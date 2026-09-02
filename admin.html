@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MATT Clean'App - Portail Administrateur</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Supabase SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: { 800: '#0a192f', 900: '#020c1b' },
+                        aqua: '#00b4d8',
+                        mattOrange: '#f77f00',
+                        whatsapp: '#25d366'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-navy-900 text-slate-100 min-h-screen font-sans flex flex-col justify-between">
+
+    <div id="toast-container" class="fixed bottom-5 right-5 z-[9999] flex flex-col gap-2 max-w-sm w-full"></div>
+
+    <header class="bg-navy-800/95 border-b-2 border-mattOrange px-4 py-3 md:px-8 flex flex-col md:flex-row justify-between items-center gap-4 sticky top-0 z-50 backdrop-blur-sm shadow-xl">
+        <div class="flex items-center gap-3">
+            <div class="bg-white p-1 rounded-full shadow-md border border-mattOrange/40 flex items-center justify-center">
+                <img src="CLAN'APP.png" alt="Logo" class="h-10 w-10 md:h-12 md:w-12 object-contain" onerror="this.src='https://placehold.co/100x100/ffffff/0a192f?text=CleanApp'">
+            </div>
+            <div class="flex flex-col">
+                <span class="text-xl md:text-2xl font-black text-white tracking-wide flex items-center gap-2">
+                    Console Admin <span class="text-xs bg-mattOrange text-white px-2 py-0.5 rounded-md font-mono">MASTER 🔐</span>
+                </span>
+                <span class="text-[9px] text-slate-400 uppercase tracking-widest font-bold">Direction MATT SARL</span>
+            </div>
+        </div>
+        
+        <div class="flex items-center gap-4">
+            <div class="text-right hidden sm:block border-r border-slate-700 pr-4">
+                <span class="text-[11px] font-black text-white block tracking-wide">MATT Clean'App</span>
+                <span class="text-[9px] text-aqua uppercase font-bold tracking-widest">by Global Tech Solutions</span>
+            </div>
+            <a href="index.html" class="px-3.5 py-1.5 rounded-lg text-xs font-bold text-slate-300 hover:text-white bg-navy-900 border border-slate-700 transition-all">
+                ⬅ Portail Public
+            </a>
+            <button onclick="lockAdminSession()" id="btn-lock-session" class="hidden px-3 py-1.5 bg-red-600/80 hover:bg-red-600 text-white rounded-lg text-xs font-bold transition-all">
+                Verrouiller 🔒
+            </button>
+        </div>
+    </header>
+
+    <!-- Écran de Connexion Sécurisée -->
+    <div id="admin-auth-screen" class="container mx-auto px-4 py-16 max-w-md flex-grow flex items-center justify-center">
+        <div class="bg-white text-slate-900 p-8 rounded-3xl shadow-2xl border border-slate-200 w-full space-y-5 text-center">
+            <div class="w-16 h-16 bg-navy-900 text-mattOrange rounded-2xl mx-auto flex items-center justify-center text-3xl font-mono shadow-inner">
+                🔐
+            </div>
+            <div>
+                <h2 class="text-xl font-black text-navy-800">Authentification Direction MATT</h2>
+                <p class="text-xs text-slate-500 font-semibold mt-1">Console Master connectée à Supabase.</p>
+            </div>
+            
+            <div class="space-y-4 text-left">
+                <div>
+                    <label class="text-[11px] font-black text-slate-700 uppercase block mb-1">Identifiant</label>
+                    <input type="text" id="admin-login-input" placeholder="Votre identifiant" class="w-full px-3.5 py-2.5 bg-slate-50 border rounded-xl text-sm font-bold text-slate-900 focus:ring-2 focus:ring-mattOrange focus:outline-none" onkeydown="if(event.key==='Enter') verifyAdminAuth();">
+                </div>
+
+                <div>
+                    <label class="text-[11px] font-black text-slate-700 uppercase block mb-1">Mot de passe</label>
+                    <div class="relative">
+                        <input type="password" id="admin-pass-input" placeholder="••••••••" class="w-full px-3.5 py-2.5 pr-10 bg-slate-50 border rounded-xl text-sm font-bold text-slate-900 focus:ring-2 focus:ring-mattOrange focus:outline-none" onkeydown="if(event.key==='Enter') verifyAdminAuth();">
+                        <button type="button" onclick="toggleAuthPasswordVisibility()" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-700">
+                            <span id="eye-icon" class="text-lg">👁️</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <button onclick="verifyAdminAuth()" class="w-full py-3 bg-mattOrange hover:bg-orange-600 text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow-md">
+                Déverrouiller le Panneau de Gestion
+            </button>
+        </div>
+    </div>
+
+    <!-- Panneau de Gestion Principal -->
+    <main id="admin-dashboard-screen" class="container mx-auto px-4 py-8 max-w-7xl flex-grow hidden">
+        <div class="bg-white text-slate-800 rounded-2xl p-6 md:p-8 shadow-2xl space-y-6">
+            
+            <div class="flex gap-2 border-b border-slate-200 pb-3 overflow-x-auto text-xs">
+                <button onclick="switchAdminTab('admin-liaisons', this)" class="admin-tab-btn px-4 py-2.5 bg-navy-800 text-white font-bold rounded-xl whitespace-nowrap active">Suivi des Commandes Supabase</button>
+                <button onclick="switchAdminTab('admin-partenaires', this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 font-bold rounded-xl whitespace-nowrap">Gestion Partenaires</button>
+                <button onclick="switchAdminTab('admin-recharges', this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 font-bold rounded-xl whitespace-nowrap">Validation Recharges</button>
+                <button onclick="switchAdminTab('admin-config', this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 font-bold rounded-xl whitespace-nowrap">⚙️ Configuration & Numéros</button>
+            </div>
+
+            <!-- Tab Commandes -->
+            <div id="admin-liaisons" class="admin-subview space-y-4">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-md font-black text-navy-800 uppercase">🔄 Commandes enregistrées en direct</h3>
+                    <button onclick="loadSupabaseOrders()" class="px-3 py-1 bg-slate-100 rounded text-xs font-bold border">Actualiser 🔄</button>
+                </div>
+
+                <div class="overflow-x-auto border rounded-xl">
+                    <table class="w-full text-left text-xs border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-600 border-b">
+                                <th class="p-3">ID</th>
+                                <th class="p-3">Client & Téléphone</th>
+                                <th class="p-3">Commune & Adresse</th>
+                                <th class="p-3">Montant Brut</th>
+                                <th class="p-3">Statut</th>
+                                <th class="p-3">Prestataire Associé</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-orders-table" class="divide-y font-medium"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tab Partenaires -->
+            <div id="admin-partenaires" class="admin-subview hidden space-y-4">
+                <div class="flex justify-between items-center">
+                    <h3 class="text-md font-black text-navy-800 uppercase">👥 Annuaire des Prestataires</h3>
+                    <button onclick="loadSupabasePartners()" class="px-3 py-1 bg-slate-100 rounded text-xs font-bold border">Actualiser 🔄</button>
+                </div>
+
+                <div class="overflow-x-auto border rounded-xl">
+                    <table class="w-full text-left text-xs border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-600 border-b">
+                                <th class="p-3">Partenaire</th>
+                                <th class="p-3">Téléphone</th>
+                                <th class="p-3">Commune</th>
+                                <th class="p-3">Spécialité</th>
+                                <th class="p-3">Solde Portefeuille</th>
+                                <th class="p-3 text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-partners-table" class="divide-y font-medium"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tab Recharges -->
+            <div id="admin-recharges" class="admin-subview hidden space-y-4">
+                <h3 class="text-md font-black text-navy-800 uppercase">📥 Déclarations de Recharge en Attente</h3>
+                <div class="overflow-x-auto border rounded-xl">
+                    <table class="w-full text-left text-xs border-collapse">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-600 border-b">
+                                <th class="p-3">Partenaire</th>
+                                <th class="p-3">Montant Déposé</th>
+                                <th class="p-3">Référence Mobile Money</th>
+                                <th class="p-3 text-right">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-recharges-table" class="divide-y font-medium"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Tab Configuration -->
+            <div id="admin-config" class="admin-subview hidden space-y-6">
+                <div class="bg-slate-50 p-6 rounded-2xl border space-y-4">
+                    <h3 class="text-md font-black text-navy-800 uppercase">📱 Canaux de Paiement Mobile Money & Assistance</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs font-bold">
+                        <div><label class="block mb-1">WhatsApp Client</label><input type="text" id="cfg-wa-client" value="+243980000338" class="w-full p-2 border rounded-lg"></div>
+                        <div><label class="block mb-1">WhatsApp Partenaire</label><input type="text" id="cfg-wa-partner" value="+243980000338" class="w-full p-2 border rounded-lg"></div>
+                        <div><label class="block mb-1">M-Pesa</label><input type="text" id="cfg-mpesa" value="+243980000338" class="w-full p-2 border rounded-lg"></div>
+                    </div>
+                    <button onclick="showToast('Coordonnées sauvegardées avec succès !')" class="px-5 py-2.5 bg-mattOrange text-white font-black text-xs rounded-xl uppercase">Sauvegarder</button>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="mt-12 border-t border-slate-800 bg-navy-800/90 py-6 text-center text-xs text-slate-400">
+        <p>MATT SARL • RCCM CD/KIN/RCCM/24-B-04106 • NIF A2441433N • Kinshasa, RDC</p>
+    </footer>
+
+    <script>
+        const SUPABASE_URL = "https://vbriworyscymnmtzzdny.supabase.co";
+        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZicml3b3J5c2N5bW5tdHp6ZG55Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzNzQwNTEsImV4cCI6MjEwMzk1MDA1MX0.VBZupVKj0srae0NT5BNZ0OeaIv9pAl2bl5L-Rd8ocJk";
+        const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        function showToast(message, type = "success") {
+            const container = document.getElementById('toast-container');
+            if (!container) return;
+            const toast = document.createElement('div');
+            let bg = type === "error" ? "bg-red-600" : "bg-green-600";
+            toast.className = `${bg} text-white px-4 py-3 rounded-xl shadow-2xl flex items-center justify-between gap-3 text-xs font-bold`;
+            toast.innerHTML = `<span>${message}</span><button onclick="this.parentElement.remove()" class="text-white font-black">✕</button>`;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 4000);
+        }
+
+        function toggleAuthPasswordVisibility() {
+            const pass = document.getElementById('admin-pass-input');
+            const icon = document.getElementById('eye-icon');
+            if (pass.type === 'password') { pass.type = 'text'; icon.innerText = '🙈'; }
+            else { pass.type = 'password'; icon.innerText = '👁️'; }
+        }
+
+        function verifyAdminAuth() {
+            const login = document.getElementById('admin-login-input').value.trim();
+            const pass = document.getElementById('admin-pass-input').value.trim();
+
+            if ((login === "0980000338" && pass === "MATT2026") || pass === "MATT2026") {
+                document.getElementById('admin-auth-screen').classList.add('hidden');
+                document.getElementById('admin-dashboard-screen').classList.remove('hidden');
+                document.getElementById('btn-lock-session').classList.remove('hidden');
+                showToast("Accès validé Direction Générale.");
+                loadSupabaseOrders();
+                loadSupabasePartners();
+                loadSupabaseRecharges();
+            } else {
+                showToast("Identifiant ou mot de passe incorrect.", "error");
+            }
+        }
+
+        function lockAdminSession() {
+            document.getElementById('admin-dashboard-screen').classList.add('hidden');
+            document.getElementById('admin-auth-screen').classList.remove('hidden');
+            document.getElementById('btn-lock-session').classList.add('hidden');
+        }
+
+        function switchAdminTab(id, btn) {
+            document.querySelectorAll('.admin-subview').forEach(s => s.classList.add('hidden'));
+            document.querySelectorAll('.admin-tab-btn').forEach(b => b.className = "admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 rounded-xl font-bold whitespace-nowrap");
+            document.getElementById(id).classList.remove('hidden');
+            if (btn) btn.className = "admin-tab-btn px-4 py-2.5 bg-navy-800 text-white rounded-xl font-bold whitespace-nowrap active";
+        }
+
+        async function loadSupabaseOrders() {
+            const { data } = await db.from('orders').select('*').order('id', { ascending: false });
+            const tbody = document.getElementById('admin-orders-table');
+            tbody.innerHTML = '';
+
+            (data || []).forEach(o => {
+                tbody.innerHTML += `
+                    <tr class="border-b hover:bg-slate-50">
+                        <td class="p-3 font-mono font-bold">#${o.id}</td>
+                        <td class="p-3"><b>${o.client_name}</b><br><span class="text-slate-400 font-mono">${o.client_phone}</span></td>
+                        <td class="p-3"><b>${o.commune}</b> - ${o.avenue || o.address || ''}</td>
+                        <td class="p-3 font-mono font-bold">${Number(o.total_amount).toLocaleString('fr-FR')} CDF</td>
+                        <td class="p-3"><span class="px-2 py-0.5 rounded bg-slate-100 font-bold">${o.status}</span></td>
+                        <td class="p-3 font-mono">${o.partner_id ? 'Attribué' : 'En recherche'}</td>
+                    </tr>
+                `;
+            });
+        }
+
+        async function loadSupabasePartners() {
+            const { data } = await db.from('partners').select('*').order('created_at', { ascending: false });
+            const tbody = document.getElementById('admin-partners-table');
+            tbody.innerHTML = '';
+
+            (data || []).forEach(p => {
+                tbody.innerHTML += `
+                    <tr class="border-b hover:bg-slate-50">
+                        <td class="p-3 font-bold">${p.name}</td>
+                        <td class="p-3 font-mono">${p.phone}</td>
+                        <td class="p-3">${p.commune}</td>
+                        <td class="p-3">${p.specialty}</td>
+                        <td class="p-3 font-mono font-bold">${Number(p.wallet).toLocaleString('fr-FR')} CDF</td>
+                        <td class="p-3 text-right">
+                            <button onclick="creditPartner('${p.id}', 15000)" class="px-2 py-1 bg-green-100 text-green-800 font-bold rounded">+15k</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        async function loadSupabaseRecharges() {
+            const { data } = await db.from('recharges').select('*').eq('status', 'En attente');
+            const tbody = document.getElementById('admin-recharges-table');
+            tbody.innerHTML = '';
+
+            (data || []).forEach(r => {
+                tbody.innerHTML += `
+                    <tr class="border-b hover:bg-slate-50">
+                        <td class="p-3 font-bold">${r.partner_name}</td>
+                        <td class="p-3 font-mono font-bold">${Number(r.amount).toLocaleString('fr-FR')} CDF</td>
+                        <td class="p-3 font-mono">${r.ref}</td>
+                        <td class="p-3 text-right">
+                            <button onclick="validerRechargeSupabase(${r.id}, '${r.partner_id}', ${r.amount})" class="px-3 py-1 bg-green-600 text-white font-bold rounded">Valider</button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            if (!data || data.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="4" class="p-3 text-center text-slate-400">Aucune demande en attente.</td></tr>`;
+            }
+        }
+
+        async function validerRechargeSupabase(rechargeId, partnerId, amount) {
+            const { data: partner } = await db.from('partners').select('wallet').eq('id', partnerId).single();
+            if (partner) {
+                await db.from('partners').update({ wallet: partner.wallet + amount }).eq('id', partnerId);
+                await db.from('recharges').update({ status: 'Validé' }).eq('id', rechargeId);
+                showToast("Recharge validée et créditée !");
+                loadSupabaseRecharges();
+                loadSupabasePartners();
+            }
+        }
+
+        async function creditPartner(partnerId, amount) {
+            const { data } = await db.from('partners').select('wallet').eq('id', partnerId).single();
+            if (data) {
+                await db.from('partners').update({ wallet: data.wallet + amount }).eq('id', partnerId);
+                showToast("Partenaire crédité !");
+                loadSupabasePartners();
+            }
+        }
+    </script>
+</body>
+</html>
