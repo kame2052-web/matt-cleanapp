@@ -32,25 +32,25 @@
             background-repeat: no-repeat;
             background-position: center;
             background-attachment: fixed;
-            background-size: 55%;
+            background-size: 50%;
             opacity: 0.03;
             z-index: -1;
             pointer-events: none;
         }
-        .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
     </style>
 </head>
-<body class="bg-navy-900 text-slate-100 min-h-screen watermark-bg font-sans flex flex-col justify-between pb-20 md:pb-6 select-none">
+<body class="bg-navy-900 text-slate-100 min-h-screen watermark-bg font-sans flex flex-col justify-between select-none">
 
     <!-- Notifications Toast -->
     <div id="toast-container" class="fixed top-4 inset-x-4 z-[9999] flex flex-col gap-2 max-w-sm mx-auto pointer-events-none"></div>
 
-    <!-- En-tête mobile épuré -->
-    <header class="bg-navy-800/95 border-b border-aqua/40 px-3 py-2.5 md:px-8 flex justify-between items-center sticky top-0 z-40 backdrop-blur-md shadow-lg">
+    <!-- En-tête simplifié -->
+    <header class="bg-navy-800/95 border-b border-aqua/30 px-4 py-3 md:px-8 flex justify-between items-center sticky top-0 z-40 backdrop-blur-md shadow-lg">
         <div class="flex items-center gap-2.5 cursor-pointer" onclick="showView('view-gateway')">
-            <div class="w-11 h-11 md:w-12 md:h-12 bg-white rounded-2xl shadow-md border border-aqua/30 p-1 flex items-center justify-center flex-shrink-0">
+            <div class="w-11 h-11 bg-white rounded-2xl shadow-md border border-aqua/30 p-1 flex items-center justify-center flex-shrink-0">
                 <img src="cleanapp.jpg" alt="Logo" class="w-full h-full object-contain" onerror="this.src='cleanapp.png'">
             </div>
             <div class="flex flex-col">
@@ -60,75 +60,65 @@
         </div>
 
         <div class="flex items-center gap-2">
-            <div id="logged-user-chip" class="hidden items-center gap-1.5 bg-navy-900 px-2.5 py-1 rounded-xl border border-aqua/40 text-[11px]">
-                <span id="logged-user-name" class="font-bold text-aqua max-w-[100px] truncate">Utilisateur</span>
-                <button onclick="logoutCurrentSession()" class="text-red-400 font-bold ml-1">✕</button>
+            <div id="logged-user-chip" class="hidden items-center gap-1.5 bg-navy-900 px-3 py-1.5 rounded-xl border border-aqua/40 text-xs">
+                <span id="logged-user-name" class="font-bold text-aqua max-w-[120px] truncate">Utilisateur</span>
+                <button onclick="logoutCurrentSession()" class="text-red-400 font-bold ml-1.5">✕</button>
             </div>
-            <button onclick="showView('view-gateway')" class="p-2 rounded-xl bg-slate-800 text-slate-300 text-xs font-bold md:hidden">
-                🏠
+            <button onclick="showView('view-gateway')" id="btn-back-home" class="hidden px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 text-xs font-bold border border-slate-700">
+                🏠 Accueil
             </button>
         </div>
     </header>
 
-    <!-- Navigation informative -->
-    <div class="bg-navy-800/80 border-b border-slate-800 px-4 py-2 flex justify-center gap-6 text-xs font-bold">
-        <button onclick="showView('view-presentation')" class="text-slate-300 hover:text-aqua transition">À Propos de MATT 🏢</button>
-        <button onclick="showView('view-cgu')" class="text-slate-300 hover:text-aqua transition">CGU & Charte Contractuelle 📜</button>
-        <button onclick="showView('view-support')" class="text-aqua hover:text-sky-300 transition">Assistance Technique 🛠️</button>
-    </div>
-
     <!-- Conteneur Principal -->
-    <main class="container mx-auto px-3 py-4 md:py-6 max-w-4xl flex-grow">
+    <main class="container mx-auto px-4 py-6 max-w-4xl flex-grow flex flex-col justify-center">
 
-        <!-- 1. ÉCRAN D'ACCUEIL -->
-        <div id="view-gateway" class="space-y-6 animate-fade-in py-2">
-            <div class="text-center space-y-2">
-                <div class="inline-block w-24 h-24 md:w-28 md:h-28 bg-white rounded-3xl p-1 shadow-2xl border-2 border-aqua/40 mb-1">
-                    <img src="cleanapp.jpg" alt="Logo" class="w-full h-full object-contain" onerror="this.src='cleanapp.png'">
+        <!-- 1. PAGE D'ACCUEIL : UNIQUE, CENTRÉE ET ÉPURÉE -->
+        <div id="view-gateway" class="space-y-8 animate-fade-in my-auto py-6">
+            <!-- Logo et Message de Bienvenue -->
+            <div class="text-center space-y-4">
+                <div class="inline-block w-28 h-28 md:w-32 md:h-32 bg-white rounded-3xl p-2 shadow-2xl border-2 border-aqua/40">
+                    <img src="cleanapp.jpg" alt="Logo Clean'App" class="w-full h-full object-contain" onerror="this.src='cleanapp.png'">
                 </div>
-                <h1 class="text-2xl md:text-3xl font-black text-white tracking-tight">Assainissement & Nettoyage Pro</h1>
-                <p class="text-slate-300 text-xs md:text-sm max-w-xs mx-auto font-medium">
-                    Automobile, Résidences, Bureaux, Traitement 3D & Vidange de Fosse à Kinshasa.
-                </p>
-                <span class="inline-block text-[9px] bg-slate-800 text-aqua px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider">
-                    MATT SARL • CD/KIN/RCCM/24-B-04106 • NIF A2441433N
-                </span>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
-                <div onclick="goToAuth('client')" class="bg-white text-slate-800 rounded-2xl p-5 shadow-xl border-2 border-transparent active:scale-95 transition-all flex items-center justify-between cursor-pointer">
-                    <div class="flex items-center gap-3.5">
-                        <div class="w-12 h-12 rounded-xl bg-sky-100 text-aqua flex items-center justify-center text-2xl font-black shadow-inner">🛒</div>
-                        <div>
-                            <h2 class="text-lg font-black text-navy-800 leading-snug">Espace Client</h2>
-                            <p class="text-[11px] text-slate-500 font-medium">Lavage, Nettoyage & Vidange</p>
-                        </div>
-                    </div>
-                    <span class="w-8 h-8 rounded-full bg-navy-800 text-white flex items-center justify-center font-bold text-xs">➔</span>
-                </div>
-
-                <div onclick="goToAuth('partner')" class="bg-white text-slate-800 rounded-2xl p-5 shadow-xl border-2 border-transparent active:scale-95 transition-all flex items-center justify-between cursor-pointer">
-                    <div class="flex items-center gap-3.5">
-                        <div class="w-12 h-12 rounded-xl bg-orange-100 text-mattOrange flex items-center justify-center text-2xl font-black shadow-inner">🤝</div>
-                        <div>
-                            <h2 class="text-lg font-black text-navy-800 leading-snug">Espace Partenaire</h2>
-                            <p class="text-[11px] text-slate-500 font-medium">Missions, Portefeuille & Clôture</p>
-                        </div>
-                    </div>
-                    <span class="w-8 h-8 rounded-full bg-mattOrange text-white flex items-center justify-center font-bold text-xs">➔</span>
+                <div class="space-y-2 max-w-md mx-auto">
+                    <h1 class="text-2xl md:text-3xl font-black text-white tracking-tight">
+                        Bienvenue dans <span class="text-aqua">MATT Clean'App</span>
+                    </h1>
+                    <p class="text-slate-300 text-sm md:text-base font-medium leading-relaxed">
+                        Votre plateforme d'assainissement et nettoyage pro.
+                    </p>
                 </div>
             </div>
 
-            <div class="grid grid-cols-3 gap-2 pt-2 text-center text-[10px] font-bold text-slate-400">
-                <button onclick="showView('view-presentation')" class="bg-slate-800/80 p-2.5 rounded-xl border border-slate-700/60 active:bg-slate-700">🏢 À Propos</button>
-                <button onclick="showView('view-cgu')" class="bg-slate-800/80 p-2.5 rounded-xl border border-slate-700/60 active:bg-slate-700">📜 CGU & Tarifs</button>
-                <button onclick="showView('view-support')" class="bg-slate-800/80 p-2.5 rounded-xl border border-slate-700/60 text-aqua active:bg-slate-700">🛠️ Assistance</button>
+            <!-- Deux grandes cartes d'accès exclusives -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-2xl mx-auto pt-2">
+                <div onclick="goToAuth('client')" class="bg-white text-slate-800 rounded-3xl p-6 shadow-2xl border-2 border-transparent hover:border-aqua active:scale-95 transition-all flex items-center justify-between cursor-pointer group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-2xl bg-sky-100 text-aqua flex items-center justify-center text-3xl font-black shadow-inner group-hover:bg-aqua group-hover:text-white transition-all">🛒</div>
+                        <div>
+                            <h2 class="text-xl font-black text-navy-800 group-hover:text-aqua transition-all">Espace Client</h2>
+                            <p class="text-xs text-slate-500 font-semibold mt-0.5">Commander une prestation</p>
+                        </div>
+                    </div>
+                    <span class="w-9 h-9 rounded-full bg-navy-800 text-white flex items-center justify-center font-bold text-sm group-hover:bg-aqua group-hover:text-navy-900 transition-all">➔</span>
+                </div>
+
+                <div onclick="goToAuth('partner')" class="bg-white text-slate-800 rounded-3xl p-6 shadow-2xl border-2 border-transparent hover:border-mattOrange active:scale-95 transition-all flex items-center justify-between cursor-pointer group">
+                    <div class="flex items-center gap-4">
+                        <div class="w-14 h-14 rounded-2xl bg-orange-100 text-mattOrange flex items-center justify-center text-3xl font-black shadow-inner group-hover:bg-mattOrange group-hover:text-white transition-all">🤝</div>
+                        <div>
+                            <h2 class="text-xl font-black text-navy-800 group-hover:text-mattOrange transition-all">Espace Partenaire</h2>
+                            <p class="text-xs text-slate-500 font-semibold mt-0.5">Accès prestataire agréé</p>
+                        </div>
+                    </div>
+                    <span class="w-9 h-9 rounded-full bg-mattOrange text-white flex items-center justify-center font-bold text-sm group-hover:bg-orange-600 transition-all">➔</span>
+                </div>
             </div>
         </div>
 
         <!-- 2. AUTHENTIFICATION CLIENT -->
-        <div id="view-client-auth" class="bg-white text-slate-800 rounded-3xl p-6 shadow-2xl hidden animate-fade-in max-w-md mx-auto">
-            <div class="flex items-center justify-between border-b pb-3 mb-4">
+        <div id="view-client-auth" class="bg-white text-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl hidden animate-fade-in max-w-md mx-auto w-full">
+            <div class="flex items-center justify-between border-b pb-3 mb-5">
                 <h2 class="text-lg font-black text-navy-800">Espace Client</h2>
                 <button onclick="showView('view-gateway')" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 font-bold flex items-center justify-center">✕</button>
             </div>
@@ -138,15 +128,15 @@
                 <button onclick="switchAuthTab('client', 'register')" id="tab-client-register" class="flex-1 py-2 font-bold border-b-2 border-transparent text-slate-400">Créer un compte</button>
             </div>
 
-            <div id="form-client-login" class="space-y-3">
+            <div id="form-client-login" class="space-y-3.5">
                 <div>
                     <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Téléphone</label>
-                    <input type="tel" id="auth-client-login-phone" placeholder="0825556633" class="w-full px-3.5 py-3 bg-slate-50 border rounded-xl text-base sm:text-xs font-bold text-slate-800 focus:ring-2 focus:ring-aqua focus:outline-none">
+                    <input type="tel" id="auth-client-login-phone" placeholder="0825556633" class="w-full px-3.5 py-3 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-aqua focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Mot de passe</label>
                     <div class="relative">
-                        <input type="password" id="auth-client-login-pass" placeholder="••••••••" class="w-full px-3.5 py-3 pr-10 bg-slate-50 border rounded-xl text-base sm:text-xs font-bold text-slate-800 focus:ring-2 focus:ring-aqua focus:outline-none">
+                        <input type="password" id="auth-client-login-pass" placeholder="••••••••" class="w-full px-3.5 py-3 pr-10 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-aqua focus:outline-none">
                         <button type="button" onclick="togglePasswordVisibility('auth-client-login-pass', 'eye-client-login')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400">
                             <span id="eye-client-login">👁️</span>
                         </button>
@@ -155,19 +145,19 @@
                 <button onclick="loginClient()" class="w-full py-3.5 bg-navy-800 active:bg-navy-900 text-white font-black text-xs rounded-xl uppercase tracking-wider shadow mt-2">Connexion</button>
             </div>
 
-            <div id="form-client-register" class="space-y-3 hidden">
+            <div id="form-client-register" class="space-y-3.5 hidden">
                 <div>
                     <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Nom complet</label>
-                    <input type="text" id="auth-client-reg-name" placeholder="Jean Mukendi" class="w-full px-3.5 py-3 bg-slate-50 border rounded-xl text-base sm:text-xs font-bold text-slate-800">
+                    <input type="text" id="auth-client-reg-name" placeholder="Jean Mukendi" class="w-full px-3.5 py-3 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800">
                 </div>
                 <div>
                     <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Téléphone</label>
-                    <input type="tel" id="auth-client-reg-phone" placeholder="0825556633" class="w-full px-3.5 py-3 bg-slate-50 border rounded-xl text-base sm:text-xs font-bold text-slate-800">
+                    <input type="tel" id="auth-client-reg-phone" placeholder="0825556633" class="w-full px-3.5 py-3 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800">
                 </div>
                 <div>
                     <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Mot de passe</label>
                     <div class="relative">
-                        <input type="password" id="auth-client-reg-pass" placeholder="••••••••" class="w-full px-3.5 py-3 pr-10 bg-slate-50 border rounded-xl text-base sm:text-xs font-bold text-slate-800">
+                        <input type="password" id="auth-client-reg-pass" placeholder="••••••••" class="w-full px-3.5 py-3 pr-10 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800">
                         <button type="button" onclick="togglePasswordVisibility('auth-client-reg-pass', 'eye-client-reg')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400">
                             <span id="eye-client-reg">👁️</span>
                         </button>
@@ -178,8 +168,8 @@
         </div>
 
         <!-- 3. AUTHENTIFICATION PARTENAIRE -->
-        <div id="view-partner-auth" class="bg-white text-slate-800 rounded-3xl p-6 shadow-2xl hidden animate-fade-in max-w-md mx-auto">
-            <div class="flex items-center justify-between border-b pb-3 mb-4">
+        <div id="view-partner-auth" class="bg-white text-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl hidden animate-fade-in max-w-md mx-auto w-full">
+            <div class="flex items-center justify-between border-b pb-3 mb-5">
                 <h2 class="text-lg font-black text-navy-800">Espace Pro Partenaire</h2>
                 <button onclick="showView('view-gateway')" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 font-bold flex items-center justify-center">✕</button>
             </div>
@@ -189,15 +179,15 @@
                 <button onclick="switchAuthTab('partner', 'register')" id="tab-partner-register" class="flex-1 py-2 font-bold border-b-2 border-transparent text-slate-400">Devenir Partenaire</button>
             </div>
 
-            <div id="form-partner-login" class="space-y-3">
+            <div id="form-partner-login" class="space-y-3.5">
                 <div>
                     <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Téléphone (Login)</label>
-                    <input type="tel" id="auth-partner-login-phone" placeholder="0819998822" class="w-full px-3.5 py-3 bg-slate-50 border rounded-xl text-base sm:text-xs font-bold text-slate-800 focus:ring-2 focus:ring-mattOrange focus:outline-none">
+                    <input type="tel" id="auth-partner-login-phone" placeholder="0819998822" class="w-full px-3.5 py-3 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-mattOrange focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Mot de passe</label>
                     <div class="relative">
-                        <input type="password" id="auth-partner-login-pass" placeholder="••••••••" class="w-full px-3.5 py-3 pr-10 bg-slate-50 border rounded-xl text-base sm:text-xs font-bold text-slate-800 focus:ring-2 focus:ring-mattOrange focus:outline-none">
+                        <input type="password" id="auth-partner-login-pass" placeholder="••••••••" class="w-full px-3.5 py-3 pr-10 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-mattOrange focus:outline-none">
                         <button type="button" onclick="togglePasswordVisibility('auth-partner-login-pass', 'eye-partner-login')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400">
                             <span id="eye-partner-login">👁️</span>
                         </button>
@@ -206,7 +196,7 @@
                 <button onclick="loginPartner()" class="w-full py-3.5 bg-mattOrange active:bg-orange-600 text-white font-black text-xs rounded-xl uppercase tracking-wider shadow mt-2">Accéder à mon espace</button>
             </div>
 
-            <div id="form-partner-register" class="space-y-3 hidden max-h-[60vh] overflow-y-auto pr-1">
+            <div id="form-partner-register" class="space-y-3.5 hidden max-h-[60vh] overflow-y-auto pr-1">
                 <div>
                     <label class="text-[10px] font-bold text-slate-600 block uppercase">Nom / Raison Sociale</label>
                     <input type="text" id="p-reg-name" placeholder="MATT Lavage Pro" class="w-full px-3.5 py-2.5 border rounded-xl text-xs font-bold">
@@ -245,15 +235,15 @@
 
         <!-- 4. ESPACE CLIENT CONNECTÉ -->
         <div id="view-client-app" class="bg-white text-slate-800 rounded-3xl p-4 md:p-6 shadow-2xl hidden animate-fade-in space-y-5">
-            <div class="flex border-b border-slate-200 text-xs">
-                <button onclick="switchClientTab('client-compose')" id="tab-btn-client-compose" class="flex-1 py-2.5 font-black border-b-2 border-mattOrange text-mattOrange">🛒 Composer la commande</button>
-                <button onclick="switchClientTab('client-tracking')" id="tab-btn-client-tracking" class="flex-1 py-2.5 font-bold border-b-2 border-transparent text-slate-500">📋 Suivi & Historique</button>
+            <!-- Navigation interne Client -->
+            <div class="flex border-b border-slate-200 text-xs overflow-x-auto custom-scrollbar">
+                <button onclick="switchClientTab('client-compose')" id="tab-btn-client-compose" class="flex-1 min-w-[120px] py-2.5 font-black border-b-2 border-mattOrange text-mattOrange">🛒 Commander</button>
+                <button onclick="switchClientTab('client-tracking')" id="tab-btn-client-tracking" class="flex-1 min-w-[120px] py-2.5 font-bold border-b-2 border-transparent text-slate-500">📋 Mes Commandes</button>
+                <button onclick="switchClientTab('client-info-support')" id="tab-btn-client-info-support" class="flex-1 min-w-[120px] py-2.5 font-bold border-b-2 border-transparent text-slate-500">ℹ️ Infos & Assistance</button>
             </div>
 
-            <!-- Composer le panier -->
+            <!-- Sous-onglet 1 : Composer la commande -->
             <div id="client-compose" class="space-y-4">
-                
-                <!-- Identification rapide -->
                 <div class="bg-slate-50 border border-slate-200 p-3.5 rounded-2xl">
                     <span class="text-[10px] font-black text-navy-800 uppercase block mb-2">👤 Donneur d'Ordre</span>
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -262,7 +252,7 @@
                     </div>
                 </div>
 
-                <!-- 1. AXE AUTOMOBILE AVEC OPTIONS TECHNIQUES PAR VÉHICULE -->
+                <!-- 1. AXE AUTO & OPTIONS -->
                 <div class="border rounded-2xl p-4 bg-white shadow-sm space-y-3">
                     <div class="flex justify-between items-center border-b pb-2">
                         <h3 class="text-xs font-black text-navy-800 uppercase flex items-center gap-1.5">
@@ -270,12 +260,10 @@
                         </h3>
                         <span class="text-[9px] text-slate-400 font-bold uppercase">Lavage de base & Options rattachées</span>
                     </div>
-
-                    <!-- Catalogue généré dynamiquement -->
                     <div id="vehicle-catalog" class="space-y-3"></div>
                 </div>
 
-                <!-- 2. AXE MAISON ET SURFACES COMPLET -->
+                <!-- 2. AXE MAISON & SURFACES -->
                 <div class="border rounded-2xl p-4 bg-white shadow-sm space-y-3">
                     <div class="flex justify-between items-center border-b pb-2">
                         <h3 class="text-xs font-black text-navy-800 uppercase flex items-center gap-1.5">
@@ -338,18 +326,18 @@
                     </div>
                 </div>
 
-                <!-- 3. AXE ENVIRONNEMENT 3D ET VIDANGE COMPLET -->
+                <!-- 3. AXE ENVIRONNEMENT 3D & VIDANGE -->
                 <div class="border rounded-2xl p-4 bg-white shadow-sm space-y-3">
                     <div class="flex justify-between items-center border-b pb-2">
                         <h3 class="text-xs font-black text-navy-800 uppercase flex items-center gap-1.5">
                             <span>🌱</span> Axe Environnement 3D & Vidange Fosse
                         </h3>
-                        <span class="text-[9px] text-slate-400 font-bold uppercase">Hygiène Publique & Assainissement</span>
+                        <span class="text-[9px] text-slate-400 font-bold uppercase">Assainissement Lourd</span>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px] font-bold">
                         <div>
-                            <label class="text-[10px] text-slate-500 uppercase block mb-0.5">Désinfection (pièces/locaux)</label>
+                            <label class="text-[10px] text-slate-500 uppercase block mb-0.5">Désinfection (pièces)</label>
                             <input type="number" id="qty-desinfection" placeholder="0" class="w-full p-2 border rounded-lg text-xs" oninput="calculerTotal()">
                         </div>
                         <div>
@@ -369,12 +357,12 @@
                         </div>
                         <div class="bg-sky-50/50 p-2.5 rounded-xl border border-sky-200">
                             <label class="text-[10px] font-black text-navy-800 uppercase block mb-1">🪠 Vidange Fosse Septique Hydrocurage (m³)</label>
-                            <input type="number" id="vol-fosse" placeholder="Volume estimé en m³" class="w-full p-2 bg-white border rounded-lg text-xs font-bold" oninput="calculerTotal()">
+                            <input type="number" id="vol-fosse" placeholder="Volume en m³" class="w-full p-2 bg-white border rounded-lg text-xs font-bold" oninput="calculerTotal()">
                         </div>
                     </div>
                 </div>
 
-                <!-- 4. SOURCES D'ÉNERGIE (COURANT & EAU) ET PLANIFICATION -->
+                <!-- 4. LOGISTIQUE & PLANIFICATION -->
                 <div class="bg-slate-50 border rounded-2xl p-4 space-y-3 text-xs">
                     <div class="flex justify-between items-center border-b pb-2">
                         <span class="text-[10px] font-black text-navy-800 uppercase">⚡ Logistique Terrain (Courant, Eau & Localisation)</span>
@@ -387,22 +375,22 @@
                             <select id="client-elec" class="w-full p-2 border rounded-lg text-xs font-bold bg-slate-50">
                                 <option value="SNEL disponible sur place">SNEL disponible sur place</option>
                                 <option value="Groupe électrogène client disponible">Groupe électrogène client disponible</option>
-                                <option value="Pas d'électricité (Prestataire doit prévoir un groupe mobile)">Pas d'électricité (Prévoir groupe mobile)</option>
+                                <option value="Pas d'électricité (Prévoir groupe mobile)">Pas d'électricité (Prévoir groupe mobile)</option>
                             </select>
                         </div>
                         <div class="bg-white p-2.5 rounded-xl border">
-                            <label class="text-[10px] font-black text-slate-600 uppercase block mb-1">🚰 Source d'Approvisionnement en Eau :</label>
+                            <label class="text-[10px] font-black text-slate-600 uppercase block mb-1">🚰 Source d'Eau :</label>
                             <select id="client-water" class="w-full p-2 border rounded-lg text-xs font-bold bg-slate-50">
                                 <option value="REGIDESO fonctionnelle sur place">REGIDESO fonctionnelle sur place</option>
                                 <option value="Citerne / Forage disponible sur place">Citerne / Forage disponible sur place</option>
-                                <option value="Pas d'eau (Prestataire doit amener une réserve/citerne)">Pas d'eau (Prévoir citerne mobile)</option>
+                                <option value="Pas d'eau (Prévoir citerne mobile)">Pas d'eau (Prévoir citerne mobile)</option>
                             </select>
                         </div>
                     </div>
 
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         <div>
-                            <label class="text-[10px] font-bold text-slate-500 uppercase block mb-0.5">Commune d'intervention :</label>
+                            <label class="text-[10px] font-bold text-slate-500 uppercase block mb-0.5">Commune :</label>
                             <select id="client-commune" class="w-full p-2.5 border rounded-xl bg-white font-bold text-xs" onchange="onClientCommuneChange()"></select>
                         </div>
                         <div>
@@ -413,8 +401,8 @@
 
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                         <div>
-                            <label class="text-[10px] font-bold text-slate-500 uppercase block mb-0.5">Point de repère visible :</label>
-                            <input type="text" id="client-ref-input" placeholder="Ex: Réf. Église Saint-Michel" class="w-full p-2 border rounded-xl font-medium text-xs">
+                            <label class="text-[10px] font-bold text-slate-500 uppercase block mb-0.5">Point de repère :</label>
+                            <input type="text" id="client-ref-input" placeholder="Ex: Réf. Pharmacie Principale" class="w-full p-2 border rounded-xl font-medium text-xs">
                         </div>
                         <div>
                             <label class="text-[10px] font-bold text-slate-500 uppercase block mb-0.5">Date souhaitée :</label>
@@ -439,13 +427,50 @@
                 </div>
             </div>
 
-            <!-- Suivi des commandes -->
+            <!-- Sous-onglet 2 : Suivi & Historique Client -->
             <div id="client-tracking" class="hidden space-y-3">
                 <div class="flex justify-between items-center border-b pb-2">
                     <span class="text-xs font-black uppercase text-navy-800">Historique des Commandes</span>
                     <button onclick="detectClientOrders()" class="text-xs text-sky-600 font-bold">Actualiser 🔄</button>
                 </div>
                 <div id="client-orders-tracking-list" class="space-y-2.5"></div>
+            </div>
+
+            <!-- Sous-onglet 3 : Informations, CGU & Support Client -->
+            <div id="client-info-support" class="hidden space-y-4 text-xs">
+                <!-- Présentation MATT -->
+                <div class="border rounded-2xl p-4 bg-slate-50 space-y-2">
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 bg-white rounded-xl border p-0.5 flex-shrink-0">
+                            <img src="matt.jpg" alt="MATT" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h3 class="font-black text-navy-800 text-sm">MASTER TOUCH TRADING (MATT SARL)</h3>
+                            <span class="text-[10px] text-slate-500">RCCM CD/KIN/RCCM/24-B-04106 • NIF A2441433N</span>
+                        </div>
+                    </div>
+                    <p class="text-slate-600">Entreprise générale d'assainissement, d'entretien automobile et de services à Kinshasa, en partenariat avec Global Tech Solutions.</p>
+                </div>
+
+                <!-- Assistance rapide -->
+                <div class="grid grid-cols-2 gap-2">
+                    <a href="https://wa.me/243980000338" target="_blank" class="p-3 bg-green-50 border border-green-200 rounded-xl flex items-center gap-2">
+                        <span class="text-xl">💬</span>
+                        <span class="font-bold text-green-800 text-[11px]">WhatsApp (+243 980 000 338)</span>
+                    </a>
+                    <a href="tel:+243980000338" class="p-3 bg-sky-50 border border-sky-200 rounded-xl flex items-center gap-2">
+                        <span class="text-xl">📞</span>
+                        <span class="font-bold text-sky-800 text-[11px]">Appel Direct</span>
+                    </a>
+                </div>
+
+                <!-- CGU Client -->
+                <div class="border rounded-2xl p-4 bg-white space-y-2">
+                    <h3 class="font-black text-navy-800 text-sm uppercase">Conditions Générales d'Utilisation (CGU)</h3>
+                    <div id="cgu-display-client" class="space-y-2 max-h-48 overflow-y-auto pr-1 custom-scrollbar text-slate-600 leading-relaxed">
+                        <p class="text-slate-400 italic">Chargement des CGU...</p>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -463,6 +488,7 @@
                 </span>
             </div>
 
+            <!-- Onglets Partenaire -->
             <div class="flex gap-1.5 border-b pb-2 overflow-x-auto custom-scrollbar text-xs font-bold">
                 <button onclick="switchPartnerTab('partner-tab-missions', this)" class="partner-tab-btn px-3 py-2 bg-mattOrange text-white rounded-xl whitespace-nowrap active text-[11px]">
                     🚨 Missions Disponibles
@@ -476,9 +502,12 @@
                 <button onclick="switchPartnerTab('partner-tab-profil', this)" class="partner-tab-btn px-3 py-2 bg-slate-100 text-slate-600 rounded-xl whitespace-nowrap text-[11px]">
                     ⚙️ Sécurité & Profil
                 </button>
+                <button onclick="switchPartnerTab('partner-tab-info-support', this)" class="partner-tab-btn px-3 py-2 bg-slate-100 text-slate-600 rounded-xl whitespace-nowrap text-[11px]">
+                    📜 Infos & Support
+                </button>
             </div>
 
-            <!-- Fil des Missions -->
+            <!-- Missions Disponibles -->
             <div id="partner-tab-missions" class="partner-subview space-y-3">
                 <div class="flex justify-between items-center">
                     <span class="text-[11px] font-black uppercase text-navy-800">Missions Disponibles dans votre Secteur</span>
@@ -551,81 +580,31 @@
                     </button>
                 </div>
             </div>
-        </div>
 
-        <!-- 6. PRÉSENTATION DE MATT SARL -->
-        <div id="view-presentation" class="bg-white text-slate-800 rounded-3xl p-5 shadow-2xl space-y-4 hidden animate-fade-in text-xs">
-            <div class="flex items-center gap-3 border-b pb-3">
-                <div class="w-12 h-12 bg-white rounded-xl border p-0.5 flex-shrink-0">
-                    <img src="matt.jpg" alt="MATT" class="w-full h-full object-cover">
+            <!-- Infos & Support Partenaire -->
+            <div id="partner-tab-info-support" class="partner-subview hidden space-y-4 text-xs">
+                <div class="border rounded-2xl p-4 bg-slate-50 space-y-2">
+                    <h3 class="font-black text-navy-800 text-sm">Assistance Partenaire MATT SARL</h3>
+                    <p class="text-slate-600">Un problème sur une course ou un rechargement ? Contactez la permanence :</p>
+                    <div class="flex gap-2 pt-1">
+                        <a href="https://wa.me/243980000338" target="_blank" class="px-4 py-2 bg-whatsapp text-white rounded-xl font-bold">WhatsApp Direct</a>
+                        <a href="tel:+243980000338" class="px-4 py-2 bg-sky-600 text-white rounded-xl font-bold">Appel Téléphonique</a>
+                    </div>
                 </div>
-                <div>
-                    <h2 class="text-base font-black text-navy-800">MASTER TOUCH TRADING</h2>
-                    <span class="text-[9px] text-aqua uppercase font-bold tracking-widest block">MATT SARL • Kinshasa</span>
+
+                <div class="border rounded-2xl p-4 bg-white space-y-2">
+                    <h3 class="font-black text-navy-800 text-sm uppercase">Conditions Générales d'Utilisation (CGU)</h3>
+                    <div id="cgu-display-partner" class="space-y-2 max-h-48 overflow-y-auto pr-1 custom-scrollbar text-slate-600 leading-relaxed">
+                        <p class="text-slate-400 italic">Chargement des CGU...</p>
+                    </div>
                 </div>
-            </div>
-            <p>Société générale d'assainissement et de services immatriculée au <b>RCCM CD/KIN/RCCM/24-B-04106</b>, NIF <b>A2441433N</b>.</p>
-            <p>Éditrice de <b>MATT Clean'App</b> en partenariat technologique avec <b>Global Tech Solutions</b>.</p>
-            <button onclick="showView('view-gateway')" class="w-full py-2.5 bg-navy-800 text-white rounded-xl font-bold uppercase">Retour</button>
-        </div>
-
-        <!-- 7. CONDITIONS GÉNÉRALES D'UTILISATION -->
-        <div id="view-cgu" class="bg-white text-slate-800 rounded-3xl p-5 shadow-2xl space-y-4 hidden animate-fade-in text-xs">
-            <div class="flex justify-between items-center border-b pb-2">
-                <h2 class="text-sm font-black text-navy-800 uppercase">CGU & Tarifs Officiels</h2>
-                <button onclick="fetchPublishedCgu()" class="text-sky-600 font-bold">🔄</button>
-            </div>
-            <div id="cgu-display-container" class="space-y-3 max-h-[60vh] overflow-y-auto pr-1 custom-scrollbar text-slate-600 leading-relaxed">
-                <p class="text-slate-400 italic">Chargement des CGU...</p>
-            </div>
-            <button onclick="showView('view-gateway')" class="w-full py-2.5 bg-navy-800 text-white rounded-xl font-bold uppercase">Fermer</button>
-        </div>
-
-        <!-- 8. ASSISTANCE TECHNIQUE -->
-        <div id="view-support" class="bg-white text-slate-800 rounded-3xl p-5 shadow-2xl space-y-4 hidden animate-fade-in text-xs">
-            <h2 class="text-base font-black text-navy-800 border-b pb-2">Assistance & Support Technique</h2>
-            <div class="grid grid-cols-2 gap-2">
-                <a href="https://wa.me/243980000338" target="_blank" class="p-3 bg-green-50 border border-green-200 rounded-xl flex items-center gap-2">
-                    <span class="text-xl">💬</span>
-                    <span class="font-bold text-green-800 text-[11px]">WhatsApp</span>
-                </a>
-                <a href="tel:+243980000338" class="p-3 bg-sky-50 border border-sky-200 rounded-xl flex items-center gap-2">
-                    <span class="text-xl">📞</span>
-                    <span class="font-bold text-sky-800 text-[11px]">Ligne Directe</span>
-                </a>
-            </div>
-            <div class="space-y-2 pt-2">
-                <input type="text" id="ticket-name" placeholder="Votre nom complet" class="w-full p-2.5 border rounded-xl">
-                <input type="tel" id="ticket-phone" placeholder="Numéro de téléphone" class="w-full p-2.5 border rounded-xl">
-                <textarea id="ticket-message" rows="3" placeholder="Description du problème..." class="w-full p-2.5 border rounded-xl"></textarea>
-                <button onclick="submitSupportTicket()" class="w-full py-3 bg-navy-800 text-white font-black rounded-xl uppercase">Transmettre la demande</button>
             </div>
         </div>
 
     </main>
 
-    <!-- BARRE DE NAVIGATION BASSE MOBILE -->
-    <nav class="fixed bottom-0 inset-x-0 bg-navy-800/95 border-t border-slate-700/80 backdrop-blur-md z-50 flex justify-around items-center py-2 text-[10px] font-bold text-slate-400 md:hidden">
-        <button onclick="showView('view-gateway')" class="flex flex-col items-center gap-0.5 active:text-aqua">
-            <span class="text-base">🏠</span>
-            <span>Accueil</span>
-        </button>
-        <button onclick="handleBottomNavAction('orders')" class="flex flex-col items-center gap-0.5 active:text-aqua">
-            <span class="text-base">📋</span>
-            <span>Missions</span>
-        </button>
-        <button onclick="showView('view-support')" class="flex flex-col items-center gap-0.5 active:text-aqua">
-            <span class="text-base">🛠️</span>
-            <span>Support</span>
-        </button>
-        <button onclick="handleBottomNavAction('profile')" class="flex flex-col items-center gap-0.5 active:text-aqua">
-            <span class="text-base">👤</span>
-            <span>Compte</span>
-        </button>
-    </nav>
-
     <!-- MODALE DE NOTATION MOBILE -->
-    <div id="modal-rating" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
+    <div id="modal-rating" class="fixed inset-0 bg-slate-955/70 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
         <div class="bg-white text-slate-900 w-full max-w-sm rounded-3xl p-5 space-y-3 relative text-xs">
             <button onclick="closeRatingModal()" class="absolute top-4 right-4 text-slate-400 font-bold text-lg">✕</button>
             <h3 class="text-sm font-black text-navy-800">⭐ Noter la course #<span id="rating-order-id"></span></h3>
@@ -676,7 +655,6 @@
             { name: "Maluku", zone: "zone4", label: "Zone 4 - Périurbaine" }
         ];
 
-        // Grille tarifaire de base par zone
         const grilleTarifaireParZone = {
             'zone1': { moto: 10000, tricycle: 15000, berline: 20000, suv: 30000, 'poids-lourd': 55000, 'bus-207': 25000, 'bus-long': 40000, 'remorque': 35000 },
             'zone2': { moto: 8000, tricycle: 12000, berline: 15000, suv: 25000, 'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000 },
@@ -684,7 +662,6 @@
             'zone4': { moto: 8000, tricycle: 12000, berline: 15000, suv: 25000, 'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000 }
         };
 
-        // Liste des véhicules
         const typesVehicules = [
             { id: 'moto', label: 'Moto', hasOptions: false },
             { id: 'tricycle', label: 'Tricycle', hasOptions: false },
@@ -696,7 +673,6 @@
             { id: 'remorque', label: 'Remorque', hasOptions: true }
         ];
 
-        // Tarifs des options techniques spécifiques pour chaque type de véhicule
         const vehicleOptionsPrices = {
             'berline': { moteur: 5000, chassis: 4000, sieges: 7000 },
             'suv': { moteur: 8000, chassis: 6000, sieges: 10000 },
@@ -737,12 +713,15 @@
         }
 
         function showView(viewId) {
-            ['view-gateway', 'view-client-auth', 'view-partner-auth', 'view-client-app', 'view-partner-app', 'view-presentation', 'view-cgu', 'view-support'].forEach(id => {
+            ['view-gateway', 'view-client-auth', 'view-partner-auth', 'view-client-app', 'view-partner-app'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.classList.add('hidden');
             });
             const target = document.getElementById(viewId);
             if (target) target.classList.remove('hidden');
+
+            const btnHome = document.getElementById('btn-back-home');
+            if (btnHome) btnHome.classList.toggle('hidden', viewId === 'view-gateway');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -772,51 +751,24 @@
             calculerTotal();
         }
 
-        function handleBottomNavAction(action) {
-            if (action === 'orders') {
-                if (session.role === 'client') {
-                    showView('view-client-app');
-                    switchClientTab('client-tracking');
-                } else if (session.role === 'partner') {
-                    showView('view-partner-app');
-                    switchPartnerTab('partner-tab-missions', document.querySelector('.partner-tab-btn'));
-                } else {
-                    showToast("Veuillez vous connecter.", "error");
-                    showView('view-gateway');
-                }
-            } else if (action === 'profile') {
-                if (session.role === 'client') {
-                    showView('view-client-app');
-                    switchClientTab('client-compose');
-                } else if (session.role === 'partner') {
-                    showView('view-partner-app');
-                    switchPartnerTab('partner-tab-profil', document.querySelectorAll('.partner-tab-btn')[3]);
-                } else {
-                    showView('view-gateway');
-                }
-            }
-        }
-
         // ==========================================
-        // SYNCHRONISATION CGU DEPUIS SUPABASE
+        // SYNCHRONISATION CGU SUPABASE
         // ==========================================
         async function fetchPublishedCgu() {
-            const container = document.getElementById('cgu-display-container');
-            if (!container) return;
-
             const { data } = await db.from('system_settings').select('value').eq('key', 'cgu_content').single();
-            if (data && data.value) {
-                container.innerHTML = data.value.split('\n\n').map(p => {
-                    const lines = p.split('\n');
-                    return `<div class="space-y-0.5"><h4 class="font-black text-navy-800 uppercase">${lines[0]}</h4><p>${lines.slice(1).join('<br>') || ''}</p></div>`;
-                }).join('');
-            } else {
-                container.innerHTML = `<p class="text-slate-500">CGU en cours d'actualisation par la Direction.</p>`;
-            }
+            const text = data && data.value ? data.value.split('\n\n').map(p => {
+                const lines = p.split('\n');
+                return `<div class="space-y-0.5"><h4 class="font-black text-navy-800 uppercase">${lines[0]}</h4><p>${lines.slice(1).join('<br>') || ''}</p></div>`;
+            }).join('') : `<p class="text-slate-500">CGU en cours d'actualisation par la Direction.</p>`;
+
+            const cClient = document.getElementById('cgu-display-client');
+            const cPartner = document.getElementById('cgu-display-partner');
+            if (cClient) cClient.innerHTML = text;
+            if (cPartner) cPartner.innerHTML = text;
         }
 
         function subscribeToCguUpdates() {
-            db.channel('cgu-realtime-mobile')
+            db.channel('cgu-realtime-sync')
                 .on('postgres_changes', { event: '*', schema: 'public', table: 'system_settings', filter: 'key=eq.cgu_content' }, payload => {
                     if (payload.new && payload.new.value) {
                         fetchPublishedCgu();
@@ -862,6 +814,7 @@
             document.getElementById('logged-user-name').innerText = session.user.name;
             detectClientOrders();
             onClientCommuneChange();
+            fetchPublishedCgu();
         }
 
         async function registerPartner() {
@@ -908,6 +861,7 @@
 
             loadPartnerMissions();
             loadPartnerAcceptedCourses();
+            fetchPublishedCgu();
         }
 
         function logoutCurrentSession() {
@@ -916,7 +870,7 @@
             showView('view-gateway');
         }
 
-        // Modification sécurisée profil prestataire
+        // Modification profil prestataire
         async function savePartnerProfileUpdate() {
             if (!session.user) return;
             const newName = document.getElementById('partner-edit-name').value.trim();
@@ -946,7 +900,7 @@
         }
 
         // ==========================================
-        // GESTION QUANTITÉS ET OPTIONS PAR VÉHICULE
+        // VÉHICULES ET CALCUL DU PANIER
         // ==========================================
         function updateVehicleCount(vid, delta) {
             clientVehiculeSelection[vid] = Math.max(0, (clientVehiculeSelection[vid] || 0) + delta);
@@ -958,7 +912,6 @@
                     optionsBox.classList.remove('hidden');
                 } else {
                     optionsBox.classList.add('hidden');
-                    // Décocher les options si le véhicule est remis à 0
                     document.getElementById(`opt-${vid}-moteur`).checked = false;
                     document.getElementById(`opt-${vid}-chassis`).checked = false;
                     document.getElementById(`opt-${vid}-sieges`).checked = false;
@@ -967,9 +920,6 @@
             calculerTotal();
         }
 
-        // ==========================================
-        // CALCUL GLOBAL DU PANIER CLIENT
-        // ==========================================
         function calculerTotal() {
             let total = 0;
             const tarifsZone = grilleTarifaireParZone[currentActiveZone] || grilleTarifaireParZone['zone1'];
@@ -980,18 +930,11 @@
                 if (count > 0) {
                     total += count * (tarifsZone[v.id] || 15000);
 
-                    // Calcul des options rattachées au véhicule
                     if (v.hasOptions) {
                         const pOpt = vehicleOptionsPrices[v.id];
-                        if (document.getElementById(`opt-${v.id}-moteur`)?.checked) {
-                            total += count * pOpt.moteur;
-                        }
-                        if (document.getElementById(`opt-${v.id}-chassis`)?.checked) {
-                            total += count * pOpt.chassis;
-                        }
-                        if (document.getElementById(`opt-${v.id}-sieges`)?.checked) {
-                            total += count * pOpt.sieges;
-                        }
+                        if (document.getElementById(`opt-${v.id}-moteur`)?.checked) total += count * pOpt.moteur;
+                        if (document.getElementById(`opt-${v.id}-chassis`)?.checked) total += count * pOpt.chassis;
+                        if (document.getElementById(`opt-${v.id}-sieges`)?.checked) total += count * pOpt.sieges;
                     }
                 }
             });
@@ -1023,7 +966,7 @@
         }
 
         // ==========================================
-        // VALIDATION DE COMMANDE & LOGISTIQUE
+        // VALIDATION DE COMMANDE
         // ==========================================
         async function passerCommande() {
             const client_name = document.getElementById('client-name-input').value.trim();
@@ -1042,7 +985,6 @@
             }
             if (total_amount <= 0) return showToast("Votre panier est vide.", "error");
 
-            // Construction du descriptif précis avec options par véhicule
             let details = [];
             typesVehicules.forEach(v => {
                 const count = clientVehiculeSelection[v.id] || 0;
@@ -1054,19 +996,15 @@
                         if (document.getElementById(`opt-${v.id}-chassis`)?.checked) vOpts.push("Châssis");
                         if (document.getElementById(`opt-${v.id}-sieges`)?.checked) vOpts.push("Sièges+Plafond");
                     }
-                    if (vOpts.length > 0) {
-                        vDesc += ` [${vOpts.join(' + ')}]`;
-                    }
+                    if (vOpts.length > 0) vDesc += ` [${vOpts.join(' + ')}]`;
                     details.push(vDesc);
                 }
             });
 
             const fosse = parseFloat(document.getElementById('vol-fosse')?.value) || 0;
             if (fosse > 0) details.push(`Vidange fosse (${fosse} m³)`);
-
             const immondices = parseFloat(document.getElementById('vol-immondices')?.value) || 0;
             if (immondices > 0) details.push(`Immondices (${immondices} m³)`);
-
             const desinf = parseFloat(document.getElementById('qty-desinfection')?.value) || 0;
             if (desinf > 0) details.push(`3D Désinfection (${desinf} pces)`);
 
@@ -1173,7 +1111,7 @@
         }
 
         // ==========================================
-        // MISSIONS & GESTION PRO PARTENAIRE
+        // GESTION MISSIONS PARTENAIRE
         // ==========================================
         function switchPartnerTab(tabId, btn) {
             document.querySelectorAll('.partner-subview').forEach(el => el.classList.add('hidden'));
@@ -1289,19 +1227,14 @@
             document.getElementById('p-recharge-ref').value = '';
         }
 
-        function submitSupportTicket() {
-            const name = document.getElementById('ticket-name').value.trim();
-            const message = document.getElementById('ticket-message').value.trim();
-            if (!name || !message) return showToast("Veuillez écrire votre message.", "error");
-            showToast("Message transmis à la Direction technique.");
-            document.getElementById('ticket-message').value = '';
-        }
-
         function switchClientTab(t) {
             document.getElementById('client-compose').classList.toggle('hidden', t !== 'client-compose');
             document.getElementById('client-tracking').classList.toggle('hidden', t !== 'client-tracking');
-            document.getElementById('tab-btn-client-compose').className = t === 'client-compose' ? 'flex-1 py-2.5 font-black border-b-2 border-mattOrange text-mattOrange' : 'flex-1 py-2.5 font-bold border-b-2 border-transparent text-slate-500';
-            document.getElementById('tab-btn-client-tracking').className = t === 'client-tracking' ? 'flex-1 py-2.5 font-black border-b-2 border-mattOrange text-mattOrange' : 'flex-1 py-2.5 font-bold border-b-2 border-transparent text-slate-500';
+            document.getElementById('client-info-support').classList.toggle('hidden', t !== 'client-info-support');
+
+            document.getElementById('tab-btn-client-compose').className = t === 'client-compose' ? 'flex-1 min-w-[120px] py-2.5 font-black border-b-2 border-mattOrange text-mattOrange' : 'flex-1 min-w-[120px] py-2.5 font-bold border-b-2 border-transparent text-slate-500';
+            document.getElementById('tab-btn-client-tracking').className = t === 'client-tracking' ? 'flex-1 min-w-[120px] py-2.5 font-black border-b-2 border-mattOrange text-mattOrange' : 'flex-1 min-w-[120px] py-2.5 font-bold border-b-2 border-transparent text-slate-500';
+            document.getElementById('tab-btn-client-info-support').className = t === 'client-info-support' ? 'flex-1 min-w-[120px] py-2.5 font-black border-b-2 border-mattOrange text-mattOrange' : 'flex-1 min-w-[120px] py-2.5 font-bold border-b-2 border-transparent text-slate-500';
         }
 
         window.onload = function() {
@@ -1315,7 +1248,7 @@
                 if (selectPartnerEdit) selectPartnerEdit.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
             });
 
-            // Génération dynamique du catalogue automobile avec tiroir d'options rattaché par véhicule
+            // Génération dynamique des véhicules et tiroirs d'options
             const vCat = document.getElementById('vehicle-catalog');
             typesVehicules.forEach(v => {
                 clientVehiculeSelection[v.id] = 0;
@@ -1325,7 +1258,7 @@
                 if (v.hasOptions && pOpt) {
                     optionsHtml = `
                         <div id="options-box-${v.id}" class="hidden mt-2 p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-[11px] space-y-1.5 transition-all">
-                            <span class="text-[10px] font-black text-navy-800 uppercase block">Options pour ${v.label} :</span>
+                            <span class="text-[10px] font-black text-navy-800 uppercase block">Options techniques pour ${v.label} :</span>
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-1.5">
                                 <label class="flex items-center gap-1.5 p-1.5 bg-white rounded-lg border cursor-pointer">
                                     <input type="checkbox" id="opt-${v.id}-moteur" class="rounded text-mattOrange" onchange="calculerTotal()">
@@ -1360,7 +1293,6 @@
             });
 
             onClientCommuneChange();
-            fetchPublishedCgu();
             subscribeToCguUpdates();
         };
     </script>
