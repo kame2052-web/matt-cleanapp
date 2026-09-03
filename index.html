@@ -54,29 +54,34 @@
             </div>
             <div class="flex flex-col">
                 <span class="text-xl md:text-2xl font-black text-white tracking-wide">MATT Clean'App</span>
-                <span class="text-[9px] text-aqua uppercase tracking-widest font-bold">by MATT SARL</span>
+                <span class="text-[9px] text-aqua uppercase tracking-widest font-bold">by Global Tech Solutions</span>
             </div>
         </div>
         
-        <!-- Liens d'information institutionnelle -->
-        <nav class="flex flex-wrap items-center justify-center gap-2 md:gap-3 text-xs font-bold">
-            <button onclick="showView('view-gateway')" class="px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition">Accueil 🏠</button>
-            <button onclick="showView('view-presentation')" class="px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition">À Propos de MATT 🏢</button>
-            <button onclick="showView('view-cgu')" class="px-2.5 py-1.5 rounded-lg text-slate-300 hover:text-white hover:bg-slate-800 transition">CGU 📜</button>
-            <button onclick="showView('view-support')" class="px-2.5 py-1.5 rounded-lg text-aqua hover:text-sky-300 hover:bg-slate-800 transition">Assistance Technique 🛠️</button>
-        </nav>
-
-        <div class="flex items-center gap-3">
+        <div class="flex items-center gap-2 md:gap-3">
+            <button onclick="showView('view-gateway')" class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-300 hover:text-white bg-slate-800 border border-slate-700 transition flex items-center gap-1.5">
+                🏠 Accueil / Changer d'espace
+            </button>
             <div id="logged-user-chip" class="hidden items-center gap-2 bg-navy-900 px-3 py-1.5 rounded-lg border border-aqua/40 text-xs">
                 <span id="logged-user-name" class="font-bold text-aqua">Utilisateur</span>
                 <button onclick="logoutCurrentSession()" class="text-red-400 hover:text-red-300 font-bold ml-1">Déconnexion ✕</button>
             </div>
-            <div class="text-right hidden xl:block">
-                <span class="text-[11px] font-black text-white block tracking-wide">MATT Clean'App</span>
-                <span class="text-[9px] text-aqua uppercase font-bold tracking-widest">by Global Tech Solutions</span>
-            </div>
+        </div>
+
+        <div class="text-right hidden sm:block">
+            <span class="text-[11px] font-black text-white block tracking-wide">MATT Clean'App</span>
+            <span class="text-[9px] text-aqua uppercase font-bold tracking-widest">by Global Tech Solutions</span>
+            <span class="text-[10px] text-slate-400 block font-semibold">Kinshasa (RDC)</span>
+            <button onclick="showView('view-cgu')" class="text-[10px] text-aqua hover:underline font-bold block mt-0.5">Mentions Légales & RCCM ⚖️</button>
         </div>
     </header>
+
+    <!-- Navigation secondaire d'information -->
+    <div class="bg-navy-800/80 border-b border-slate-800 px-4 py-2 flex justify-center gap-6 text-xs font-bold">
+        <button onclick="showView('view-presentation')" class="text-slate-300 hover:text-aqua transition">À Propos de MATT 🏢</button>
+        <button onclick="showView('view-cgu')" class="text-slate-300 hover:text-aqua transition">CGU & Tarifs 📜</button>
+        <button onclick="showView('view-support')" class="text-aqua hover:text-sky-300 transition">Assistance Technique 🛠️</button>
+    </div>
 
     <!-- Conteneur Principal -->
     <main class="container mx-auto px-4 py-8 max-w-7xl flex-grow">
@@ -111,7 +116,7 @@
                     <div class="space-y-4">
                         <div class="w-14 h-14 rounded-2xl bg-orange-100 text-mattOrange flex items-center justify-center text-2xl font-black group-hover:bg-mattOrange group-hover:text-white transition-all shadow-inner">🤝</div>
                         <h2 class="text-2xl font-black text-navy-800 group-hover:text-mattOrange transition-all">Espace Partenaire</h2>
-                        <p class="text-xs text-slate-600 leading-relaxed font-medium">Laveur ou assainisseur professionnel ? Connectez-vous, consultez les missions géolocalisées et augmentez vos revenus.</p>
+                        <p class="text-xs text-slate-600 leading-relaxed font-medium">Laveur ou assainisseur professionnel ? Connectez-vous, gérez votre portefeuille et acceptez des missions.</p>
                     </div>
                     <div class="pt-6 border-t border-slate-150 mt-6 flex items-center justify-between">
                         <span class="text-xs font-black text-navy-800 uppercase tracking-wide">Espace Prestataire</span>
@@ -126,7 +131,7 @@
             <div class="flex items-center justify-between border-b pb-4 mb-6">
                 <div>
                     <h2 class="text-xl font-black text-navy-800">Espace Client</h2>
-                    <p class="text-xs text-slate-500 font-semibold">Connectez-vous pour gérer et suivre vos commandes.</p>
+                    <p class="text-xs text-slate-500 font-semibold">Connectez-vous pour passer et suivre vos commandes.</p>
                 </div>
                 <button onclick="showView('view-gateway')" class="text-slate-400 hover:text-slate-700 text-sm font-bold">✕</button>
             </div>
@@ -170,7 +175,7 @@
             <div class="flex items-center justify-between border-b pb-4 mb-6">
                 <div>
                     <h2 class="text-xl font-black text-navy-800">Espace Partenaire</h2>
-                    <p class="text-xs text-slate-500 font-semibold">Gérez vos interventions et vos commissions d'assainissement.</p>
+                    <p class="text-xs text-slate-500 font-semibold">Accédez à votre compte professionnel d'assainissement.</p>
                 </div>
                 <button onclick="showView('view-gateway')" class="text-slate-400 hover:text-slate-700 text-sm font-bold">✕</button>
             </div>
@@ -195,7 +200,7 @@
             <div id="form-partner-register" class="space-y-3.5 hidden max-h-[60vh] overflow-y-auto pr-1">
                 <div>
                     <label class="text-[10px] font-bold text-slate-600 block uppercase">Nom Complet ou Raison Sociale</label>
-                    <input type="text" id="p-reg-name" placeholder="Ex: Pro Clean Kin" class="w-full px-3 py-2 border rounded-lg text-xs font-bold">
+                    <input type="text" id="p-reg-name" placeholder="Ex: MATT Lavage Pro" class="w-full px-3 py-2 border rounded-lg text-xs font-bold">
                 </div>
                 <div>
                     <label class="text-[10px] font-bold text-slate-600 block uppercase">Numéro de Téléphone</label>
@@ -332,41 +337,169 @@
             </div>
         </div>
 
-        <!-- 5. ESPACE PARTENAIRE CONNECTÉ -->
-        <div id="view-partner-app" class="bg-white text-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl hidden animate-fade-in">
-            <div class="flex justify-between items-center border-b pb-4 mb-6">
+        <!-- 5. ESPACE PARTENAIRE CONNECTÉ (DESIGN FIDÈLE À LA MAQUETTE) -->
+        <div id="view-partner-app" class="bg-white text-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl hidden animate-fade-in space-y-6">
+            
+            <!-- Bandeau de Statut et Profil Partenaire -->
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b pb-4">
                 <div>
-                    <h2 class="text-2xl font-black text-navy-800">👤 Tableau de Bord Prestataire</h2>
-                    <p class="text-xs text-slate-500 font-semibold">Connecté : <b id="partner-dashboard-name" class="text-mattOrange"></b></p>
+                    <h2 class="text-2xl font-black text-navy-800 flex items-center gap-2">
+                        <span>👤</span> Tableau de Bord Partenaire
+                    </h2>
+                    <p class="text-xs text-slate-500 font-semibold mt-0.5">
+                        Connecté en tant que : <b id="partner-dashboard-name" class="text-mattOrange">MATT</b> <span id="partner-dashboard-meta" class="text-slate-600 font-normal">(Lavage auto - Bandalungwa)</span>
+                    </p>
                 </div>
-                <button onclick="logoutCurrentSession()" class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg text-xs font-bold border">Déconnexion</button>
+                <div class="flex items-center gap-2">
+                    <span id="partner-mode-badge" class="px-3.5 py-1.5 bg-slate-100 border border-slate-200 text-slate-700 text-xs font-black rounded-xl">
+                        Mode Commission (15%)
+                    </span>
+                    <button onclick="logoutCurrentSession()" class="px-4 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl border transition">
+                        Déconnexion
+                    </button>
+                </div>
             </div>
 
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <!-- Portefeuille -->
-                <div class="bg-sky-50 border border-aqua rounded-2xl p-6 shadow-sm space-y-4">
-                    <h3 class="text-md font-black text-navy-800 uppercase">💳 Portefeuille Virtuel</h3>
-                    <div class="bg-white p-4 rounded-xl border text-center">
-                        <span class="text-[10px] text-slate-400 font-bold block uppercase">Solde Actuel</span>
-                        <span class="text-2xl font-black text-navy-800" id="partner-wallet-balance">0 CDF</span>
-                    </div>
+            <!-- Barre des Onglets Partenaire -->
+            <div class="flex gap-2 border-b border-slate-200 pb-3 overflow-x-auto text-xs font-bold">
+                <button onclick="switchPartnerTab('partner-tab-missions', this)" class="partner-tab-btn px-4 py-2.5 bg-mattOrange text-white rounded-xl whitespace-nowrap shadow-sm active">
+                    📥 Missions Disponibles
+                </button>
+                <button onclick="switchPartnerTab('partner-tab-ca', this)" class="partner-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap">
+                    📊 Chiffre d'Affaires & Périodes
+                </button>
+                <button onclick="switchPartnerTab('partner-tab-courses', this)" class="partner-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap">
+                    📑 Mes Courses & Clôture
+                </button>
+                <button onclick="switchPartnerTab('partner-tab-profil', this)" class="partner-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap">
+                    👤 Mon Profil & Informations
+                </button>
+            </div>
+
+            <!-- SOUS-ONGLET 1 : MISSIONS & PORTEFEUILLE (VUE PRINCIPALE) -->
+            <div id="partner-tab-missions" class="partner-subview grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                
+                <!-- COLONNE GAUCHE : PORTEFEUILLE VIRTUEL -->
+                <div class="border-2 border-sky-300 rounded-3xl p-6 bg-white shadow-sm space-y-5">
                     <div>
-                        <label class="text-[10px] font-bold block mb-1">Recharger (CDF)</label>
-                        <input type="number" id="p-recharge-amount" placeholder="Montant en CDF" class="w-full p-2 border rounded-xl text-xs font-bold mb-2">
-                        <input type="text" id="p-recharge-ref" placeholder="Réf Mobile Money (ex: M-Pesa)" class="w-full p-2 border rounded-xl text-xs font-bold mb-2">
-                        <button onclick="sendRechargeDeclaration()" class="w-full py-2.5 bg-mattOrange text-white rounded-xl text-xs font-black uppercase">Déclarer la recharge</button>
+                        <h3 class="text-sm font-black text-navy-800 uppercase flex items-center gap-2">
+                            <span>💳</span> VOTRE PORTEFEUILLE VIRTUEL
+                        </h3>
+                        <p class="text-[11px] text-slate-500 font-semibold mt-0.5">Gérez votre solde ou souscrivez un forfait d'accès illimité.</p>
+                    </div>
+
+                    <!-- Solde Actuel -->
+                    <div class="bg-white border-2 border-slate-100 rounded-2xl p-4 text-center shadow-inner">
+                        <span class="text-[9px] text-slate-400 font-black uppercase tracking-wider block" id="partner-solde-label">SOLDE ACTUEL (MODE COMMISSION)</span>
+                        <div class="text-3xl font-black text-navy-800 mt-1" id="partner-wallet-balance">0 CDF</div>
+                    </div>
+
+                    <!-- Formulaire de Recharge / Choix de forfait -->
+                    <div class="space-y-3">
+                        <span class="text-xs font-black text-navy-800 uppercase block">RECHARGER / CHOISIR UN FORFAIT</span>
+                        
+                        <div>
+                            <label class="text-[10px] text-slate-500 font-bold uppercase block mb-1">MODE D'ACCÈS AUX MISSIONS :</label>
+                            <select id="p-billing-mode-select" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-bold text-slate-800 focus:outline-none" onchange="adjustPartnerRechargeMode()">
+                                <option value="commission">1. Recharge Solde Commission (À la course)</option>
+                                <option value="journalier">2. Forfait Journalier Illimité (15 000 CDF)</option>
+                                <option value="mensuel">3. Forfait Mensuel Illimité (150 000 CDF)</option>
+                            </select>
+                        </div>
+
+                        <!-- Comptes Mobiles Officiels MATT -->
+                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 space-y-1.5 text-[11px]">
+                            <span class="text-[10px] font-black text-slate-700 uppercase block">COMPTES MOBILES OFFICIELS MATT :</span>
+                            <div class="flex justify-between items-center text-slate-600">
+                                <span>📱 M-Pesa :</span>
+                                <b class="font-mono text-slate-900 font-bold">+243980000338</b>
+                            </div>
+                            <div class="flex justify-between items-center text-slate-600">
+                                <span>📱 Orange Money :</span>
+                                <b class="font-mono text-slate-900 font-bold">+243980000338</b>
+                            </div>
+                            <div class="flex justify-between items-center text-slate-600">
+                                <span>📱 Airtel Money :</span>
+                                <b class="font-mono text-slate-900 font-bold">+243980000338</b>
+                            </div>
+                        </div>
+
+                        <div>
+                            <input type="number" id="p-recharge-amount" placeholder="Montant déposé (CDF)" class="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-xl text-xs font-bold text-slate-800">
+                        </div>
+
+                        <div>
+                            <input type="text" id="p-recharge-ref" placeholder="Référence de transaction" class="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-xl text-xs font-bold text-slate-800 font-mono">
+                        </div>
+
+                        <button onclick="sendRechargeDeclaration()" class="w-full py-3 bg-mattOrange hover:bg-orange-600 text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow-md">
+                            TRANSMETTRE LA DÉCLARATION
+                        </button>
+
+                        <a id="btn-whatsapp-proof" href="https://wa.me/243980000338?text=Bonjour%20MATT,%20je%20viens%20d'effectuer%20un%20dépôt%20de%20recharge." target="_blank" class="w-full py-2.5 bg-whatsapp hover:bg-green-600 text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center justify-center gap-2">
+                            <span>📲</span> Envoyer la preuve sur WhatsApp
+                        </a>
                     </div>
                 </div>
 
-                <!-- Missions Disponibles -->
+                <!-- COLONNE DROITE : FIL DES MISSIONS DISPONIBLES -->
                 <div class="lg:col-span-2 space-y-4">
                     <div class="flex justify-between items-center border-b pb-2">
-                        <h3 class="text-lg font-black text-navy-800 uppercase">📥 Missions Disponibles</h3>
-                        <button onclick="loadPartnerMissions()" class="text-xs text-sky-600 font-bold hover:underline">Actualiser 🔄</button>
+                        <div>
+                            <h3 class="text-sm font-black text-navy-800 uppercase flex items-center gap-2">
+                                <span>🚨</span> FIL DES MISSIONS DISPONIBLES
+                            </h3>
+                            <p class="text-[11px] text-slate-500 font-medium">Toutes les commandes sont affichées avec les repères. Les coordonnées précises se déverrouillent à l'acceptation.</p>
+                        </div>
+                        <button onclick="loadPartnerMissions()" class="text-xs text-sky-600 font-bold hover:underline flex items-center gap-1">
+                            🔄 Actualiser
+                        </button>
                     </div>
-                    <div id="partner-missions-container" class="space-y-4"></div>
+
+                    <div id="partner-missions-container" class="space-y-4 pt-2">
+                        <p class="text-xs text-slate-400 text-center py-16">Aucune nouvelle mission disponible pour le moment dans le fil de Kinshasa.</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- SOUS-ONGLET 2 : CHIFFRE D'AFFAIRES & PÉRIODES -->
+            <div id="partner-tab-ca" class="partner-subview hidden space-y-4">
+                <h3 class="text-md font-black text-navy-800 uppercase">📊 Historique des Gains & Activité Financière</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+                    <div class="bg-slate-50 border p-4 rounded-2xl">
+                        <span class="text-[10px] text-slate-500 font-bold uppercase block">Courses Terminées</span>
+                        <b class="text-2xl font-black text-navy-800" id="ca-completed-count">0</b>
+                    </div>
+                    <div class="bg-slate-50 border p-4 rounded-2xl">
+                        <span class="text-[10px] text-slate-500 font-bold uppercase block">Chiffre d'Affaires Brut</span>
+                        <b class="text-2xl font-black text-green-700" id="ca-gross-total">0 CDF</b>
+                    </div>
+                    <div class="bg-slate-50 border p-4 rounded-2xl">
+                        <span class="text-[10px] text-slate-500 font-bold uppercase block">Commissions MATT Versées</span>
+                        <b class="text-2xl font-black text-mattOrange" id="ca-commissions-total">0 CDF</b>
+                    </div>
                 </div>
             </div>
+
+            <!-- SOUS-ONGLET 3 : MES COURSES & CLÔTURE -->
+            <div id="partner-tab-courses" class="partner-subview hidden space-y-4">
+                <h3 class="text-md font-black text-navy-800 uppercase">📑 Mes Missions Acceptées & Clôture de Prestation</h3>
+                <div id="partner-accepted-courses-list" class="space-y-3"></div>
+            </div>
+
+            <!-- SOUS-ONGLET 4 : MON PROFIL & INFORMATIONS -->
+            <div id="partner-tab-profil" class="partner-subview hidden space-y-4">
+                <h3 class="text-md font-black text-navy-800 uppercase">👤 Détails du Compte Prestataire</h3>
+                <div class="bg-slate-50 p-6 rounded-2xl border space-y-3 text-xs max-w-lg">
+                    <div><span class="text-slate-500 font-bold">Raison Sociale / Nom :</span> <b id="profil-partner-name" class="text-slate-800"></b></div>
+                    <div><span class="text-slate-500 font-bold">Numéro de Téléphone :</span> <b id="profil-partner-phone" class="text-slate-800 font-mono"></b></div>
+                    <div><span class="text-slate-500 font-bold">Commune Principale :</span> <b id="profil-partner-commune" class="text-slate-800"></b></div>
+                    <div><span class="text-slate-500 font-bold">Adresse Physique :</span> <b id="profil-partner-address" class="text-slate-800"></b></div>
+                    <div><span class="text-slate-500 font-bold">Spécialisation d'Assainissement :</span> <b id="profil-partner-specialty" class="text-slate-800"></b></div>
+                </div>
+            </div>
+
         </div>
 
         <!-- 6. PAGE PRÉSENTATION DE MATT -->
@@ -381,7 +514,7 @@
                 </div>
             </div>
 
-            <div class="prose text-xs text-slate-600 leading-relaxed space-y-4 font-medium">
+            <div class="text-xs text-slate-600 leading-relaxed space-y-4 font-medium">
                 <p>
                     <b>MATT SARL</b> est une société à responsabilité limitée de droit congolais, immatriculée au Registre du Commerce et du Crédit Mobilier sous le numéro <b>CD/KIN/RCCM/24-B-04106</b> et identifiée au NIF sous le numéro <b>A2441433N</b>, ayant son siège d'exploitation à Kinshasa, République Démocratique du Congo.
                 </p>
@@ -480,7 +613,7 @@
 
     </main>
 
-    <!-- MODALE DE NOTATION / COTATION -->
+    <!-- MODALE DE NOTATION / COTATION CLIENT -->
     <div id="modal-rating" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
         <div class="bg-white text-slate-900 w-full max-w-md rounded-2xl shadow-2xl p-6 border border-slate-200 flex flex-col gap-4 relative">
             <button onclick="closeRatingModal()" class="absolute top-4 right-4 text-slate-500 hover:text-slate-800 font-bold text-xl">✕</button>
@@ -498,8 +631,8 @@
                     </div>
                 </div>
                 <div>
-                    <label class="font-bold text-slate-600 block mb-1">Commentaire sur le travail du partenaire :</label>
-                    <textarea id="rating-comment" rows="3" placeholder="Donnez votre avis sur le travail accompli..." class="w-full p-2.5 border rounded-xl font-medium"></textarea>
+                    <label class="font-bold text-slate-600 block mb-1">Commentaire sur le travail du prestataire :</label>
+                    <textarea id="rating-comment" rows="3" placeholder="Donnez votre avis sur le service..." class="w-full p-2.5 border rounded-xl font-medium"></textarea>
                 </div>
             </div>
 
@@ -510,7 +643,7 @@
         </div>
     </div>
 
-    <!-- Pied de page -->
+    <!-- Pied de page officiel -->
     <footer class="mt-12 border-t border-slate-800 bg-navy-800/90 py-6 text-center text-xs text-slate-400">
         <div class="container mx-auto px-4 max-w-5xl space-y-2">
             <div class="flex flex-wrap justify-center items-center gap-x-6 gap-y-1 text-slate-300 font-bold">
@@ -649,8 +782,26 @@
         function openPartnerApp() {
             showView('view-partner-app');
             document.getElementById('partner-dashboard-name').innerText = session.user.name;
+            document.getElementById('partner-dashboard-meta').innerText = `(${session.user.specialty} - ${session.user.commune})`;
             document.getElementById('partner-wallet-balance').innerText = `${Number(session.user.wallet || 0).toLocaleString('fr-FR')} CDF`;
+            
+            // Remplissage profil
+            document.getElementById('profil-partner-name').innerText = session.user.name;
+            document.getElementById('profil-partner-phone').innerText = session.user.phone;
+            document.getElementById('profil-partner-commune').innerText = session.user.commune;
+            document.getElementById('profil-partner-address').innerText = session.user.address || 'Non spécifiée';
+            document.getElementById('profil-partner-specialty').innerText = session.user.specialty;
+
+            // Mode Badge
+            const mode = session.user.billing_mode || 'commission';
+            document.getElementById('partner-mode-badge').innerText = mode === 'commission' ? 'Mode Commission (15%)' : (mode === 'journalier' ? 'Forfait Journalier (Actif)' : 'Forfait Mensuel (Actif)');
+            document.getElementById('partner-solde-label').innerText = `SOLDE ACTUEL (${mode.toUpperCase()})`;
+
+            document.getElementById('logged-user-chip').classList.remove('hidden');
+            document.getElementById('logged-user-name').innerText = session.user.name;
+            
             loadPartnerMissions();
+            loadPartnerAcceptedCourses();
         }
 
         function logoutCurrentSession() {
@@ -660,7 +811,7 @@
         }
 
         // ==========================================
-        // COMMANDES ET CALCULS
+        // COMMANDES ET ACTIONS CLIENTS
         // ==========================================
         function calculerTotal() {
             let total = 0;
@@ -715,9 +866,6 @@
             detectClientOrders();
         }
 
-        // ==========================================
-        // ACTIONS SUR LES COMMANDES (ANNULER, SUPPRIMER, COTER)
-        // ==========================================
         async function detectClientOrders() {
             const phone = document.getElementById('client-phone-input').value.trim();
             if (!phone) return;
@@ -747,7 +895,6 @@
                             </div>
                         </div>
 
-                        <!-- Notation existante ou bouton d'évaluation -->
                         ${o.rating_service ? `
                             <div class="bg-white p-2 rounded-xl border text-[11px] flex justify-between items-center">
                                 <span>Note attribuée : <b class="text-mattOrange">${'⭐'.repeat(o.rating_service)}</b></span>
@@ -755,7 +902,6 @@
                             </div>
                         ` : ''}
 
-                        <!-- Boutons d'actions -->
                         <div class="flex flex-wrap items-center justify-end gap-2 pt-1">
                             ${o.status === 'En attente' ? `
                                 <button onclick="cancelOrder(${o.id})" class="px-3 py-1.5 bg-orange-100 hover:bg-orange-200 text-orange-800 rounded-lg font-bold">
@@ -788,7 +934,7 @@
             if (!confirm(`Êtes-vous sûr de vouloir supprimer définitivement la commande #${orderId} de votre historique ?`)) return;
             const { error } = await db.from('orders').delete().eq('id', orderId);
             if (error) return showToast(error.message, "error");
-            showToast(`Commande #${orderId} supprimée de l'historique.`);
+            showToast(`Commande #${orderId} supprimée.`);
             detectClientOrders();
         }
 
@@ -827,38 +973,110 @@
         }
 
         // ==========================================
-        // ESPACE PARTENAIRE: MISSIONS & RECHARGES
+        // ESPACE PARTENAIRE : ONGLETS ET ACTIONS
         // ==========================================
+        function switchPartnerTab(tabId, btn) {
+            document.querySelectorAll('.partner-subview').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.partner-tab-btn').forEach(b => {
+                b.className = "partner-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap";
+            });
+            document.getElementById(tabId).classList.remove('hidden');
+            if (btn) btn.className = "partner-tab-btn px-4 py-2.5 bg-mattOrange text-white rounded-xl whitespace-nowrap shadow-sm active";
+        }
+
+        function adjustPartnerRechargeMode() {
+            const mode = document.getElementById('p-billing-mode-select').value;
+            const input = document.getElementById('p-recharge-amount');
+            if (mode === 'journalier') input.value = 15000;
+            else if (mode === 'mensuel') input.value = 150000;
+            else input.value = '';
+        }
+
         async function loadPartnerMissions() {
-            const { data } = await db.from('orders').select('*').eq('status', 'En attente');
+            const { data } = await db.from('orders').select('*').eq('status', 'En attente').order('id', { ascending: false });
             const container = document.getElementById('partner-missions-container');
             container.innerHTML = '';
 
-            (data || []).forEach(o => {
+            if (!data || data.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-16">Aucune nouvelle mission disponible pour le moment dans le fil de Kinshasa.</p>`;
+                return;
+            }
+
+            data.forEach(o => {
                 container.innerHTML += `
-                    <div class="p-4 border rounded-2xl bg-slate-50 space-y-2 text-xs">
-                        <div class="flex justify-between font-bold">
-                            <span>📍 Commune : ${o.commune} (Q/${o.quartier || 'Centre'})</span>
-                            <span class="text-navy-800 font-mono">${Number(o.total_amount).toLocaleString('fr-FR')} CDF</span>
+                    <div class="p-5 border-2 border-slate-100 rounded-3xl bg-white space-y-3 text-xs shadow-sm hover:border-aqua transition">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <span class="text-xs font-black text-navy-800">COMMUNE : ${o.commune.toUpperCase()}</span>
+                                <span class="text-slate-400 block text-[11px]">Quartier : ${o.quartier || 'Centre'} • Planifié : ${o.date} (${o.time})</span>
+                            </div>
+                            <div class="text-right font-mono">
+                                <span class="text-base font-black text-navy-800">${Number(o.total_amount).toLocaleString('fr-FR')} CDF</span>
+                                <span class="block text-[10px] text-mattOrange font-bold">Commission : ${Number(o.commission).toLocaleString('fr-FR')} CDF</span>
+                            </div>
                         </div>
-                        <p class="text-slate-600">Repère : ${o.reference || 'Aucun repère'}</p>
-                        <p class="font-mono text-slate-400">Coordonnées : •••••••••• (Débloquées après acceptation)</p>
-                        <button onclick="accepterMission(${o.id}, ${o.commission})" class="px-4 py-2 bg-mattOrange text-white rounded-xl font-bold uppercase">
-                            Accepter (${Number(o.commission).toLocaleString('fr-FR')} CDF commission)
+                        <div class="bg-slate-50 p-3 rounded-xl border text-[11px] text-slate-600">
+                            <b>Détails :</b> ${o.description} • <b>Repère :</b> ${o.reference || 'Aucun'}
+                            <div class="text-slate-400 font-mono mt-1">Coordonnées client : ••••••••••• (Débloquées à l'acceptation)</div>
+                        </div>
+                        <button onclick="accepterMission(${o.id}, ${o.commission})" class="w-full py-2.5 bg-mattOrange hover:bg-orange-600 text-white rounded-xl font-black uppercase tracking-wider transition shadow">
+                            Accepter la mission (${Number(o.commission).toLocaleString('fr-FR')} CDF)
                         </button>
                     </div>
                 `;
             });
+        }
 
-            if (!data || data.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Aucune mission disponible pour le moment.</p>`;
-            }
+        async function loadPartnerAcceptedCourses() {
+            if (!session.user) return;
+            const { data } = await db.from('orders').select('*').eq('partner_id', session.user.id).order('id', { ascending: false });
+            const container = document.getElementById('partner-accepted-courses-list');
+            container.innerHTML = '';
+
+            let gross = 0;
+            let comTotal = 0;
+            let completed = 0;
+
+            (data || []).forEach(o => {
+                if (o.status === 'Terminée') {
+                    gross += Number(o.total_amount || 0);
+                    comTotal += Number(o.commission || 0);
+                    completed++;
+                }
+
+                container.innerHTML += `
+                    <div class="p-4 border rounded-2xl bg-white shadow-sm space-y-2 text-xs">
+                        <div class="flex justify-between font-bold">
+                            <span>Mission #${o.id} - ${o.commune}</span>
+                            <span class="text-navy-800">${Number(o.total_amount).toLocaleString('fr-FR')} CDF</span>
+                        </div>
+                        <div class="text-slate-600 text-[11px]">
+                            <b>Client :</b> ${o.client_name} • <b>Tél :</b> <a href="tel:${o.client_phone}" class="text-aqua font-bold underline font-mono">${o.client_phone}</a><br>
+                            <b>Adresse :</b> ${o.avenue} (Repère : ${o.reference || 'N/A'})
+                        </div>
+                        ${o.status === 'Acceptée' ? `
+                            <button onclick="cloturerMission(${o.id})" class="px-4 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded-lg font-bold text-xs">
+                                ✅ Clôturer cette mission (Terminée)
+                            </button>
+                        ` : `<span class="text-green-600 font-bold text-[11px]">Mission clôturée avec succès</span>`}
+                    </div>
+                `;
+            });
+
+            document.getElementById('ca-completed-count').innerText = completed;
+            document.getElementById('ca-gross-total').innerText = `${gross.toLocaleString('fr-FR')} CDF`;
+            document.getElementById('ca-commissions-total').innerText = `${comTotal.toLocaleString('fr-FR')} CDF`;
         }
 
         async function accepterMission(orderId, commission) {
-            if (session.user.wallet < commission) return showToast("Solde insuffisant pour couvrir la commission.", "error");
+            const mode = session.user.billing_mode || 'commission';
+            
+            // Si mode commission, vérifier le solde
+            if (mode === 'commission' && session.user.wallet < commission) {
+                return showToast("Solde insuffisant pour couvrir la commission de cette course.", "error");
+            }
 
-            const newWallet = session.user.wallet - commission;
+            const newWallet = mode === 'commission' ? session.user.wallet - commission : session.user.wallet;
             await db.from('partners').update({ wallet: newWallet }).eq('id', session.user.id);
             await db.from('orders').update({ status: 'Acceptée', partner_id: session.user.id }).eq('id', orderId);
 
@@ -866,38 +1084,44 @@
             document.getElementById('partner-wallet-balance').innerText = `${newWallet.toLocaleString('fr-FR')} CDF`;
             showToast("Mission acceptée ! Coordonnées client débloquées.");
             loadPartnerMissions();
+            loadPartnerAcceptedCourses();
+        }
+
+        async function cloturerMission(orderId) {
+            await db.from('orders').update({ status: 'Terminée' }).eq('id', orderId);
+            showToast("Course clôturée et marquée comme terminée !");
+            loadPartnerAcceptedCourses();
         }
 
         async function sendRechargeDeclaration() {
+            const mode = document.getElementById('p-billing-mode-select').value;
             const amount = parseFloat(document.getElementById('p-recharge-amount').value);
             const ref = document.getElementById('p-recharge-ref').value.trim();
 
-            if (!amount || !ref) return showToast("Montant et référence requis.", "error");
+            if (!amount || !ref) return showToast("Veuillez renseigner le montant et la référence.", "error");
 
             await db.from('recharges').insert([{
                 partner_id: session.user.id,
                 partner_name: session.user.name,
-                mode: 'commission',
-                amount, ref, status: 'En attente'
+                mode: mode,
+                amount: amount,
+                ref: ref,
+                status: 'En attente'
             }]);
 
-            showToast("Déclaration envoyée à la Direction !");
+            showToast("Déclaration transmise avec succès à la Direction MATT !");
             document.getElementById('p-recharge-amount').value = '';
             document.getElementById('p-recharge-ref').value = '';
         }
 
-        // ==========================================
-        // ASSISTANCE TECHNIQUE (SOUMISSION TICKET)
-        // ==========================================
         function submitSupportTicket() {
             const name = document.getElementById('ticket-name').value.trim();
             const phone = document.getElementById('ticket-phone').value.trim();
-            const orderId = document.getElementById('ticket-order-id').value.trim();
             const message = document.getElementById('ticket-message').value.trim();
 
-            if (!name || !phone || !message) return showToast("Veuillez renseigner votre nom, téléphone et votre message.", "error");
+            if (!name || !phone || !message) return showToast("Veuillez remplir vos coordonnées et votre message.", "error");
 
-            showToast("Votre signalement a été transmis à la Direction technique de MATT SARL.");
+            showToast("Votre demande a été soumise à l'équipe technique de MATT SARL.");
             document.getElementById('ticket-message').value = '';
         }
 
