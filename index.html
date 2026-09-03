@@ -49,8 +49,8 @@
     <!-- En-tête de navigation -->
     <header class="bg-navy-800/95 border-b-2 border-aqua px-4 py-3 md:px-8 flex flex-col md:flex-row justify-between items-center gap-4 sticky top-0 z-50 backdrop-blur-sm shadow-xl">
         <div class="flex items-center gap-3 cursor-pointer" onclick="showView('view-gateway')">
-            <div class="bg-white p-1 rounded-full shadow-md border border-aqua/30 flex items-center justify-center">
-                <img src="cleanapp.png" alt="Logo" class="h-11 w-11 md:h-12 md:w-12 object-contain" onerror="this.src='https://placehold.co/100x100/ffffff/0a192f?text=CleanApp'">
+            <div class="bg-white p-1.5 rounded-2xl shadow-md border border-aqua/30 flex items-center justify-center flex-shrink-0">
+                <img src="cleanapp.png" alt="Logo" class="h-12 w-12 sm:h-14 sm:w-14 object-contain" onerror="this.src='https://placehold.co/120x120/ffffff/0a192f?text=CleanApp'">
             </div>
             <div class="flex flex-col">
                 <span class="text-xl md:text-2xl font-black text-white tracking-wide">MATT Clean'App</span>
@@ -72,14 +72,14 @@
             <span class="text-[11px] font-black text-white block tracking-wide">MATT Clean'App</span>
             <span class="text-[9px] text-aqua uppercase font-bold tracking-widest">by Global Tech Solutions</span>
             <span class="text-[10px] text-slate-400 block font-semibold">Kinshasa (RDC)</span>
-            <button onclick="showView('view-cgu')" class="text-[10px] text-aqua hover:underline font-bold block mt-0.5">Mentions Légales & RCCM ⚖️</button>
+            <button onclick="showView('view-cgu')" class="text-[10px] text-aqua hover:underline font-bold block mt-0.5">Mentions Légales & CGU ⚖️</button>
         </div>
     </header>
 
-    <!-- Navigation secondaire d'information -->
+    <!-- Barre d'onglets de navigation informationnelle -->
     <div class="bg-navy-800/80 border-b border-slate-800 px-4 py-2 flex justify-center gap-6 text-xs font-bold">
         <button onclick="showView('view-presentation')" class="text-slate-300 hover:text-aqua transition">À Propos de MATT 🏢</button>
-        <button onclick="showView('view-cgu')" class="text-slate-300 hover:text-aqua transition">CGU & Tarifs 📜</button>
+        <button onclick="showView('view-cgu')" class="text-slate-300 hover:text-aqua transition">CGU & Charte Contractuelle 📜</button>
         <button onclick="showView('view-support')" class="text-aqua hover:text-sky-300 transition">Assistance Technique 🛠️</button>
     </div>
 
@@ -89,7 +89,7 @@
         <!-- 1. ACCUEIL (PORTAILS CLIENT / PARTENAIRE) -->
         <div id="view-gateway" class="max-w-4xl mx-auto space-y-8 animate-fade-in my-auto py-8">
             <div class="text-center space-y-3">
-                <div class="inline-block bg-white p-3 rounded-full shadow-2xl border-2 border-aqua/40 mb-2">
+                <div class="inline-block bg-white p-3 rounded-2xl shadow-2xl border-2 border-aqua/40 mb-2">
                     <img src="cleanapp.png" alt="Logo" class="h-20 w-20 md:h-24 md:w-24 object-contain" onerror="this.src='https://placehold.co/120x120/ffffff/0a192f?text=CleanApp'">
                 </div>
                 <h1 class="text-3xl md:text-4xl font-black text-white tracking-tight">Bienvenue sur MATT Clean'App</h1>
@@ -187,7 +187,7 @@
 
             <div id="form-partner-login" class="space-y-4">
                 <div>
-                    <label class="block text-[11px] font-black text-slate-600 uppercase mb-1">Numéro de Téléphone</label>
+                    <label class="block text-[11px] font-black text-slate-600 uppercase mb-1">Numéro de Téléphone (Login)</label>
                     <input type="tel" id="auth-partner-login-phone" placeholder="Ex: 0819998822" class="w-full px-3.5 py-2.5 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-mattOrange focus:outline-none">
                 </div>
                 <div>
@@ -280,13 +280,16 @@
                     </div>
                 </div>
 
-                <!-- Localisation & Logistique -->
+                <!-- Localisation & Logistique avec recalcul par zone -->
                 <div class="bg-slate-50 border rounded-2xl p-5 shadow-inner">
-                    <h3 class="text-lg font-black text-navy-800 border-b pb-2 mb-4">📍 Planification & Localisation</h3>
+                    <div class="flex justify-between items-center border-b pb-2 mb-4">
+                        <h3 class="text-lg font-black text-navy-800">📍 Planification & Zone Tarifaire</h3>
+                        <span id="zone-detected-badge" class="px-2.5 py-1 rounded-lg text-xs font-black bg-sky-100 text-sky-800">Zone 1 - Résidentielle</span>
+                    </div>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-bold">
                         <div>
-                            <label class="block mb-1">Commune</label>
-                            <select id="client-commune" class="w-full p-2 border rounded-xl bg-white"></select>
+                            <label class="block mb-1">Commune (Zone d'intervention)</label>
+                            <select id="client-commune" class="w-full p-2 border rounded-xl bg-white" onchange="onClientCommuneChange()"></select>
                             <label class="block mt-2 mb-1">Quartier</label>
                             <input type="text" id="client-quartier-input" placeholder="Ex: Lubudi" class="w-full p-2 border rounded-xl">
                             <label class="block mt-2 mb-1">Avenue & N°</label>
@@ -337,7 +340,7 @@
             </div>
         </div>
 
-        <!-- 5. ESPACE PARTENAIRE CONNECTÉ (DESIGN FIDÈLE À LA MAQUETTE) -->
+        <!-- 5. ESPACE PARTENAIRE CONNECTÉ (AVEC MODIFICATION DES IDENTIFIANTS ET SOLDE ADAPTÉ) -->
         <div id="view-partner-app" class="bg-white text-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl hidden animate-fade-in space-y-6">
             
             <!-- Bandeau de Statut et Profil Partenaire -->
@@ -372,11 +375,11 @@
                     📑 Mes Courses & Clôture
                 </button>
                 <button onclick="switchPartnerTab('partner-tab-profil', this)" class="partner-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap">
-                    👤 Mon Profil & Informations
+                    ⚙️ Mon Profil & Identifiants
                 </button>
             </div>
 
-            <!-- SOUS-ONGLET 1 : MISSIONS & PORTEFEUILLE (VUE PRINCIPALE) -->
+            <!-- SOUS-ONGLET 1 : MISSIONS & PORTEFEUILLE -->
             <div id="partner-tab-missions" class="partner-subview grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
                 
                 <!-- COLONNE GAUCHE : PORTEFEUILLE VIRTUEL -->
@@ -388,13 +391,11 @@
                         <p class="text-[11px] text-slate-500 font-semibold mt-0.5">Gérez votre solde ou souscrivez un forfait d'accès illimité.</p>
                     </div>
 
-                    <!-- Solde Actuel -->
                     <div class="bg-white border-2 border-slate-100 rounded-2xl p-4 text-center shadow-inner">
                         <span class="text-[9px] text-slate-400 font-black uppercase tracking-wider block" id="partner-solde-label">SOLDE ACTUEL (MODE COMMISSION)</span>
                         <div class="text-3xl font-black text-navy-800 mt-1" id="partner-wallet-balance">0 CDF</div>
                     </div>
 
-                    <!-- Formulaire de Recharge / Choix de forfait -->
                     <div class="space-y-3">
                         <span class="text-xs font-black text-navy-800 uppercase block">RECHARGER / CHOISIR UN FORFAIT</span>
                         
@@ -449,7 +450,7 @@
                             <h3 class="text-sm font-black text-navy-800 uppercase flex items-center gap-2">
                                 <span>🚨</span> FIL DES MISSIONS DISPONIBLES
                             </h3>
-                            <p class="text-[11px] text-slate-500 font-medium">Toutes les commandes sont affichées avec les repères. Les coordonnées précises se déverrouillent à l'acceptation.</p>
+                            <p class="text-[11px] text-slate-500 font-medium">Les missions correspondent à votre spécialité et votre zone d'affectation.</p>
                         </div>
                         <button onclick="loadPartnerMissions()" class="text-xs text-sky-600 font-bold hover:underline flex items-center gap-1">
                             🔄 Actualiser
@@ -457,7 +458,7 @@
                     </div>
 
                     <div id="partner-missions-container" class="space-y-4 pt-2">
-                        <p class="text-xs text-slate-400 text-center py-16">Aucune nouvelle mission disponible pour le moment dans le fil de Kinshasa.</p>
+                        <p class="text-xs text-slate-400 text-center py-16">Aucune nouvelle mission disponible pour le moment dans votre secteur.</p>
                     </div>
                 </div>
 
@@ -488,21 +489,40 @@
                 <div id="partner-accepted-courses-list" class="space-y-3"></div>
             </div>
 
-            <!-- SOUS-ONGLET 4 : MON PROFIL & INFORMATIONS -->
+            <!-- SOUS-ONGLET 4 : MODIFICATION DES IDENTIFIANTS DU PARTENAIRE -->
             <div id="partner-tab-profil" class="partner-subview hidden space-y-4">
-                <h3 class="text-md font-black text-navy-800 uppercase">👤 Détails du Compte Prestataire</h3>
-                <div class="bg-slate-50 p-6 rounded-2xl border space-y-3 text-xs max-w-lg">
-                    <div><span class="text-slate-500 font-bold">Raison Sociale / Nom :</span> <b id="profil-partner-name" class="text-slate-800"></b></div>
-                    <div><span class="text-slate-500 font-bold">Numéro de Téléphone :</span> <b id="profil-partner-phone" class="text-slate-800 font-mono"></b></div>
-                    <div><span class="text-slate-500 font-bold">Commune Principale :</span> <b id="profil-partner-commune" class="text-slate-800"></b></div>
-                    <div><span class="text-slate-500 font-bold">Adresse Physique :</span> <b id="profil-partner-address" class="text-slate-800"></b></div>
-                    <div><span class="text-slate-500 font-bold">Spécialisation d'Assainissement :</span> <b id="profil-partner-specialty" class="text-slate-800"></b></div>
+                <div class="border-b pb-2">
+                    <h3 class="text-md font-black text-navy-800 uppercase">⚙️ Modifier Mes Identifiants & Profil</h3>
+                    <p class="text-xs text-slate-500">Mettez à jour vos identifiants d'accès direct et votre zone d'exercice.</p>
+                </div>
+
+                <div class="bg-slate-50 p-6 rounded-3xl border border-slate-200 max-w-xl space-y-4">
+                    <div>
+                        <label class="text-[11px] font-bold text-slate-600 block uppercase mb-1">Raison Sociale ou Nom d'Opérateur :</label>
+                        <input type="text" id="partner-edit-name" class="w-full px-3.5 py-2.5 bg-white border rounded-xl text-xs font-bold text-slate-800">
+                    </div>
+                    <div>
+                        <label class="text-[11px] font-bold text-slate-600 block uppercase mb-1">Numéro de Téléphone (Identifiant / Login) :</label>
+                        <input type="tel" id="partner-edit-phone" class="w-full px-3.5 py-2.5 bg-white border rounded-xl text-xs font-bold text-slate-800 font-mono">
+                    </div>
+                    <div>
+                        <label class="text-[11px] font-bold text-slate-600 block uppercase mb-1">Commune Principale d'Intervention :</label>
+                        <select id="partner-edit-commune" class="w-full px-3.5 py-2.5 bg-white border rounded-xl text-xs font-bold text-slate-800"></select>
+                    </div>
+                    <div>
+                        <label class="text-[11px] font-bold text-slate-600 block uppercase mb-1">Nouveau Mot de Passe (laisser vide pour ne pas changer) :</label>
+                        <input type="password" id="partner-edit-pass" placeholder="••••••••" class="w-full px-3.5 py-2.5 bg-white border rounded-xl text-xs font-bold text-slate-800">
+                    </div>
+
+                    <button onclick="savePartnerProfileUpdate()" class="w-full py-3 bg-navy-800 hover:bg-navy-900 text-white text-xs font-black uppercase rounded-xl transition tracking-wider shadow">
+                        💾 Enregistrer les modifications
+                    </button>
                 </div>
             </div>
 
         </div>
 
-        <!-- 6. PAGE PRÉSENTATION DE MATT -->
+        <!-- 6. PRÉSENTATION DE MATT SARL -->
         <div id="view-presentation" class="bg-white text-slate-800 rounded-3xl p-8 shadow-2xl space-y-6 max-w-4xl mx-auto hidden animate-fade-in">
             <div class="border-b pb-4 flex items-center gap-4">
                 <div class="bg-white p-2 rounded-2xl border shadow-sm">
@@ -516,20 +536,20 @@
 
             <div class="text-xs text-slate-600 leading-relaxed space-y-4 font-medium">
                 <p>
-                    <b>MATT SARL</b> est une société à responsabilité limitée de droit congolais, immatriculée au Registre du Commerce et du Crédit Mobilier sous le numéro <b>CD/KIN/RCCM/24-B-04106</b> et identifiée au NIF sous le numéro <b>A2441433N</b>, ayant son siège d'exploitation à Kinshasa, République Démocratique du Congo.
+                    <b>MATT SARL</b> est une société commerciale immatriculée au Registre du Commerce et du Crédit Mobilier sous le numéro <b>CD/KIN/RCCM/24-B-04106</b> et identifiée au Numéro d'Impôt Fiscal (NIF) sous le numéro <b>A2441433N</b>, exerçant ses activités à Kinshasa en République Démocratique du Congo.
                 </p>
                 
                 <h4 class="text-sm font-black text-navy-800 uppercase">Nos Domaines d'Intervention :</h4>
                 <ul class="list-disc pl-5 space-y-1">
-                    <li><b>Entretien et Lavage Automobile :</b> Lavage extérieur haute pression, shampouinage intérieur des sièges, dégraissage châssis et moteur à domicile ou sur site professionnel.</li>
-                    <li><b>Hygiène Résidentielle & Tertiaire :</b> Nettoyage en profondeur de canapés (textile, lin, cuir), moquettes, vitrerie, façades et sols carrelés.</li>
-                    <li><b>Assainissement 3D :</b> Désinfection microbiologique, Désinsectisation curative et préventive, Dératisation de bâtiments résidentiels, commerciaux et industriels.</li>
-                    <li><b>Gestion des Déchets & Vidange :</b> Évacuation volumétrique d'immondices et vidange hydrocurage certifiée de fosses septiques.</li>
+                    <li><b>Lavage & Entretien Automobile :</b> Lavage intégral sur site ou à domicile, lustrage, shampouinage sièges, dégraissage châssis et moteur.</li>
+                    <li><b>Hygiène Résidentielle & Tertiaire :</b> Remise en état de canapés (textile, lin, cuir), surfaces vitrées, sols carrelés et moquettes.</li>
+                    <li><b>Assainissement 3D :</b> Désinfection microbiologique, Désinsectisation certifiée et Dératisation de locaux privés et commerciaux.</li>
+                    <li><b>Gestion des Déchets & Vidange :</b> Évacuation d'immondices par volume et vidange hydrocurage de fosses septiques.</li>
                 </ul>
 
                 <h4 class="text-sm font-black text-navy-800 uppercase">Partenariat Technologique :</h4>
                 <p>
-                    L'application <b>MATT Clean'App</b> est conçue et orchestrée en collaboration avec <b>Global Tech Solutions</b>, offrant aux ménages et entreprises une traçabilité numérique intégrale, une tarification standardisée en Francs Congolais (CDF) et une mise en relation instantanée avec des prestataires qualifiés.
+                    La plateforme <b>MATT Clean'App</b> est développée et orchestrée par <b>Global Tech Solutions</b>, garantissant la digitalisation des flux, la traçabilité des prestataires et la sécurisation des échanges.
                 </p>
             </div>
             
@@ -538,74 +558,73 @@
             </div>
         </div>
 
-        <!-- 7. PAGE CONDITIONS GÉNÉRALES D'UTILISATION (CGU) -->
+        <!-- 7. CONDITIONS GÉNÉRALES D'UTILISATION (CGU VALIDÉES RESTAURÉES) -->
         <div id="view-cgu" class="bg-white text-slate-800 rounded-3xl p-8 shadow-2xl space-y-6 max-w-4xl mx-auto hidden animate-fade-in">
             <div class="border-b pb-4">
-                <h2 class="text-2xl font-black text-navy-800">Conditions Générales d'Utilisation (CGU)</h2>
-                <p class="text-xs text-slate-500 font-semibold">Plateforme MATT Clean'App • En vigueur à Kinshasa (RDC)</p>
+                <h2 class="text-2xl font-black text-navy-800">Conditions Générales d'Utilisation & Charte Qualité</h2>
+                <p class="text-xs text-slate-500 font-semibold">Plateforme MATT Clean'App • Exploitant : MATT SARL • En vigueur à Kinshasa</p>
             </div>
 
             <div class="text-xs text-slate-600 leading-relaxed space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
                 <div>
-                    <h4 class="font-black text-navy-800 uppercase">ARTICLE 1 : OBJET</h4>
-                    <p>Les présentes CGU encadrent l'accès et l'utilisation des services de mise en relation pour prestations de lavage, nettoyage et assainissement via l'application MATT Clean'App, exploitée par MATT SARL.</p>
+                    <h4 class="font-black text-navy-800 uppercase">ARTICLE 1 : CADRE CONTRACTUEL ET IDENTIFICATION</h4>
+                    <p>Les présentes CGU définissent les droits et obligations régissant les relations entre la société <b>MASTER TOUCH TRADING (MATT SARL)</b>, RCCM CD/KIN/RCCM/24-B-04106, NIF A2441433N, les utilisateurs demandeurs (« Clients ») et les prestataires indépendants agréés (« Partenaires ») sur l'application MATT Clean'App éditée par Global Tech Solutions.</p>
                 </div>
                 <div>
-                    <h4 class="font-black text-navy-800 uppercase">ARTICLE 2 : MONNAIE ET TARIFICATION</h4>
-                    <p>Toutes les prestations sont exclusivement tarifées et liquidées en <b>Francs Congolais (CDF)</b>. Les prix sont calculés en fonction des options sélectionnées et de la zone communale d'intervention.</p>
+                    <h4 class="font-black text-navy-800 uppercase">ARTICLE 2 : SOUVERAINETÉ DE LA MONNAIE (CDF)</h4>
+                    <p>En conformité avec les réglementations de la Banque Centrale du Congo (BCC), l'ensemble des prix, devis et règlements s'effectuent obligatoirement en <b>Francs Congolais (CDF)</b>. Les tarifs tiennent compte du découpage sectoriel de Kinshasa (Zone 1 résidentielle, Zone 2 centrale, Zone 3 populaire, Zone 4 périurbaine).</p>
                 </div>
                 <div>
-                    <h4 class="font-black text-navy-800 uppercase">ARTICLE 3 : ENGAGEMENTS DU CLIENT</h4>
-                    <p>Le client s'engage à fournir des informations de localisation exactes (commune, quartier, avenue, repère) et à assurer l'accès sécurisé du prestataire au site d'intervention convenu à l'heure planifiée.</p>
+                    <h4 class="font-black text-navy-800 uppercase">ARTICLE 3 : ENGAGEMENTS ET EXACTITUDE DU CLIENT</h4>
+                    <p>Le client s'engage à renseigner des indications d'accès fidèles (commune, quartier, avenue, numéro, point de repère). Il certifie la disponibilité de l'énergie (SNEL ou groupe) et de l'eau (REGIDESO ou réserve) selon les options indiquées au moment de la commande.</p>
                 </div>
                 <div>
-                    <h4 class="font-black text-navy-800 uppercase">ARTICLE 4 : ENGAGEMENTS DU PARTENAIRE</h4>
-                    <p>Le partenaire certifie disposer du matériel adéquat et des compétences professionnelles pour exécuter la tâche commandée. L'acceptation d'une mission engendre le prélèvement automatique de la commission convenue sur son portefeuille virtuel.</p>
+                    <h4 class="font-black text-navy-800 uppercase">ARTICLE 4 : RÈGLEMENT DES COMMISSIONS ET FORFAITS PARTENAIRES</h4>
+                    <p>Pour le mode commission, un prélèvement automatique de 15 % du montant brut est opéré sur le portefeuille virtuel du partenaire lors de l'acceptation de la mission. Pour le forfait journalier, l'accès illimité expire automatiquement le jour même à 23h59 min 59 s.</p>
                 </div>
                 <div>
-                    <h4 class="font-black text-navy-800 uppercase">ARTICLE 5 : ANNULATION ET LITIGES</h4>
-                    <p>Toute demande d'annulation doit intervenir avant le déplacement du prestataire sur site. Tout litige relatif à l'exécution de la mission est arbitré par la direction technique de MATT SARL via le module d'assistance.</p>
+                    <h4 class="font-black text-navy-800 uppercase">ARTICLE 5 : PROTOCOLE D'AUDIT ET D'ANNULATION</h4>
+                    <p>Une commande peut être librement annulée par le client avant l'assignation du prestataire. Toute mission contestée fait l'objet d'un audit contradictoire (photos avant/après) traité par le support technique de MATT SARL.</p>
                 </div>
             </div>
 
             <div class="pt-4 border-t flex justify-end">
-                <button onclick="showView('view-gateway')" class="px-5 py-2.5 bg-navy-800 text-white text-xs font-bold rounded-xl uppercase">J'ai compris</button>
+                <button onclick="showView('view-gateway')" class="px-5 py-2.5 bg-navy-800 text-white text-xs font-bold rounded-xl uppercase">J'accepte les CGU</button>
             </div>
         </div>
 
-        <!-- 8. PAGE ASSISTANCE TECHNIQUE -->
+        <!-- 8. ASSISTANCE TECHNIQUE & SUPPORT -->
         <div id="view-support" class="bg-white text-slate-800 rounded-3xl p-8 shadow-2xl space-y-6 max-w-3xl mx-auto hidden animate-fade-in">
             <div class="border-b pb-4">
-                <h2 class="text-2xl font-black text-navy-800">Assistance Technique & Support MATT</h2>
-                <p class="text-xs text-slate-500 font-semibold">Une équipe opérationnelle dédiée pour vous assister 7j/7 à Kinshasa.</p>
+                <h2 class="text-2xl font-black text-navy-800">Assistance Technique & Service Client</h2>
+                <p class="text-xs text-slate-500 font-semibold">Support opérationnel disponible pour Kinshasa.</p>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <a href="https://wa.me/243980000338" target="_blank" class="p-4 rounded-2xl bg-green-50 border border-green-200 flex items-center gap-3 hover:bg-green-100 transition">
                     <span class="text-3xl">💬</span>
                     <div>
-                        <span class="text-[10px] text-green-700 font-black uppercase block">Assistance Rapide</span>
-                        <b class="text-slate-800 text-xs font-bold">WhatsApp (+243 980 000 338)</b>
+                        <span class="text-[10px] text-green-700 font-black uppercase block">Assistance WhatsApp</span>
+                        <b class="text-slate-800 text-xs font-bold">+243 980 000 338</b>
                     </div>
                 </a>
                 <a href="tel:+243980000338" class="p-4 rounded-2xl bg-sky-50 border border-sky-200 flex items-center gap-3 hover:bg-sky-100 transition">
                     <span class="text-3xl">📞</span>
                     <div>
-                        <span class="text-[10px] text-sky-700 font-black uppercase block">Appel Direct MATT</span>
+                        <span class="text-[10px] text-sky-700 font-black uppercase block">Ligne Téléphonique</span>
                         <b class="text-slate-800 text-xs font-bold">+243 980 000 338</b>
                     </div>
                 </a>
             </div>
 
             <div class="space-y-4 pt-2">
-                <h3 class="text-xs font-black text-navy-800 uppercase">Soumettre un ticket d'incident ou une réclamation :</h3>
+                <h3 class="text-xs font-black text-navy-800 uppercase">Formulaire de réclamation ou demande d'assistance :</h3>
                 <div class="space-y-3">
                     <input type="text" id="ticket-name" placeholder="Votre nom complet" class="w-full px-3.5 py-2.5 border rounded-xl text-xs font-bold">
                     <input type="tel" id="ticket-phone" placeholder="Numéro de téléphone" class="w-full px-3.5 py-2.5 border rounded-xl text-xs font-bold">
-                    <input type="text" id="ticket-order-id" placeholder="N° de commande concernée (facultatif)" class="w-full px-3.5 py-2.5 border rounded-xl text-xs font-bold font-mono">
-                    <textarea id="ticket-message" rows="4" placeholder="Décrivez votre préoccupation ou réclamation..." class="w-full p-3.5 border rounded-xl text-xs font-semibold"></textarea>
+                    <textarea id="ticket-message" rows="4" placeholder="Décrivez votre problème technique ou votre réclamation..." class="w-full p-3.5 border rounded-xl text-xs font-semibold"></textarea>
                     <button onclick="submitSupportTicket()" class="w-full py-3 bg-navy-800 hover:bg-navy-900 text-white font-black text-xs rounded-xl uppercase tracking-wider">
-                        Envoyer ma réclamation à la Direction
+                        Transmettre ma demande
                     </button>
                 </div>
             </div>
@@ -662,11 +681,41 @@
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZicml3b3J5c2N5bW5tdHp6ZG55Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzNzQwNTEsImV4cCI6MjEwMzk1MDA1MX0.VBZupVKj0srae0NT5BNZ0OeaIv9pAl2bl5L-Rd8ocJk";
         const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+        // Répertoire des communes et classification en zones
         const communesKinshasa = [
-            "Bandalungwa", "Barumbu", "Bumbu", "Gombe", "Kalamu", "Kasa-Vubu", "Kimbanseke", "Kinshasa", 
-            "Kintambo", "Kisenso", "Lemba", "Limete", "Lingwala", "Makala", "Maluku", "Masina", 
-            "Matete", "Mont-Ngafula", "Ngaba", "Ngaliema", "Ngiri-Ngiri", "Nsele", "Selembao", "N'djili"
+            { name: "Gombe", zone: "zone1", label: "Zone 1 - Résidentielle" },
+            { name: "Ngaliema", zone: "zone1", label: "Zone 1 - Résidentielle" },
+            { name: "Limete", zone: "zone1", label: "Zone 1 - Résidentielle" },
+            { name: "Kintambo", zone: "zone1", label: "Zone 1 - Résidentielle" },
+            { name: "Bandalungwa", zone: "zone2", label: "Zone 2 - Centrale" },
+            { name: "Kasa-Vubu", zone: "zone2", label: "Zone 2 - Centrale" },
+            { name: "Kalamu", zone: "zone2", label: "Zone 2 - Centrale" },
+            { name: "Lemba", zone: "zone2", label: "Zone 2 - Centrale" },
+            { name: "Lingwala", zone: "zone2", label: "Zone 2 - Centrale" },
+            { name: "Barumbu", zone: "zone2", label: "Zone 2 - Centrale" },
+            { name: "Kinshasa", zone: "zone2", label: "Zone 2 - Centrale" },
+            { name: "N'djili", zone: "zone3", label: "Zone 3 - Est & Populaire" },
+            { name: "Masina", zone: "zone3", label: "Zone 3 - Est & Populaire" },
+            { name: "Matete", zone: "zone3", label: "Zone 3 - Est & Populaire" },
+            { name: "Bumbu", zone: "zone3", label: "Zone 3 - Est & Populaire" },
+            { name: "Makala", zone: "zone3", label: "Zone 3 - Est & Populaire" },
+            { name: "Ngaba", zone: "zone3", label: "Zone 3 - Est & Populaire" },
+            { name: "Ngiri-Ngiri", zone: "zone3", label: "Zone 3 - Est & Populaire" },
+            { name: "Kimbanseke", zone: "zone3", label: "Zone 3 - Est & Populaire" },
+            { name: "Kisenso", zone: "zone3", label: "Zone 3 - Est & Populaire" },
+            { name: "Selembao", zone: "zone3", label: "Zone 3 - Est & Populaire" },
+            { name: "Mont-Ngafula", zone: "zone4", label: "Zone 4 - Périurbaine" },
+            { name: "Nsele", zone: "zone4", label: "Zone 4 - Périurbaine" },
+            { name: "Maluku", zone: "zone4", label: "Zone 4 - Périurbaine" }
         ];
+
+        // Barème par zone
+        const grilleTarifaireParZone = {
+            'zone1': { moto: 10000, tricycle: 15000, berline: 20000, suv: 30000, 'poids-lourd': 55000, 'bus-207': 25000 },
+            'zone2': { moto: 8000, tricycle: 12000, berline: 15000, suv: 25000, 'poids-lourd': 45000, 'bus-207': 20000 },
+            'zone3': { moto: 7000, tricycle: 10000, berline: 12000, suv: 20000, 'poids-lourd': 40000, 'bus-207': 18000 },
+            'zone4': { moto: 8000, tricycle: 12000, berline: 15000, suv: 25000, 'poids-lourd': 45000, 'bus-207': 20000 }
+        };
 
         const typesVehicules = [
             { id: 'moto', label: 'Moto' }, { id: 'tricycle', label: 'Tricycle' },
@@ -674,6 +723,7 @@
             { id: 'poids-lourd', label: 'Poids lourds' }, { id: 'bus-207', label: 'Minibus (207)' }
         ];
 
+        let currentActiveZone = "zone1";
         let session = { role: null, user: null };
         let clientVehiculeSelection = {};
         let currentRatingOrderId = null;
@@ -708,6 +758,16 @@
         function switchAuthTab(role, tab) {
             document.getElementById(`form-${role}-login`).classList.toggle('hidden', tab !== 'login');
             document.getElementById(`form-${role}-register`).classList.toggle('hidden', tab === 'login');
+        }
+
+        function onClientCommuneChange() {
+            const selectedName = document.getElementById('client-commune').value;
+            const com = communesKinshasa.find(c => c.name === selectedName);
+            if (com) {
+                currentActiveZone = com.zone;
+                document.getElementById('zone-detected-badge').innerText = com.label;
+            }
+            calculerTotal();
         }
 
         // ==========================================
@@ -747,6 +807,7 @@
             document.getElementById('logged-user-chip').classList.remove('hidden');
             document.getElementById('logged-user-name').innerText = session.user.name;
             detectClientOrders();
+            onClientCommuneChange();
         }
 
         async function registerPartner() {
@@ -785,12 +846,11 @@
             document.getElementById('partner-dashboard-meta').innerText = `(${session.user.specialty} - ${session.user.commune})`;
             document.getElementById('partner-wallet-balance').innerText = `${Number(session.user.wallet || 0).toLocaleString('fr-FR')} CDF`;
             
-            // Remplissage profil
-            document.getElementById('profil-partner-name').innerText = session.user.name;
-            document.getElementById('profil-partner-phone').innerText = session.user.phone;
-            document.getElementById('profil-partner-commune').innerText = session.user.commune;
-            document.getElementById('profil-partner-address').innerText = session.user.address || 'Non spécifiée';
-            document.getElementById('profil-partner-specialty').innerText = session.user.specialty;
+            // Pré-remplissage formulaire modification profil
+            document.getElementById('partner-edit-name').value = session.user.name;
+            document.getElementById('partner-edit-phone').value = session.user.phone;
+            document.getElementById('partner-edit-commune').value = session.user.commune;
+            document.getElementById('partner-edit-pass').value = '';
 
             // Mode Badge
             const mode = session.user.billing_mode || 'commission';
@@ -811,18 +871,66 @@
         }
 
         // ==========================================
+        // MODIFICATION DES IDENTIFIANTS DU PARTENAIRE
+        // ==========================================
+        async function savePartnerProfileUpdate() {
+            if (!session.user) return;
+
+            const newName = document.getElementById('partner-edit-name').value.trim();
+            const newPhone = document.getElementById('partner-edit-phone').value.trim();
+            const newCommune = document.getElementById('partner-edit-commune').value;
+            const newPass = document.getElementById('partner-edit-pass').value.trim();
+
+            if (!newName || !newPhone) {
+                return showToast("Le nom et le téléphone sont obligatoires.", "error");
+            }
+
+            let updatePayload = {
+                name: newName,
+                phone: newPhone,
+                commune: newCommune
+            };
+
+            if (newPass) {
+                updatePayload.password = newPass;
+            }
+
+            const { error } = await db.from('partners').update(updatePayload).eq('id', session.user.id);
+            if (error) return showToast(error.message, "error");
+
+            // Mettre à jour l'état local
+            session.user.name = newName;
+            session.user.phone = newPhone;
+            session.user.commune = newCommune;
+            if (newPass) session.user.password = newPass;
+
+            document.getElementById('partner-dashboard-name').innerText = newName;
+            document.getElementById('partner-dashboard-meta').innerText = `(${session.user.specialty} - ${newCommune})`;
+            document.getElementById('logged-user-name').innerText = newName;
+
+            showToast("Vos identifiants ont été mis à jour avec succès !");
+            loadPartnerMissions();
+        }
+
+        // ==========================================
         // COMMANDES ET ACTIONS CLIENTS
         // ==========================================
         function calculerTotal() {
             let total = 0;
+            const tarifsZone = grilleTarifaireParZone[currentActiveZone] || grilleTarifaireParZone['zone1'];
+
             typesVehicules.forEach(v => {
-                if (clientVehiculeSelection[v.id]) total += clientVehiculeSelection[v.id] * 15000;
+                if (clientVehiculeSelection[v.id]) {
+                    const prixUnitaire = tarifsZone[v.id] || 15000;
+                    total += clientVehiculeSelection[v.id] * prixUnitaire;
+                }
             });
+
             total += (parseFloat(document.getElementById('m2-tapis').value) || 0) * 2000;
             total += (parseFloat(document.getElementById('m2-vitres').value) || 0) * 1500;
             total += (parseFloat(document.getElementById('qty-canape-textile').value) || 0) * 4500;
             total += (parseFloat(document.getElementById('qty-desinfection').value) || 0) * 10000;
-            total += (parseFloat(document.getElementById('vol-fosse').value) || 0) * 40000;
+            total += (parseFloat(document.getElementById('vol-fosse').value) || 0) * (currentActiveZone === 'zone4' ? 50000 : 40000);
 
             document.getElementById('prix-total-affichage').innerText = total.toLocaleString('fr-FR');
             return total;
@@ -846,18 +954,18 @@
 
             const commission = Math.floor(total_amount * 0.15);
 
-            const { data, error } = await db.from('orders').insert([{
+            const { error } = await db.from('orders').insert([{
                 axe: 'Auto & Maison',
                 client_name,
                 client_phone,
-                description: 'Prestation d\'assainissement sur mesure',
+                description: `Prestation secteur ${commune} (${currentActiveZone.toUpperCase()})`,
                 commune, quartier, avenue, reference,
                 logistics: 'SNEL / REGIDESO',
                 date, time,
                 total_amount,
                 commission,
                 status: 'En attente'
-            }]).select();
+            }]);
 
             if (error) return showToast(error.message, "error");
 
@@ -931,7 +1039,7 @@
         }
 
         async function deleteOrderClient(orderId) {
-            if (!confirm(`Êtes-vous sûr de vouloir supprimer définitivement la commande #${orderId} de votre historique ?`)) return;
+            if (!confirm(`Supprimer définitivement la commande #${orderId} de votre historique ?`)) return;
             const { error } = await db.from('orders').delete().eq('id', orderId);
             if (error) return showToast(error.message, "error");
             showToast(`Commande #${orderId} supprimée.`);
@@ -973,7 +1081,7 @@
         }
 
         // ==========================================
-        // ESPACE PARTENAIRE : ONGLETS ET ACTIONS
+        // ESPACE PARTENAIRE : ONGLETS ET MISSIONS
         // ==========================================
         function switchPartnerTab(tabId, btn) {
             document.querySelectorAll('.partner-subview').forEach(el => el.classList.add('hidden'));
@@ -998,7 +1106,7 @@
             container.innerHTML = '';
 
             if (!data || data.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-16">Aucune nouvelle mission disponible pour le moment dans le fil de Kinshasa.</p>`;
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-16">Aucune nouvelle mission disponible pour le moment dans votre secteur.</p>`;
                 return;
             }
 
@@ -1071,7 +1179,6 @@
         async function accepterMission(orderId, commission) {
             const mode = session.user.billing_mode || 'commission';
             
-            // Si mode commission, vérifier le solde
             if (mode === 'commission' && session.user.wallet < commission) {
                 return showToast("Solde insuffisant pour couvrir la commission de cette course.", "error");
             }
@@ -1133,11 +1240,16 @@
         }
 
         window.onload = function() {
-            const select = document.getElementById('client-commune');
-            const selectP = document.getElementById('p-reg-commune');
+            const selectClient = document.getElementById('client-commune');
+            const selectPartnerReg = document.getElementById('p-reg-commune');
+            const selectPartnerEdit = document.getElementById('partner-edit-commune');
+
             communesKinshasa.forEach(c => {
-                select.insertAdjacentHTML('beforeend', `<option value="${c}">${c}</option>`);
-                selectP.insertAdjacentHTML('beforeend', `<option value="${c}">${c}</option>`);
+                selectClient.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
+                selectPartnerReg.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
+                if (selectPartnerEdit) {
+                    selectPartnerEdit.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
+                }
             });
 
             const vCat = document.getElementById('vehicle-catalog');
@@ -1154,6 +1266,8 @@
                     </div>
                 `;
             });
+
+            onClientCommuneChange();
         };
     </script>
 </body>
