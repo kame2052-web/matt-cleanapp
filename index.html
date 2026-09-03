@@ -49,8 +49,9 @@
     <!-- En-tête de navigation -->
     <header class="bg-navy-800/95 border-b-2 border-aqua px-4 py-3 md:px-8 flex flex-col md:flex-row justify-between items-center gap-4 sticky top-0 z-50 backdrop-blur-sm shadow-xl">
         <div class="flex items-center gap-3 cursor-pointer" onclick="showView('view-gateway')">
-            <div class="bg-white p-1.5 rounded-2xl shadow-md border border-aqua/30 flex items-center justify-center flex-shrink-0">
-                <img src="cleanapp.png" alt="Logo" class="h-12 w-12 sm:h-14 sm:w-14 object-contain" onerror="this.src='https://placehold.co/120x120/ffffff/0a192f?text=CleanApp'">
+            <!-- Logo ajusté pour remplir toute la zone sans marges -->
+            <div class="w-14 h-14 bg-white rounded-2xl shadow-md border border-aqua/30 overflow-hidden flex items-center justify-center flex-shrink-0">
+                <img src="cleanapp.png" alt="Logo" class="w-full h-full object-cover transform scale-110" onerror="this.src='https://placehold.co/120x120/ffffff/0a192f?text=CleanApp'">
             </div>
             <div class="flex flex-col">
                 <span class="text-xl md:text-2xl font-black text-white tracking-wide">MATT Clean'App</span>
@@ -76,7 +77,7 @@
         </div>
     </header>
 
-    <!-- Barre d'onglets de navigation informationnelle -->
+    <!-- Navigation informative -->
     <div class="bg-navy-800/80 border-b border-slate-800 px-4 py-2 flex justify-center gap-6 text-xs font-bold">
         <button onclick="showView('view-presentation')" class="text-slate-300 hover:text-aqua transition">À Propos de MATT 🏢</button>
         <button onclick="showView('view-cgu')" class="text-slate-300 hover:text-aqua transition">CGU & Charte Contractuelle 📜</button>
@@ -89,8 +90,9 @@
         <!-- 1. ACCUEIL (PORTAILS CLIENT / PARTENAIRE) -->
         <div id="view-gateway" class="max-w-4xl mx-auto space-y-8 animate-fade-in my-auto py-8">
             <div class="text-center space-y-3">
-                <div class="inline-block bg-white p-3 rounded-2xl shadow-2xl border-2 border-aqua/40 mb-2">
-                    <img src="cleanapp.png" alt="Logo" class="h-20 w-20 md:h-24 md:w-24 object-contain" onerror="this.src='https://placehold.co/120x120/ffffff/0a192f?text=CleanApp'">
+                <!-- Macaron central agrandi et remplissant tout le cadre -->
+                <div class="inline-block w-28 h-28 md:w-32 md:h-32 bg-white rounded-3xl shadow-2xl border-2 border-aqua/40 overflow-hidden mb-2">
+                    <img src="cleanapp.png" alt="Logo" class="w-full h-full object-cover transform scale-110" onerror="this.src='https://placehold.co/120x120/ffffff/0a192f?text=CleanApp'">
                 </div>
                 <h1 class="text-3xl md:text-4xl font-black text-white tracking-tight">Bienvenue sur MATT Clean'App</h1>
                 <p class="text-slate-300 text-sm md:text-base max-w-xl mx-auto font-medium">
@@ -126,7 +128,7 @@
             </div>
         </div>
 
-        <!-- 2. AUTHENTIFICATION CLIENT -->
+        <!-- 2. AUTHENTIFICATION CLIENT (AVEC OEIL MAGIQUE) -->
         <div id="view-client-auth" class="max-w-md mx-auto bg-white text-slate-800 rounded-3xl p-7 md:p-8 shadow-2xl border border-slate-200 hidden animate-fade-in">
             <div class="flex items-center justify-between border-b pb-4 mb-6">
                 <div>
@@ -148,7 +150,12 @@
                 </div>
                 <div>
                     <label class="block text-[11px] font-black text-slate-600 uppercase mb-1">Mot de passe</label>
-                    <input type="password" id="auth-client-login-pass" placeholder="••••••••" class="w-full px-3.5 py-2.5 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-aqua focus:outline-none">
+                    <div class="relative">
+                        <input type="password" id="auth-client-login-pass" placeholder="••••••••" class="w-full px-3.5 py-2.5 pr-10 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-aqua focus:outline-none">
+                        <button type="button" onclick="togglePasswordVisibility('auth-client-login-pass', 'eye-client-login')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-700">
+                            <span id="eye-client-login" class="text-base">👁️</span>
+                        </button>
+                    </div>
                 </div>
                 <button onclick="loginClient()" class="w-full py-3 bg-navy-800 hover:bg-navy-900 text-white font-black text-xs rounded-xl uppercase tracking-wider transition-all">Se Connecter</button>
             </div>
@@ -164,13 +171,18 @@
                 </div>
                 <div>
                     <label class="block text-[11px] font-black text-slate-600 uppercase mb-1">Mot de passe</label>
-                    <input type="password" id="auth-client-reg-pass" placeholder="••••••••" class="w-full px-3.5 py-2.5 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-aqua focus:outline-none">
+                    <div class="relative">
+                        <input type="password" id="auth-client-reg-pass" placeholder="••••••••" class="w-full px-3.5 py-2.5 pr-10 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-aqua focus:outline-none">
+                        <button type="button" onclick="togglePasswordVisibility('auth-client-reg-pass', 'eye-client-reg')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-700">
+                            <span id="eye-client-reg" class="text-base">👁️</span>
+                        </button>
+                    </div>
                 </div>
                 <button onclick="registerClient()" class="w-full py-3 bg-aqua hover:bg-sky-500 text-navy-900 font-black text-xs rounded-xl uppercase tracking-wider transition-all">Créer mon compte Client</button>
             </div>
         </div>
 
-        <!-- 3. AUTHENTIFICATION PARTENAIRE -->
+        <!-- 3. AUTHENTIFICATION PARTENAIRE (AVEC OEIL MAGIQUE) -->
         <div id="view-partner-auth" class="max-w-lg mx-auto bg-white text-slate-800 rounded-3xl p-7 md:p-8 shadow-2xl border border-slate-200 hidden animate-fade-in">
             <div class="flex items-center justify-between border-b pb-4 mb-6">
                 <div>
@@ -192,7 +204,12 @@
                 </div>
                 <div>
                     <label class="block text-[11px] font-black text-slate-600 uppercase mb-1">Mot de passe</label>
-                    <input type="password" id="auth-partner-login-pass" placeholder="••••••••" class="w-full px-3.5 py-2.5 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-mattOrange focus:outline-none">
+                    <div class="relative">
+                        <input type="password" id="auth-partner-login-pass" placeholder="••••••••" class="w-full px-3.5 py-2.5 pr-10 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-mattOrange focus:outline-none">
+                        <button type="button" onclick="togglePasswordVisibility('auth-partner-login-pass', 'eye-partner-login')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-700">
+                            <span id="eye-partner-login" class="text-base">👁️</span>
+                        </button>
+                    </div>
                 </div>
                 <button onclick="loginPartner()" class="w-full py-3 bg-mattOrange hover:bg-orange-600 text-white font-black text-xs rounded-xl uppercase tracking-wider transition-all">Se Connecter</button>
             </div>
@@ -208,7 +225,12 @@
                 </div>
                 <div>
                     <label class="text-[10px] font-bold text-slate-600 block uppercase">Mot de passe</label>
-                    <input type="password" id="p-reg-pass" placeholder="••••••••" class="w-full px-3 py-2 border rounded-lg text-xs font-bold">
+                    <div class="relative">
+                        <input type="password" id="p-reg-pass" placeholder="••••••••" class="w-full px-3 py-2 pr-10 border rounded-lg text-xs font-bold">
+                        <button type="button" onclick="togglePasswordVisibility('p-reg-pass', 'eye-partner-reg')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-700">
+                            <span id="eye-partner-reg" class="text-base">👁️</span>
+                        </button>
+                    </div>
                 </div>
                 <div>
                     <label class="text-[10px] font-bold text-slate-600 block uppercase">Commune Principale</label>
@@ -340,7 +362,7 @@
             </div>
         </div>
 
-        <!-- 5. ESPACE PARTENAIRE CONNECTÉ (AVEC MODIFICATION DES IDENTIFIANTS ET SOLDE ADAPTÉ) -->
+        <!-- 5. ESPACE PARTENAIRE CONNECTÉ -->
         <div id="view-partner-app" class="bg-white text-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl hidden animate-fade-in space-y-6">
             
             <!-- Bandeau de Statut et Profil Partenaire -->
@@ -489,11 +511,11 @@
                 <div id="partner-accepted-courses-list" class="space-y-3"></div>
             </div>
 
-            <!-- SOUS-ONGLET 4 : MODIFICATION DES IDENTIFIANTS DU PARTENAIRE -->
+            <!-- SOUS-ONGLET 4 : MODIFICATION DES IDENTIFIANTS AVEC ANCIEN ET NOUVEAU MOT DE PASSE -->
             <div id="partner-tab-profil" class="partner-subview hidden space-y-4">
                 <div class="border-b pb-2">
                     <h3 class="text-md font-black text-navy-800 uppercase">⚙️ Modifier Mes Identifiants & Profil</h3>
-                    <p class="text-xs text-slate-500">Mettez à jour vos identifiants d'accès direct et votre zone d'exercice.</p>
+                    <p class="text-xs text-slate-500">Mettez à jour vos identifiants d'accès direct et sécurisez votre compte.</p>
                 </div>
 
                 <div class="bg-slate-50 p-6 rounded-3xl border border-slate-200 max-w-xl space-y-4">
@@ -509,9 +531,27 @@
                         <label class="text-[11px] font-bold text-slate-600 block uppercase mb-1">Commune Principale d'Intervention :</label>
                         <select id="partner-edit-commune" class="w-full px-3.5 py-2.5 bg-white border rounded-xl text-xs font-bold text-slate-800"></select>
                     </div>
-                    <div>
-                        <label class="text-[11px] font-bold text-slate-600 block uppercase mb-1">Nouveau Mot de Passe (laisser vide pour ne pas changer) :</label>
-                        <input type="password" id="partner-edit-pass" placeholder="••••••••" class="w-full px-3.5 py-2.5 bg-white border rounded-xl text-xs font-bold text-slate-800">
+
+                    <!-- Champs sécurisés : Ancien et Nouveau Mot de Passe avec œil -->
+                    <div class="border-t pt-3 space-y-3">
+                        <div>
+                            <label class="text-[11px] font-bold text-slate-600 block uppercase mb-1">Ancien Mot de Passe (obligatoire pour valider) :</label>
+                            <div class="relative">
+                                <input type="password" id="partner-edit-old-pass" placeholder="Votre mot de passe actuel" class="w-full px-3.5 py-2.5 pr-10 bg-white border rounded-xl text-xs font-bold text-slate-800">
+                                <button type="button" onclick="togglePasswordVisibility('partner-edit-old-pass', 'eye-p-old')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-700">
+                                    <span id="eye-p-old" class="text-base">👁️</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div>
+                            <label class="text-[11px] font-bold text-slate-600 block uppercase mb-1">Nouveau Mot de Passe (laisser vide pour conserver l'actuel) :</label>
+                            <div class="relative">
+                                <input type="password" id="partner-edit-new-pass" placeholder="Nouveau mot de passe" class="w-full px-3.5 py-2.5 pr-10 bg-white border rounded-xl text-xs font-bold text-slate-800">
+                                <button type="button" onclick="togglePasswordVisibility('partner-edit-new-pass', 'eye-p-new')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-700">
+                                    <span id="eye-p-new" class="text-base">👁️</span>
+                                </button>
+                            </div>
+                        </div>
                     </div>
 
                     <button onclick="savePartnerProfileUpdate()" class="w-full py-3 bg-navy-800 hover:bg-navy-900 text-white text-xs font-black uppercase rounded-xl transition tracking-wider shadow">
@@ -525,8 +565,8 @@
         <!-- 6. PRÉSENTATION DE MATT SARL -->
         <div id="view-presentation" class="bg-white text-slate-800 rounded-3xl p-8 shadow-2xl space-y-6 max-w-4xl mx-auto hidden animate-fade-in">
             <div class="border-b pb-4 flex items-center gap-4">
-                <div class="bg-white p-2 rounded-2xl border shadow-sm">
-                    <img src="matt.jpg" alt="Logo MATT" class="h-14 w-14 object-contain" onerror="this.src='https://placehold.co/100x100/ffffff/0a192f?text=MATT'">
+                <div class="w-16 h-16 bg-white rounded-2xl border shadow-sm overflow-hidden flex items-center justify-center flex-shrink-0">
+                    <img src="matt.jpg" alt="Logo MATT" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/ffffff/0a192f?text=MATT'">
                 </div>
                 <div>
                     <h2 class="text-2xl font-black text-navy-800">MASTER TOUCH TRADING (MATT SARL)</h2>
@@ -558,7 +598,7 @@
             </div>
         </div>
 
-        <!-- 7. CONDITIONS GÉNÉRALES D'UTILISATION (CGU VALIDÉES RESTAURÉES) -->
+        <!-- 7. CONDITIONS GÉNÉRALES D'UTILISATION (CGU RESTAURÉES) -->
         <div id="view-cgu" class="bg-white text-slate-800 rounded-3xl p-8 shadow-2xl space-y-6 max-w-4xl mx-auto hidden animate-fade-in">
             <div class="border-b pb-4">
                 <h2 class="text-2xl font-black text-navy-800">Conditions Générales d'Utilisation & Charte Qualité</h2>
@@ -681,7 +721,7 @@
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZicml3b3J5c2N5bW5tdHp6ZG55Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzNzQwNTEsImV4cCI6MjEwMzk1MDA1MX0.VBZupVKj0srae0NT5BNZ0OeaIv9pAl2bl5L-Rd8ocJk";
         const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // Répertoire des communes et classification en zones
+        // Répertoire des communes et zones
         const communesKinshasa = [
             { name: "Gombe", zone: "zone1", label: "Zone 1 - Résidentielle" },
             { name: "Ngaliema", zone: "zone1", label: "Zone 1 - Résidentielle" },
@@ -709,7 +749,6 @@
             { name: "Maluku", zone: "zone4", label: "Zone 4 - Périurbaine" }
         ];
 
-        // Barème par zone
         const grilleTarifaireParZone = {
             'zone1': { moto: 10000, tricycle: 15000, berline: 20000, suv: 30000, 'poids-lourd': 55000, 'bus-207': 25000 },
             'zone2': { moto: 8000, tricycle: 12000, berline: 15000, suv: 25000, 'poids-lourd': 45000, 'bus-207': 20000 },
@@ -738,6 +777,20 @@
             toast.innerHTML = `<span>${message}</span><button onclick="this.parentElement.remove()" class="text-white font-black">✕</button>`;
             container.appendChild(toast);
             setTimeout(() => toast.remove(), 4000);
+        }
+
+        // Fonction pour afficher / masquer le mot de passe avec l'oeil
+        function togglePasswordVisibility(inputId, eyeIconId) {
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(eyeIconId);
+            if (!input) return;
+            if (input.type === 'password') {
+                input.type = 'text';
+                if (icon) icon.innerText = '🙈';
+            } else {
+                input.type = 'password';
+                if (icon) icon.innerText = '👁️';
+            }
         }
 
         function showView(viewId) {
@@ -846,13 +899,13 @@
             document.getElementById('partner-dashboard-meta').innerText = `(${session.user.specialty} - ${session.user.commune})`;
             document.getElementById('partner-wallet-balance').innerText = `${Number(session.user.wallet || 0).toLocaleString('fr-FR')} CDF`;
             
-            // Pré-remplissage formulaire modification profil
+            // Pré-remplissage modification profil
             document.getElementById('partner-edit-name').value = session.user.name;
             document.getElementById('partner-edit-phone').value = session.user.phone;
             document.getElementById('partner-edit-commune').value = session.user.commune;
-            document.getElementById('partner-edit-pass').value = '';
+            document.getElementById('partner-edit-old-pass').value = '';
+            document.getElementById('partner-edit-new-pass').value = '';
 
-            // Mode Badge
             const mode = session.user.billing_mode || 'commission';
             document.getElementById('partner-mode-badge').innerText = mode === 'commission' ? 'Mode Commission (15%)' : (mode === 'journalier' ? 'Forfait Journalier (Actif)' : 'Forfait Mensuel (Actif)');
             document.getElementById('partner-solde-label').innerText = `SOLDE ACTUEL (${mode.toUpperCase()})`;
@@ -871,7 +924,7 @@
         }
 
         // ==========================================
-        // MODIFICATION DES IDENTIFIANTS DU PARTENAIRE
+        // MODIFICATION DES IDENTIFIANTS DU PARTENAIRE (AVEC ANCIEN & NOUVEAU MOT DE PASSE)
         // ==========================================
         async function savePartnerProfileUpdate() {
             if (!session.user) return;
@@ -879,10 +932,22 @@
             const newName = document.getElementById('partner-edit-name').value.trim();
             const newPhone = document.getElementById('partner-edit-phone').value.trim();
             const newCommune = document.getElementById('partner-edit-commune').value;
-            const newPass = document.getElementById('partner-edit-pass').value.trim();
+            const oldPass = document.getElementById('partner-edit-old-pass').value.trim();
+            const newPass = document.getElementById('partner-edit-new-pass').value.trim();
 
             if (!newName || !newPhone) {
                 return showToast("Le nom et le téléphone sont obligatoires.", "error");
+            }
+
+            if (!oldPass) {
+                return showToast("Veuillez saisir votre ancien mot de passe pour confirmer.", "error");
+            }
+
+            // Vérification de l'ancien mot de passe dans Supabase
+            const { data: checkUser, error: checkErr } = await db.from('partners').select('*').eq('id', session.user.id).eq('password', oldPass).single();
+
+            if (checkErr || !checkUser) {
+                return showToast("L'ancien mot de passe saisi est incorrect.", "error");
             }
 
             let updatePayload = {
@@ -898,7 +963,7 @@
             const { error } = await db.from('partners').update(updatePayload).eq('id', session.user.id);
             if (error) return showToast(error.message, "error");
 
-            // Mettre à jour l'état local
+            // Mettre à jour l'état de session local
             session.user.name = newName;
             session.user.phone = newPhone;
             session.user.commune = newCommune;
@@ -907,6 +972,9 @@
             document.getElementById('partner-dashboard-name').innerText = newName;
             document.getElementById('partner-dashboard-meta').innerText = `(${session.user.specialty} - ${newCommune})`;
             document.getElementById('logged-user-name').innerText = newName;
+
+            document.getElementById('partner-edit-old-pass').value = '';
+            document.getElementById('partner-edit-new-pass').value = '';
 
             showToast("Vos identifiants ont été mis à jour avec succès !");
             loadPartnerMissions();
