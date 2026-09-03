@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MATT Clean'App - Portail Administrateur</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Supabase SDK -->
+    <!-- Supabase JS Client -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         tailwind.config = {
@@ -21,15 +22,39 @@
             }
         }
     </script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #94a3b8;
+            border-radius: 8px;
+            border: 2px solid #f1f5f9;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+            background: #00b4d8;
+        }
+        .custom-scrollbar {
+            scrollbar-width: thin;
+            scrollbar-color: #94a3b8 #f1f5f9;
+        }
+    </style>
 </head>
 <body class="bg-navy-900 text-slate-100 min-h-screen font-sans flex flex-col justify-between">
 
+    <!-- Conteneur des alertes Toast -->
     <div id="toast-container" class="fixed bottom-5 right-5 z-[9999] flex flex-col gap-2 max-w-sm w-full"></div>
 
+    <!-- En-tête -->
     <header class="bg-navy-800/95 border-b-2 border-mattOrange px-4 py-3 md:px-8 flex flex-col md:flex-row justify-between items-center gap-4 sticky top-0 z-50 backdrop-blur-sm shadow-xl">
         <div class="flex items-center gap-3">
             <div class="bg-white p-1 rounded-full shadow-md border border-mattOrange/40 flex items-center justify-center">
-                <img src="CLAN'APP.png" alt="Logo" class="h-10 w-10 md:h-12 md:w-12 object-contain" onerror="this.src='https://placehold.co/100x100/ffffff/0a192f?text=CleanApp'">
+                <img src="cleanapp.png" alt="Logo" class="h-10 w-10 md:h-12 md:w-12 object-contain" onerror="this.src='https://placehold.co/100x100/ffffff/0a192f?text=CleanApp'">
             </div>
             <div class="flex flex-col">
                 <span class="text-xl md:text-2xl font-black text-white tracking-wide flex items-center gap-2">
@@ -53,7 +78,7 @@
         </div>
     </header>
 
-    <!-- Écran de Connexion Sécurisée -->
+    <!-- Écran d'authentification -->
     <div id="admin-auth-screen" class="container mx-auto px-4 py-16 max-w-md flex-grow flex items-center justify-center">
         <div class="bg-white text-slate-900 p-8 rounded-3xl shadow-2xl border border-slate-200 w-full space-y-5 text-center">
             <div class="w-16 h-16 bg-navy-900 text-mattOrange rounded-2xl mx-auto flex items-center justify-center text-3xl font-mono shadow-inner">
@@ -61,20 +86,20 @@
             </div>
             <div>
                 <h2 class="text-xl font-black text-navy-800">Authentification Direction MATT</h2>
-                <p class="text-xs text-slate-500 font-semibold mt-1">Console Master connectée à Supabase.</p>
+                <p class="text-xs text-slate-500 font-semibold mt-1">Saisissez vos accès pour déverrouiller la console.</p>
             </div>
             
             <div class="space-y-4 text-left">
                 <div>
                     <label class="text-[11px] font-black text-slate-700 uppercase block mb-1">Identifiant</label>
-                    <input type="text" id="admin-login-input" placeholder="Votre identifiant" class="w-full px-3.5 py-2.5 bg-slate-50 border rounded-xl text-sm font-bold text-slate-900 focus:ring-2 focus:ring-mattOrange focus:outline-none" onkeydown="if(event.key==='Enter') verifyAdminAuth();">
+                    <input type="text" id="admin-login-input" placeholder="Votre identifiant" class="w-full px-3.5 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-sm font-bold text-slate-900 focus:ring-2 focus:ring-mattOrange focus:outline-none" onkeydown="if(event.key==='Enter') verifyAdminAuth();">
                 </div>
 
                 <div>
                     <label class="text-[11px] font-black text-slate-700 uppercase block mb-1">Mot de passe</label>
                     <div class="relative">
-                        <input type="password" id="admin-pass-input" placeholder="••••••••" class="w-full px-3.5 py-2.5 pr-10 bg-slate-50 border rounded-xl text-sm font-bold text-slate-900 focus:ring-2 focus:ring-mattOrange focus:outline-none" onkeydown="if(event.key==='Enter') verifyAdminAuth();">
-                        <button type="button" onclick="toggleAuthPasswordVisibility()" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-700">
+                        <input type="password" id="admin-pass-input" placeholder="••••••••" class="w-full px-3.5 py-2.5 pr-10 bg-slate-50 border border-slate-300 rounded-xl text-sm font-bold text-slate-900 focus:ring-2 focus:ring-mattOrange focus:outline-none" onkeydown="if(event.key==='Enter') verifyAdminAuth();">
+                        <button type="button" onclick="toggleAuthPasswordVisibility()" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-700 focus:outline-none">
                             <span id="eye-icon" class="text-lg">👁️</span>
                         </button>
                     </div>
@@ -87,107 +112,747 @@
         </div>
     </div>
 
-    <!-- Panneau de Gestion Principal -->
+    <!-- Dashboard Principal -->
     <main id="admin-dashboard-screen" class="container mx-auto px-4 py-8 max-w-7xl flex-grow hidden">
         <div class="bg-white text-slate-800 rounded-2xl p-6 md:p-8 shadow-2xl space-y-6">
             
-            <div class="flex gap-2 border-b border-slate-200 pb-3 overflow-x-auto text-xs">
-                <button onclick="switchAdminTab('admin-liaisons', this)" class="admin-tab-btn px-4 py-2.5 bg-navy-800 text-white font-bold rounded-xl whitespace-nowrap active">Suivi des Commandes Supabase</button>
+            <!-- Navigation par Onglets -->
+            <div class="flex gap-2 border-b border-slate-200 pb-3 overflow-x-auto custom-scrollbar text-xs">
+                <button onclick="switchAdminTab('admin-liaisons', this)" class="admin-tab-btn px-4 py-2.5 bg-navy-800 text-white font-bold rounded-xl whitespace-nowrap active">Suivi des Liaisons</button>
                 <button onclick="switchAdminTab('admin-partenaires', this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 font-bold rounded-xl whitespace-nowrap">Gestion Partenaires</button>
-                <button onclick="switchAdminTab('admin-recharges', this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 font-bold rounded-xl whitespace-nowrap">Validation Recharges</button>
-                <button onclick="switchAdminTab('admin-config', this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 font-bold rounded-xl whitespace-nowrap">⚙️ Configuration & Numéros</button>
+                <button onclick="switchAdminTab('admin-recharges', this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 font-bold rounded-xl whitespace-nowrap">Validation Recharges & Caisse</button>
+                <button onclick="switchAdminTab('admin-prix', this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 font-bold rounded-xl whitespace-nowrap">Configuration des Prix</button>
+                <button onclick="switchAdminTab('admin-cgu', this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 font-bold rounded-xl whitespace-nowrap">📜 Édition des CGU</button>
+                <button onclick="switchAdminTab('admin-stats', this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 font-bold rounded-xl whitespace-nowrap">📊 Statistiques d'Activité</button>
+                <button onclick="switchAdminTab('admin-config', this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 font-bold rounded-xl whitespace-nowrap">⚙️ Configuration Système</button>
             </div>
 
-            <!-- Tab Commandes -->
+            <!-- ONGLET 1: SUIVI DES LIAISONS & COMMANDES -->
             <div id="admin-liaisons" class="admin-subview space-y-4">
-                <div class="flex justify-between items-center">
-                    <h3 class="text-md font-black text-navy-800 uppercase">🔄 Commandes enregistrées en direct</h3>
-                    <button onclick="loadSupabaseOrders()" class="px-3 py-1 bg-slate-100 rounded text-xs font-bold border">Actualiser 🔄</button>
-                </div>
-
-                <div class="overflow-x-auto border rounded-xl">
-                    <table class="w-full text-left text-xs border-collapse">
-                        <thead>
-                            <tr class="bg-slate-100 text-slate-600 border-b">
-                                <th class="p-3">ID</th>
-                                <th class="p-3">Client & Téléphone</th>
-                                <th class="p-3">Commune & Adresse</th>
-                                <th class="p-3">Montant Brut</th>
-                                <th class="p-3">Statut</th>
-                                <th class="p-3">Prestataire Associé</th>
-                            </tr>
-                        </thead>
-                        <tbody id="admin-orders-table" class="divide-y font-medium"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Tab Partenaires -->
-            <div id="admin-partenaires" class="admin-subview hidden space-y-4">
-                <div class="flex justify-between items-center">
-                    <h3 class="text-md font-black text-navy-800 uppercase">👥 Annuaire des Prestataires</h3>
-                    <button onclick="loadSupabasePartners()" class="px-3 py-1 bg-slate-100 rounded text-xs font-bold border">Actualiser 🔄</button>
-                </div>
-
-                <div class="overflow-x-auto border rounded-xl">
-                    <table class="w-full text-left text-xs border-collapse">
-                        <thead>
-                            <tr class="bg-slate-100 text-slate-600 border-b">
-                                <th class="p-3">Partenaire</th>
-                                <th class="p-3">Téléphone</th>
-                                <th class="p-3">Commune</th>
-                                <th class="p-3">Spécialité</th>
-                                <th class="p-3">Solde Portefeuille</th>
-                                <th class="p-3 text-right">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="admin-partners-table" class="divide-y font-medium"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Tab Recharges -->
-            <div id="admin-recharges" class="admin-subview hidden space-y-4">
-                <h3 class="text-md font-black text-navy-800 uppercase">📥 Déclarations de Recharge en Attente</h3>
-                <div class="overflow-x-auto border rounded-xl">
-                    <table class="w-full text-left text-xs border-collapse">
-                        <thead>
-                            <tr class="bg-slate-100 text-slate-600 border-b">
-                                <th class="p-3">Partenaire</th>
-                                <th class="p-3">Montant Déposé</th>
-                                <th class="p-3">Référence Mobile Money</th>
-                                <th class="p-3 text-right">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody id="admin-recharges-table" class="divide-y font-medium"></tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- Tab Configuration -->
-            <div id="admin-config" class="admin-subview hidden space-y-6">
-                <div class="bg-slate-50 p-6 rounded-2xl border space-y-4">
-                    <h3 class="text-md font-black text-navy-800 uppercase">📱 Canaux de Paiement Mobile Money & Assistance</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs font-bold">
-                        <div><label class="block mb-1">WhatsApp Client</label><input type="text" id="cfg-wa-client" value="+243980000338" class="w-full p-2 border rounded-lg"></div>
-                        <div><label class="block mb-1">WhatsApp Partenaire</label><input type="text" id="cfg-wa-partner" value="+243980000338" class="w-full p-2 border rounded-lg"></div>
-                        <div><label class="block mb-1">M-Pesa</label><input type="text" id="cfg-mpesa" value="+243980000338" class="w-full p-2 border rounded-lg"></div>
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <h3 class="text-md font-black text-navy-800 uppercase tracking-wide">🔄 Suivi des commandes globales et attributions</h3>
+                    <div class="flex items-center gap-2 text-xs">
+                        <button onclick="loadSupabaseOrders()" class="px-3 py-1.5 bg-slate-100 text-navy-800 font-bold rounded-lg border hover:bg-slate-200">Actualiser 🔄</button>
+                        <select id="admin-filter-order-axe" class="bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-800 font-bold" onchange="renderAdminOrders()">
+                            <option value="Tous">Tous les Axes</option>
+                            <option value="Auto">🚗 Axe Automobile</option>
+                            <option value="Maison">🏡 Axe Maison</option>
+                            <option value="Environnement">🌱 Axe Environnement & 3D</option>
+                        </select>
                     </div>
-                    <button onclick="showToast('Coordonnées sauvegardées avec succès !')" class="px-5 py-2.5 bg-mattOrange text-white font-black text-xs rounded-xl uppercase">Sauvegarder</button>
                 </div>
+
+                <div class="overflow-x-auto border border-slate-200 rounded-xl shadow-inner custom-scrollbar">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-600 border-b">
+                                <th class="p-3 font-black uppercase">ID</th>
+                                <th class="p-3 font-black uppercase">Axe</th>
+                                <th class="p-3 font-black uppercase">Client & Tél</th>
+                                <th class="p-3 font-black uppercase">Panier</th>
+                                <th class="p-3 font-black uppercase">Commune / Adresse</th>
+                                <th class="p-3 font-black uppercase">Montant</th>
+                                <th class="p-3 font-black uppercase">Statut</th>
+                                <th class="p-3 font-black uppercase">Prestataire Associé</th>
+                                <th class="p-3 font-black uppercase text-right">Audit</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-orders-table" class="divide-y divide-slate-100 font-medium"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ONGLET 2: GESTION PARTENAIRES -->
+            <div id="admin-partenaires" class="admin-subview hidden space-y-4">
+                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3">
+                    <div>
+                        <h3 class="text-md font-black text-navy-800 uppercase tracking-wide">👥 Annuaire des Prestataires (Gestion & Actions)</h3>
+                        <p class="text-[11px] text-slate-500 font-medium">Visualisation des accès, activation, suspension et suppression.</p>
+                    </div>
+                    
+                    <div class="flex flex-wrap items-center gap-2 text-xs w-full lg:w-auto">
+                        <button onclick="loadSupabasePartners()" class="px-3 py-1.5 bg-slate-100 text-navy-800 font-bold rounded-lg border hover:bg-slate-200">Actualiser 🔄</button>
+                        <input type="text" id="admin-search-partner" placeholder="🔍 Rechercher nom, tél..." class="bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-800 font-bold focus:outline-none" oninput="renderAdminPartners()">
+                        <select id="admin-filter-partner-axe" class="bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-800 font-bold" onchange="renderAdminPartners()">
+                            <option value="Tous">Tous les Axes</option>
+                            <option value="Auto">🚗 Axe Automobile</option>
+                            <option value="Maison">🏡 Axe Maison</option>
+                            <option value="Polyvalent">🔄 Polyvalent Auto & Maison</option>
+                            <option value="3D">🌱 Traitement 3D</option>
+                            <option value="Immondices">🗑️ Évacuation Immondices</option>
+                            <option value="Fosse">🪠 Vidange Fosse</option>
+                        </select>
+                        <select id="admin-filter-commune" class="bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-slate-800 font-bold" onchange="renderAdminPartners()"></select>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto border border-slate-200 rounded-xl shadow-inner custom-scrollbar">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-600 border-b">
+                                <th class="p-3 font-black uppercase">Partenaire</th>
+                                <th class="p-3 font-black uppercase">Axe & Spécialité</th>
+                                <th class="p-3 font-black uppercase">Commune</th>
+                                <th class="p-3 font-black uppercase">Mode Facturation</th>
+                                <th class="p-3 font-black uppercase">Solde / Validité</th>
+                                <th class="p-3 font-black uppercase">Statut</th>
+                                <th class="p-3 font-black uppercase text-right">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="admin-partners-table" class="divide-y divide-slate-100 font-medium"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ONGLET 3: RECHARGES & CAISSE -->
+            <div id="admin-recharges" class="admin-subview hidden space-y-6">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div class="bg-green-50 border border-green-200 rounded-2xl p-5 text-center">
+                        <span class="text-[10px] font-black text-green-700 block uppercase tracking-widest font-mono">Caisse de Commissions MATT</span>
+                        <div class="text-3xl font-black text-green-800 my-2" id="admin-commission-balance">0 CDF</div>
+                        
+                        <div class="border-t border-green-200 pt-4 mt-4 text-left">
+                            <h4 class="text-xs font-black text-green-800 uppercase mb-2">📥 Retrait vers Compte Mobile</h4>
+                            <div class="space-y-2">
+                                <select id="admin-payout-network" class="w-full px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-xs font-bold text-slate-800">
+                                    <option>Compte M-Pesa MATT</option>
+                                    <option>Compte Orange Money MATT</option>
+                                    <option>Compte Airtel Money MATT</option>
+                                </select>
+                                <input type="number" id="admin-payout-amount" placeholder="Montant en CDF" class="w-full px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-xs font-bold">
+                                <button onclick="payoutCommissions()" class="w-full py-2 bg-green-700 hover:bg-green-800 text-white font-bold text-xs rounded-lg transition-all">
+                                    Valider le retrait
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-sky-50 border border-sky-200 rounded-2xl p-5 lg:col-span-2 space-y-4">
+                        <div>
+                            <h4 class="text-sm font-black text-navy-800 uppercase tracking-wide">🛠️ Recharger / Appliquer un Forfait</h4>
+                            <p class="text-[11px] text-slate-500 font-semibold">Le forfait journalier expire automatiquement à 23h59 du jour même.</p>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            <div class="sm:col-span-2">
+                                <label class="text-[10px] font-bold text-slate-500 block uppercase">Recherche partenaire :</label>
+                                <input type="text" id="admin-manual-search-input" placeholder="Tapez pour filtrer..." class="w-full mt-1 px-3 py-1.5 bg-white border border-slate-300 rounded-lg text-xs font-bold text-slate-800" oninput="filterManualPartnerSelect()">
+                                <select id="admin-manual-recharge-partner" class="w-full mt-1.5 px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs font-bold text-slate-800"></select>
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-bold text-slate-500 block uppercase">Mode :</label>
+                                <select id="admin-manual-recharge-mode" class="w-full mt-1 px-3 py-2 bg-white border border-slate-300 rounded-lg text-xs font-bold text-slate-800" onchange="adjustManualAmountByMode()">
+                                    <option value="commission">Commission (CDF)</option>
+                                    <option value="journalier">Forfait Journalier (23h59)</option>
+                                    <option value="mensuel">Forfait Mensuel (30 jours)</option>
+                                </select>
+                                <input type="number" id="admin-manual-recharge-amount" placeholder="Montant CDF" class="w-full mt-1.5 px-3 py-1.5 bg-white border border-slate-300 rounded-lg text-xs font-bold">
+                            </div>
+                        </div>
+
+                        <button onclick="executeManualRecharge()" class="px-5 py-2.5 bg-navy-800 hover:bg-navy-900 text-white font-bold text-xs rounded-lg uppercase tracking-wider transition-all">
+                            Appliquer l'opération
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div>
+                        <div class="flex justify-between items-center mb-3">
+                            <h4 class="text-xs font-black text-navy-800 uppercase tracking-wide">🕒 Déclarations de recharge en attente</h4>
+                            <button onclick="loadSupabaseRecharges()" class="text-xs text-sky-600 font-bold hover:underline">Rafraîchir</button>
+                        </div>
+                        <div class="overflow-x-auto border border-slate-200 rounded-xl shadow-inner custom-scrollbar">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead>
+                                    <tr class="bg-slate-100 border-b">
+                                        <th class="p-3">Partenaire</th>
+                                        <th class="p-3">Mode</th>
+                                        <th class="p-3">Montant</th>
+                                        <th class="p-3">Réf.</th>
+                                        <th class="p-3 text-right">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-recharges-table" class="divide-y divide-slate-100 font-medium"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h4 class="text-xs font-black text-navy-800 mb-3 uppercase tracking-wide">📋 Historique des virements caisse</h4>
+                        <div class="overflow-x-auto border border-slate-200 rounded-xl shadow-inner custom-scrollbar">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead>
+                                    <tr class="bg-slate-100 border-b">
+                                        <th class="p-3">Date</th>
+                                        <th class="p-3">Réseau</th>
+                                        <th class="p-3">Montant</th>
+                                        <th class="p-3 font-bold">Statut</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-payouts-table" class="divide-y divide-slate-100 font-medium"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ONGLET 4: CONFIGURATION DES PRIX -->
+            <div id="admin-prix" class="admin-subview hidden space-y-6">
+                <div class="flex flex-col lg:flex-row justify-between lg:items-center gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-200">
+                    <div>
+                        <h3 class="text-lg font-black text-navy-800 uppercase tracking-wide">⚙️ Grille Tarifaire par Groupe de Communes</h3>
+                        <p class="text-xs text-slate-500 font-semibold">Ajustez les prix en fonction des zones géographiques de Kinshasa.</p>
+                    </div>
+                    
+                    <div class="flex flex-wrap items-center gap-3">
+                        <select id="admin-commune-group-select" class="px-3 py-2 bg-white border-2 border-mattOrange rounded-xl text-xs font-black text-slate-900 shadow-sm focus:outline-none" onchange="onCommuneGroupChange()">
+                            <option value="standard">Tarif Standard Global (Toutes communes)</option>
+                            <option value="zone1">Zone 1 - Résidentielle</option>
+                            <option value="zone2">Zone 2 - Centrale</option>
+                            <option value="zone3">Zone 3 - Est & Populaire</option>
+                            <option value="zone4">Zone 4 - Périurbaine</option>
+                        </select>
+                        <button onclick="saveTarifsForCurrentGroup()" class="px-5 py-2 bg-mattOrange hover:bg-orange-600 text-white font-black text-xs rounded-xl shadow uppercase tracking-wider transition-all">
+                            💾 Enregistrer ce Groupe
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Axe Auto -->
+                    <div class="border-2 border-slate-200 rounded-2xl p-4 bg-white shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center border-b pb-2 mb-3">
+                                <h4 class="font-black text-sm text-navy-800 uppercase tracking-wide">🚗 Axe Automobile</h4>
+                                <div class="flex items-center gap-1">
+                                    <button onclick="scrollPriceSection('scroll-auto-box', -180)" type="button" class="px-2 py-0.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-bold rounded">▲</button>
+                                    <button onclick="scrollPriceSection('scroll-auto-box', 180)" type="button" class="px-2 py-0.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-[11px] font-bold rounded">▼</button>
+                                </div>
+                            </div>
+                            
+                            <div id="scroll-auto-box" class="space-y-4 max-h-[520px] overflow-y-auto pr-2 custom-scrollbar pb-6">
+                                <div>
+                                    <span class="text-[11px] font-black text-slate-400 uppercase tracking-wider block mb-2">Base Véhicules (CDF) :</span>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Moto</label><input type="number" id="p-moto" value="8000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                        <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Tricycle</label><input type="number" id="p-tricycle" value="12000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                        <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Berline</label><input type="number" id="p-berline" value="15000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                        <div><label class="text-[9px] font-bold text-slate-500 uppercase block">SUV / 4x4</label><input type="number" id="p-suv" value="25000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                        <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Poids Lourds</label><input type="number" id="p-poids-lourd" value="45000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                        <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Bus 207</label><input type="number" id="p-bus-207" value="20000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                        <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Bus Long</label><input type="number" id="p-bus-long" value="35000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                        <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Remorque</label><input type="number" id="p-remorque" value="30000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                    </div>
+                                </div>
+
+                                <div class="border-t border-slate-100 pt-3 space-y-2.5">
+                                    <span class="text-[11px] font-black text-slate-400 uppercase tracking-wider block">Options Moteur / Châssis / Sièges :</span>
+                                    
+                                    <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                                        <span class="text-[10px] font-black text-navy-800 uppercase block mb-1">Berline</span>
+                                        <div class="grid grid-cols-3 gap-1">
+                                            <input type="number" id="p-opt-moteur-berline" value="5000" class="p-1 border rounded text-[10px] text-center font-bold" placeholder="Moteur">
+                                            <input type="number" id="p-opt-chassis-berline" value="4000" class="p-1 border rounded text-[10px] text-center font-bold" placeholder="Châssis">
+                                            <input type="number" id="p-opt-sieges-berline" value="7000" class="p-1 border rounded text-[10px] text-center font-bold" placeholder="Sièges">
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                                        <span class="text-[10px] font-black text-navy-800 uppercase block mb-1">SUV / 4x4</span>
+                                        <div class="grid grid-cols-3 gap-1">
+                                            <input type="number" id="p-opt-moteur-suv" value="8000" class="p-1 border rounded text-[10px] text-center font-bold">
+                                            <input type="number" id="p-opt-chassis-suv" value="6000" class="p-1 border rounded text-[10px] text-center font-bold">
+                                            <input type="number" id="p-opt-sieges-suv" value="10000" class="p-1 border rounded text-[10px] text-center font-bold">
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                                        <span class="text-[10px] font-black text-navy-800 uppercase block mb-1">Poids Lourds</span>
+                                        <div class="grid grid-cols-3 gap-1">
+                                            <input type="number" id="p-opt-moteur-poids-lourd" value="15000" class="p-1 border rounded text-[10px] text-center font-bold">
+                                            <input type="number" id="p-opt-chassis-poids-lourd" value="12000" class="p-1 border rounded text-[10px] text-center font-bold">
+                                            <input type="number" id="p-opt-sieges-poids-lourd" value="15000" class="p-1 border rounded text-[10px] text-center font-bold">
+                                        </div>
+                                    </div>
+
+                                    <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
+                                        <span class="text-[10px] font-black text-navy-800 uppercase block mb-1">Remorque</span>
+                                        <div class="grid grid-cols-3 gap-1">
+                                            <input type="number" id="p-opt-moteur-remorque" value="5000" class="p-1 border rounded text-[10px] text-center font-bold">
+                                            <input type="number" id="p-opt-chassis-remorque" value="6000" class="p-1 border rounded text-[10px] text-center font-bold">
+                                            <input type="number" id="p-opt-sieges-remorque" value="5000" class="p-1 border rounded text-[10px] text-center font-bold">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Axe Maison -->
+                    <div class="border-2 border-slate-200 rounded-2xl p-4 bg-white shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center border-b pb-2 mb-3">
+                                <h4 class="font-black text-sm text-navy-800 uppercase tracking-wide">🏡 Axe Maison</h4>
+                            </div>
+                            
+                            <div class="space-y-4 max-h-[520px] overflow-y-auto pr-2 custom-scrollbar pb-6">
+                                <div class="grid grid-cols-2 gap-2">
+                                    <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Tapis (m²)</label><input type="number" id="p-tapis" value="2000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                    <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Moquette (m²)</label><input type="number" id="p-moquette" value="2000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                    <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Vitres (m²)</label><input type="number" id="p-vitres" value="1500" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                    <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Carreaux (m²)</label><input type="number" id="p-carreaux" value="1000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                </div>
+                                <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Baie Vitrée (m²)</label><input type="number" id="p-baie" value="3000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Panneau Solaire (pièce)</label><input type="number" id="p-panneau" value="4000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                <div class="border-t pt-2 space-y-2">
+                                    <span class="text-[10px] font-black text-navy-800 uppercase block">Canapés & Matelas (par place)</span>
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <input type="number" id="p-canape-textile" value="4500" class="p-1 border rounded text-xs font-bold" placeholder="Textile">
+                                        <input type="number" id="p-canape-lin" value="6000" class="p-1 border rounded text-xs font-bold" placeholder="Lin">
+                                        <input type="number" id="p-canape-velours" value="8000" class="p-1 border rounded text-xs font-bold" placeholder="Velours">
+                                        <input type="number" id="p-canape-cuir" value="12000" class="p-1 border rounded text-xs font-bold" placeholder="Cuir">
+                                    </div>
+                                    <input type="number" id="p-matelas" value="5000" class="w-full p-1 border rounded text-xs font-bold" placeholder="Matelas">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Axe Environnement -->
+                    <div class="border-2 border-slate-200 rounded-2xl p-4 bg-white shadow-sm flex flex-col justify-between">
+                        <div>
+                            <div class="flex justify-between items-center border-b pb-2 mb-3">
+                                <h4 class="font-black text-sm text-navy-800 uppercase tracking-wide">🌱 Axe Environnement & 3D</h4>
+                            </div>
+                            
+                            <div class="space-y-4 max-h-[520px] overflow-y-auto pr-2 custom-scrollbar pb-6">
+                                <div class="space-y-2">
+                                    <label class="text-[9px] font-bold text-slate-500 uppercase block">Désinfection (pièce)</label>
+                                    <input type="number" id="p-desinf" value="10000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold">
+                                    <label class="text-[9px] font-bold text-slate-500 uppercase block">Désinsectisation (pièce)</label>
+                                    <input type="number" id="p-desinsect" value="12000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold">
+                                    <label class="text-[9px] font-bold text-slate-500 uppercase block">Dératisation (pièce)</label>
+                                    <input type="number" id="p-derat" value="14000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold">
+                                </div>
+                                <div class="border-t pt-2 space-y-2">
+                                    <label class="text-[9px] font-bold text-mattOrange uppercase block">Évacuation immondices (m³)</label>
+                                    <input type="number" id="p-immondices" value="15000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold">
+                                    <label class="text-[9px] font-bold text-mattOrange uppercase block">Vidange fosse septique (m³)</label>
+                                    <input type="number" id="p-fosse" value="40000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ONGLET 5: ÉDITEUR DES CGU -->
+            <div id="admin-cgu" class="admin-subview hidden space-y-6">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b pb-3">
+                    <div>
+                        <h3 class="text-lg font-black text-navy-800 uppercase tracking-wide">📜 Éditeur Officiel des CGU</h3>
+                        <p class="text-xs text-slate-500 font-semibold">Conditions contractuelles liant MATT SARL aux clients et prestataires.</p>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="resetCguToOfficial()" class="px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl border">
+                            Texte par défaut
+                        </button>
+                        <button onclick="saveCguContent()" class="px-5 py-2 bg-mattOrange hover:bg-orange-600 text-white font-black text-xs rounded-xl shadow uppercase tracking-wider">
+                            Publier les CGU
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <div class="space-y-2">
+                        <label class="text-xs font-black text-slate-700 uppercase block">Texte Brut des CGU :</label>
+                        <textarea id="admin-cgu-textarea" rows="18" class="w-full p-4 border border-slate-300 rounded-2xl text-xs font-mono bg-slate-50 text-slate-800 focus:outline-none focus:ring-2 focus:ring-mattOrange" oninput="updateCguLivePreview()"></textarea>
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-xs font-black text-slate-700 uppercase block">Aperçu en direct (Live Preview) :</label>
+                        <div id="admin-cgu-preview" class="p-5 border border-slate-200 rounded-2xl bg-white max-h-[440px] overflow-y-auto custom-scrollbar text-xs leading-relaxed space-y-3"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ONGLET 6: STATISTIQUES D'ACTIVITÉ -->
+            <div id="admin-stats" class="admin-subview hidden space-y-4">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                    <div>
+                        <h3 class="text-lg font-bold text-navy-800 uppercase tracking-wide">📊 Données d'activité par Commune</h3>
+                        <p class="text-xs text-slate-500">Statistiques territoriales consolidées pour Kinshasa.</p>
+                    </div>
+                    <button onclick="exporterDonnees()" class="px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-xs font-bold rounded-xl flex items-center gap-2 shadow">
+                        📥 Exporter CSV
+                    </button>
+                </div>
+
+                <div class="overflow-x-auto border border-slate-200 rounded-xl max-h-[450px] overflow-y-auto shadow-inner bg-white custom-scrollbar">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-700 border-b sticky top-0">
+                                <th class="p-3 font-bold uppercase">N°</th>
+                                <th class="p-3 font-bold uppercase">Commune</th>
+                                <th class="p-3 font-bold uppercase text-center">Zone</th>
+                                <th class="p-3 font-bold uppercase text-center">Véhicules (U)</th>
+                                <th class="p-3 font-bold uppercase text-center">Désinfection</th>
+                                <th class="p-3 font-bold uppercase text-center">Désinsectisation</th>
+                                <th class="p-3 font-bold uppercase text-center">Dératisation</th>
+                                <th class="p-3 font-bold uppercase text-center">Immondices (m³)</th>
+                                <th class="p-3 font-bold uppercase text-center">Fosse (m³)</th>
+                            </tr>
+                        </thead>
+                        <tbody id="stats-table-body" class="divide-y divide-slate-100 font-bold text-slate-800"></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ONGLET 7: CONFIGURATION SYSTÈME -->
+            <div id="admin-config" class="admin-subview hidden space-y-8">
+                
+                <!-- 1. NUMÉROS MOBILES ET WHATSAPP -->
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
+                    <div class="flex justify-between items-center border-b pb-3">
+                        <div>
+                            <h3 class="text-md font-black text-navy-800 uppercase tracking-wide">📱 Numéros Mobile Money & Assistance WhatsApp</h3>
+                            <p class="text-xs text-slate-500 font-semibold">Modifiez les canaux de paiement et d'assistance affichés aux clients et partenaires.</p>
+                        </div>
+                        <button onclick="saveSysContactConfig()" class="px-5 py-2 bg-mattOrange hover:bg-orange-600 text-white font-black text-xs rounded-xl shadow uppercase tracking-wider">
+                            💾 Sauvegarder les Numéros
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
+                            <label class="text-[10px] font-black text-slate-500 uppercase block">💬 WhatsApp Assistance Client :</label>
+                            <input type="text" id="cfg-wa-client" value="+243980000338" class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800">
+                        </div>
+                        <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
+                            <label class="text-[10px] font-black text-slate-500 uppercase block">💬 WhatsApp Partenaires :</label>
+                            <input type="text" id="cfg-wa-partner" value="+243980000338" class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800">
+                        </div>
+                        <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
+                            <label class="text-[10px] font-black text-slate-500 uppercase block">📞 Téléphone Direct MATT :</label>
+                            <input type="text" id="cfg-tel-call" value="+243980000338" class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 border-t pt-3">
+                        <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
+                            <label class="text-[10px] font-black text-slate-500 uppercase block">💳 Compte M-Pesa MATT :</label>
+                            <input type="text" id="cfg-mpesa" value="+243980000338" class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800">
+                        </div>
+                        <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
+                            <label class="text-[10px] font-black text-slate-500 uppercase block">💳 Compte Orange Money MATT :</label>
+                            <input type="text" id="cfg-orange" value="+243980000338" class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800">
+                        </div>
+                        <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
+                            <label class="text-[10px] font-black text-slate-500 uppercase block">💳 Compte Airtel Money MATT :</label>
+                            <input type="text" id="cfg-airtel" value="+243980000338" class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. COMMUNES PAR ZONES -->
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
+                    <div class="flex justify-between items-center border-b pb-3">
+                        <div>
+                            <h3 class="text-md font-black text-navy-800 uppercase tracking-wide">📍 Ajout & Attribution des Communes par Zones</h3>
+                            <p class="text-xs text-slate-500 font-semibold">Créez de nouvelles communes ou rattachez-les aux zones tarifaires (Zone 1 à 4).</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-white p-4 rounded-xl border border-slate-200 items-end">
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase block mb-1">Nom de la Commune :</label>
+                            <input type="text" id="cfg-new-commune-name" placeholder="Ex: N'Sele Extension, Kasavubu Est..." class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase block mb-1">Zone Géographique & Tarifaire :</label>
+                            <select id="cfg-new-commune-zone" class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800 bg-white">
+                                <option value="zone1">Zone 1 - Résidentielle (Gombe, Ngaliema...)</option>
+                                <option value="zone2">Zone 2 - Centrale (Bandalungwa, Lemba...)</option>
+                                <option value="zone3">Zone 3 - Est & Populaire (N'djili, Masina...)</option>
+                                <option value="zone4">Zone 4 - Périurbaine (Mont-Ngafula, Maluku...)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <button onclick="addNewCommuneToZone()" class="w-full py-2.5 bg-navy-800 hover:bg-navy-900 text-white font-black text-xs rounded-lg uppercase tracking-wider transition-all">
+                                ➕ Ajouter cette Commune
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto border border-slate-200 rounded-xl bg-white shadow-inner custom-scrollbar max-h-60 overflow-y-auto">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead>
+                                <tr class="bg-slate-100 text-slate-600 border-b sticky top-0">
+                                    <th class="p-3 font-bold uppercase">Commune</th>
+                                    <th class="p-3 font-bold uppercase">Zone Associée</th>
+                                    <th class="p-3 font-bold uppercase text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cfg-communes-table" class="divide-y divide-slate-100 font-medium"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 3. IDENTIFIANTS ADMIN -->
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
+                    <h3 class="text-md font-black text-navy-800 uppercase tracking-wide">🔑 Gestion, Création & Modification des Accès Administrateurs</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 bg-white p-4 rounded-xl border border-slate-200">
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase block">Nom :</label>
+                            <input type="text" id="cfg-new-user-name" placeholder="Ex: Jean Mukendi" class="w-full mt-1 px-3 py-1.5 border rounded-lg text-xs font-bold">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase block">Login / Tél :</label>
+                            <input type="tel" id="cfg-new-user-login" placeholder="Ex: 0810002233" class="w-full mt-1 px-3 py-1.5 border rounded-lg text-xs font-bold">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase block">Rôle :</label>
+                            <select id="cfg-new-user-role" class="w-full mt-1 px-3 py-1.5 border rounded-lg text-xs font-bold bg-white">
+                                <option value="Superviseur">Superviseur Opérations</option>
+                                <option value="Comptable">Comptable & Caisse</option>
+                                <option value="Administrateur">Administrateur Master</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase block">Mot de Passe :</label>
+                            <input type="text" id="cfg-new-user-pass" placeholder="••••••••" class="w-full mt-1 px-3 py-1.5 border rounded-lg text-xs font-bold">
+                        </div>
+                        <div class="sm:col-span-4 flex justify-end">
+                            <button onclick="createNewAdminAccount()" class="px-5 py-2 bg-navy-800 hover:bg-navy-900 text-white font-black text-xs rounded-lg uppercase tracking-wider">
+                                ➕ Créer cet accès
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto border border-slate-200 rounded-xl bg-white shadow-inner custom-scrollbar">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead>
+                                <tr class="bg-slate-100 text-slate-600 border-b">
+                                    <th class="p-3 font-bold uppercase">Nom</th>
+                                    <th class="p-3 font-bold uppercase">Identifiant / Login</th>
+                                    <th class="p-3 font-bold uppercase">Rôle</th>
+                                    <th class="p-3 font-bold uppercase">Mot de Passe</th>
+                                    <th class="p-3 font-bold uppercase text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cfg-admin-users-table" class="divide-y divide-slate-100 font-medium"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 4. AXES D'INTERVENTION -->
+                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
+                    <h3 class="text-md font-black text-navy-800 uppercase tracking-wide">📦 Gestion & Ajout d'Axes d'Intervention</h3>
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-white p-4 rounded-xl border border-slate-200">
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase block">Nom de l'Axe :</label>
+                            <input type="text" id="cfg-new-axe-name" placeholder="Ex: Bureaux & Entreprises" class="w-full mt-1 px-3 py-1.5 border rounded-lg text-xs font-bold">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase block">Icône :</label>
+                            <input type="text" id="cfg-new-axe-icon" placeholder="Ex: 🏢" class="w-full mt-1 px-3 py-1.5 border rounded-lg text-xs font-bold">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-600 uppercase block">Description :</label>
+                            <input type="text" id="cfg-new-axe-desc" placeholder="Ex: Nettoyage tertiaire" class="w-full mt-1 px-3 py-1.5 border rounded-lg text-xs font-semibold">
+                        </div>
+                        <div class="sm:col-span-3 flex justify-end">
+                            <button onclick="createNewAxe()" class="px-5 py-2 bg-mattOrange hover:bg-orange-600 text-white font-black text-xs rounded-lg uppercase tracking-wider">
+                                ➕ Ajouter cet Axe
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto border border-slate-200 rounded-xl bg-white shadow-inner custom-scrollbar">
+                        <table class="w-full text-left text-xs border-collapse">
+                            <thead>
+                                <tr class="bg-slate-100 text-slate-600 border-b">
+                                    <th class="p-3 font-bold uppercase">Icône</th>
+                                    <th class="p-3 font-bold uppercase">Axe</th>
+                                    <th class="p-3 font-bold uppercase">Description</th>
+                                    <th class="p-3 font-bold uppercase">Statut</th>
+                                    <th class="p-3 font-bold uppercase text-right">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cfg-axes-table" class="divide-y divide-slate-100 font-medium"></tbody>
+                        </table>
+                    </div>
+                </div>
+
             </div>
 
         </div>
     </main>
 
+    <!-- MODALE MODIFICATION IDENTIFIANT ADMIN -->
+    <div id="admin-edit-user-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
+        <div class="bg-white text-slate-900 w-full max-w-md rounded-2xl shadow-2xl p-6 border border-slate-200 flex flex-col gap-4 relative">
+            <button onclick="closeEditUserModal()" class="absolute top-4 right-4 text-slate-500 hover:text-slate-800 font-bold text-xl">✕</button>
+            <h3 class="text-lg font-black text-navy-800 border-b pb-2">✏️ Modifier l'Identifiant Administrateur</h3>
+            <input type="hidden" id="edit-user-id">
+            <div class="space-y-3 text-xs">
+                <div>
+                    <label class="font-bold text-slate-600 block mb-1">Nom Complet :</label>
+                    <input type="text" id="edit-user-name" class="w-full px-3 py-2 border rounded-lg font-bold text-slate-800">
+                </div>
+                <div>
+                    <label class="font-bold text-slate-600 block mb-1">Identifiant / Login :</label>
+                    <input type="text" id="edit-user-login" class="w-full px-3 py-2 border rounded-lg font-bold text-slate-800 font-mono">
+                </div>
+                <div>
+                    <label class="font-bold text-slate-600 block mb-1">Rôle :</label>
+                    <select id="edit-user-role" class="w-full px-3 py-2 border rounded-lg font-bold text-slate-800 bg-white">
+                        <option value="Superviseur">Superviseur Opérations</option>
+                        <option value="Comptable">Comptable & Caisse</option>
+                        <option value="Administrateur">Administrateur Master</option>
+                    </select>
+                </div>
+                <div>
+                    <label class="font-bold text-slate-600 block mb-1">Mot de Passe :</label>
+                    <input type="text" id="edit-user-pass" class="w-full px-3 py-2 border rounded-lg font-bold text-slate-800 font-mono">
+                </div>
+            </div>
+            <div class="flex justify-end gap-2 pt-3 border-t">
+                <button onclick="closeEditUserModal()" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-xl text-xs font-bold">Annuler</button>
+                <button onclick="saveEditedAdminUser()" class="px-5 py-2 bg-mattOrange text-white rounded-xl text-xs font-black uppercase">Enregistrer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODALE IDENTIFIANTS PARTENAIRE -->
+    <div id="admin-partner-credentials-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
+        <div class="bg-white text-slate-900 w-full max-w-md rounded-2xl shadow-2xl p-6 border border-slate-200 flex flex-col gap-4 relative">
+            <button onclick="closeCredentialsModal();" class="absolute top-4 right-4 text-slate-500 hover:text-slate-800 font-bold text-xl">✕</button>
+            <h3 class="text-lg font-black text-navy-800 border-b pb-2 flex items-center gap-2">
+                🔑 Identifiants : <span id="cred-partner-name" class="text-mattOrange"></span>
+            </h3>
+            <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-3 text-xs">
+                <div>
+                    <span class="text-[10px] text-slate-500 font-bold uppercase block">Téléphone / Login :</span>
+                    <b id="cred-partner-phone" class="font-mono text-sm text-navy-800 font-black"></b>
+                </div>
+                <div>
+                    <span class="text-[10px] text-slate-500 font-bold uppercase block">Mot de Passe :</span>
+                    <div class="flex items-center gap-2 mt-0.5">
+                        <b id="cred-partner-pass" class="font-mono text-sm text-mattOrange font-black bg-white px-2 py-1 border rounded-lg"></b>
+                        <button onclick="togglePasswordVisibility()" class="text-[10px] text-slate-500 underline font-bold">Afficher / Masquer</button>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 pt-2 border-t text-slate-600">
+                    <div><span>Commune :</span> <b id="cred-partner-commune" class="text-slate-800 block"></b></div>
+                    <div><span>Spécialité :</span> <b id="cred-partner-specialty" class="text-slate-800 block"></b></div>
+                </div>
+            </div>
+            <div class="flex justify-end pt-2">
+                <button onclick="closeCredentialsModal();" class="px-4 py-2 bg-navy-800 text-white rounded-xl text-xs font-bold uppercase">
+                    Fermer
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODALE AUDIT QUALITÉ -->
+    <div id="admin-monitoring-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
+        <div class="bg-white text-slate-900 w-full max-w-2xl rounded-2xl shadow-2xl p-6 border border-slate-200 flex flex-col gap-4 relative">
+            <button onclick="closeMonitoringModal();" class="absolute top-4 right-4 text-slate-500 hover:text-slate-800 font-bold text-xl">✕</button>
+            <h3 class="text-lg font-black text-navy-800 border-b pb-2">📋 Audit Qualité - Mission #<span id="audit-order-id"></span></h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                    <span class="text-xs font-black text-slate-500 block uppercase mb-2">📸 Avant (Client)</span>
+                    <div id="audit-media-before" class="h-44 w-full bg-slate-100 rounded-lg overflow-hidden flex items-center justify-center text-xs font-bold text-slate-400">
+                        Aucun média joint
+                    </div>
+                </div>
+                <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+                    <span class="text-xs font-black text-slate-500 block uppercase mb-2">📷 Après (Partenaire)</span>
+                    <div id="audit-media-after" class="h-44 w-full bg-slate-100 rounded-lg overflow-hidden flex items-center justify-center text-xs font-bold text-slate-400">
+                        Non clôturée
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pied de page -->
     <footer class="mt-12 border-t border-slate-800 bg-navy-800/90 py-6 text-center text-xs text-slate-400">
-        <p>MATT SARL • RCCM CD/KIN/RCCM/24-B-04106 • NIF A2441433N • Kinshasa, RDC</p>
+        <div class="container mx-auto px-4 max-w-5xl space-y-2">
+            <div class="flex flex-wrap justify-center items-center gap-x-6 gap-y-1 text-slate-300 font-bold">
+                <span>MATT SARL</span>
+                <span>RCCM : <b class="text-aqua font-mono">CD/KIN/RCCM/24-B-04106</b></span>
+                <span>NIF : <b class="text-aqua font-mono">A2441433N</b></span>
+                <span>Kinshasa, RDC</span>
+            </div>
+            <p class="text-[10px] text-slate-500">Console d'administration officielle éditée par MATT SARL by Global Tech Solutions.</p>
+        </div>
     </footer>
 
+    <!-- LOGIQUE JAVASCRIPT ET CONNECTEURS SUPABASE -->
     <script>
+        // CONFIGURATION SUPABASE OFFICIELLE
         const SUPABASE_URL = "https://vbriworyscymnmtzzdny.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZicml3b3J5c2N5bW5tdHp6ZG55Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzNzQwNTEsImV4cCI6MjEwMzk1MDA1MX0.VBZupVKj0srae0NT5BNZ0OeaIv9pAl2bl5L-Rd8ocJk";
         const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        let communesList = [
+            { name: "Gombe", zone: "zone1" }, { name: "Ngaliema", zone: "zone1" },
+            { name: "Limete", zone: "zone1" }, { name: "Kintambo", zone: "zone1" },
+            { name: "Bandalungwa", zone: "zone2" }, { name: "Kasa-Vubu", zone: "zone2" },
+            { name: "Kalamu", zone: "zone2" }, { name: "Lemba", zone: "zone2" },
+            { name: "Lingwala", zone: "zone2" }, { name: "Barumbu", zone: "zone2" },
+            { name: "Kinshasa", zone: "zone2" }, { name: "N'djili", zone: "zone3" },
+            { name: "Masina", zone: "zone3" }, { name: "Matete", zone: "zone3" },
+            { name: "Bumbu", zone: "zone3" }, { name: "Makala", zone: "zone3" },
+            { name: "Ngaba", zone: "zone3" }, { name: "Ngiri-Ngiri", zone: "zone3" },
+            { name: "Kimbanseke", zone: "zone3" }, { name: "Kisenso", zone: "zone3" },
+            { name: "Selembao", zone: "zone3" }, { name: "Mont-Ngafula", zone: "zone4" },
+            { name: "Nsele", zone: "zone4" }, { name: "Maluku", zone: "zone4" }
+        ];
+
+        const defaultTarifsGroup = {
+            'moto': 8000, 'tricycle': 12000, 'berline': 15000, 'suv': 25000,
+            'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000,
+            'opt-moteur-berline': 5000, 'opt-chassis-berline': 4000, 'opt-sieges-berline': 7000,
+            'opt-moteur-suv': 8000, 'opt-chassis-suv': 6000, 'opt-sieges-suv': 10000,
+            'opt-moteur-poids-lourd': 15000, 'opt-chassis-poids-lourd': 12000, 'opt-sieges-poids-lourd': 15000,
+            'opt-moteur-bus-207': 6000, 'opt-chassis-bus-207': 5000, 'opt-sieges-bus-207': 9000,
+            'opt-moteur-bus-long': 10000, 'opt-chassis-bus-long': 8000, 'opt-sieges-bus-long': 12000,
+            'opt-moteur-remorque': 5000, 'opt-chassis-remorque': 6000, 'opt-sieges-remorque': 5000,
+            'tapis': 2000, 'moquette': 2000, 'vitres': 1500, 'carreaux': 1000, 'baie': 3000, 'panneau': 4000,
+            'canape-textile': 4500, 'canape-lin': 6000, 'canape-velours': 8000, 'canape-cuir': 12000, 'matelas': 5000,
+            'desinf': 10000, 'desinsect': 12000, 'derat': 14000, 'immondices': 15000, 'fosse': 40000
+        };
+
+        const state = {
+            currentGroupKey: 'standard',
+            pricesByGroup: {
+                'standard': { ...defaultTarifsGroup },
+                'zone1': { ...defaultTarifsGroup, 'berline': 20000, 'suv': 30000 },
+                'zone2': { ...defaultTarifsGroup, 'berline': 15000, 'suv': 25000 },
+                'zone3': { ...defaultTarifsGroup, 'berline': 12000, 'suv': 20000 },
+                'zone4': { ...defaultTarifsGroup, 'fosse': 50000, 'immondices': 20000 }
+            },
+            adminUsers: [
+                { id: "adm1", name: "Direction Générale", login: "0980000338", role: "Administrateur Master", pass: "MATT2026" }
+            ],
+            axes: [
+                { id: "axe_auto", name: "Axe Automobile", icon: "🚗", desc: "Nettoyage véhicules", status: "Actif" },
+                { id: "axe_maison", name: "Axe Maison", icon: "🏡", desc: "Canapés, surfaces et vitrerie", status: "Actif" },
+                { id: "axe_env", name: "Axe Environnement & 3D", icon: "🌱", desc: "Désinfection, dératisation et vidange", status: "Actif" }
+            ],
+            partners: [],
+            orders: [],
+            recharges: [],
+            commissionAccount: 0,
+            payouts: []
+        };
+
+        let currentTargetPartnerId = null;
+        let isPassVisible = false;
 
         function showToast(message, type = "success") {
             const container = document.getElementById('toast-container');
@@ -211,11 +876,12 @@
             const login = document.getElementById('admin-login-input').value.trim();
             const pass = document.getElementById('admin-pass-input').value.trim();
 
-            if ((login === "0980000338" && pass === "MATT2026") || pass === "MATT2026") {
+            const matched = state.adminUsers.find(u => u.login === login && u.pass === pass);
+            if (matched || (login === "0980000338" && pass === "MATT2026") || pass === "MATT2026") {
                 document.getElementById('admin-auth-screen').classList.add('hidden');
                 document.getElementById('admin-dashboard-screen').classList.remove('hidden');
                 document.getElementById('btn-lock-session').classList.remove('hidden');
-                showToast("Accès validé Direction Générale.");
+                showToast("Accès validé. Bienvenue à la Direction.", "success");
                 loadSupabaseOrders();
                 loadSupabasePartners();
                 loadSupabaseRecharges();
@@ -228,97 +894,537 @@
             document.getElementById('admin-dashboard-screen').classList.add('hidden');
             document.getElementById('admin-auth-screen').classList.remove('hidden');
             document.getElementById('btn-lock-session').classList.add('hidden');
+            document.getElementById('admin-login-input').value = '';
+            document.getElementById('admin-pass-input').value = '';
+            showToast("Session administrateur verrouillée.", "info");
         }
 
-        function switchAdminTab(id, btn) {
+        function switchAdminTab(tabId, btn) {
             document.querySelectorAll('.admin-subview').forEach(s => s.classList.add('hidden'));
-            document.querySelectorAll('.admin-tab-btn').forEach(b => b.className = "admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 rounded-xl font-bold whitespace-nowrap");
-            document.getElementById(id).classList.remove('hidden');
-            if (btn) btn.className = "admin-tab-btn px-4 py-2.5 bg-navy-800 text-white rounded-xl font-bold whitespace-nowrap active";
-        }
-
-        async function loadSupabaseOrders() {
-            const { data } = await db.from('orders').select('*').order('id', { ascending: false });
-            const tbody = document.getElementById('admin-orders-table');
-            tbody.innerHTML = '';
-
-            (data || []).forEach(o => {
-                tbody.innerHTML += `
-                    <tr class="border-b hover:bg-slate-50">
-                        <td class="p-3 font-mono font-bold">#${o.id}</td>
-                        <td class="p-3"><b>${o.client_name}</b><br><span class="text-slate-400 font-mono">${o.client_phone}</span></td>
-                        <td class="p-3"><b>${o.commune}</b> - ${o.avenue || o.address || ''}</td>
-                        <td class="p-3 font-mono font-bold">${Number(o.total_amount).toLocaleString('fr-FR')} CDF</td>
-                        <td class="p-3"><span class="px-2 py-0.5 rounded bg-slate-100 font-bold">${o.status}</span></td>
-                        <td class="p-3 font-mono">${o.partner_id ? 'Attribué' : 'En recherche'}</td>
-                    </tr>
-                `;
+            document.querySelectorAll('.admin-tab-btn').forEach(b => {
+                b.className = "admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 font-bold rounded-xl whitespace-nowrap";
             });
+            document.getElementById(tabId).classList.remove('hidden');
+            if (btn) btn.className = "admin-tab-btn px-4 py-2.5 bg-navy-800 text-white font-bold rounded-xl whitespace-nowrap active";
+
+            if (tabId === 'admin-config') {
+                renderCommunesTable();
+                renderAdminUsersTable();
+                renderAxesTable();
+            } else if (tabId === 'admin-stats') {
+                genererTableauStatistiques();
+            }
         }
 
-        async function loadSupabasePartners() {
-            const { data } = await db.from('partners').select('*').order('created_at', { ascending: false });
-            const tbody = document.getElementById('admin-partners-table');
-            tbody.innerHTML = '';
+        function scrollPriceSection(elementId, offset) {
+            document.getElementById(elementId)?.scrollBy({ top: offset, behavior: 'smooth' });
+        }
 
-            (data || []).forEach(p => {
+        // ==========================================
+        // SUPABASE: CHARGEMENT DES DONNÉES
+        // ==========================================
+        async function loadSupabaseOrders() {
+            const { data, error } = await db.from('orders').select('*').order('id', { ascending: false });
+            if (!error && data) {
+                state.orders = data;
+                renderAdminOrders();
+            }
+        }
+
+        function renderAdminOrders() {
+            const tbody = document.getElementById('admin-orders-table');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            const filterAxe = document.getElementById('admin-filter-order-axe').value;
+
+            state.orders.forEach(o => {
+                if (filterAxe !== "Tous" && o.axe && !o.axe.includes(filterAxe)) return;
                 tbody.innerHTML += `
-                    <tr class="border-b hover:bg-slate-50">
-                        <td class="p-3 font-bold">${p.name}</td>
-                        <td class="p-3 font-mono">${p.phone}</td>
-                        <td class="p-3">${p.commune}</td>
-                        <td class="p-3">${p.specialty}</td>
-                        <td class="p-3 font-mono font-bold">${Number(p.wallet).toLocaleString('fr-FR')} CDF</td>
+                    <tr class="hover:bg-slate-50 border-b">
+                        <td class="p-3 font-mono font-bold">#${o.id}</td>
+                        <td class="p-3">${o.axe || 'Auto & Maison'}</td>
+                        <td class="p-3"><b>${o.client_name}</b><br><span class="text-slate-400 font-mono">${o.client_phone}</span></td>
+                        <td class="p-3">${o.description || '-'}</td>
+                        <td class="p-3 font-bold">${o.commune} <span class="text-[10px] text-slate-400 font-normal">(${o.avenue || o.address || ''})</span></td>
+                        <td class="p-3 font-mono font-bold">${Number(o.total_amount || 0).toLocaleString('fr-FR')} CDF</td>
+                        <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100">${o.status}</span></td>
+                        <td class="p-3">${o.partner_id ? 'Attribué' : '<span class="text-orange-500">Non attribué</span>'}</td>
                         <td class="p-3 text-right">
-                            <button onclick="creditPartner('${p.id}', 15000)" class="px-2 py-1 bg-green-100 text-green-800 font-bold rounded">+15k</button>
+                            <button onclick="openMonitoringModal('${o.id}')" class="px-2 py-1 bg-aqua/20 text-navy-800 font-bold rounded text-[10px]">Audit</button>
                         </td>
                     </tr>
                 `;
             });
+
+            if (state.orders.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="9" class="p-4 text-center text-slate-400">Aucune commande enregistrée.</td></tr>`;
+            }
+        }
+
+        async function loadSupabasePartners() {
+            const { data, error } = await db.from('partners').select('*').order('created_at', { ascending: false });
+            if (!error && data) {
+                state.partners = data;
+                renderAdminPartners();
+                filterManualPartnerSelect();
+            }
+        }
+
+        function renderAdminPartners() {
+            const tbody = document.getElementById('admin-partners-table');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            const filterCommune = document.getElementById('admin-filter-commune').value;
+            const filterAxe = document.getElementById('admin-filter-partner-axe').value;
+            const search = document.getElementById('admin-search-partner').value.toLowerCase();
+
+            state.partners.forEach(p => {
+                if (filterCommune !== "Toutes" && p.commune !== filterCommune) return;
+                if (filterAxe !== "Tous" && p.specialty && !p.specialty.includes(filterAxe)) return;
+                if (search && !p.name.toLowerCase().includes(search) && !p.phone.includes(search)) return;
+
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50 border-b">
+                        <td class="p-3"><b>${p.name}</b><br><span class="text-slate-400 font-mono">${p.phone}</span></td>
+                        <td class="p-3">${p.specialty}</td>
+                        <td class="p-3 font-bold">${p.commune}</td>
+                        <td class="p-3">${p.billing_mode || 'commission'}</td>
+                        <td class="p-3 font-mono">${Number(p.wallet || 0).toLocaleString('fr-FR')} CDF</td>
+                        <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold ${p.status === 'Actif' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}">${p.status || 'Actif'}</span></td>
+                        <td class="p-3 text-right space-x-1">
+                            <button onclick="openCredentialsModal('${p.id}')" class="px-2 py-1 bg-sky-100 text-sky-800 rounded font-bold">👁️ Voir</button>
+                            <button onclick="togglePartnerStatus('${p.id}')" class="px-2 py-1 bg-slate-100 rounded font-bold">${p.status === 'Actif' ? 'Désactiver' : 'Activer'}</button>
+                            <button onclick="deletePartner('${p.id}')" class="px-2 py-1 bg-red-100 text-red-700 rounded font-bold">🗑️</button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            if (state.partners.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="7" class="p-4 text-center text-slate-400">Aucun prestataire dans l'annuaire.</td></tr>`;
+            }
         }
 
         async function loadSupabaseRecharges() {
-            const { data } = await db.from('recharges').select('*').eq('status', 'En attente');
+            const { data, error } = await db.from('recharges').select('*').eq('status', 'En attente');
             const tbody = document.getElementById('admin-recharges-table');
+            if (!tbody) return;
             tbody.innerHTML = '';
 
             (data || []).forEach(r => {
                 tbody.innerHTML += `
                     <tr class="border-b hover:bg-slate-50">
                         <td class="p-3 font-bold">${r.partner_name}</td>
+                        <td class="p-3">${r.mode}</td>
                         <td class="p-3 font-mono font-bold">${Number(r.amount).toLocaleString('fr-FR')} CDF</td>
                         <td class="p-3 font-mono">${r.ref}</td>
                         <td class="p-3 text-right">
-                            <button onclick="validerRechargeSupabase(${r.id}, '${r.partner_id}', ${r.amount})" class="px-3 py-1 bg-green-600 text-white font-bold rounded">Valider</button>
+                            <button onclick="validerRechargeSupabase(${r.id}, '${r.partner_id}', ${r.amount})" class="px-3 py-1 bg-green-600 hover:bg-green-700 text-white font-bold rounded">Valider</button>
                         </td>
                     </tr>
                 `;
             });
 
             if (!data || data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="4" class="p-3 text-center text-slate-400">Aucune demande en attente.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="p-3 text-center text-slate-400">Aucune déclaration en attente.</td></tr>`;
             }
         }
 
         async function validerRechargeSupabase(rechargeId, partnerId, amount) {
-            const { data: partner } = await db.from('partners').select('wallet').eq('id', partnerId).single();
-            if (partner) {
-                await db.from('partners').update({ wallet: partner.wallet + amount }).eq('id', partnerId);
+            const { data: p } = await db.from('partners').select('wallet').eq('id', partnerId).single();
+            if (p) {
+                await db.from('partners').update({ wallet: (p.wallet || 0) + amount }).eq('id', partnerId);
                 await db.from('recharges').update({ status: 'Validé' }).eq('id', rechargeId);
-                showToast("Recharge validée et créditée !");
+                state.commissionAccount += Math.floor(amount * 0.10);
+                document.getElementById('admin-commission-balance').innerText = `${state.commissionAccount.toLocaleString('fr-FR')} CDF`;
+                showToast("Recharge validée et créditée avec succès !");
                 loadSupabaseRecharges();
                 loadSupabasePartners();
             }
         }
 
-        async function creditPartner(partnerId, amount) {
-            const { data } = await db.from('partners').select('wallet').eq('id', partnerId).single();
-            if (data) {
-                await db.from('partners').update({ wallet: data.wallet + amount }).eq('id', partnerId);
-                showToast("Partenaire crédité !");
-                loadSupabasePartners();
+        function filterManualPartnerSelect() {
+            const select = document.getElementById('admin-manual-recharge-partner');
+            if (!select) return;
+            select.innerHTML = '';
+            const search = document.getElementById('admin-manual-search-input').value.toLowerCase();
+            state.partners.forEach(p => {
+                if (!search || p.name.toLowerCase().includes(search) || p.phone.includes(search)) {
+                    select.insertAdjacentHTML('beforeend', `<option value="${p.id}">${p.name} (${p.phone})</option>`);
+                }
+            });
+        }
+
+        function adjustManualAmountByMode() {
+            const mode = document.getElementById('admin-manual-recharge-mode').value;
+            const input = document.getElementById('admin-manual-recharge-amount');
+            input.value = mode === 'journalier' ? 15000 : mode === 'mensuel' ? 150000 : '';
+        }
+
+        async function executeManualRecharge() {
+            const pId = document.getElementById('admin-manual-recharge-partner').value;
+            const mode = document.getElementById('admin-manual-recharge-mode').value;
+            const amount = parseFloat(document.getElementById('admin-manual-recharge-amount').value) || 0;
+            const p = state.partners.find(x => x.id === pId);
+            if (!p) return;
+
+            let updatePayload = { billing_mode: mode };
+            if (mode === 'commission') {
+                updatePayload.wallet = (p.wallet || 0) + amount;
+            } else if (mode === 'journalier') {
+                const today = new Date().toISOString().split('T')[0];
+                updatePayload.expires_at = `${today}T23:59:59Z`;
+            } else if (mode === 'mensuel') {
+                const d = new Date();
+                d.setDate(d.getDate() + 30);
+                updatePayload.expires_at = `${d.toISOString().split('T')[0]}T23:59:59Z`;
+            }
+
+            await db.from('partners').update(updatePayload).eq('id', pId);
+            showToast("Opération appliquée au partenaire.");
+            loadSupabasePartners();
+        }
+
+        function payoutCommissions() {
+            const amount = parseFloat(document.getElementById('admin-payout-amount').value) || 0;
+            if (amount <= 0 || amount > state.commissionAccount) {
+                showToast("Montant non valide ou solde insuffisant.", "error");
+                return;
+            }
+            state.commissionAccount -= amount;
+            state.payouts.push({
+                date: new Date().toISOString().split('T')[0],
+                network: document.getElementById('admin-payout-network').value,
+                amount: amount,
+                status: "Validé"
+            });
+            document.getElementById('admin-commission-balance').innerText = `${state.commissionAccount.toLocaleString('fr-FR')} CDF`;
+            renderAdminPayouts();
+            showToast("Retrait effectué avec succès.", "success");
+        }
+
+        function renderAdminPayouts() {
+            const tbody = document.getElementById('admin-payouts-table');
+            if (!tbody) return;
+            tbody.innerHTML = state.payouts.map(p => `
+                <tr class="border-b">
+                    <td class="p-3">${p.date}</td>
+                    <td class="p-3">${p.network}</td>
+                    <td class="p-3 font-mono font-bold text-red-600">-${p.amount.toLocaleString('fr-FR')} CDF</td>
+                    <td class="p-3"><span class="bg-green-100 text-green-800 px-2 py-0.5 rounded">${p.status}</span></td>
+                </tr>
+            `).join('');
+        }
+
+        // ==========================================
+        // CONFIGURATION DES PRIX
+        // ==========================================
+        function onCommuneGroupChange() {
+            const groupKey = document.getElementById('admin-commune-group-select').value;
+            state.currentGroupKey = groupKey;
+            const prices = state.pricesByGroup[groupKey] || state.pricesByGroup['standard'];
+            for (let k in prices) {
+                const input = document.getElementById(`p-${k}`);
+                if (input) input.value = prices[k];
             }
         }
+
+        function saveTarifsForCurrentGroup() {
+            const groupKey = state.currentGroupKey;
+            if (!state.pricesByGroup[groupKey]) state.pricesByGroup[groupKey] = {};
+            document.querySelectorAll('#admin-prix input[type="number"]').forEach(input => {
+                const k = input.id.replace('p-', '');
+                state.pricesByGroup[groupKey][k] = parseFloat(input.value) || 0;
+            });
+            showToast("Grille tarifaire sauvegardée pour ce groupe.", "success");
+        }
+
+        // ==========================================
+        // ÉDITEUR DES CGU
+        // ==========================================
+        function resetCguToOfficial() {
+            const defaultCgu = `ARTICLE 1 : OBJET ET DÉFINITIONS\nLes présentes CGU régissent la plateforme MATT Clean'App éditée par MATT SARL (RCCM CD/KIN/RCCM/24-B-04106, NIF A2441433N).\n\nARTICLE 2 : SECTEURS D'ACTIVITÉ\nAutomobile, Maison et Environnement 3D.\n\nARTICLE 3 : TARIFICATION EN FRANCS CONGOLAIS (CDF)\nToutes les transactions s'effectuent exclusivement en CDF.\n\nARTICLE 4 : RÈGLES DES FORFAITS ET COMMISSIONS\nLe forfait journalier expire automatiquement à 23h59 le jour de son activation.`;
+            document.getElementById('admin-cgu-textarea').value = defaultCgu;
+            updateCguLivePreview();
+        }
+
+        function updateCguLivePreview() {
+            const text = document.getElementById('admin-cgu-textarea').value;
+            document.getElementById('admin-cgu-preview').innerHTML = text.split('\n\n').map(p => `<p class="mb-2">${p.replace(/\n/g, '<br>')}</p>`).join('');
+        }
+
+        function saveCguContent() {
+            showToast("Nouvelles CGU publiées avec succès !", "success");
+        }
+
+        // ==========================================
+        // STATISTIQUES
+        // ==========================================
+        function genererTableauStatistiques() {
+            const tbody = document.getElementById('stats-table-body');
+            if (!tbody) return;
+            tbody.innerHTML = communesList.map((c, i) => {
+                const ordersInCommune = state.orders.filter(o => o.commune === c.name).length;
+                return `
+                    <tr class="hover:bg-slate-50 border-b">
+                        <td class="p-3 font-mono text-slate-400">${i + 1}</td>
+                        <td class="p-3 font-bold">${c.name}</td>
+                        <td class="p-3 text-center"><span class="bg-slate-100 px-2 py-0.5 rounded text-[10px] font-bold uppercase">${c.zone}</span></td>
+                        <td class="p-3 text-center">${ordersInCommune} U</td>
+                        <td class="p-3 text-center">0 P</td>
+                        <td class="p-3 text-center">0 P</td>
+                        <td class="p-3 text-center">0 P</td>
+                        <td class="p-3 text-center">0 m³</td>
+                        <td class="p-3 text-center">0 m³</td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function exporterDonnees() {
+            let csv = "data:text/csv;charset=utf-8,N,Commune,Zone,Commandes_Total\n";
+            communesList.forEach((c, idx) => {
+                const count = state.orders.filter(o => o.commune === c.name).length;
+                csv += `${idx + 1},${c.name},${c.zone},${count}\n`;
+            });
+            const link = document.createElement("a");
+            link.setAttribute("href", encodeURI(csv));
+            link.setAttribute("download", "MATT_CleanApp_Stats.csv");
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // ==========================================
+        // CONFIGURATION SYSTÈME (CONTACTS, COMMUNES, ADMINS, AXES)
+        // ==========================================
+        function saveSysContactConfig() {
+            showToast("Coordonnées Mobile Money et WhatsApp sauvegardées avec succès !", "success");
+        }
+
+        function renderCommunesTable() {
+            const tbody = document.getElementById('cfg-communes-table');
+            if (!tbody) return;
+            tbody.innerHTML = '';
+            const zoneLabels = {
+                'zone1': 'Zone 1 - Résidentielle',
+                'zone2': 'Zone 2 - Centrale',
+                'zone3': 'Zone 3 - Est & Populaire',
+                'zone4': 'Zone 4 - Périurbaine'
+            };
+
+            communesList.forEach((c, index) => {
+                tbody.innerHTML += `
+                    <tr class="hover:bg-slate-50 border-b">
+                        <td class="p-3 font-bold text-slate-800">${c.name}</td>
+                        <td class="p-3"><span class="bg-sky-100 text-sky-800 font-bold px-2 py-0.5 rounded text-[11px]">${zoneLabels[c.zone] || c.zone}</span></td>
+                        <td class="p-3 text-right">
+                            <button onclick="deleteCommune(${index})" class="text-red-600 font-bold hover:underline">Supprimer</button>
+                        </td>
+                    </tr>
+                `;
+            });
+        }
+
+        function addNewCommuneToZone() {
+            const name = document.getElementById('cfg-new-commune-name').value.trim();
+            const zone = document.getElementById('cfg-new-commune-zone').value;
+            if (!name) return showToast("Veuillez saisir un nom de commune.", "error");
+
+            if (communesList.some(c => c.name.toLowerCase() === name.toLowerCase())) {
+                return showToast("Cette commune existe déjà.", "error");
+            }
+
+            communesList.push({ name, zone });
+            document.getElementById('cfg-new-commune-name').value = '';
+            renderCommunesTable();
+            initCommunesOptions();
+            genererTableauStatistiques();
+            showToast(`Commune ${name} ajoutée !`);
+        }
+
+        function deleteCommune(index) {
+            communesList.splice(index, 1);
+            renderCommunesTable();
+            initCommunesOptions();
+            genererTableauStatistiques();
+            showToast("Commune retirée.");
+        }
+
+        function createNewAdminAccount() {
+            const name = document.getElementById('cfg-new-user-name').value.trim();
+            const login = document.getElementById('cfg-new-user-login').value.trim();
+            const role = document.getElementById('cfg-new-user-role').value;
+            const pass = document.getElementById('cfg-new-user-pass').value.trim();
+            if (!name || !login || !pass) return showToast("Remplissez tous les champs.", "error");
+
+            state.adminUsers.push({ id: `adm_${Date.now()}`, name, login, role, pass });
+            document.getElementById('cfg-new-user-name').value = '';
+            document.getElementById('cfg-new-user-login').value = '';
+            document.getElementById('cfg-new-user-pass').value = '';
+            renderAdminUsersTable();
+            showToast("Nouvel accès administrateur créé.");
+        }
+
+        function renderAdminUsersTable() {
+            const tbody = document.getElementById('cfg-admin-users-table');
+            if (!tbody) return;
+            tbody.innerHTML = state.adminUsers.map(u => `
+                <tr class="border-b">
+                    <td class="p-3 font-bold text-slate-800">${u.name}</td>
+                    <td class="p-3 font-mono font-bold text-slate-700">${u.login}</td>
+                    <td class="p-3"><span class="bg-sky-100 text-sky-800 px-2 py-0.5 rounded font-bold text-[10px]">${u.role}</span></td>
+                    <td class="p-3 font-mono font-bold text-mattOrange">${u.pass}</td>
+                    <td class="p-3 text-right space-x-2">
+                        <button onclick="openEditUserModal('${u.id}')" class="text-sky-600 font-bold hover:underline">✏️ Modifier</button>
+                        <button onclick="deleteAdminUser('${u.id}')" class="text-red-600 font-bold hover:underline">Supprimer</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function openEditUserModal(id) {
+            const user = state.adminUsers.find(u => u.id === id);
+            if (!user) return;
+            document.getElementById('edit-user-id').value = user.id;
+            document.getElementById('edit-user-name').value = user.name;
+            document.getElementById('edit-user-login').value = user.login;
+            document.getElementById('edit-user-role').value = user.role;
+            document.getElementById('edit-user-pass').value = user.pass;
+            document.getElementById('admin-edit-user-modal').classList.remove('hidden');
+        }
+
+        function closeEditUserModal() {
+            document.getElementById('admin-edit-user-modal').classList.add('hidden');
+        }
+
+        function saveEditedAdminUser() {
+            const id = document.getElementById('edit-user-id').value;
+            const name = document.getElementById('edit-user-name').value.trim();
+            const login = document.getElementById('edit-user-login').value.trim();
+            const role = document.getElementById('edit-user-role').value;
+            const pass = document.getElementById('edit-user-pass').value.trim();
+
+            const user = state.adminUsers.find(u => u.id === id);
+            if (user) {
+                user.name = name;
+                user.login = login;
+                user.role = role;
+                user.pass = pass;
+                renderAdminUsersTable();
+                closeEditUserModal();
+                showToast("Accès administrateur modifié.");
+            }
+        }
+
+        function deleteAdminUser(id) {
+            if (state.adminUsers.length <= 1) return showToast("Impossible de supprimer le dernier compte administrateur.", "error");
+            state.adminUsers = state.adminUsers.filter(u => u.id !== id);
+            renderAdminUsersTable();
+            showToast("Accès supprimé.");
+        }
+
+        function createNewAxe() {
+            const name = document.getElementById('cfg-new-axe-name').value.trim();
+            const icon = document.getElementById('cfg-new-axe-icon').value.trim() || '🏢';
+            const desc = document.getElementById('cfg-new-axe-desc').value.trim();
+            if (!name) return showToast("Nom d'axe requis.", "error");
+            state.axes.push({ id: `axe_${Date.now()}`, name, icon, desc, status: "Actif" });
+            renderAxesTable();
+            showToast("Nouvel axe créé.");
+        }
+
+        function renderAxesTable() {
+            const tbody = document.getElementById('cfg-axes-table');
+            if (!tbody) return;
+            tbody.innerHTML = state.axes.map(a => `
+                <tr class="border-b">
+                    <td class="p-3 text-lg">${a.icon}</td>
+                    <td class="p-3 font-bold">${a.name}</td>
+                    <td class="p-3">${a.desc}</td>
+                    <td class="p-3"><span class="px-2 py-0.5 rounded bg-green-100 text-green-800 text-[10px] font-bold">${a.status}</span></td>
+                    <td class="p-3 text-right"><button onclick="deleteAxe('${a.id}')" class="text-red-600 font-bold">Supprimer</button></td>
+                </tr>
+            `).join('');
+        }
+
+        function deleteAxe(id) {
+            state.axes = state.axes.filter(a => a.id !== id);
+            renderAxesTable();
+            showToast("Axe retiré.");
+        }
+
+        // ==========================================
+        // MODALES ET INITIALISATION
+        // ==========================================
+        function openCredentialsModal(id) {
+            currentTargetPartnerId = id;
+            const p = state.partners.find(x => x.id === id);
+            if (!p) return;
+            document.getElementById('cred-partner-name').innerText = p.name;
+            document.getElementById('cred-partner-phone').innerText = p.phone;
+            document.getElementById('cred-partner-commune').innerText = p.commune;
+            document.getElementById('cred-partner-specialty').innerText = p.specialty;
+            document.getElementById('cred-partner-pass').innerText = "••••••••";
+            isPassVisible = false;
+            document.getElementById('admin-partner-credentials-modal').classList.remove('hidden');
+        }
+
+        function togglePasswordVisibility() {
+            const p = state.partners.find(x => x.id === currentTargetPartnerId);
+            if (!p) return;
+            isPassVisible = !isPassVisible;
+            document.getElementById('cred-partner-pass').innerText = isPassVisible ? (p.password || 'Non défini') : "••••••••";
+        }
+
+        function closeCredentialsModal() {
+            document.getElementById('admin-partner-credentials-modal').classList.add('hidden');
+        }
+
+        async function togglePartnerStatus(id) {
+            const p = state.partners.find(x => x.id === id);
+            if (!p) return;
+            const nextStatus = p.status === 'Actif' ? 'Désactivé' : 'Actif';
+            await db.from('partners').update({ status: nextStatus }).eq('id', id);
+            p.status = nextStatus;
+            renderAdminPartners();
+            showToast("Statut mis à jour.");
+        }
+
+        async function deletePartner(id) {
+            await db.from('partners').delete().eq('id', id);
+            state.partners = state.partners.filter(x => x.id !== id);
+            renderAdminPartners();
+            showToast("Partenaire supprimé de la base.");
+        }
+
+        function openMonitoringModal(id) {
+            document.getElementById('audit-order-id').innerText = id;
+            document.getElementById('admin-monitoring-modal').classList.remove('hidden');
+        }
+
+        function closeMonitoringModal() {
+            document.getElementById('admin-monitoring-modal').classList.add('hidden');
+        }
+
+        function initCommunesOptions() {
+            const select = document.getElementById('admin-filter-commune');
+            if (!select) return;
+            select.innerHTML = '<option value="Toutes">Toutes les Communes</option>';
+            communesList.forEach(c => {
+                select.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
+            });
+        }
+
+        window.onload = function() {
+            initCommunesOptions();
+            onCommuneGroupChange();
+            resetCguToOfficial();
+            renderCommunesTable();
+            renderAdminUsersTable();
+            renderAxesTable();
+            genererTableauStatistiques();
+        };
     </script>
 </body>
 </html>
