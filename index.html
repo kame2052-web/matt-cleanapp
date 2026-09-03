@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" class="h-full">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MATT Clean'App by Global Tech Solutions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>MATT Clean'App</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Supabase JS Client -->
@@ -23,6 +23,8 @@
         }
     </script>
     <style>
+        /* Touch optimization & smooth scrolling */
+        * { -webkit-tap-highlight-color: transparent; }
         .watermark-bg::before {
             content: "";
             position: fixed;
@@ -31,680 +33,502 @@
             background-repeat: no-repeat;
             background-position: center;
             background-attachment: fixed;
-            background-size: 35%;
-            opacity: 0.04;
+            background-size: 55%;
+            opacity: 0.03;
             z-index: -1;
             pointer-events: none;
         }
-        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; border-radius: 6px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 6px; }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
     </style>
 </head>
-<body class="bg-navy-900 text-slate-100 min-h-screen watermark-bg font-sans flex flex-col justify-between">
+<body class="bg-navy-900 text-slate-100 min-h-screen watermark-bg font-sans flex flex-col justify-between pb-20 md:pb-6 select-none">
 
-    <!-- Toast Notifications -->
-    <div id="toast-container" class="fixed bottom-5 right-5 z-[9999] flex flex-col gap-2 max-w-sm w-full"></div>
+    <!-- Toast Notifications Mobile -->
+    <div id="toast-container" class="fixed top-4 inset-x-4 z-[9999] flex flex-col gap-2 max-w-sm mx-auto pointer-events-none"></div>
 
-    <!-- En-tête de navigation -->
-    <header class="bg-navy-800/95 border-b-2 border-aqua px-4 py-3 md:px-8 flex flex-col md:flex-row justify-between items-center gap-4 sticky top-0 z-50 backdrop-blur-sm shadow-xl">
-        <div class="flex items-center gap-3 cursor-pointer" onclick="showView('view-gateway')">
-            <div class="w-14 h-14 bg-white rounded-2xl shadow-md border border-aqua/30 overflow-hidden flex items-center justify-center flex-shrink-0">
-                <img src="cleanapp.png" alt="Logo" class="w-full h-full object-cover transform scale-110" onerror="this.src='https://placehold.co/120x120/ffffff/0a192f?text=CleanApp'">
+    <!-- En-tête mobile épuré -->
+    <header class="bg-navy-800/95 border-b border-aqua/40 px-3 py-2.5 md:px-8 flex justify-between items-center sticky top-0 z-40 backdrop-blur-md shadow-lg">
+        <div class="flex items-center gap-2.5 cursor-pointer" onclick="showView('view-gateway')">
+            <div class="w-10 h-10 md:w-12 md:h-12 bg-white rounded-xl shadow-md border border-aqua/30 p-0.5 flex items-center justify-center flex-shrink-0">
+                <img src="cleanapp.jpg" alt="Logo" class="w-full h-full object-contain" onerror="this.src='cleanapp.png'">
             </div>
             <div class="flex flex-col">
-                <span class="text-xl md:text-2xl font-black text-white tracking-wide">MATT Clean'App</span>
-                <span class="text-[9px] text-aqua uppercase tracking-widest font-bold">by Global Tech Solutions</span>
-            </div>
-        </div>
-        
-        <div class="flex items-center gap-2 md:gap-3">
-            <button onclick="showView('view-gateway')" class="px-3 py-1.5 rounded-lg text-xs font-bold text-slate-300 hover:text-white bg-slate-800 border border-slate-700 transition flex items-center gap-1.5">
-                🏠 Accueil / Changer d'espace
-            </button>
-            <div id="logged-user-chip" class="hidden items-center gap-2 bg-navy-900 px-3 py-1.5 rounded-lg border border-aqua/40 text-xs">
-                <span id="logged-user-name" class="font-bold text-aqua">Utilisateur</span>
-                <button onclick="logoutCurrentSession()" class="text-red-400 hover:text-red-300 font-bold ml-1">Déconnexion ✕</button>
+                <span class="text-lg md:text-xl font-black text-white leading-tight tracking-wide">MATT Clean'App</span>
+                <span class="text-[8px] md:text-[9px] text-aqua uppercase font-bold tracking-widest">by Global Tech Solutions</span>
             </div>
         </div>
 
-        <div class="text-right hidden sm:block">
-            <span class="text-[11px] font-black text-white block tracking-wide">MATT Clean'App</span>
-            <span class="text-[9px] text-aqua uppercase font-bold tracking-widest">by Global Tech Solutions</span>
-            <span class="text-[10px] text-slate-400 block font-semibold">Kinshasa (RDC)</span>
-            <button onclick="showView('view-cgu')" class="text-[10px] text-aqua hover:underline font-bold block mt-0.5">Mentions Légales & CGU ⚖️</button>
+        <div class="flex items-center gap-2">
+            <div id="logged-user-chip" class="hidden items-center gap-1.5 bg-navy-900 px-2.5 py-1 rounded-xl border border-aqua/40 text-[11px]">
+                <span id="logged-user-name" class="font-bold text-aqua max-w-[100px] truncate">Utilisateur</span>
+                <button onclick="logoutCurrentSession()" class="text-red-400 font-bold ml-1">✕</button>
+            </div>
+            <button onclick="showView('view-gateway')" class="p-2 rounded-xl bg-slate-800 text-slate-300 text-xs font-bold md:hidden">
+                🏠
+            </button>
         </div>
     </header>
 
-    <!-- Navigation informative -->
-    <div class="bg-navy-800/80 border-b border-slate-800 px-4 py-2 flex justify-center gap-6 text-xs font-bold">
-        <button onclick="showView('view-presentation')" class="text-slate-300 hover:text-aqua transition">À Propos de MATT 🏢</button>
-        <button onclick="showView('view-cgu')" class="text-slate-300 hover:text-aqua transition">CGU & Charte Contractuelle 📜</button>
-        <button onclick="showView('view-support')" class="text-aqua hover:text-sky-300 transition">Assistance Technique 🛠️</button>
-    </div>
+    <!-- Conteneur d'Écrans Mobiles -->
+    <main class="container mx-auto px-3 py-4 md:py-6 max-w-4xl flex-grow">
 
-    <!-- Conteneur Principal -->
-    <main class="container mx-auto px-4 py-8 max-w-7xl flex-grow">
-
-        <!-- 1. ACCUEIL -->
-        <div id="view-gateway" class="max-w-4xl mx-auto space-y-8 animate-fade-in my-auto py-8">
-            <div class="text-center space-y-3">
-                <div class="inline-block w-28 h-28 md:w-32 md:h-32 bg-white rounded-3xl shadow-2xl border-2 border-aqua/40 overflow-hidden mb-2">
-                    <img src="cleanapp.png" alt="Logo" class="w-full h-full object-cover transform scale-110" onerror="this.src='https://placehold.co/120x120/ffffff/0a192f?text=CleanApp'">
+        <!-- 1. ÉCRAN D'ACCUEIL (PASSERELLE SMARTPHONE) -->
+        <div id="view-gateway" class="space-y-6 animate-fade-in py-2">
+            <div class="text-center space-y-2">
+                <div class="inline-block w-20 h-20 md:w-24 md:h-24 bg-white rounded-3xl p-1 shadow-2xl border-2 border-aqua/40 mb-1">
+                    <img src="cleanapp.jpg" alt="Logo" class="w-full h-full object-contain" onerror="this.src='cleanapp.png'">
                 </div>
-                <h1 class="text-3xl md:text-4xl font-black text-white tracking-tight">Bienvenue sur MATT Clean'App</h1>
-                <p class="text-slate-300 text-sm md:text-base max-w-xl mx-auto font-medium">
-                    La plateforme technologique d'assainissement, d'entretien automobile et de nettoyage spécialisé à Kinshasa.
+                <h1 class="text-2xl md:text-3xl font-black text-white tracking-tight">Assainissement & Lavage</h1>
+                <p class="text-slate-300 text-xs md:text-sm max-w-xs mx-auto font-medium">
+                    Commandez une intervention sur mesure à Kinshasa ou débloquez des courses pro.
                 </p>
-                <p class="text-xs text-aqua font-bold uppercase tracking-widest">Édité par MASTER TOUCH TRADING (MATT SARL)</p>
+                <span class="inline-block text-[9px] bg-slate-800 text-aqua px-2.5 py-0.5 rounded-full font-bold uppercase tracking-wider">
+                    MATT SARL • CD/KIN/RCCM/24-B-04106
+                </span>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4">
-                <div onclick="goToAuth('client')" class="bg-white text-slate-800 rounded-3xl p-7 shadow-2xl border-2 border-transparent hover:border-aqua cursor-pointer transform hover:-translate-y-1 transition-all group flex flex-col justify-between">
-                    <div class="space-y-4">
-                        <div class="w-14 h-14 rounded-2xl bg-sky-100 text-aqua flex items-center justify-center text-2xl font-black group-hover:bg-aqua group-hover:text-white transition-all shadow-inner">🛒</div>
-                        <h2 class="text-2xl font-black text-navy-800 group-hover:text-aqua transition-all">Espace Client</h2>
-                        <p class="text-xs text-slate-600 leading-relaxed font-medium">Commandez votre lavage véhicule, canapés, vitrerie, traitement 3D ou vidange de fosse septique.</p>
+            <!-- Deux gros boutons tactiles ergonomiques -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                <div onclick="goToAuth('client')" class="bg-white text-slate-800 rounded-2xl p-5 shadow-xl border-2 border-transparent active:scale-95 transition-all flex items-center justify-between cursor-pointer">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-12 h-12 rounded-xl bg-sky-100 text-aqua flex items-center justify-center text-2xl font-black shadow-inner">🛒</div>
+                        <div>
+                            <h2 class="text-lg font-black text-navy-800 leading-snug">Espace Client</h2>
+                            <p class="text-[11px] text-slate-500 font-medium">Lavage auto, maison, vidange</p>
+                        </div>
                     </div>
-                    <div class="pt-6 border-t border-slate-150 mt-6 flex items-center justify-between">
-                        <span class="text-xs font-black text-navy-800 uppercase tracking-wide">Commander / Accéder</span>
-                        <span class="w-8 h-8 rounded-full bg-navy-800 text-white flex items-center justify-center font-bold group-hover:bg-aqua group-hover:text-navy-900 transition-all">➔</span>
-                    </div>
+                    <span class="w-8 h-8 rounded-full bg-navy-800 text-white flex items-center justify-center font-bold text-xs">➔</span>
                 </div>
 
-                <div onclick="goToAuth('partner')" class="bg-white text-slate-800 rounded-3xl p-7 shadow-2xl border-2 border-transparent hover:border-mattOrange cursor-pointer transform hover:-translate-y-1 transition-all group flex flex-col justify-between">
-                    <div class="space-y-4">
-                        <div class="w-14 h-14 rounded-2xl bg-orange-100 text-mattOrange flex items-center justify-center text-2xl font-black group-hover:bg-mattOrange group-hover:text-white transition-all shadow-inner">🤝</div>
-                        <h2 class="text-2xl font-black text-navy-800 group-hover:text-mattOrange transition-all">Espace Partenaire</h2>
-                        <p class="text-xs text-slate-600 leading-relaxed font-medium">Laveur ou assainisseur professionnel ? Connectez-vous, gérez votre portefeuille et acceptez des missions.</p>
+                <div onclick="goToAuth('partner')" class="bg-white text-slate-800 rounded-2xl p-5 shadow-xl border-2 border-transparent active:scale-95 transition-all flex items-center justify-between cursor-pointer">
+                    <div class="flex items-center gap-3.5">
+                        <div class="w-12 h-12 rounded-xl bg-orange-100 text-mattOrange flex items-center justify-center text-2xl font-black shadow-inner">🤝</div>
+                        <div>
+                            <h2 class="text-lg font-black text-navy-800 leading-snug">Espace Partenaire</h2>
+                            <p class="text-[11px] text-slate-500 font-medium">Missions, gains & portefeuille</p>
+                        </div>
                     </div>
-                    <div class="pt-6 border-t border-slate-150 mt-6 flex items-center justify-between">
-                        <span class="text-xs font-black text-navy-800 uppercase tracking-wide">Espace Prestataire</span>
-                        <span class="w-8 h-8 rounded-full bg-navy-800 text-white flex items-center justify-center font-bold group-hover:bg-mattOrange group-hover:text-white transition-all">➔</span>
-                    </div>
+                    <span class="w-8 h-8 rounded-full bg-mattOrange text-white flex items-center justify-center font-bold text-xs">➔</span>
                 </div>
+            </div>
+
+            <!-- Raccourcis informations -->
+            <div class="grid grid-cols-3 gap-2 pt-2 text-center text-[10px] font-bold text-slate-400">
+                <button onclick="showView('view-presentation')" class="bg-slate-800/80 p-2 rounded-xl border border-slate-700/60 active:bg-slate-700">🏢 À Propos</button>
+                <button onclick="showView('view-cgu')" class="bg-slate-800/80 p-2 rounded-xl border border-slate-700/60 active:bg-slate-700">📜 CGU & Tarifs</button>
+                <button onclick="showView('view-support')" class="bg-slate-800/80 p-2 rounded-xl border border-slate-700/60 text-aqua active:bg-slate-700">🛠️ Assistance</button>
             </div>
         </div>
 
-        <!-- 2. AUTHENTIFICATION CLIENT -->
-        <div id="view-client-auth" class="max-w-md mx-auto bg-white text-slate-800 rounded-3xl p-7 md:p-8 shadow-2xl border border-slate-200 hidden animate-fade-in">
-            <div class="flex items-center justify-between border-b pb-4 mb-6">
-                <div>
-                    <h2 class="text-xl font-black text-navy-800">Espace Client</h2>
-                    <p class="text-xs text-slate-500 font-semibold">Connectez-vous pour passer et suivre vos commandes.</p>
-                </div>
-                <button onclick="showView('view-gateway')" class="text-slate-400 hover:text-slate-700 text-sm font-bold">✕</button>
+        <!-- 2. AUTHENTIFICATION CLIENT MOBILE -->
+        <div id="view-client-auth" class="bg-white text-slate-800 rounded-3xl p-6 shadow-2xl hidden animate-fade-in">
+            <div class="flex items-center justify-between border-b pb-3 mb-4">
+                <h2 class="text-lg font-black text-navy-800">Espace Client</h2>
+                <button onclick="showView('view-gateway')" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 font-bold flex items-center justify-center">✕</button>
             </div>
 
-            <div class="flex border-b border-slate-200 mb-6 text-xs">
-                <button onclick="switchAuthTab('client', 'login')" id="tab-client-login" class="flex-1 py-2.5 font-black border-b-2 border-aqua text-aqua focus:outline-none">Se Connecter</button>
-                <button onclick="switchAuthTab('client', 'register')" id="tab-client-register" class="flex-1 py-2.5 font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-700 focus:outline-none">Créer un compte</button>
+            <div class="flex border-b border-slate-200 mb-5 text-xs">
+                <button onclick="switchAuthTab('client', 'login')" id="tab-client-login" class="flex-1 py-2 font-black border-b-2 border-aqua text-aqua">Se Connecter</button>
+                <button onclick="switchAuthTab('client', 'register')" id="tab-client-register" class="flex-1 py-2 font-bold border-b-2 border-transparent text-slate-400">Créer un compte</button>
             </div>
 
-            <div id="form-client-login" class="space-y-4">
+            <div id="form-client-login" class="space-y-3">
                 <div>
-                    <label class="block text-[11px] font-black text-slate-600 uppercase mb-1">Numéro de Téléphone</label>
-                    <input type="tel" id="auth-client-login-phone" placeholder="Ex: 0825556633" class="w-full px-3.5 py-2.5 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-aqua focus:outline-none">
+                    <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Téléphone</label>
+                    <input type="tel" id="auth-client-login-phone" placeholder="0825556633" class="w-full px-3.5 py-3 bg-slate-50 border rounded-xl text-base sm:text-xs font-bold text-slate-800 focus:ring-2 focus:ring-aqua focus:outline-none">
                 </div>
                 <div>
-                    <label class="block text-[11px] font-black text-slate-600 uppercase mb-1">Mot de passe</label>
+                    <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Mot de passe</label>
                     <div class="relative">
-                        <input type="password" id="auth-client-login-pass" placeholder="••••••••" class="w-full px-3.5 py-2.5 pr-10 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-aqua focus:outline-none">
-                        <button type="button" onclick="togglePasswordVisibility('auth-client-login-pass', 'eye-client-login')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-700">
-                            <span id="eye-client-login" class="text-base">👁️</span>
+                        <input type="password" id="auth-client-login-pass" placeholder="••••••••" class="w-full px-3.5 py-3 pr-10 bg-slate-50 border rounded-xl text-base sm:text-xs font-bold text-slate-800 focus:ring-2 focus:ring-aqua focus:outline-none">
+                        <button type="button" onclick="togglePasswordVisibility('auth-client-login-pass', 'eye-client-login')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400">
+                            <span id="eye-client-login">👁️</span>
                         </button>
                     </div>
                 </div>
-                <button onclick="loginClient()" class="w-full py-3 bg-navy-800 hover:bg-navy-900 text-white font-black text-xs rounded-xl uppercase tracking-wider transition-all">Se Connecter</button>
+                <button onclick="loginClient()" class="w-full py-3.5 bg-navy-800 active:bg-navy-900 text-white font-black text-xs rounded-xl uppercase tracking-wider shadow mt-2">Connexion</button>
             </div>
 
-            <div id="form-client-register" class="space-y-4 hidden">
+            <div id="form-client-register" class="space-y-3 hidden">
                 <div>
-                    <label class="block text-[11px] font-black text-slate-600 uppercase mb-1">Nom complet</label>
-                    <input type="text" id="auth-client-reg-name" placeholder="Ex: Jean Mukendi" class="w-full px-3.5 py-2.5 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-aqua focus:outline-none">
+                    <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Nom complet</label>
+                    <input type="text" id="auth-client-reg-name" placeholder="Jean Mukendi" class="w-full px-3.5 py-3 bg-slate-50 border rounded-xl text-base sm:text-xs font-bold text-slate-800">
                 </div>
                 <div>
-                    <label class="block text-[11px] font-black text-slate-600 uppercase mb-1">Numéro de Téléphone</label>
-                    <input type="tel" id="auth-client-reg-phone" placeholder="Ex: 0825556633" class="w-full px-3.5 py-2.5 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-aqua focus:outline-none">
+                    <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Téléphone</label>
+                    <input type="tel" id="auth-client-reg-phone" placeholder="0825556633" class="w-full px-3.5 py-3 bg-slate-50 border rounded-xl text-base sm:text-xs font-bold text-slate-800">
                 </div>
                 <div>
-                    <label class="block text-[11px] font-black text-slate-600 uppercase mb-1">Mot de passe</label>
+                    <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Mot de passe</label>
                     <div class="relative">
-                        <input type="password" id="auth-client-reg-pass" placeholder="••••••••" class="w-full px-3.5 py-2.5 pr-10 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-aqua focus:outline-none">
-                        <button type="button" onclick="togglePasswordVisibility('auth-client-reg-pass', 'eye-client-reg')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-700">
-                            <span id="eye-client-reg" class="text-base">👁️</span>
+                        <input type="password" id="auth-client-reg-pass" placeholder="••••••••" class="w-full px-3.5 py-3 pr-10 bg-slate-50 border rounded-xl text-base sm:text-xs font-bold text-slate-800">
+                        <button type="button" onclick="togglePasswordVisibility('auth-client-reg-pass', 'eye-client-reg')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400">
+                            <span id="eye-client-reg">👁️</span>
                         </button>
                     </div>
                 </div>
-                <button onclick="registerClient()" class="w-full py-3 bg-aqua hover:bg-sky-500 text-navy-900 font-black text-xs rounded-xl uppercase tracking-wider transition-all">Créer mon compte Client</button>
+                <button onclick="registerClient()" class="w-full py-3.5 bg-aqua text-navy-900 font-black text-xs rounded-xl uppercase tracking-wider shadow mt-2">Créer mon compte</button>
             </div>
         </div>
 
-        <!-- 3. AUTHENTIFICATION PARTENAIRE -->
-        <div id="view-partner-auth" class="max-w-lg mx-auto bg-white text-slate-800 rounded-3xl p-7 md:p-8 shadow-2xl border border-slate-200 hidden animate-fade-in">
-            <div class="flex items-center justify-between border-b pb-4 mb-6">
-                <div>
-                    <h2 class="text-xl font-black text-navy-800">Espace Partenaire</h2>
-                    <p class="text-xs text-slate-500 font-semibold">Accédez à votre compte professionnel d'assainissement.</p>
-                </div>
-                <button onclick="showView('view-gateway')" class="text-slate-400 hover:text-slate-700 text-sm font-bold">✕</button>
+        <!-- 3. AUTHENTIFICATION PARTENAIRE MOBILE -->
+        <div id="view-partner-auth" class="bg-white text-slate-800 rounded-3xl p-6 shadow-2xl hidden animate-fade-in">
+            <div class="flex items-center justify-between border-b pb-3 mb-4">
+                <h2 class="text-lg font-black text-navy-800">Espace Pro Partenaire</h2>
+                <button onclick="showView('view-gateway')" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 font-bold flex items-center justify-center">✕</button>
             </div>
 
-            <div class="flex border-b border-slate-200 mb-6 text-xs">
-                <button onclick="switchAuthTab('partner', 'login')" id="tab-partner-login" class="flex-1 py-2.5 font-black border-b-2 border-mattOrange text-mattOrange focus:outline-none">Connexion Partenaire</button>
-                <button onclick="switchAuthTab('partner', 'register')" id="tab-partner-register" class="flex-1 py-2.5 font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-700 focus:outline-none">Devenir Partenaire</button>
+            <div class="flex border-b border-slate-200 mb-5 text-xs">
+                <button onclick="switchAuthTab('partner', 'login')" id="tab-partner-login" class="flex-1 py-2 font-black border-b-2 border-mattOrange text-mattOrange">Connexion</button>
+                <button onclick="switchAuthTab('partner', 'register')" id="tab-partner-register" class="flex-1 py-2 font-bold border-b-2 border-transparent text-slate-400">Devenir Partenaire</button>
             </div>
 
-            <div id="form-partner-login" class="space-y-4">
+            <div id="form-partner-login" class="space-y-3">
                 <div>
-                    <label class="block text-[11px] font-black text-slate-600 uppercase mb-1">Numéro de Téléphone (Login)</label>
-                    <input type="tel" id="auth-partner-login-phone" placeholder="Ex: 0819998822" class="w-full px-3.5 py-2.5 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-mattOrange focus:outline-none">
+                    <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Téléphone (Login)</label>
+                    <input type="tel" id="auth-partner-login-phone" placeholder="0819998822" class="w-full px-3.5 py-3 bg-slate-50 border rounded-xl text-base sm:text-xs font-bold text-slate-800 focus:ring-2 focus:ring-mattOrange focus:outline-none">
                 </div>
                 <div>
-                    <label class="block text-[11px] font-black text-slate-600 uppercase mb-1">Mot de passe</label>
+                    <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Mot de passe</label>
                     <div class="relative">
-                        <input type="password" id="auth-partner-login-pass" placeholder="••••••••" class="w-full px-3.5 py-2.5 pr-10 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-mattOrange focus:outline-none">
-                        <button type="button" onclick="togglePasswordVisibility('auth-partner-login-pass', 'eye-partner-login')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-700">
-                            <span id="eye-partner-login" class="text-base">👁️</span>
+                        <input type="password" id="auth-partner-login-pass" placeholder="••••••••" class="w-full px-3.5 py-3 pr-10 bg-slate-50 border rounded-xl text-base sm:text-xs font-bold text-slate-800 focus:ring-2 focus:ring-mattOrange focus:outline-none">
+                        <button type="button" onclick="togglePasswordVisibility('auth-partner-login-pass', 'eye-partner-login')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400">
+                            <span id="eye-partner-login">👁️</span>
                         </button>
                     </div>
                 </div>
-                <button onclick="loginPartner()" class="w-full py-3 bg-mattOrange hover:bg-orange-600 text-white font-black text-xs rounded-xl uppercase tracking-wider transition-all">Se Connecter</button>
+                <button onclick="loginPartner()" class="w-full py-3.5 bg-mattOrange active:bg-orange-600 text-white font-black text-xs rounded-xl uppercase tracking-wider shadow mt-2">Accéder à mon espace</button>
             </div>
 
-            <div id="form-partner-register" class="space-y-3.5 hidden max-h-[60vh] overflow-y-auto pr-1">
+            <div id="form-partner-register" class="space-y-3 hidden max-h-[60vh] overflow-y-auto pr-1">
                 <div>
-                    <label class="text-[10px] font-bold text-slate-600 block uppercase">Nom Complet ou Raison Sociale</label>
-                    <input type="text" id="p-reg-name" placeholder="Ex: MATT Lavage Pro" class="w-full px-3 py-2 border rounded-lg text-xs font-bold">
+                    <label class="text-[10px] font-bold text-slate-600 block uppercase">Nom / Raison Sociale</label>
+                    <input type="text" id="p-reg-name" placeholder="MATT Lavage Pro" class="w-full px-3.5 py-2.5 border rounded-xl text-xs font-bold">
                 </div>
                 <div>
-                    <label class="text-[10px] font-bold text-slate-600 block uppercase">Numéro de Téléphone</label>
-                    <input type="tel" id="p-reg-phone" placeholder="Ex: 0819998822" class="w-full px-3 py-2 border rounded-lg text-xs font-bold">
+                    <label class="text-[10px] font-bold text-slate-600 block uppercase">Téléphone</label>
+                    <input type="tel" id="p-reg-phone" placeholder="0819998822" class="w-full px-3.5 py-2.5 border rounded-xl text-xs font-bold">
                 </div>
                 <div>
                     <label class="text-[10px] font-bold text-slate-600 block uppercase">Mot de passe</label>
                     <div class="relative">
-                        <input type="password" id="p-reg-pass" placeholder="••••••••" class="w-full px-3 py-2 pr-10 border rounded-lg text-xs font-bold">
-                        <button type="button" onclick="togglePasswordVisibility('p-reg-pass', 'eye-partner-reg')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-700">
-                            <span id="eye-partner-reg" class="text-base">👁️</span>
+                        <input type="password" id="p-reg-pass" placeholder="••••••••" class="w-full px-3.5 py-2.5 pr-10 border rounded-xl text-xs font-bold">
+                        <button type="button" onclick="togglePasswordVisibility('p-reg-pass', 'eye-p-reg')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400">
+                            <span id="eye-p-reg">👁️</span>
                         </button>
                     </div>
                 </div>
                 <div>
-                    <label class="text-[10px] font-bold text-slate-600 block uppercase">Commune Principale</label>
-                    <select id="p-reg-commune" class="w-full px-3 py-2 border rounded-lg text-xs text-slate-800 font-bold bg-white"></select>
+                    <label class="text-[10px] font-bold text-slate-600 block uppercase">Commune d'Intervention</label>
+                    <select id="p-reg-commune" class="w-full px-3.5 py-2.5 border rounded-xl text-xs text-slate-800 font-bold bg-white"></select>
                 </div>
                 <div>
-                    <label class="text-[10px] font-bold text-slate-600 block uppercase">Adresse Physique</label>
-                    <input type="text" id="p-reg-address" placeholder="N°, Avenue, Quartier..." class="w-full px-3 py-2 border rounded-lg text-xs font-semibold">
-                </div>
-                <div>
-                    <label class="text-[10px] font-bold text-slate-600 block uppercase">Spécialisation</label>
-                    <select id="p-reg-specialty" class="w-full px-3 py-2 border rounded-lg text-xs text-slate-800 font-bold bg-white">
+                    <label class="text-[10px] font-bold text-slate-600 block uppercase">Spécialité</label>
+                    <select id="p-reg-specialty" class="w-full px-3.5 py-2.5 border rounded-xl text-xs text-slate-800 font-bold bg-white">
                         <option>Lavage auto</option>
-                        <option>Maison (Canapés, tapis...)</option>
+                        <option>Maison (Canapés, vitres)</option>
                         <option>Polyvalent Auto et Maison</option>
-                        <option>Environnement 3D (Désinfection, Dératisation...)</option>
-                        <option>Évacuation des ordures</option>
+                        <option>Environnement 3D</option>
+                        <option>Évacuation ordures</option>
                         <option>Vidange fosse septique</option>
                     </select>
                 </div>
-                <button onclick="registerPartner()" class="w-full py-3 bg-navy-800 hover:bg-navy-900 text-white font-bold text-xs rounded-xl uppercase tracking-wide transition-all">Soumettre l'inscription</button>
+                <button onclick="registerPartner()" class="w-full py-3.5 bg-navy-800 text-white font-bold text-xs rounded-xl uppercase tracking-wide mt-2">Soumettre mon dossier</button>
             </div>
         </div>
 
         <!-- 4. ESPACE CLIENT CONNECTÉ -->
-        <div id="view-client-app" class="bg-white text-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl hidden animate-fade-in">
-            <div class="flex border-b border-slate-200 mb-6">
-                <button onclick="switchClientTab('client-compose')" id="tab-btn-client-compose" class="py-2.5 px-4 font-black border-b-2 border-mattOrange text-mattOrange text-sm">🛒 Commander une Prestation</button>
-                <button onclick="switchClientTab('client-tracking')" id="tab-btn-client-tracking" class="py-2.5 px-4 font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800 text-sm">📋 Suivi, Actions & Notations</button>
+        <div id="view-client-app" class="bg-white text-slate-800 rounded-3xl p-4 md:p-6 shadow-2xl hidden animate-fade-in space-y-4">
+            <!-- Tabs Client -->
+            <div class="flex border-b border-slate-200 text-xs">
+                <button onclick="switchClientTab('client-compose')" id="tab-btn-client-compose" class="flex-1 py-2.5 font-black border-b-2 border-mattOrange text-mattOrange">🛒 Commander</button>
+                <button onclick="switchClientTab('client-tracking')" id="tab-btn-client-tracking" class="flex-1 py-2.5 font-bold border-b-2 border-transparent text-slate-500">📋 Mes Commandes</button>
             </div>
 
-            <!-- Sous-onglet: Composer le panier -->
-            <div id="client-compose" class="space-y-6">
-                <div class="bg-slate-50 border border-slate-200 p-5 rounded-2xl">
-                    <h3 class="text-xs font-black text-navy-800 uppercase mb-3">👤 Informations du Demandeur</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <input type="text" id="client-name-input" placeholder="Nom complet" class="px-3.5 py-2.5 bg-white border rounded-xl font-bold text-xs">
-                        <input type="tel" id="client-phone-input" placeholder="Téléphone de contact" class="px-3.5 py-2.5 bg-white border rounded-xl font-bold text-xs" onchange="detectClientOrders();">
+            <!-- Composer le panier -->
+            <div id="client-compose" class="space-y-4">
+                <div class="bg-slate-50 border border-slate-200 p-3.5 rounded-2xl">
+                    <span class="text-[10px] font-black text-navy-800 uppercase block mb-2">👤 Mes Coordonnées</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <input type="text" id="client-name-input" placeholder="Nom complet" class="px-3 py-2 bg-white border rounded-xl font-bold text-xs">
+                        <input type="tel" id="client-phone-input" placeholder="Téléphone" class="px-3 py-2 bg-white border rounded-xl font-bold text-xs" onchange="detectClientOrders();">
                     </div>
                 </div>
 
-                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                <!-- Accordéons de prestations -->
+                <div class="space-y-3">
                     <!-- Auto -->
-                    <div class="bg-white border rounded-2xl p-5 shadow-sm">
-                        <h3 class="text-lg font-black text-navy-800 border-b pb-2 mb-3">🚗 Axe Automobile</h3>
-                        <div id="vehicle-catalog" class="space-y-3 max-h-[420px] overflow-y-auto pr-1 custom-scrollbar"></div>
+                    <div class="border rounded-2xl p-3.5 bg-white shadow-sm">
+                        <h3 class="text-xs font-black text-navy-800 uppercase mb-2 flex items-center justify-between">
+                            <span>🚗 Axe Automobile</span>
+                            <span class="text-[9px] text-slate-400 font-normal">Sélectionnez quantité</span>
+                        </h3>
+                        <div id="vehicle-catalog" class="space-y-2"></div>
                     </div>
 
                     <!-- Maison -->
-                    <div class="bg-white border rounded-2xl p-5 shadow-sm space-y-3">
-                        <h3 class="text-lg font-black text-navy-800 border-b pb-2">🏡 Axe Maison</h3>
-                        <div class="grid grid-cols-2 gap-2 text-xs font-bold">
-                            <div><label>Tapis (m²)</label><input type="number" id="m2-tapis" class="w-full p-1 border rounded" oninput="calculerTotal()"></div>
-                            <div><label>Moquette (m²)</label><input type="number" id="m2-moquette" class="w-full p-1 border rounded" oninput="calculerTotal()"></div>
-                            <div><label>Vitres (m²)</label><input type="number" id="m2-vitres" class="w-full p-1 border rounded" oninput="calculerTotal()"></div>
-                            <div><label>Carreaux (m²)</label><input type="number" id="m2-carreaux" class="w-full p-1 border rounded" oninput="calculerTotal()"></div>
+                    <div class="border rounded-2xl p-3.5 bg-white shadow-sm space-y-2.5">
+                        <h3 class="text-xs font-black text-navy-800 uppercase">🏡 Axe Maison & Surfaces</h3>
+                        <div class="grid grid-cols-2 gap-2 text-[11px] font-bold">
+                            <div><label>Tapis (m²)</label><input type="number" id="m2-tapis" placeholder="0" class="w-full p-2 border rounded-lg text-xs" oninput="calculerTotal()"></div>
+                            <div><label>Vitres (m²)</label><input type="number" id="m2-vitres" placeholder="0" class="w-full p-2 border rounded-lg text-xs" oninput="calculerTotal()"></div>
+                            <div><label>Canapé Textile (pl.)</label><input type="number" id="qty-canape-textile" placeholder="0" class="w-full p-2 border rounded-lg text-xs" oninput="calculerTotal()"></div>
+                            <div><label>Canapé Cuir (pl.)</label><input type="number" id="qty-canape-cuir" placeholder="0" class="w-full p-2 border rounded-lg text-xs" oninput="calculerTotal()"></div>
                         </div>
-                        <div><label class="text-xs font-bold">Canapé Textile (places)</label><input type="number" id="qty-canape-textile" class="w-full p-1 border rounded text-xs font-bold" oninput="calculerTotal()"></div>
-                        <div><label class="text-xs font-bold">Canapé Cuir (places)</label><input type="number" id="qty-canape-cuir" class="w-full p-1 border rounded text-xs font-bold" oninput="calculerTotal()"></div>
                     </div>
 
                     <!-- Environnement -->
-                    <div class="bg-white border rounded-2xl p-5 shadow-sm space-y-3">
-                        <h3 class="text-lg font-black text-navy-800 border-b pb-2">🌱 Environnement & 3D</h3>
-                        <div><label class="text-xs font-bold">Désinfection (pièces)</label><input type="number" id="qty-desinfection" class="w-full p-1.5 border rounded text-xs font-bold" oninput="calculerTotal()"></div>
-                        <div><label class="text-xs font-bold">Dératisation (pièces)</label><input type="number" id="qty-deratisation" class="w-full p-1.5 border rounded text-xs font-bold" oninput="calculerTotal()"></div>
-                        <div><label class="text-xs font-bold">Évacuation ordures (m³)</label><input type="number" id="vol-immondices" class="w-full p-1.5 border rounded text-xs font-bold" oninput="calculerTotal()"></div>
-                        <div><label class="text-xs font-bold">Vidange fosse septique (m³)</label><input type="number" id="vol-fosse" class="w-full p-1.5 border rounded text-xs font-bold" oninput="calculerTotal()"></div>
-                    </div>
-                </div>
-
-                <!-- Localisation & Logistique avec recalcul par zone -->
-                <div class="bg-slate-50 border rounded-2xl p-5 shadow-inner">
-                    <div class="flex justify-between items-center border-b pb-2 mb-4">
-                        <h3 class="text-lg font-black text-navy-800">📍 Planification & Zone Tarifaire</h3>
-                        <span id="zone-detected-badge" class="px-2.5 py-1 rounded-lg text-xs font-black bg-sky-100 text-sky-800">Zone 1 - Résidentielle</span>
-                    </div>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-bold">
-                        <div>
-                            <label class="block mb-1">Commune (Zone d'intervention)</label>
-                            <select id="client-commune" class="w-full p-2 border rounded-xl bg-white" onchange="onClientCommuneChange()"></select>
-                            <label class="block mt-2 mb-1">Quartier</label>
-                            <input type="text" id="client-quartier-input" placeholder="Ex: Lubudi" class="w-full p-2 border rounded-xl">
-                            <label class="block mt-2 mb-1">Avenue & N°</label>
-                            <input type="text" id="client-avenue-input" placeholder="Ex: Av. Kimbondo N° 45" class="w-full p-2 border rounded-xl">
-                        </div>
-                        <div>
-                            <label class="block mb-1">Point de repère</label>
-                            <input type="text" id="client-ref-input" placeholder="Ex: Église Saint-Michel" class="w-full p-2 border rounded-xl">
-                            <label class="block mt-2 mb-1">Date d'intervention</label>
-                            <input type="date" id="client-date-input" class="w-full p-2 border rounded-xl">
-                            <label class="block mt-2 mb-1">Heure souhaitée</label>
-                            <input type="time" id="client-time-input" class="w-full p-2 border rounded-xl">
-                        </div>
-                        <div>
-                            <label class="block mb-1">Alimentation Électrique</label>
-                            <select id="client-elec" class="w-full p-2 border rounded-xl bg-white">
-                                <option>SNEL fonctionnelle</option>
-                                <option>Groupe électrogène</option>
-                                <option>Pas d'électricité disponible</option>
-                            </select>
-                            <label class="block mt-2 mb-1">Approvisionnement en Eau</label>
-                            <select id="client-water" class="w-full p-2 border rounded-xl bg-white">
-                                <option>REGIDESO fonctionnelle</option>
-                                <option>Forage / Citerne</option>
-                                <option>Pas d'eau disponible</option>
-                            </select>
+                    <div class="border rounded-2xl p-3.5 bg-white shadow-sm space-y-2.5">
+                        <h3 class="text-xs font-black text-navy-800 uppercase">🌱 Environnement 3D & Vidange</h3>
+                        <div class="grid grid-cols-2 gap-2 text-[11px] font-bold">
+                            <div><label>Désinfection (pce)</label><input type="number" id="qty-desinfection" placeholder="0" class="w-full p-2 border rounded-lg text-xs" oninput="calculerTotal()"></div>
+                            <div><label>Dératisation (pce)</label><input type="number" id="qty-deratisation" placeholder="0" class="w-full p-2 border rounded-lg text-xs" oninput="calculerTotal()"></div>
+                            <div><label>Immondices (m³)</label><input type="number" id="vol-immondices" placeholder="0" class="w-full p-2 border rounded-lg text-xs" oninput="calculerTotal()"></div>
+                            <div><label>Fosse septique (m³)</label><input type="number" id="vol-fosse" placeholder="0" class="w-full p-2 border rounded-lg text-xs" oninput="calculerTotal()"></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Total & Commande -->
-                <div class="bg-sky-50 border-2 border-aqua rounded-3xl p-6 text-center max-w-xl mx-auto shadow-md">
-                    <span class="text-xs font-black text-navy-800 uppercase tracking-widest">Total Panier estimé :</span>
-                    <div class="text-4xl font-black text-mattOrange my-2"><span id="prix-total-affichage">0</span> CDF</div>
-                    <button onclick="passerCommande()" class="w-full py-3.5 bg-mattOrange hover:bg-orange-600 text-white font-black rounded-xl uppercase tracking-wider text-base shadow transition-all">
-                        🚀 Confirmer et Commander
+                <!-- Localisation & Planification -->
+                <div class="bg-slate-50 border rounded-2xl p-3.5 space-y-2.5 text-xs">
+                    <div class="flex justify-between items-center">
+                        <span class="text-[10px] font-black text-navy-800 uppercase">📍 Localisation & Zone</span>
+                        <span id="zone-detected-badge" class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-100 text-sky-800">Zone 1</span>
+                    </div>
+                    <select id="client-commune" class="w-full p-2.5 border rounded-xl bg-white font-bold text-xs" onchange="onClientCommuneChange()"></select>
+                    <input type="text" id="client-avenue-input" placeholder="Avenue, Numéro, Quartier..." class="w-full p-2.5 border rounded-xl font-medium text-xs">
+                    <input type="text" id="client-ref-input" placeholder="Point de repère (ex: Arrêt pharmacie)" class="w-full p-2.5 border rounded-xl font-medium text-xs">
+                    <div class="grid grid-cols-2 gap-2">
+                        <input type="date" id="client-date-input" class="p-2 border rounded-xl text-xs font-bold">
+                        <input type="time" id="client-time-input" class="p-2 border rounded-xl text-xs font-bold">
+                    </div>
+                </div>
+
+                <!-- Bouton Sticky de Commande -->
+                <div class="bg-navy-900 text-white p-4 rounded-2xl flex items-center justify-between shadow-xl border border-aqua/30">
+                    <div>
+                        <span class="text-[10px] text-slate-400 font-bold uppercase block">Total Panier :</span>
+                        <span class="text-xl font-black text-mattOrange font-mono"><span id="prix-total-affichage">0</span> CDF</span>
+                    </div>
+                    <button onclick="passerCommande()" class="px-5 py-2.5 bg-mattOrange active:bg-orange-600 text-white font-black text-xs rounded-xl uppercase shadow">
+                        Commander 🚀
                     </button>
                 </div>
             </div>
 
-            <!-- Sous-onglet: Suivi des commandes -->
-            <div id="client-tracking" class="hidden space-y-4">
+            <!-- Suivi des commandes Client -->
+            <div id="client-tracking" class="hidden space-y-3">
                 <div class="flex justify-between items-center border-b pb-2">
-                    <h3 class="text-lg font-black text-navy-800 uppercase">📋 Historique & Gestion de vos commandes</h3>
-                    <button onclick="detectClientOrders()" class="text-xs text-sky-600 font-bold hover:underline">Rafraîchir 🔄</button>
+                    <span class="text-xs font-black uppercase text-navy-800">Mes Commandes</span>
+                    <button onclick="detectClientOrders()" class="text-xs text-sky-600 font-bold">Actualiser 🔄</button>
                 </div>
-                <div id="client-orders-tracking-list" class="space-y-3"></div>
+                <div id="client-orders-tracking-list" class="space-y-2.5"></div>
             </div>
         </div>
 
         <!-- 5. ESPACE PARTENAIRE CONNECTÉ -->
-        <div id="view-partner-app" class="bg-white text-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl hidden animate-fade-in space-y-6">
-            
-            <!-- Bandeau de Statut et Profil Partenaire -->
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b pb-4">
+        <div id="view-partner-app" class="bg-white text-slate-800 rounded-3xl p-4 md:p-6 shadow-2xl hidden animate-fade-in space-y-4">
+            <div class="flex justify-between items-center border-b pb-3">
                 <div>
-                    <h2 class="text-2xl font-black text-navy-800 flex items-center gap-2">
-                        <span>👤</span> Tableau de Bord Partenaire
+                    <h2 class="text-base font-black text-navy-800 flex items-center gap-1.5">
+                        <span>👤</span> <span id="partner-dashboard-name">MATT</span>
                     </h2>
-                    <p class="text-xs text-slate-500 font-semibold mt-0.5">
-                        Connecté en tant que : <b id="partner-dashboard-name" class="text-mattOrange">MATT</b> <span id="partner-dashboard-meta" class="text-slate-600 font-normal">(Lavage auto - Bandalungwa)</span>
-                    </p>
+                    <span id="partner-dashboard-meta" class="text-[10px] text-slate-500 font-semibold block">Lavage auto - Bandalungwa</span>
                 </div>
-                <div class="flex items-center gap-2">
-                    <span id="partner-mode-badge" class="px-3.5 py-1.5 bg-slate-100 border border-slate-200 text-slate-700 text-xs font-black rounded-xl">
-                        Mode Commission (15%)
-                    </span>
-                    <button onclick="logoutCurrentSession()" class="px-4 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-xl border transition">
-                        Déconnexion
+                <span id="partner-mode-badge" class="px-2.5 py-1 bg-slate-100 text-slate-700 text-[10px] font-bold rounded-lg border">
+                    15% Comm.
+                </span>
+            </div>
+
+            <!-- Menu à onglets mobile -->
+            <div class="flex gap-1.5 border-b pb-2 overflow-x-auto custom-scrollbar text-xs font-bold">
+                <button onclick="switchPartnerTab('partner-tab-missions', this)" class="partner-tab-btn px-3 py-2 bg-mattOrange text-white rounded-xl whitespace-nowrap active text-[11px]">
+                    🚨 Missions
+                </button>
+                <button onclick="switchPartnerTab('partner-tab-wallet', this)" class="partner-tab-btn px-3 py-2 bg-slate-100 text-slate-600 rounded-xl whitespace-nowrap text-[11px]">
+                    💳 Portefeuille
+                </button>
+                <button onclick="switchPartnerTab('partner-tab-courses', this)" class="partner-tab-btn px-3 py-2 bg-slate-100 text-slate-600 rounded-xl whitespace-nowrap text-[11px]">
+                    📑 Mes Courses
+                </button>
+                <button onclick="switchPartnerTab('partner-tab-profil', this)" class="partner-tab-btn px-3 py-2 bg-slate-100 text-slate-600 rounded-xl whitespace-nowrap text-[11px]">
+                    ⚙️ Profil & Code
+                </button>
+            </div>
+
+            <!-- Missions Disponibles -->
+            <div id="partner-tab-missions" class="partner-subview space-y-3">
+                <div class="flex justify-between items-center">
+                    <span class="text-[11px] font-black uppercase text-navy-800">Missions Disponibles</span>
+                    <button onclick="loadPartnerMissions()" class="text-xs text-sky-600 font-bold">Actualiser 🔄</button>
+                </div>
+                <div id="partner-missions-container" class="space-y-3"></div>
+            </div>
+
+            <!-- Portefeuille Virtuel & Recharge -->
+            <div id="partner-tab-wallet" class="partner-subview hidden space-y-4">
+                <div class="bg-sky-50 border border-aqua/40 rounded-2xl p-4 text-center">
+                    <span class="text-[9px] text-slate-500 font-black uppercase tracking-wider block" id="partner-solde-label">Solde Actuel</span>
+                    <div class="text-3xl font-black text-navy-800 mt-0.5" id="partner-wallet-balance">0 CDF</div>
+                </div>
+
+                <div class="border rounded-2xl p-3.5 space-y-3 text-xs">
+                    <span class="font-black text-navy-800 uppercase block">Recharger / Forfait</span>
+                    <select id="p-billing-mode-select" class="w-full p-2.5 border rounded-xl font-bold bg-white" onchange="adjustPartnerRechargeMode()">
+                        <option value="commission">Recharge Commission (À la course)</option>
+                        <option value="journalier">Forfait Jour Illimité (15 000 CDF)</option>
+                        <option value="mensuel">Forfait Mois Illimité (150 000 CDF)</option>
+                    </select>
+
+                    <div class="bg-slate-50 p-2.5 rounded-xl border text-[10px] space-y-1">
+                        <span class="font-bold text-slate-500 block uppercase">Comptes Mobiles MATT :</span>
+                        <div>📱 M-Pesa / Orange / Airtel : <b class="text-slate-900 font-mono">+243980000338</b></div>
+                    </div>
+
+                    <input type="number" id="p-recharge-amount" placeholder="Montant déposé (CDF)" class="w-full p-2.5 border rounded-xl font-bold text-xs">
+                    <input type="text" id="p-recharge-ref" placeholder="Réf transaction Mobile Money" class="w-full p-2.5 border rounded-xl font-mono text-xs">
+                    <button onclick="sendRechargeDeclaration()" class="w-full py-3 bg-mattOrange active:bg-orange-600 text-white font-black rounded-xl uppercase text-xs">
+                        Déclarer le Paiement
                     </button>
+                    <a href="https://wa.me/243980000338?text=Preuve%20de%20dépôt%20MATT" target="_blank" class="w-full py-2 bg-whatsapp text-white font-bold rounded-xl text-center block text-xs">
+                        📲 Preuve WhatsApp (+243 980 000 338)
+                    </a>
                 </div>
             </div>
 
-            <!-- Barre des Onglets Partenaire -->
-            <div class="flex gap-2 border-b border-slate-200 pb-3 overflow-x-auto text-xs font-bold">
-                <button onclick="switchPartnerTab('partner-tab-missions', this)" class="partner-tab-btn px-4 py-2.5 bg-mattOrange text-white rounded-xl whitespace-nowrap shadow-sm active">
-                    📥 Missions Disponibles
-                </button>
-                <button onclick="switchPartnerTab('partner-tab-ca', this)" class="partner-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap">
-                    📊 Chiffre d'Affaires & Périodes
-                </button>
-                <button onclick="switchPartnerTab('partner-tab-courses', this)" class="partner-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap">
-                    📑 Mes Courses & Clôture
-                </button>
-                <button onclick="switchPartnerTab('partner-tab-profil', this)" class="partner-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap">
-                    ⚙️ Mon Profil & Identifiants
-                </button>
+            <!-- Mes Courses & Clôture -->
+            <div id="partner-tab-courses" class="partner-subview hidden space-y-3">
+                <span class="text-[11px] font-black uppercase text-navy-800 block">Courses en cours & clôture</span>
+                <div id="partner-accepted-courses-list" class="space-y-2.5"></div>
             </div>
 
-            <!-- SOUS-ONGLET 1 : MISSIONS & PORTEFEUILLE -->
-            <div id="partner-tab-missions" class="partner-subview grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
-                
-                <!-- COLONNE GAUCHE : PORTEFEUILLE VIRTUEL -->
-                <div class="border-2 border-sky-300 rounded-3xl p-6 bg-white shadow-sm space-y-5">
-                    <div>
-                        <h3 class="text-sm font-black text-navy-800 uppercase flex items-center gap-2">
-                            <span>💳</span> VOTRE PORTEFEUILLE VIRTUEL
-                        </h3>
-                        <p class="text-[11px] text-slate-500 font-semibold mt-0.5">Gérez votre solde ou souscrivez un forfait d'accès illimité.</p>
-                    </div>
-
-                    <div class="bg-white border-2 border-slate-100 rounded-2xl p-4 text-center shadow-inner">
-                        <span class="text-[9px] text-slate-400 font-black uppercase tracking-wider block" id="partner-solde-label">SOLDE ACTUEL (MODE COMMISSION)</span>
-                        <div class="text-3xl font-black text-navy-800 mt-1" id="partner-wallet-balance">0 CDF</div>
-                    </div>
-
-                    <div class="space-y-3">
-                        <span class="text-xs font-black text-navy-800 uppercase block">RECHARGER / CHOISIR UN FORFAIT</span>
-                        
-                        <div>
-                            <label class="text-[10px] text-slate-500 font-bold uppercase block mb-1">MODE D'ACCÈS AUX MISSIONS :</label>
-                            <select id="p-billing-mode-select" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-bold text-slate-800 focus:outline-none" onchange="adjustPartnerRechargeMode()">
-                                <option value="commission">1. Recharge Solde Commission (À la course)</option>
-                                <option value="journalier">2. Forfait Journalier Illimité (15 000 CDF)</option>
-                                <option value="mensuel">3. Forfait Mensuel Illimité (150 000 CDF)</option>
-                            </select>
-                        </div>
-
-                        <!-- Comptes Mobiles Officiels MATT -->
-                        <div class="bg-slate-50 border border-slate-200 rounded-2xl p-3.5 space-y-1.5 text-[11px]">
-                            <span class="text-[10px] font-black text-slate-700 uppercase block">COMPTES MOBILES OFFICIELS MATT :</span>
-                            <div class="flex justify-between items-center text-slate-600">
-                                <span>📱 M-Pesa :</span>
-                                <b class="font-mono text-slate-900 font-bold">+243980000338</b>
-                            </div>
-                            <div class="flex justify-between items-center text-slate-600">
-                                <span>📱 Orange Money :</span>
-                                <b class="font-mono text-slate-900 font-bold">+243980000338</b>
-                            </div>
-                            <div class="flex justify-between items-center text-slate-600">
-                                <span>📱 Airtel Money :</span>
-                                <b class="font-mono text-slate-900 font-bold">+243980000338</b>
-                            </div>
-                        </div>
-
-                        <div>
-                            <input type="number" id="p-recharge-amount" placeholder="Montant déposé (CDF)" class="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-xl text-xs font-bold text-slate-800">
-                        </div>
-
-                        <div>
-                            <input type="text" id="p-recharge-ref" placeholder="Référence de transaction" class="w-full px-3.5 py-2.5 bg-white border border-slate-300 rounded-xl text-xs font-bold text-slate-800 font-mono">
-                        </div>
-
-                        <button onclick="sendRechargeDeclaration()" class="w-full py-3 bg-mattOrange hover:bg-orange-600 text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow-md">
-                            TRANSMETTRE LA DÉCLARATION
-                        </button>
-
-                        <a id="btn-whatsapp-proof" href="https://wa.me/243980000338?text=Bonjour%20MATT,%20je%20viens%20d'effectuer%20un%20dépôt%20de%20recharge." target="_blank" class="w-full py-2.5 bg-whatsapp hover:bg-green-600 text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow-md flex items-center justify-center gap-2">
-                            <span>📲</span> Envoyer la preuve sur WhatsApp
-                        </a>
-                    </div>
-                </div>
-
-                <!-- COLONNE DROITE : FIL DES MISSIONS DISPONIBLES -->
-                <div class="lg:col-span-2 space-y-4">
-                    <div class="flex justify-between items-center border-b pb-2">
-                        <div>
-                            <h3 class="text-sm font-black text-navy-800 uppercase flex items-center gap-2">
-                                <span>🚨</span> FIL DES MISSIONS DISPONIBLES
-                            </h3>
-                            <p class="text-[11px] text-slate-500 font-medium">Les missions correspondent à votre spécialité et votre zone d'affectation.</p>
-                        </div>
-                        <button onclick="loadPartnerMissions()" class="text-xs text-sky-600 font-bold hover:underline flex items-center gap-1">
-                            🔄 Actualiser
+            <!-- Modification Profil & Mots de passe -->
+            <div id="partner-tab-profil" class="partner-subview hidden space-y-3">
+                <span class="text-[11px] font-black uppercase text-navy-800 block">Sécurité & Identifiants</span>
+                <div class="bg-slate-50 p-3.5 rounded-2xl border space-y-2.5 text-xs">
+                    <input type="text" id="partner-edit-name" placeholder="Nom ou Raison sociale" class="w-full p-2.5 bg-white border rounded-xl font-bold">
+                    <input type="tel" id="partner-edit-phone" placeholder="Numéro de téléphone" class="w-full p-2.5 bg-white border rounded-xl font-bold font-mono">
+                    <select id="partner-edit-commune" class="w-full p-2.5 bg-white border rounded-xl font-bold"></select>
+                    
+                    <div class="relative">
+                        <input type="password" id="partner-edit-old-pass" placeholder="Ancien mot de passe *" class="w-full p-2.5 pr-10 bg-white border rounded-xl font-bold">
+                        <button type="button" onclick="togglePasswordVisibility('partner-edit-old-pass', 'eye-p-old')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400">
+                            <span id="eye-p-old">👁️</span>
                         </button>
                     </div>
 
-                    <div id="partner-missions-container" class="space-y-4 pt-2">
-                        <p class="text-xs text-slate-400 text-center py-16">Aucune nouvelle mission disponible pour le moment dans votre secteur.</p>
-                    </div>
-                </div>
-
-            </div>
-
-            <!-- SOUS-ONGLET 2 : CHIFFRE D'AFFAIRES & PÉRIODES -->
-            <div id="partner-tab-ca" class="partner-subview hidden space-y-4">
-                <h3 class="text-md font-black text-navy-800 uppercase">📊 Historique des Gains & Activité Financière</h3>
-                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
-                    <div class="bg-slate-50 border p-4 rounded-2xl">
-                        <span class="text-[10px] text-slate-500 font-bold uppercase block">Courses Terminées</span>
-                        <b class="text-2xl font-black text-navy-800" id="ca-completed-count">0</b>
-                    </div>
-                    <div class="bg-slate-50 border p-4 rounded-2xl">
-                        <span class="text-[10px] text-slate-500 font-bold uppercase block">Chiffre d'Affaires Brut</span>
-                        <b class="text-2xl font-black text-green-700" id="ca-gross-total">0 CDF</b>
-                    </div>
-                    <div class="bg-slate-50 border p-4 rounded-2xl">
-                        <span class="text-[10px] text-slate-500 font-bold uppercase block">Commissions MATT Versées</span>
-                        <b class="text-2xl font-black text-mattOrange" id="ca-commissions-total">0 CDF</b>
-                    </div>
-                </div>
-            </div>
-
-            <!-- SOUS-ONGLET 3 : MES COURSES & CLÔTURE -->
-            <div id="partner-tab-courses" class="partner-subview hidden space-y-4">
-                <h3 class="text-md font-black text-navy-800 uppercase">📑 Mes Missions Acceptées & Clôture de Prestation</h3>
-                <div id="partner-accepted-courses-list" class="space-y-3"></div>
-            </div>
-
-            <!-- SOUS-ONGLET 4 : MODIFICATION DES IDENTIFIANTS DU PARTENAIRE -->
-            <div id="partner-tab-profil" class="partner-subview hidden space-y-4">
-                <div class="border-b pb-2">
-                    <h3 class="text-md font-black text-navy-800 uppercase">⚙️ Modifier Mes Identifiants & Profil</h3>
-                    <p class="text-xs text-slate-500">Mettez à jour vos identifiants d'accès direct et sécurisez votre compte.</p>
-                </div>
-
-                <div class="bg-slate-50 p-6 rounded-3xl border border-slate-200 max-w-xl space-y-4">
-                    <div>
-                        <label class="text-[11px] font-bold text-slate-600 block uppercase mb-1">Raison Sociale ou Nom d'Opérateur :</label>
-                        <input type="text" id="partner-edit-name" class="w-full px-3.5 py-2.5 bg-white border rounded-xl text-xs font-bold text-slate-800">
-                    </div>
-                    <div>
-                        <label class="text-[11px] font-bold text-slate-600 block uppercase mb-1">Numéro de Téléphone (Identifiant / Login) :</label>
-                        <input type="tel" id="partner-edit-phone" class="w-full px-3.5 py-2.5 bg-white border rounded-xl text-xs font-bold text-slate-800 font-mono">
-                    </div>
-                    <div>
-                        <label class="text-[11px] font-bold text-slate-600 block uppercase mb-1">Commune Principale d'Intervention :</label>
-                        <select id="partner-edit-commune" class="w-full px-3.5 py-2.5 bg-white border rounded-xl text-xs font-bold text-slate-800"></select>
+                    <div class="relative">
+                        <input type="password" id="partner-edit-new-pass" placeholder="Nouveau mot de passe" class="w-full p-2.5 pr-10 bg-white border rounded-xl font-bold">
+                        <button type="button" onclick="togglePasswordVisibility('partner-edit-new-pass', 'eye-p-new')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400">
+                            <span id="eye-p-new">👁️</span>
+                        </button>
                     </div>
 
-                    <!-- Champs sécurisés : Ancien et Nouveau Mot de Passe avec œil -->
-                    <div class="border-t pt-3 space-y-3">
-                        <div>
-                            <label class="text-[11px] font-bold text-slate-600 block uppercase mb-1">Ancien Mot de Passe (obligatoire pour valider) :</label>
-                            <div class="relative">
-                                <input type="password" id="partner-edit-old-pass" placeholder="Votre mot de passe actuel" class="w-full px-3.5 py-2.5 pr-10 bg-white border rounded-xl text-xs font-bold text-slate-800">
-                                <button type="button" onclick="togglePasswordVisibility('partner-edit-old-pass', 'eye-p-old')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-700">
-                                    <span id="eye-p-old" class="text-base">👁️</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="text-[11px] font-bold text-slate-600 block uppercase mb-1">Nouveau Mot de Passe (laisser vide pour conserver l'actuel) :</label>
-                            <div class="relative">
-                                <input type="password" id="partner-edit-new-pass" placeholder="Nouveau mot de passe" class="w-full px-3.5 py-2.5 pr-10 bg-white border rounded-xl text-xs font-bold text-slate-800">
-                                <button type="button" onclick="togglePasswordVisibility('partner-edit-new-pass', 'eye-p-new')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-700">
-                                    <span id="eye-p-new" class="text-base">👁️</span>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <button onclick="savePartnerProfileUpdate()" class="w-full py-3 bg-navy-800 hover:bg-navy-900 text-white text-xs font-black uppercase rounded-xl transition tracking-wider shadow">
-                        💾 Enregistrer les modifications
+                    <button onclick="savePartnerProfileUpdate()" class="w-full py-3 bg-navy-800 text-white font-black rounded-xl uppercase text-xs">
+                        Enregistrer
                     </button>
                 </div>
             </div>
-
         </div>
 
         <!-- 6. PRÉSENTATION DE MATT SARL -->
-        <div id="view-presentation" class="bg-white text-slate-800 rounded-3xl p-8 shadow-2xl space-y-6 max-w-4xl mx-auto hidden animate-fade-in">
-            <div class="border-b pb-4 flex items-center gap-4">
-                <div class="w-16 h-16 bg-white rounded-2xl border shadow-sm overflow-hidden flex items-center justify-center flex-shrink-0">
-                    <img src="matt.jpg" alt="Logo MATT" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/100x100/ffffff/0a192f?text=MATT'">
+        <div id="view-presentation" class="bg-white text-slate-800 rounded-3xl p-5 shadow-2xl space-y-4 hidden animate-fade-in text-xs">
+            <div class="flex items-center gap-3 border-b pb-3">
+                <div class="w-12 h-12 bg-white rounded-xl border p-0.5 flex-shrink-0">
+                    <img src="matt.jpg" alt="MATT" class="w-full h-full object-cover">
                 </div>
                 <div>
-                    <h2 class="text-2xl font-black text-navy-800">MASTER TOUCH TRADING (MATT SARL)</h2>
-                    <p class="text-xs text-aqua font-bold uppercase tracking-widest">Entreprise générale d'assainissement et de services</p>
+                    <h2 class="text-base font-black text-navy-800">MASTER TOUCH TRADING</h2>
+                    <span class="text-[9px] text-aqua uppercase font-bold tracking-widest block">MATT SARL • Kinshasa</span>
                 </div>
             </div>
-
-            <div class="text-xs text-slate-600 leading-relaxed space-y-4 font-medium">
-                <p>
-                    <b>MATT SARL</b> est une société commerciale immatriculée au Registre du Commerce et du Crédit Mobilier sous le numéro <b>CD/KIN/RCCM/24-B-04106</b> et identifiée au Numéro d'Impôt Fiscal (NIF) sous le numéro <b>A2441433N</b>, exerçant ses activités à Kinshasa en République Démocratique du Congo.
-                </p>
-                
-                <h4 class="text-sm font-black text-navy-800 uppercase">Nos Domaines d'Intervention :</h4>
-                <ul class="list-disc pl-5 space-y-1">
-                    <li><b>Lavage & Entretien Automobile :</b> Lavage intégral sur site ou à domicile, lustrage, shampouinage sièges, dégraissage châssis et moteur.</li>
-                    <li><b>Hygiène Résidentielle & Tertiaire :</b> Remise en état de canapés (textile, lin, cuir), surfaces vitrées, sols carrelés et moquettes.</li>
-                    <li><b>Assainissement 3D :</b> Désinfection microbiologique, Désinsectisation certifiée et Dératisation de locaux privés et commerciaux.</li>
-                    <li><b>Gestion des Déchets & Vidange :</b> Évacuation d'immondices par volume et vidange hydrocurage de fosses septiques.</li>
-                </ul>
-
-                <h4 class="text-sm font-black text-navy-800 uppercase">Partenariat Technologique :</h4>
-                <p>
-                    La plateforme <b>MATT Clean'App</b> est développée et orchestrée par <b>Global Tech Solutions</b>, garantissant la digitalisation des flux, la traçabilité des prestataires et la sécurisation des échanges.
-                </p>
-            </div>
-            
-            <div class="pt-4 border-t flex justify-end">
-                <button onclick="showView('view-gateway')" class="px-5 py-2.5 bg-navy-800 text-white text-xs font-bold rounded-xl uppercase">Retour à l'accueil</button>
-            </div>
+            <p>Société d'assainissement et entretien immatriculée au <b>RCCM CD/KIN/RCCM/24-B-04106</b>, NIF <b>A2441433N</b>.</p>
+            <p>Éditrice de <b>MATT Clean'App</b> en partenariat technologique avec <b>Global Tech Solutions</b>.</p>
+            <button onclick="showView('view-gateway')" class="w-full py-2.5 bg-navy-800 text-white rounded-xl font-bold uppercase">Retour</button>
         </div>
 
-        <!-- 7. CONDITIONS GÉNÉRALES D'UTILISATION (DYNAMIQUES VIA SUPABASE) -->
-        <div id="view-cgu" class="bg-white text-slate-800 rounded-3xl p-8 shadow-2xl space-y-6 max-w-4xl mx-auto hidden animate-fade-in">
-            <div class="border-b pb-4 flex justify-between items-center">
-                <div>
-                    <h2 class="text-2xl font-black text-navy-800">Conditions Générales d'Utilisation & Charte Qualité</h2>
-                    <p class="text-xs text-slate-500 font-semibold">Plateforme MATT Clean'App • Exploitant : MATT SARL • En vigueur à Kinshasa</p>
-                </div>
-                <button onclick="fetchPublishedCgu()" class="text-xs text-sky-600 font-bold hover:underline">Rafraîchir 🔄</button>
+        <!-- 7. CONDITIONS GÉNÉRALES D'UTILISATION (CGU DYNAMIQUES) -->
+        <div id="view-cgu" class="bg-white text-slate-800 rounded-3xl p-5 shadow-2xl space-y-4 hidden animate-fade-in text-xs">
+            <div class="flex justify-between items-center border-b pb-2">
+                <h2 class="text-sm font-black text-navy-800 uppercase">CGU & Tarifs Officiels</h2>
+                <button onclick="fetchPublishedCgu()" class="text-sky-600 font-bold">🔄</button>
             </div>
-
-            <!-- Ce conteneur reçoit le texte publié en direct depuis l'admin -->
-            <div id="cgu-display-container" class="text-xs text-slate-600 leading-relaxed space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
-                <p class="text-slate-400 italic">Chargement des CGU officielles...</p>
+            <div id="cgu-display-container" class="space-y-3 max-h-[60vh] overflow-y-auto pr-1 custom-scrollbar text-slate-600 leading-relaxed">
+                <p class="text-slate-400 italic">Chargement des CGU...</p>
             </div>
-
-            <div class="pt-4 border-t flex justify-end">
-                <button onclick="showView('view-gateway')" class="px-5 py-2.5 bg-navy-800 text-white text-xs font-bold rounded-xl uppercase">J'ai compris</button>
-            </div>
+            <button onclick="showView('view-gateway')" class="w-full py-2.5 bg-navy-800 text-white rounded-xl font-bold uppercase">Fermer</button>
         </div>
 
-        <!-- 8. ASSISTANCE TECHNIQUE & SUPPORT -->
-        <div id="view-support" class="bg-white text-slate-800 rounded-3xl p-8 shadow-2xl space-y-6 max-w-3xl mx-auto hidden animate-fade-in">
-            <div class="border-b pb-4">
-                <h2 class="text-2xl font-black text-navy-800">Assistance Technique & Service Client</h2>
-                <p class="text-xs text-slate-500 font-semibold">Support opérationnel disponible pour Kinshasa.</p>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <a href="https://wa.me/243980000338" target="_blank" class="p-4 rounded-2xl bg-green-50 border border-green-200 flex items-center gap-3 hover:bg-green-100 transition">
-                    <span class="text-3xl">💬</span>
-                    <div>
-                        <span class="text-[10px] text-green-700 font-black uppercase block">Assistance WhatsApp</span>
-                        <b class="text-slate-800 text-xs font-bold">+243 980 000 338</b>
-                    </div>
+        <!-- 8. ASSISTANCE TECHNIQUE & WHATSAPP DIRECT -->
+        <div id="view-support" class="bg-white text-slate-800 rounded-3xl p-5 shadow-2xl space-y-4 hidden animate-fade-in text-xs">
+            <h2 class="text-base font-black text-navy-800 border-b pb-2">Assistance & Urgences</h2>
+            <div class="grid grid-cols-2 gap-2">
+                <a href="https://wa.me/243980000338" target="_blank" class="p-3 bg-green-50 border border-green-200 rounded-xl flex items-center gap-2">
+                    <span class="text-xl">💬</span>
+                    <span class="font-bold text-green-800 text-[11px]">WhatsApp</span>
                 </a>
-                <a href="tel:+243980000338" class="p-4 rounded-2xl bg-sky-50 border border-sky-200 flex items-center gap-3 hover:bg-sky-100 transition">
-                    <span class="text-3xl">📞</span>
-                    <div>
-                        <span class="text-[10px] text-sky-700 font-black uppercase block">Ligne Téléphonique</span>
-                        <b class="text-slate-800 text-xs font-bold">+243 980 000 338</b>
-                    </div>
+                <a href="tel:+243980000338" class="p-3 bg-sky-50 border border-sky-200 rounded-xl flex items-center gap-2">
+                    <span class="text-xl">📞</span>
+                    <span class="font-bold text-sky-800 text-[11px]">Appel Direct</span>
                 </a>
             </div>
-
-            <div class="space-y-4 pt-2">
-                <h3 class="text-xs font-black text-navy-800 uppercase">Formulaire de réclamation ou demande d'assistance :</h3>
-                <div class="space-y-3">
-                    <input type="text" id="ticket-name" placeholder="Votre nom complet" class="w-full px-3.5 py-2.5 border rounded-xl text-xs font-bold">
-                    <input type="tel" id="ticket-phone" placeholder="Numéro de téléphone" class="w-full px-3.5 py-2.5 border rounded-xl text-xs font-bold">
-                    <textarea id="ticket-message" rows="4" placeholder="Décrivez votre problème technique ou votre réclamation..." class="w-full p-3.5 border rounded-xl text-xs font-semibold"></textarea>
-                    <button onclick="submitSupportTicket()" class="w-full py-3 bg-navy-800 hover:bg-navy-900 text-white font-black text-xs rounded-xl uppercase tracking-wider">
-                        Transmettre ma demande
-                    </button>
-                </div>
+            <div class="space-y-2 pt-2">
+                <input type="text" id="ticket-name" placeholder="Votre nom" class="w-full p-2.5 border rounded-xl">
+                <input type="tel" id="ticket-phone" placeholder="Téléphone" class="w-full p-2.5 border rounded-xl">
+                <textarea id="ticket-message" rows="3" placeholder="Message / Réclamation..." class="w-full p-2.5 border rounded-xl"></textarea>
+                <button onclick="submitSupportTicket()" class="w-full py-3 bg-navy-800 text-white font-black rounded-xl uppercase">Envoyer</button>
             </div>
         </div>
 
     </main>
 
-    <!-- MODALE DE NOTATION / COTATION CLIENT -->
-    <div id="modal-rating" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
-        <div class="bg-white text-slate-900 w-full max-w-md rounded-2xl shadow-2xl p-6 border border-slate-200 flex flex-col gap-4 relative">
-            <button onclick="closeRatingModal()" class="absolute top-4 right-4 text-slate-500 hover:text-slate-800 font-bold text-xl">✕</button>
-            <h3 class="text-lg font-black text-navy-800 border-b pb-2">⭐ Évaluer la prestation #<span id="rating-order-id"></span></h3>
+    <!-- BARRE DE NAVIGATION INFÉRIEURE MOBILE (BOTTOM BAR) -->
+    <nav class="fixed bottom-0 inset-x-0 bg-navy-800/95 border-t border-slate-700/80 backdrop-blur-md z-50 flex justify-around items-center py-2 text-[10px] font-bold text-slate-400 md:hidden">
+        <button onclick="showView('view-gateway')" class="flex flex-col items-center gap-0.5 active:text-aqua">
+            <span class="text-base">🏠</span>
+            <span>Accueil</span>
+        </button>
+        <button onclick="handleBottomNavAction('orders')" class="flex flex-col items-center gap-0.5 active:text-aqua">
+            <span class="text-base">📋</span>
+            <span>Missions</span>
+        </button>
+        <button onclick="showView('view-support')" class="flex flex-col items-center gap-0.5 active:text-aqua">
+            <span class="text-base">🛠️</span>
+            <span>Aide</span>
+        </button>
+        <button onclick="handleBottomNavAction('profile')" class="flex flex-col items-center gap-0.5 active:text-aqua">
+            <span class="text-base">👤</span>
+            <span>Compte</span>
+        </button>
+    </nav>
+
+    <!-- MODALE DE NOTATION MOBILE -->
+    <div id="modal-rating" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
+        <div class="bg-white text-slate-900 w-full max-w-sm rounded-3xl p-5 space-y-3 relative text-xs">
+            <button onclick="closeRatingModal()" class="absolute top-4 right-4 text-slate-400 font-bold text-lg">✕</button>
+            <h3 class="text-sm font-black text-navy-800">⭐ Noter la course #<span id="rating-order-id"></span></h3>
             
-            <div class="space-y-3 text-xs">
-                <div>
-                    <label class="font-bold text-slate-600 block mb-1">Qualité de la prestation :</label>
-                    <div class="flex gap-2 text-2xl cursor-pointer" id="stars-service-container">
-                        <span onclick="setRating('service', 1)">★</span>
-                        <span onclick="setRating('service', 2)">★</span>
-                        <span onclick="setRating('service', 3)">★</span>
-                        <span onclick="setRating('service', 4)">★</span>
-                        <span onclick="setRating('service', 5)">★</span>
-                    </div>
-                </div>
-                <div>
-                    <label class="font-bold text-slate-600 block mb-1">Commentaire sur le travail du prestataire :</label>
-                    <textarea id="rating-comment" rows="3" placeholder="Donnez votre avis sur le service..." class="w-full p-2.5 border rounded-xl font-medium"></textarea>
-                </div>
+            <div class="flex justify-center gap-2 text-3xl cursor-pointer py-1" id="stars-service-container">
+                <span onclick="setRating('service', 1)">★</span>
+                <span onclick="setRating('service', 2)">★</span>
+                <span onclick="setRating('service', 3)">★</span>
+                <span onclick="setRating('service', 4)">★</span>
+                <span onclick="setRating('service', 5)">★</span>
             </div>
 
-            <div class="flex justify-end gap-2 pt-3 border-t">
-                <button onclick="closeRatingModal()" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-xl text-xs font-bold">Annuler</button>
-                <button onclick="submitOrderRating()" class="px-5 py-2 bg-mattOrange text-white rounded-xl text-xs font-black uppercase">Enregistrer ma note</button>
-            </div>
+            <textarea id="rating-comment" rows="2" placeholder="Votre commentaire..." class="w-full p-2.5 border rounded-xl"></textarea>
+            <button onclick="submitOrderRating()" class="w-full py-3 bg-mattOrange text-white font-black rounded-xl uppercase">Enregistrer</button>
         </div>
     </div>
 
-    <!-- Pied de page officiel -->
-    <footer class="mt-12 border-t border-slate-800 bg-navy-800/90 py-6 text-center text-xs text-slate-400">
-        <div class="container mx-auto px-4 max-w-5xl space-y-2">
-            <div class="flex flex-wrap justify-center items-center gap-x-6 gap-y-1 text-slate-300 font-bold">
-                <span>MATT SARL</span>
-                <span>RCCM : <b class="text-aqua font-mono">CD/KIN/RCCM/24-B-04106</b></span>
-                <span>NIF : <b class="text-aqua font-mono">A2441433N</b></span>
-                <span>Kinshasa, RDC</span>
-            </div>
-            <p class="text-[10px] text-slate-500">Plateforme officielle développée par MATT SARL by Global Tech Solutions.</p>
-        </div>
-    </footer>
-
-    <!-- LOGIQUE JAVASCRIPT & CONNEXION SUPABASE -->
+    <!-- LOGIQUE JAVASCRIPT ET CONNEXION SUPABASE -->
     <script>
         const SUPABASE_URL = "https://vbriworyscymnmtzzdny.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZicml3b3J5c2N5bW5tdHp6ZG55Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzNzQwNTEsImV4cCI6MjEwMzk1MDA1MX0.VBZupVKj0srae0NT5BNZ0OeaIv9pAl2bl5L-Rd8ocJk";
         const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        // Répertoire des communes et zones
         const communesKinshasa = [
             { name: "Gombe", zone: "zone1", label: "Zone 1 - Résidentielle" },
             { name: "Ngaliema", zone: "zone1", label: "Zone 1 - Résidentielle" },
@@ -717,16 +541,16 @@
             { name: "Lingwala", zone: "zone2", label: "Zone 2 - Centrale" },
             { name: "Barumbu", zone: "zone2", label: "Zone 2 - Centrale" },
             { name: "Kinshasa", zone: "zone2", label: "Zone 2 - Centrale" },
-            { name: "N'djili", zone: "zone3", label: "Zone 3 - Est & Populaire" },
-            { name: "Masina", zone: "zone3", label: "Zone 3 - Est & Populaire" },
-            { name: "Matete", zone: "zone3", label: "Zone 3 - Est & Populaire" },
-            { name: "Bumbu", zone: "zone3", label: "Zone 3 - Est & Populaire" },
-            { name: "Makala", zone: "zone3", label: "Zone 3 - Est & Populaire" },
-            { name: "Ngaba", zone: "zone3", label: "Zone 3 - Est & Populaire" },
-            { name: "Ngiri-Ngiri", zone: "zone3", label: "Zone 3 - Est & Populaire" },
-            { name: "Kimbanseke", zone: "zone3", label: "Zone 3 - Est & Populaire" },
-            { name: "Kisenso", zone: "zone3", label: "Zone 3 - Est & Populaire" },
-            { name: "Selembao", zone: "zone3", label: "Zone 3 - Est & Populaire" },
+            { name: "N'djili", zone: "zone3", label: "Zone 3 - Populaire" },
+            { name: "Masina", zone: "zone3", label: "Zone 3 - Populaire" },
+            { name: "Matete", zone: "zone3", label: "Zone 3 - Populaire" },
+            { name: "Bumbu", zone: "zone3", label: "Zone 3 - Populaire" },
+            { name: "Makala", zone: "zone3", label: "Zone 3 - Populaire" },
+            { name: "Ngaba", zone: "zone3", label: "Zone 3 - Populaire" },
+            { name: "Ngiri-Ngiri", zone: "zone3", label: "Zone 3 - Populaire" },
+            { name: "Kimbanseke", zone: "zone3", label: "Zone 3 - Populaire" },
+            { name: "Kisenso", zone: "zone3", label: "Zone 3 - Populaire" },
+            { name: "Selembao", zone: "zone3", label: "Zone 3 - Populaire" },
             { name: "Mont-Ngafula", zone: "zone4", label: "Zone 4 - Périurbaine" },
             { name: "Nsele", zone: "zone4", label: "Zone 4 - Périurbaine" },
             { name: "Maluku", zone: "zone4", label: "Zone 4 - Périurbaine" }
@@ -756,10 +580,10 @@
             if (!container) return;
             const toast = document.createElement('div');
             let bg = type === "error" ? "bg-red-600" : "bg-green-600";
-            toast.className = `${bg} text-white px-4 py-3 rounded-xl shadow-2xl flex items-center justify-between gap-3 text-xs font-bold`;
+            toast.className = `${bg} text-white px-4 py-2.5 rounded-2xl shadow-2xl flex items-center justify-between gap-3 text-xs font-bold pointer-events-auto transition-all`;
             toast.innerHTML = `<span>${message}</span><button onclick="this.parentElement.remove()" class="text-white font-black">✕</button>`;
             container.appendChild(toast);
-            setTimeout(() => toast.remove(), 4000);
+            setTimeout(() => toast.remove(), 3500);
         }
 
         function togglePasswordVisibility(inputId, eyeIconId) {
@@ -786,8 +610,14 @@
         }
 
         function goToAuth(role) {
-            if (role === 'client') showView('view-client-auth');
-            if (role === 'partner') showView('view-partner-auth');
+            if (role === 'client') {
+                if (session.role === 'client') openClientApp();
+                else showView('view-client-auth');
+            }
+            if (role === 'partner') {
+                if (session.role === 'partner') openPartnerApp();
+                else showView('view-partner-auth');
+            }
         }
 
         function switchAuthTab(role, tab) {
@@ -805,6 +635,31 @@
             calculerTotal();
         }
 
+        function handleBottomNavAction(action) {
+            if (action === 'orders') {
+                if (session.role === 'client') {
+                    showView('view-client-app');
+                    switchClientTab('client-tracking');
+                } else if (session.role === 'partner') {
+                    showView('view-partner-app');
+                    switchPartnerTab('partner-tab-missions', document.querySelector('.partner-tab-btn'));
+                } else {
+                    showToast("Connectez-vous pour voir vos courses.", "error");
+                    showView('view-gateway');
+                }
+            } else if (action === 'profile') {
+                if (session.role === 'client') {
+                    showView('view-client-app');
+                    switchClientTab('client-compose');
+                } else if (session.role === 'partner') {
+                    showView('view-partner-app');
+                    switchPartnerTab('partner-tab-profil', document.querySelectorAll('.partner-tab-btn')[3]);
+                } else {
+                    showView('view-gateway');
+                }
+            }
+        }
+
         // ==========================================
         // SYNCHRONISATION CGU AVEC SUPABASE
         // ==========================================
@@ -813,30 +668,22 @@
             if (!container) return;
 
             const { data } = await db.from('system_settings').select('value').eq('key', 'cgu_content').single();
-            
             if (data && data.value) {
-                container.innerHTML = data.value.split('\n\n').map(paragraphe => {
-                    const lines = paragraphe.split('\n');
-                    const titre = lines[0];
-                    const corps = lines.slice(1).join('<br>');
-                    return `
-                        <div class="space-y-1">
-                            <h4 class="font-black text-navy-800 uppercase">${titre}</h4>
-                            <p>${corps || ''}</p>
-                        </div>
-                    `;
+                container.innerHTML = data.value.split('\n\n').map(p => {
+                    const lines = p.split('\n');
+                    return `<div class="space-y-0.5"><h4 class="font-black text-navy-800 uppercase">${lines[0]}</h4><p>${lines.slice(1).join('<br>') || ''}</p></div>`;
                 }).join('');
             } else {
-                container.innerHTML = `<p class="text-slate-500">Les CGU officielles sont en cours d'actualisation par la Direction.</p>`;
+                container.innerHTML = `<p class="text-slate-500">CGU en cours d'actualisation.</p>`;
             }
         }
 
         function subscribeToCguUpdates() {
-            db.channel('cgu-realtime-sync')
+            db.channel('cgu-realtime-mobile')
                 .on('postgres_changes', { event: '*', schema: 'public', table: 'system_settings', filter: 'key=eq.cgu_content' }, payload => {
                     if (payload.new && payload.new.value) {
                         fetchPublishedCgu();
-                        showToast("Les CGU officielles viennent d'être actualisées par la Direction.", "info");
+                        showToast("CGU actualisées par la Direction.", "info");
                     }
                 })
                 .subscribe();
@@ -849,26 +696,24 @@
             const name = document.getElementById('auth-client-reg-name').value.trim();
             const phone = document.getElementById('auth-client-reg-phone').value.trim();
             const password = document.getElementById('auth-client-reg-pass').value.trim();
-
             if (!name || !phone || !password) return showToast("Remplissez tous les champs.", "error");
 
             const { data, error } = await db.from('clients').insert([{ name, phone, password }]).select();
             if (error) return showToast(error.message, "error");
 
             session = { role: 'client', user: data[0] };
-            showToast("Compte client créé avec succès !");
+            showToast("Compte client créé !");
             openClientApp();
         }
 
         async function loginClient() {
             const phone = document.getElementById('auth-client-login-phone').value.trim();
             const password = document.getElementById('auth-client-login-pass').value.trim();
-
             const { data, error } = await db.from('clients').select('*').eq('phone', phone).eq('password', password).single();
-            if (error || !data) return showToast("Numéro ou mot de passe incorrect.", "error");
+            if (error || !data) return showToast("Identifiants incorrects.", "error");
 
             session = { role: 'client', user: data };
-            showToast(`Bienvenue ${data.name} !`);
+            showToast(`Bienvenue ${data.name}`);
             openClientApp();
         }
 
@@ -887,25 +732,22 @@
             const phone = document.getElementById('p-reg-phone').value.trim();
             const password = document.getElementById('p-reg-pass').value.trim();
             const commune = document.getElementById('p-reg-commune').value;
-            const address = document.getElementById('p-reg-address').value.trim();
             const specialty = document.getElementById('p-reg-specialty').value;
-
             if (!name || !phone || !password) return showToast("Tous les champs sont requis.", "error");
 
-            const { data, error } = await db.from('partners').insert([{ name, phone, password, commune, address, specialty, wallet: 0 }]).select();
+            const { data, error } = await db.from('partners').insert([{ name, phone, password, commune, specialty, wallet: 0 }]).select();
             if (error) return showToast(error.message, "error");
 
             session = { role: 'partner', user: data[0] };
-            showToast("Dossier partenaire enregistré !");
+            showToast("Compte prestataire activé !");
             openPartnerApp();
         }
 
         async function loginPartner() {
             const phone = document.getElementById('auth-partner-login-phone').value.trim();
             const password = document.getElementById('auth-partner-login-pass').value.trim();
-
             const { data, error } = await db.from('partners').select('*').eq('phone', phone).eq('password', password).single();
-            if (error || !data) return showToast("Identifiants partenaire incorrects.", "error");
+            if (error || !data) return showToast("Accès partenaire refusé.", "error");
 
             session = { role: 'partner', user: data };
             showToast(`Connecté : ${data.name}`);
@@ -915,22 +757,18 @@
         function openPartnerApp() {
             showView('view-partner-app');
             document.getElementById('partner-dashboard-name').innerText = session.user.name;
-            document.getElementById('partner-dashboard-meta').innerText = `(${session.user.specialty} - ${session.user.commune})`;
+            document.getElementById('partner-dashboard-meta').innerText = `${session.user.specialty} - ${session.user.commune}`;
             document.getElementById('partner-wallet-balance').innerText = `${Number(session.user.wallet || 0).toLocaleString('fr-FR')} CDF`;
-            
+
             document.getElementById('partner-edit-name').value = session.user.name;
             document.getElementById('partner-edit-phone').value = session.user.phone;
             document.getElementById('partner-edit-commune').value = session.user.commune;
-            document.getElementById('partner-edit-old-pass').value = '';
-            document.getElementById('partner-edit-new-pass').value = '';
 
             const mode = session.user.billing_mode || 'commission';
-            document.getElementById('partner-mode-badge').innerText = mode === 'commission' ? 'Mode Commission (15%)' : (mode === 'journalier' ? 'Forfait Journalier (Actif)' : 'Forfait Mensuel (Actif)');
-            document.getElementById('partner-solde-label').innerText = `SOLDE ACTUEL (${mode.toUpperCase()})`;
-
+            document.getElementById('partner-mode-badge').innerText = mode === 'commission' ? '15% Comm.' : 'Forfait Actif';
             document.getElementById('logged-user-chip').classList.remove('hidden');
             document.getElementById('logged-user-name').innerText = session.user.name;
-            
+
             loadPartnerMissions();
             loadPartnerAcceptedCourses();
         }
@@ -941,79 +779,53 @@
             showView('view-gateway');
         }
 
-        // ==========================================
-        // MODIFICATION DES IDENTIFIANTS DU PARTENAIRE
-        // ==========================================
+        // Modification sécurisée profil prestataire
         async function savePartnerProfileUpdate() {
             if (!session.user) return;
-
             const newName = document.getElementById('partner-edit-name').value.trim();
             const newPhone = document.getElementById('partner-edit-phone').value.trim();
             const newCommune = document.getElementById('partner-edit-commune').value;
             const oldPass = document.getElementById('partner-edit-old-pass').value.trim();
             const newPass = document.getElementById('partner-edit-new-pass').value.trim();
 
-            if (!newName || !newPhone) {
-                return showToast("Le nom et le téléphone sont obligatoires.", "error");
-            }
+            if (!newName || !newPhone) return showToast("Nom et téléphone requis.", "error");
+            if (!oldPass) return showToast("Ancien mot de passe requis.", "error");
 
-            if (!oldPass) {
-                return showToast("Veuillez saisir votre ancien mot de passe pour confirmer.", "error");
-            }
+            const { data: checkUser } = await db.from('partners').select('*').eq('id', session.user.id).eq('password', oldPass).single();
+            if (!checkUser) return showToast("Ancien mot de passe erroné.", "error");
 
-            const { data: checkUser, error: checkErr } = await db.from('partners').select('*').eq('id', session.user.id).eq('password', oldPass).single();
+            let updatePayload = { name: newName, phone: newPhone, commune: newCommune };
+            if (newPass) updatePayload.password = newPass;
 
-            if (checkErr || !checkUser) {
-                return showToast("L'ancien mot de passe saisi est incorrect.", "error");
-            }
-
-            let updatePayload = {
-                name: newName,
-                phone: newPhone,
-                commune: newCommune
-            };
-
-            if (newPass) {
-                updatePayload.password = newPass;
-            }
-
-            const { error } = await db.from('partners').update(updatePayload).eq('id', session.user.id);
-            if (error) return showToast(error.message, "error");
-
+            await db.from('partners').update(updatePayload).eq('id', session.user.id);
             session.user.name = newName;
             session.user.phone = newPhone;
             session.user.commune = newCommune;
             if (newPass) session.user.password = newPass;
 
             document.getElementById('partner-dashboard-name').innerText = newName;
-            document.getElementById('partner-dashboard-meta').innerText = `(${session.user.specialty} - ${newCommune})`;
-            document.getElementById('logged-user-name').innerText = newName;
-
-            document.getElementById('partner-edit-old-pass').value = '';
-            document.getElementById('partner-edit-new-pass').value = '';
-
-            showToast("Vos identifiants ont été mis à jour avec succès !");
-            loadPartnerMissions();
+            document.getElementById('partner-dashboard-meta').innerText = `${session.user.specialty} - ${newCommune}`;
+            showToast("Profil mis à jour !");
         }
 
         // ==========================================
-        // COMMANDES ET ACTIONS CLIENTS
+        // COMMANDES ET ACTIONS CLIENT
         // ==========================================
         function calculerTotal() {
             let total = 0;
             const tarifsZone = grilleTarifaireParZone[currentActiveZone] || grilleTarifaireParZone['zone1'];
 
             typesVehicules.forEach(v => {
-                if (clientVehiculeSelection[v.id]) {
-                    const prixUnitaire = tarifsZone[v.id] || 15000;
-                    total += clientVehiculeSelection[v.id] * prixUnitaire;
-                }
+                if (clientVehiculeSelection[v.id]) total += clientVehiculeSelection[v.id] * (tarifsZone[v.id] || 15000);
             });
 
             total += (parseFloat(document.getElementById('m2-tapis').value) || 0) * 2000;
             total += (parseFloat(document.getElementById('m2-vitres').value) || 0) * 1500;
             total += (parseFloat(document.getElementById('qty-canape-textile').value) || 0) * 4500;
+            total += (parseFloat(document.getElementById('qty-canape-cuir').value) || 0) * 10000;
             total += (parseFloat(document.getElementById('qty-desinfection').value) || 0) * 10000;
+            total += (parseFloat(document.getElementById('qty-deratisation').value) || 0) * 12000;
+            total += (parseFloat(document.getElementById('vol-immondices').value) || 0) * 15000;
             total += (parseFloat(document.getElementById('vol-fosse').value) || 0) * (currentActiveZone === 'zone4' ? 50000 : 40000);
 
             document.getElementById('prix-total-affichage').innerText = total.toLocaleString('fr-FR');
@@ -1024,7 +836,6 @@
             const client_name = document.getElementById('client-name-input').value.trim();
             const client_phone = document.getElementById('client-phone-input').value.trim();
             const commune = document.getElementById('client-commune').value;
-            const quartier = document.getElementById('client-quartier-input').value.trim();
             const avenue = document.getElementById('client-avenue-input').value.trim();
             const reference = document.getElementById('client-ref-input').value.trim();
             const date = document.getElementById('client-date-input').value;
@@ -1032,7 +843,7 @@
             const total_amount = calculerTotal();
 
             if (!client_name || !client_phone || !avenue || !date || !time) {
-                return showToast("Veuillez renseigner toutes les informations de planification.", "error");
+                return showToast("Complétez les informations requises.", "error");
             }
             if (total_amount <= 0) return showToast("Votre panier est vide.", "error");
 
@@ -1040,20 +851,16 @@
 
             const { error } = await db.from('orders').insert([{
                 axe: 'Auto & Maison',
-                client_name,
-                client_phone,
-                description: `Prestation secteur ${commune} (${currentActiveZone.toUpperCase()})`,
-                commune, quartier, avenue, reference,
-                logistics: 'SNEL / REGIDESO',
+                client_name, client_phone,
+                description: `Prestation secteur ${commune}`,
+                commune, avenue, reference,
                 date, time,
-                total_amount,
-                commission,
+                total_amount, commission,
                 status: 'En attente'
             }]);
 
             if (error) return showToast(error.message, "error");
-
-            showToast("Commande confirmée et transmise à la Direction !");
+            showToast("Commande confirmée !");
             switchClientTab('client-tracking');
             detectClientOrders();
         }
@@ -1067,47 +874,29 @@
             list.innerHTML = '';
 
             if (!data || data.length === 0) {
-                list.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Aucune commande trouvée pour ce numéro.</p>`;
+                list.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Aucune commande en cours.</p>`;
                 return;
             }
 
             data.forEach(o => {
                 let badgeColor = o.status === 'En attente' ? 'bg-orange-100 text-orange-700' : (o.status === 'Annulée' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700');
-                
                 list.innerHTML += `
-                    <div class="p-4 border rounded-2xl bg-slate-50 space-y-3 text-xs shadow-sm">
-                        <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 border-b pb-2">
+                    <div class="p-3 border rounded-2xl bg-slate-50 space-y-2 text-xs shadow-sm">
+                        <div class="flex justify-between items-start">
                             <div>
-                                <b class="text-navy-800 font-mono text-sm">#${o.id}</b> - <span class="font-bold text-slate-700">${o.commune} (${o.avenue})</span><br>
-                                <span class="text-slate-500 text-[11px]">${o.date} à ${o.time}</span>
+                                <b class="text-navy-800">#${o.id} - ${o.commune}</b>
+                                <span class="text-[10px] text-slate-500 block">${o.date} (${o.time})</span>
                             </div>
                             <div class="text-right">
-                                <span class="px-2.5 py-1 rounded-md font-bold text-[10px] uppercase ${badgeColor}">${o.status}</span>
-                                <div class="font-mono font-black text-navy-800 mt-1">${Number(o.total_amount).toLocaleString('fr-FR')} CDF</div>
+                                <span class="px-2 py-0.5 rounded text-[9px] font-bold uppercase ${badgeColor}">${o.status}</span>
+                                <div class="font-mono font-black text-navy-800">${Number(o.total_amount).toLocaleString('fr-FR')} CDF</div>
                             </div>
                         </div>
-
-                        ${o.rating_service ? `
-                            <div class="bg-white p-2 rounded-xl border text-[11px] flex justify-between items-center">
-                                <span>Note attribuée : <b class="text-mattOrange">${'⭐'.repeat(o.rating_service)}</b></span>
-                                <span class="italic text-slate-500 font-semibold">${o.comment || 'Aucun avis'}</span>
-                            </div>
-                        ` : ''}
-
-                        <div class="flex flex-wrap items-center justify-end gap-2 pt-1">
-                            ${o.status === 'En attente' ? `
-                                <button onclick="cancelOrder(${o.id})" class="px-3 py-1.5 bg-orange-100 hover:bg-orange-200 text-orange-800 rounded-lg font-bold">
-                                    ⚠️ Annuler
-                                </button>
-                            ` : ''}
-
-                            <button onclick="openRatingModal(${o.id})" class="px-3 py-1.5 bg-sky-100 hover:bg-sky-200 text-sky-800 rounded-lg font-bold">
-                                ⭐ Coter la prestation
-                            </button>
-
-                            <button onclick="deleteOrderClient(${o.id})" class="px-3 py-1.5 bg-red-100 hover:bg-red-200 text-red-700 rounded-lg font-bold">
-                                🗑️ Supprimer
-                            </button>
+                        ${o.rating_service ? `<div class="text-[10px] text-mattOrange font-bold">Note : ${'⭐'.repeat(o.rating_service)}</div>` : ''}
+                        <div class="flex justify-end gap-1.5 pt-1">
+                            ${o.status === 'En attente' ? `<button onclick="cancelOrder(${o.id})" class="px-2.5 py-1 bg-orange-100 text-orange-800 rounded-lg text-[10px] font-bold">Annuler</button>` : ''}
+                            <button onclick="openRatingModal(${o.id})" class="px-2.5 py-1 bg-sky-100 text-sky-800 rounded-lg text-[10px] font-bold">⭐ Noter</button>
+                            <button onclick="deleteOrderClient(${o.id})" class="px-2.5 py-1 bg-red-100 text-red-700 rounded-lg text-[10px] font-bold">🗑️</button>
                         </div>
                     </div>
                 `;
@@ -1115,25 +904,20 @@
         }
 
         async function cancelOrder(orderId) {
-            if (!confirm(`Voulez-vous vraiment annuler la commande #${orderId} ?`)) return;
-            const { error } = await db.from('orders').update({ status: 'Annulée' }).eq('id', orderId);
-            if (error) return showToast(error.message, "error");
-            showToast(`Commande #${orderId} annulée.`);
+            await db.from('orders').update({ status: 'Annulée' }).eq('id', orderId);
+            showToast("Commande annulée.");
             detectClientOrders();
         }
 
         async function deleteOrderClient(orderId) {
-            if (!confirm(`Supprimer définitivement la commande #${orderId} de votre historique ?`)) return;
-            const { error } = await db.from('orders').delete().eq('id', orderId);
-            if (error) return showToast(error.message, "error");
-            showToast(`Commande #${orderId} supprimée.`);
+            await db.from('orders').delete().eq('id', orderId);
+            showToast("Commande supprimée.");
             detectClientOrders();
         }
 
         function openRatingModal(orderId) {
             currentRatingOrderId = orderId;
             document.getElementById('rating-order-id').innerText = orderId;
-            document.getElementById('rating-comment').value = '';
             setRating('service', 5);
             document.getElementById('modal-rating').classList.remove('hidden');
         }
@@ -1144,44 +928,35 @@
 
         function setRating(type, val) {
             selectedRatingValue = val;
-            const stars = document.querySelectorAll('#stars-service-container span');
-            stars.forEach((s, idx) => {
+            document.querySelectorAll('#stars-service-container span').forEach((s, idx) => {
                 s.className = idx < val ? 'text-mattOrange' : 'text-slate-300';
             });
         }
 
         async function submitOrderRating() {
             const comment = document.getElementById('rating-comment').value.trim();
-            const { error } = await db.from('orders').update({
-                rating_service: selectedRatingValue,
-                comment: comment
-            }).eq('id', currentRatingOrderId);
-
-            if (error) return showToast(error.message, "error");
-
-            showToast("Votre cotation a été enregistrée avec succès !");
+            await db.from('orders').update({ rating_service: selectedRatingValue, comment }).eq('id', currentRatingOrderId);
+            showToast("Note enregistrée !");
             closeRatingModal();
             detectClientOrders();
         }
 
         // ==========================================
-        // ESPACE PARTENAIRE : ONGLETS ET MISSIONS
+        // MISSIONS & GESTION PRO PARTENAIRE
         // ==========================================
         function switchPartnerTab(tabId, btn) {
             document.querySelectorAll('.partner-subview').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('.partner-tab-btn').forEach(b => {
-                b.className = "partner-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap";
+                b.className = "partner-tab-btn px-3 py-2 bg-slate-100 text-slate-600 rounded-xl whitespace-nowrap text-[11px]";
             });
             document.getElementById(tabId).classList.remove('hidden');
-            if (btn) btn.className = "partner-tab-btn px-4 py-2.5 bg-mattOrange text-white rounded-xl whitespace-nowrap shadow-sm active";
+            if (btn) btn.className = "partner-tab-btn px-3 py-2 bg-mattOrange text-white rounded-xl whitespace-nowrap text-[11px] active";
         }
 
         function adjustPartnerRechargeMode() {
             const mode = document.getElementById('p-billing-mode-select').value;
             const input = document.getElementById('p-recharge-amount');
-            if (mode === 'journalier') input.value = 15000;
-            else if (mode === 'mensuel') input.value = 150000;
-            else input.value = '';
+            input.value = mode === 'journalier' ? 15000 : (mode === 'mensuel' ? 150000 : '');
         }
 
         async function loadPartnerMissions() {
@@ -1190,29 +965,26 @@
             container.innerHTML = '';
 
             if (!data || data.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-16">Aucune nouvelle mission disponible pour le moment dans votre secteur.</p>`;
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-8">Aucune mission disponible.</p>`;
                 return;
             }
 
             data.forEach(o => {
                 container.innerHTML += `
-                    <div class="p-5 border-2 border-slate-100 rounded-3xl bg-white space-y-3 text-xs shadow-sm hover:border-aqua transition">
+                    <div class="p-4 border rounded-2xl bg-white space-y-2.5 text-xs shadow-sm">
                         <div class="flex justify-between items-start">
                             <div>
-                                <span class="text-xs font-black text-navy-800">COMMUNE : ${o.commune.toUpperCase()}</span>
-                                <span class="text-slate-400 block text-[11px]">Quartier : ${o.quartier || 'Centre'} • Planifié : ${o.date} (${o.time})</span>
+                                <b class="text-navy-800">${o.commune.toUpperCase()}</b>
+                                <span class="text-[10px] text-slate-500 block">${o.date} à ${o.time}</span>
                             </div>
                             <div class="text-right font-mono">
-                                <span class="text-base font-black text-navy-800">${Number(o.total_amount).toLocaleString('fr-FR')} CDF</span>
-                                <span class="block text-[10px] text-mattOrange font-bold">Commission : ${Number(o.commission).toLocaleString('fr-FR')} CDF</span>
+                                <span class="font-black text-navy-800">${Number(o.total_amount).toLocaleString('fr-FR')} CDF</span>
+                                <span class="block text-[9px] text-mattOrange font-bold">Comm: ${Number(o.commission).toLocaleString('fr-FR')} CDF</span>
                             </div>
                         </div>
-                        <div class="bg-slate-50 p-3 rounded-xl border text-[11px] text-slate-600">
-                            <b>Détails :</b> ${o.description} • <b>Repère :</b> ${o.reference || 'Aucun'}
-                            <div class="text-slate-400 font-mono mt-1">Coordonnées client : ••••••••••• (Débloquées à l'acceptation)</div>
-                        </div>
-                        <button onclick="accepterMission(${o.id}, ${o.commission})" class="w-full py-2.5 bg-mattOrange hover:bg-orange-600 text-white rounded-xl font-black uppercase tracking-wider transition shadow">
-                            Accepter la mission (${Number(o.commission).toLocaleString('fr-FR')} CDF)
+                        <p class="text-slate-600 text-[11px]">${o.description}</p>
+                        <button onclick="accepterMission(${o.id}, ${o.commission})" class="w-full py-2.5 bg-mattOrange active:bg-orange-600 text-white rounded-xl font-black uppercase text-[11px] shadow">
+                            Accepter la course
                         </button>
                     </div>
                 `;
@@ -1225,46 +997,31 @@
             const container = document.getElementById('partner-accepted-courses-list');
             container.innerHTML = '';
 
-            let gross = 0;
-            let comTotal = 0;
-            let completed = 0;
-
             (data || []).forEach(o => {
-                if (o.status === 'Terminée') {
-                    gross += Number(o.total_amount || 0);
-                    comTotal += Number(o.commission || 0);
-                    completed++;
-                }
-
                 container.innerHTML += `
-                    <div class="p-4 border rounded-2xl bg-white shadow-sm space-y-2 text-xs">
+                    <div class="p-3.5 border rounded-2xl bg-white shadow-sm space-y-1.5 text-xs">
                         <div class="flex justify-between font-bold">
-                            <span>Mission #${o.id} - ${o.commune}</span>
+                            <span>#${o.id} - ${o.commune}</span>
                             <span class="text-navy-800">${Number(o.total_amount).toLocaleString('fr-FR')} CDF</span>
                         </div>
-                        <div class="text-slate-600 text-[11px]">
-                            <b>Client :</b> ${o.client_name} • <b>Tél :</b> <a href="tel:${o.client_phone}" class="text-aqua font-bold underline font-mono">${o.client_phone}</a><br>
+                        <div class="text-[11px] text-slate-600">
+                            <b>Client :</b> ${o.client_name} • <a href="tel:${o.client_phone}" class="text-aqua font-bold font-mono">${o.client_phone}</a><br>
                             <b>Adresse :</b> ${o.avenue} (Repère : ${o.reference || 'N/A'})
                         </div>
                         ${o.status === 'Acceptée' ? `
-                            <button onclick="cloturerMission(${o.id})" class="px-4 py-1.5 bg-green-600 hover:bg-green-700 text-white rounded-lg font-bold text-xs">
-                                ✅ Clôturer cette mission (Terminée)
+                            <button onclick="cloturerMission(${o.id})" class="w-full py-2 bg-green-600 active:bg-green-700 text-white rounded-xl font-bold text-xs mt-1">
+                                ✅ Clôturer (Terminée)
                             </button>
-                        ` : `<span class="text-green-600 font-bold text-[11px]">Mission clôturée avec succès</span>`}
+                        ` : `<span class="text-green-600 font-bold text-[10px] block text-right">Terminée ✔</span>`}
                     </div>
                 `;
             });
-
-            document.getElementById('ca-completed-count').innerText = completed;
-            document.getElementById('ca-gross-total').innerText = `${gross.toLocaleString('fr-FR')} CDF`;
-            document.getElementById('ca-commissions-total').innerText = `${comTotal.toLocaleString('fr-FR')} CDF`;
         }
 
         async function accepterMission(orderId, commission) {
             const mode = session.user.billing_mode || 'commission';
-            
             if (mode === 'commission' && session.user.wallet < commission) {
-                return showToast("Solde insuffisant pour couvrir la commission de cette course.", "error");
+                return showToast("Solde insuffisant pour la commission.", "error");
             }
 
             const newWallet = mode === 'commission' ? session.user.wallet - commission : session.user.wallet;
@@ -1273,14 +1030,14 @@
 
             session.user.wallet = newWallet;
             document.getElementById('partner-wallet-balance').innerText = `${newWallet.toLocaleString('fr-FR')} CDF`;
-            showToast("Mission acceptée ! Coordonnées client débloquées.");
+            showToast("Mission acceptée ! Coordonnées débloquées.");
             loadPartnerMissions();
             loadPartnerAcceptedCourses();
         }
 
         async function cloturerMission(orderId) {
             await db.from('orders').update({ status: 'Terminée' }).eq('id', orderId);
-            showToast("Course clôturée et marquée comme terminée !");
+            showToast("Course terminée !");
             loadPartnerAcceptedCourses();
         }
 
@@ -1288,39 +1045,27 @@
             const mode = document.getElementById('p-billing-mode-select').value;
             const amount = parseFloat(document.getElementById('p-recharge-amount').value);
             const ref = document.getElementById('p-recharge-ref').value.trim();
+            if (!amount || !ref) return showToast("Montant et référence requis.", "error");
 
-            if (!amount || !ref) return showToast("Veuillez renseigner le montant et la référence.", "error");
-
-            await db.from('recharges').insert([{
-                partner_id: session.user.id,
-                partner_name: session.user.name,
-                mode: mode,
-                amount: amount,
-                ref: ref,
-                status: 'En attente'
-            }]);
-
-            showToast("Déclaration transmise avec succès à la Direction MATT !");
+            await db.from('recharges').insert([{ partner_id: session.user.id, partner_name: session.user.name, mode, amount, ref, status: 'En attente' }]);
+            showToast("Déclaration envoyée !");
             document.getElementById('p-recharge-amount').value = '';
             document.getElementById('p-recharge-ref').value = '';
         }
 
         function submitSupportTicket() {
             const name = document.getElementById('ticket-name').value.trim();
-            const phone = document.getElementById('ticket-phone').value.trim();
             const message = document.getElementById('ticket-message').value.trim();
-
-            if (!name || !phone || !message) return showToast("Veuillez remplir vos coordonnées et votre message.", "error");
-
-            showToast("Votre demande a été soumise à l'équipe technique de MATT SARL.");
+            if (!name || !message) return showToast("Veuillez remplir votre message.", "error");
+            showToast("Message envoyé à la Direction.");
             document.getElementById('ticket-message').value = '';
         }
 
         function switchClientTab(t) {
             document.getElementById('client-compose').classList.toggle('hidden', t !== 'client-compose');
             document.getElementById('client-tracking').classList.toggle('hidden', t !== 'client-tracking');
-            document.getElementById('tab-btn-client-compose').className = t === 'client-compose' ? 'py-2.5 px-4 font-black border-b-2 border-mattOrange text-mattOrange text-sm' : 'py-2.5 px-4 font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800 text-sm';
-            document.getElementById('tab-btn-client-tracking').className = t === 'client-tracking' ? 'py-2.5 px-4 font-black border-b-2 border-mattOrange text-mattOrange text-sm' : 'py-2.5 px-4 font-bold border-b-2 border-transparent text-slate-500 hover:text-slate-800 text-sm';
+            document.getElementById('tab-btn-client-compose').className = t === 'client-compose' ? 'flex-1 py-2.5 font-black border-b-2 border-mattOrange text-mattOrange' : 'flex-1 py-2.5 font-bold border-b-2 border-transparent text-slate-500';
+            document.getElementById('tab-btn-client-tracking').className = t === 'client-tracking' ? 'flex-1 py-2.5 font-black border-b-2 border-mattOrange text-mattOrange' : 'flex-1 py-2.5 font-bold border-b-2 border-transparent text-slate-500';
         }
 
         window.onload = function() {
@@ -1331,21 +1076,19 @@
             communesKinshasa.forEach(c => {
                 selectClient.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
                 selectPartnerReg.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
-                if (selectPartnerEdit) {
-                    selectPartnerEdit.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
-                }
+                if (selectPartnerEdit) selectPartnerEdit.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
             });
 
             const vCat = document.getElementById('vehicle-catalog');
             typesVehicules.forEach(v => {
                 clientVehiculeSelection[v.id] = 0;
                 vCat.innerHTML += `
-                    <div class="flex justify-between items-center text-xs border-b pb-2">
-                        <span>${v.label}</span>
+                    <div class="flex justify-between items-center text-xs border-b pb-1.5 pt-0.5">
+                        <span class="font-bold text-slate-700">${v.label}</span>
                         <div class="flex gap-2 items-center">
-                            <button class="px-2 bg-slate-200 rounded font-bold" onclick="clientVehiculeSelection['${v.id}']=Math.max(0, clientVehiculeSelection['${v.id}']-1); document.getElementById('qty-${v.id}').innerText=clientVehiculeSelection['${v.id}']; calculerTotal();">-</button>
-                            <span id="qty-${v.id}" class="w-4 text-center font-bold">0</span>
-                            <button class="px-2 bg-slate-200 rounded font-bold" onclick="clientVehiculeSelection['${v.id}']++; document.getElementById('qty-${v.id}').innerText=clientVehiculeSelection['${v.id}']; calculerTotal();">+</button>
+                            <button class="w-7 h-7 bg-slate-200 rounded-lg font-bold flex items-center justify-center text-sm" onclick="clientVehiculeSelection['${v.id}']=Math.max(0, clientVehiculeSelection['${v.id}']-1); document.getElementById('qty-${v.id}').innerText=clientVehiculeSelection['${v.id}']; calculerTotal();">-</button>
+                            <span id="qty-${v.id}" class="w-4 text-center font-bold text-navy-800">0</span>
+                            <button class="w-7 h-7 bg-slate-200 rounded-lg font-bold flex items-center justify-center text-sm" onclick="clientVehiculeSelection['${v.id}']++; document.getElementById('qty-${v.id}').innerText=clientVehiculeSelection['${v.id}']; calculerTotal();">+</button>
                         </div>
                     </div>
                 `;
