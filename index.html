@@ -243,9 +243,8 @@
             </div>
         </div>
 
-        <!-- 4. ESPACE CLIENT CONNECTÉ (CATALOGUE COMPLET RESTAURÉ) -->
+        <!-- 4. ESPACE CLIENT CONNECTÉ -->
         <div id="view-client-app" class="bg-white text-slate-800 rounded-3xl p-4 md:p-6 shadow-2xl hidden animate-fade-in space-y-5">
-            <!-- Onglets de sélection -->
             <div class="flex border-b border-slate-200 text-xs">
                 <button onclick="switchClientTab('client-compose')" id="tab-btn-client-compose" class="flex-1 py-2.5 font-black border-b-2 border-mattOrange text-mattOrange">🛒 Composer la commande</button>
                 <button onclick="switchClientTab('client-tracking')" id="tab-btn-client-tracking" class="flex-1 py-2.5 font-bold border-b-2 border-transparent text-slate-500">📋 Suivi & Historique</button>
@@ -263,36 +262,17 @@
                     </div>
                 </div>
 
-                <!-- 1. AXE AUTOMOBILE COMPLET & OPTIONS -->
+                <!-- 1. AXE AUTOMOBILE AVEC OPTIONS TECHNIQUES PAR VÉHICULE -->
                 <div class="border rounded-2xl p-4 bg-white shadow-sm space-y-3">
                     <div class="flex justify-between items-center border-b pb-2">
                         <h3 class="text-xs font-black text-navy-800 uppercase flex items-center gap-1.5">
                             <span>🚗</span> Axe Automobile & Engins
                         </h3>
-                        <span class="text-[9px] text-slate-400 font-bold uppercase">Lavage Extérieur & Intérieur</span>
+                        <span class="text-[9px] text-slate-400 font-bold uppercase">Lavage de base & Options rattachées</span>
                     </div>
 
-                    <!-- Catalogue des véhicules -->
-                    <div id="vehicle-catalog" class="space-y-2"></div>
-
-                    <!-- Options Techniques Automobiles Cochables -->
-                    <div class="bg-slate-50 border border-slate-200 p-3 rounded-xl space-y-2 text-xs">
-                        <span class="text-[10px] font-black text-navy-800 uppercase block">⚙️ Options Techniques Véhicules (Surplus) :</span>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border text-[11px] font-bold cursor-pointer">
-                                <input type="checkbox" id="opt-auto-moteur" class="rounded text-mattOrange" onchange="calculerTotal()">
-                                <span>Nettoyage Moteur + Radiateur (+5 000 CDF)</span>
-                            </label>
-                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border text-[11px] font-bold cursor-pointer">
-                                <input type="checkbox" id="opt-auto-chassis" class="rounded text-mattOrange" onchange="calculerTotal()">
-                                <span>Lavage Châssis sous-caisse (+4 000 CDF)</span>
-                            </label>
-                            <label class="flex items-center gap-2 p-2 bg-white rounded-lg border text-[11px] font-bold cursor-pointer">
-                                <input type="checkbox" id="opt-auto-sieges" class="rounded text-mattOrange" onchange="calculerTotal()">
-                                <span>Shampouinage Sièges + Plafond (+8 000 CDF)</span>
-                            </label>
-                        </div>
-                    </div>
+                    <!-- Catalogue généré dynamiquement -->
+                    <div id="vehicle-catalog" class="space-y-3"></div>
                 </div>
 
                 <!-- 2. AXE MAISON ET SURFACES COMPLET -->
@@ -401,7 +381,6 @@
                         <span id="zone-detected-badge" class="px-2.5 py-0.5 rounded text-[10px] font-black bg-sky-100 text-sky-800">Zone 1 - Résidentielle</span>
                     </div>
 
-                    <!-- Disponibilité Énergie & Eau -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                         <div class="bg-white p-2.5 rounded-xl border">
                             <label class="text-[10px] font-black text-slate-600 uppercase block mb-1">🔌 Source d'Énergie Électrique :</label>
@@ -421,7 +400,6 @@
                         </div>
                     </div>
 
-                    <!-- Localisation précise -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         <div>
                             <label class="text-[10px] font-bold text-slate-500 uppercase block mb-0.5">Commune d'intervention :</label>
@@ -449,7 +427,7 @@
                     </div>
                 </div>
 
-                <!-- Récapitulatif et validation de commande -->
+                <!-- Récapitulatif -->
                 <div class="bg-navy-900 text-white p-4 rounded-2xl flex items-center justify-between shadow-xl border border-aqua/30">
                     <div>
                         <span class="text-[10px] text-slate-400 font-bold uppercase block">Montant Total Estimé :</span>
@@ -500,7 +478,7 @@
                 </button>
             </div>
 
-            <!-- Fil des Missions avec affichage des options et logistique -->
+            <!-- Fil des Missions -->
             <div id="partner-tab-missions" class="partner-subview space-y-3">
                 <div class="flex justify-between items-center">
                     <span class="text-[11px] font-black uppercase text-navy-800">Missions Disponibles dans votre Secteur</span>
@@ -591,7 +569,7 @@
             <button onclick="showView('view-gateway')" class="w-full py-2.5 bg-navy-800 text-white rounded-xl font-bold uppercase">Retour</button>
         </div>
 
-        <!-- 7. CONDITIONS GÉNÉRALES D'UTILISATION (CGU DYNAMIQUES) -->
+        <!-- 7. CONDITIONS GÉNÉRALES D'UTILISATION -->
         <div id="view-cgu" class="bg-white text-slate-800 rounded-3xl p-5 shadow-2xl space-y-4 hidden animate-fade-in text-xs">
             <div class="flex justify-between items-center border-b pb-2">
                 <h2 class="text-sm font-black text-navy-800 uppercase">CGU & Tarifs Officiels</h2>
@@ -698,7 +676,7 @@
             { name: "Maluku", zone: "zone4", label: "Zone 4 - Périurbaine" }
         ];
 
-        // Grille tarifaire officielle par zone (en CDF)
+        // Grille tarifaire de base par zone
         const grilleTarifaireParZone = {
             'zone1': { moto: 10000, tricycle: 15000, berline: 20000, suv: 30000, 'poids-lourd': 55000, 'bus-207': 25000, 'bus-long': 40000, 'remorque': 35000 },
             'zone2': { moto: 8000, tricycle: 12000, berline: 15000, suv: 25000, 'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000 },
@@ -706,17 +684,27 @@
             'zone4': { moto: 8000, tricycle: 12000, berline: 15000, suv: 25000, 'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000 }
         };
 
-        // Liste exhaustive des véhicules avec remorque incluse
+        // Liste des véhicules
         const typesVehicules = [
-            { id: 'moto', label: 'Moto' },
-            { id: 'tricycle', label: 'Tricycle' },
-            { id: 'berline', label: 'Berline' },
-            { id: 'suv', label: 'SUV / 4x4' },
-            { id: 'poids-lourd', label: 'Poids lourds' },
-            { id: 'bus-207', label: 'Minibus (207)' },
-            { id: 'bus-long', label: 'Bus Long' },
-            { id: 'remorque', label: 'Remorque' }
+            { id: 'moto', label: 'Moto', hasOptions: false },
+            { id: 'tricycle', label: 'Tricycle', hasOptions: false },
+            { id: 'berline', label: 'Berline', hasOptions: true },
+            { id: 'suv', label: 'SUV / 4x4', hasOptions: true },
+            { id: 'poids-lourd', label: 'Poids lourds', hasOptions: true },
+            { id: 'bus-207', label: 'Minibus (207)', hasOptions: true },
+            { id: 'bus-long', label: 'Bus Long', hasOptions: true },
+            { id: 'remorque', label: 'Remorque', hasOptions: true }
         ];
+
+        // Tarifs des options techniques spécifiques pour chaque type de véhicule
+        const vehicleOptionsPrices = {
+            'berline': { moteur: 5000, chassis: 4000, sieges: 7000 },
+            'suv': { moteur: 8000, chassis: 6000, sieges: 10000 },
+            'poids-lourd': { moteur: 15000, chassis: 12000, sieges: 15000 },
+            'bus-207': { moteur: 6000, chassis: 5000, sieges: 9000 },
+            'bus-long': { moteur: 10000, chassis: 8000, sieges: 12000 },
+            'remorque': { moteur: 5000, chassis: 6000, sieges: 5000 }
+        };
 
         let currentActiveZone = "zone1";
         let session = { role: null, user: null };
@@ -958,29 +946,57 @@
         }
 
         // ==========================================
+        // GESTION QUANTITÉS ET OPTIONS PAR VÉHICULE
+        // ==========================================
+        function updateVehicleCount(vid, delta) {
+            clientVehiculeSelection[vid] = Math.max(0, (clientVehiculeSelection[vid] || 0) + delta);
+            document.getElementById(`qty-${vid}`).innerText = clientVehiculeSelection[vid];
+            
+            const optionsBox = document.getElementById(`options-box-${vid}`);
+            if (optionsBox) {
+                if (clientVehiculeSelection[vid] > 0) {
+                    optionsBox.classList.remove('hidden');
+                } else {
+                    optionsBox.classList.add('hidden');
+                    // Décocher les options si le véhicule est remis à 0
+                    document.getElementById(`opt-${vid}-moteur`).checked = false;
+                    document.getElementById(`opt-${vid}-chassis`).checked = false;
+                    document.getElementById(`opt-${vid}-sieges`).checked = false;
+                }
+            }
+            calculerTotal();
+        }
+
+        // ==========================================
         // CALCUL GLOBAL DU PANIER CLIENT
         // ==========================================
         function calculerTotal() {
             let total = 0;
             const tarifsZone = grilleTarifaireParZone[currentActiveZone] || grilleTarifaireParZone['zone1'];
 
-            // 1. Calcul véhicules
-            let countVehicules = 0;
+            // 1. Véhicules et options rattachées
             typesVehicules.forEach(v => {
-                if (clientVehiculeSelection[v.id]) {
-                    total += clientVehiculeSelection[v.id] * (tarifsZone[v.id] || 15000);
-                    countVehicules += clientVehiculeSelection[v.id];
+                const count = clientVehiculeSelection[v.id] || 0;
+                if (count > 0) {
+                    total += count * (tarifsZone[v.id] || 15000);
+
+                    // Calcul des options rattachées au véhicule
+                    if (v.hasOptions) {
+                        const pOpt = vehicleOptionsPrices[v.id];
+                        if (document.getElementById(`opt-${v.id}-moteur`)?.checked) {
+                            total += count * pOpt.moteur;
+                        }
+                        if (document.getElementById(`opt-${v.id}-chassis`)?.checked) {
+                            total += count * pOpt.chassis;
+                        }
+                        if (document.getElementById(`opt-${v.id}-sieges`)?.checked) {
+                            total += count * pOpt.sieges;
+                        }
+                    }
                 }
             });
 
-            // Options techniques auto
-            if (countVehicules > 0) {
-                if (document.getElementById('opt-auto-moteur')?.checked) total += 5000 * countVehicules;
-                if (document.getElementById('opt-auto-chassis')?.checked) total += 4000 * countVehicules;
-                if (document.getElementById('opt-auto-sieges')?.checked) total += 8000 * countVehicules;
-            }
-
-            // 2. Calcul Maison & Surfaces
+            // 2. Maison & Surfaces
             total += (parseFloat(document.getElementById('m2-tapis')?.value) || 0) * 2000;
             total += (parseFloat(document.getElementById('m2-moquette')?.value) || 0) * 2000;
             total += (parseFloat(document.getElementById('m2-vitres')?.value) || 0) * 1500;
@@ -995,7 +1011,7 @@
             total += (parseFloat(document.getElementById('qty-canape-cuir')?.value) || 0) * 12000;
             total += (parseFloat(document.getElementById('qty-matelas')?.value) || 0) * 5000;
 
-            // 3. Calcul Environnement 3D & Vidange
+            // 3. Environnement 3D & Vidange
             total += (parseFloat(document.getElementById('qty-desinfection')?.value) || 0) * 10000;
             total += (parseFloat(document.getElementById('qty-desinsectisation')?.value) || 0) * 12000;
             total += (parseFloat(document.getElementById('qty-deratisation')?.value) || 0) * 14000;
@@ -1022,18 +1038,28 @@
             const total_amount = calculerTotal();
 
             if (!client_name || !client_phone || !avenue || !date || !time) {
-                return showToast("Veuillez remplir toutes les informations d'adresse et de planification.", "error");
+                return showToast("Veuillez renseigner toutes les informations de planification.", "error");
             }
             if (total_amount <= 0) return showToast("Votre panier est vide.", "error");
 
-            // Construction du descriptif détaillé
+            // Construction du descriptif précis avec options par véhicule
             let details = [];
             typesVehicules.forEach(v => {
-                if (clientVehiculeSelection[v.id]) details.push(`${clientVehiculeSelection[v.id]}x ${v.label}`);
+                const count = clientVehiculeSelection[v.id] || 0;
+                if (count > 0) {
+                    let vDesc = `${count}x ${v.label}`;
+                    let vOpts = [];
+                    if (v.hasOptions) {
+                        if (document.getElementById(`opt-${v.id}-moteur`)?.checked) vOpts.push("Moteur+Rad.");
+                        if (document.getElementById(`opt-${v.id}-chassis`)?.checked) vOpts.push("Châssis");
+                        if (document.getElementById(`opt-${v.id}-sieges`)?.checked) vOpts.push("Sièges+Plafond");
+                    }
+                    if (vOpts.length > 0) {
+                        vDesc += ` [${vOpts.join(' + ')}]`;
+                    }
+                    details.push(vDesc);
+                }
             });
-            if (document.getElementById('opt-auto-moteur')?.checked) details.push("Moteur+Radiateur");
-            if (document.getElementById('opt-auto-chassis')?.checked) details.push("Lavage Châssis");
-            if (document.getElementById('opt-auto-sieges')?.checked) details.push("Sièges+Plafond");
 
             const fosse = parseFloat(document.getElementById('vol-fosse')?.value) || 0;
             if (fosse > 0) details.push(`Vidange fosse (${fosse} m³)`);
@@ -1063,7 +1089,7 @@
             }]);
 
             if (error) return showToast(error.message, "error");
-            showToast("Commande transmise avec succès !");
+            showToast("Commande confirmée et transmise !");
             switchClientTab('client-tracking');
             detectClientOrders();
         }
@@ -1289,18 +1315,46 @@
                 if (selectPartnerEdit) selectPartnerEdit.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
             });
 
-            // Génération dynamique du catalogue automobile avec Remorque et Bus Long
+            // Génération dynamique du catalogue automobile avec tiroir d'options rattaché par véhicule
             const vCat = document.getElementById('vehicle-catalog');
             typesVehicules.forEach(v => {
                 clientVehiculeSelection[v.id] = 0;
-                vCat.innerHTML += `
-                    <div class="flex justify-between items-center text-xs border-b pb-1.5 pt-0.5">
-                        <span class="font-bold text-slate-700">${v.label}</span>
-                        <div class="flex gap-2 items-center">
-                            <button class="w-7 h-7 bg-slate-200 rounded-lg font-bold flex items-center justify-center text-sm" onclick="clientVehiculeSelection['${v.id}']=Math.max(0, clientVehiculeSelection['${v.id}']-1); document.getElementById('qty-${v.id}').innerText=clientVehiculeSelection['${v.id}']; calculerTotal();">-</button>
-                            <span id="qty-${v.id}" class="w-4 text-center font-bold text-navy-800">0</span>
-                            <button class="w-7 h-7 bg-slate-200 rounded-lg font-bold flex items-center justify-center text-sm" onclick="clientVehiculeSelection['${v.id}']++; document.getElementById('qty-${v.id}').innerText=clientVehiculeSelection['${v.id}']; calculerTotal();">+</button>
+                const pOpt = vehicleOptionsPrices[v.id];
+
+                let optionsHtml = '';
+                if (v.hasOptions && pOpt) {
+                    optionsHtml = `
+                        <div id="options-box-${v.id}" class="hidden mt-2 p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-[11px] space-y-1.5 transition-all">
+                            <span class="text-[10px] font-black text-navy-800 uppercase block">Options pour ${v.label} :</span>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-1.5">
+                                <label class="flex items-center gap-1.5 p-1.5 bg-white rounded-lg border cursor-pointer">
+                                    <input type="checkbox" id="opt-${v.id}-moteur" class="rounded text-mattOrange" onchange="calculerTotal()">
+                                    <span>Moteur+Rad. (+${pOpt.moteur.toLocaleString('fr-FR')} CDF)</span>
+                                </label>
+                                <label class="flex items-center gap-1.5 p-1.5 bg-white rounded-lg border cursor-pointer">
+                                    <input type="checkbox" id="opt-${v.id}-chassis" class="rounded text-mattOrange" onchange="calculerTotal()">
+                                    <span>Châssis (+${pOpt.chassis.toLocaleString('fr-FR')} CDF)</span>
+                                </label>
+                                <label class="flex items-center gap-1.5 p-1.5 bg-white rounded-lg border cursor-pointer">
+                                    <input type="checkbox" id="opt-${v.id}-sieges" class="rounded text-mattOrange" onchange="calculerTotal()">
+                                    <span>Sièges+Plafond (+${pOpt.sieges.toLocaleString('fr-FR')} CDF)</span>
+                                </label>
+                            </div>
                         </div>
+                    `;
+                }
+
+                vCat.innerHTML += `
+                    <div class="border rounded-xl p-2.5 bg-white shadow-xs">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="font-bold text-slate-800 text-sm sm:text-xs">${v.label}</span>
+                            <div class="flex gap-2 items-center">
+                                <button class="w-8 h-8 bg-slate-200 active:bg-slate-300 rounded-lg font-bold flex items-center justify-center text-base" onclick="updateVehicleCount('${v.id}', -1)">-</button>
+                                <span id="qty-${v.id}" class="w-5 text-center font-black text-navy-800 text-sm">0</span>
+                                <button class="w-8 h-8 bg-slate-200 active:bg-slate-300 rounded-lg font-bold flex items-center justify-center text-base" onclick="updateVehicleCount('${v.id}', 1)">+</button>
+                            </div>
+                        </div>
+                        ${optionsHtml}
                     </div>
                 `;
             });
