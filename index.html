@@ -49,7 +49,6 @@
     <!-- En-tête de navigation -->
     <header class="bg-navy-800/95 border-b-2 border-aqua px-4 py-3 md:px-8 flex flex-col md:flex-row justify-between items-center gap-4 sticky top-0 z-50 backdrop-blur-sm shadow-xl">
         <div class="flex items-center gap-3 cursor-pointer" onclick="showView('view-gateway')">
-            <!-- Logo ajusté pour remplir toute la zone sans marges -->
             <div class="w-14 h-14 bg-white rounded-2xl shadow-md border border-aqua/30 overflow-hidden flex items-center justify-center flex-shrink-0">
                 <img src="cleanapp.png" alt="Logo" class="w-full h-full object-cover transform scale-110" onerror="this.src='https://placehold.co/120x120/ffffff/0a192f?text=CleanApp'">
             </div>
@@ -87,10 +86,9 @@
     <!-- Conteneur Principal -->
     <main class="container mx-auto px-4 py-8 max-w-7xl flex-grow">
 
-        <!-- 1. ACCUEIL (PORTAILS CLIENT / PARTENAIRE) -->
+        <!-- 1. ACCUEIL -->
         <div id="view-gateway" class="max-w-4xl mx-auto space-y-8 animate-fade-in my-auto py-8">
             <div class="text-center space-y-3">
-                <!-- Macaron central agrandi et remplissant tout le cadre -->
                 <div class="inline-block w-28 h-28 md:w-32 md:h-32 bg-white rounded-3xl shadow-2xl border-2 border-aqua/40 overflow-hidden mb-2">
                     <img src="cleanapp.png" alt="Logo" class="w-full h-full object-cover transform scale-110" onerror="this.src='https://placehold.co/120x120/ffffff/0a192f?text=CleanApp'">
                 </div>
@@ -128,7 +126,7 @@
             </div>
         </div>
 
-        <!-- 2. AUTHENTIFICATION CLIENT (AVEC OEIL MAGIQUE) -->
+        <!-- 2. AUTHENTIFICATION CLIENT -->
         <div id="view-client-auth" class="max-w-md mx-auto bg-white text-slate-800 rounded-3xl p-7 md:p-8 shadow-2xl border border-slate-200 hidden animate-fade-in">
             <div class="flex items-center justify-between border-b pb-4 mb-6">
                 <div>
@@ -182,7 +180,7 @@
             </div>
         </div>
 
-        <!-- 3. AUTHENTIFICATION PARTENAIRE (AVEC OEIL MAGIQUE) -->
+        <!-- 3. AUTHENTIFICATION PARTENAIRE -->
         <div id="view-partner-auth" class="max-w-lg mx-auto bg-white text-slate-800 rounded-3xl p-7 md:p-8 shadow-2xl border border-slate-200 hidden animate-fade-in">
             <div class="flex items-center justify-between border-b pb-4 mb-6">
                 <div>
@@ -352,7 +350,7 @@
                 </div>
             </div>
 
-            <!-- Sous-onglet: Suivi des commandes avec actions (Annuler, Supprimer, Coter) -->
+            <!-- Sous-onglet: Suivi des commandes -->
             <div id="client-tracking" class="hidden space-y-4">
                 <div class="flex justify-between items-center border-b pb-2">
                     <h3 class="text-lg font-black text-navy-800 uppercase">📋 Historique & Gestion de vos commandes</h3>
@@ -511,7 +509,7 @@
                 <div id="partner-accepted-courses-list" class="space-y-3"></div>
             </div>
 
-            <!-- SOUS-ONGLET 4 : MODIFICATION DES IDENTIFIANTS AVEC ANCIEN ET NOUVEAU MOT DE PASSE -->
+            <!-- SOUS-ONGLET 4 : MODIFICATION DES IDENTIFIANTS DU PARTENAIRE -->
             <div id="partner-tab-profil" class="partner-subview hidden space-y-4">
                 <div class="border-b pb-2">
                     <h3 class="text-md font-black text-navy-800 uppercase">⚙️ Modifier Mes Identifiants & Profil</h3>
@@ -598,38 +596,23 @@
             </div>
         </div>
 
-        <!-- 7. CONDITIONS GÉNÉRALES D'UTILISATION (CGU RESTAURÉES) -->
+        <!-- 7. CONDITIONS GÉNÉRALES D'UTILISATION (DYNAMIQUES VIA SUPABASE) -->
         <div id="view-cgu" class="bg-white text-slate-800 rounded-3xl p-8 shadow-2xl space-y-6 max-w-4xl mx-auto hidden animate-fade-in">
-            <div class="border-b pb-4">
-                <h2 class="text-2xl font-black text-navy-800">Conditions Générales d'Utilisation & Charte Qualité</h2>
-                <p class="text-xs text-slate-500 font-semibold">Plateforme MATT Clean'App • Exploitant : MATT SARL • En vigueur à Kinshasa</p>
+            <div class="border-b pb-4 flex justify-between items-center">
+                <div>
+                    <h2 class="text-2xl font-black text-navy-800">Conditions Générales d'Utilisation & Charte Qualité</h2>
+                    <p class="text-xs text-slate-500 font-semibold">Plateforme MATT Clean'App • Exploitant : MATT SARL • En vigueur à Kinshasa</p>
+                </div>
+                <button onclick="fetchPublishedCgu()" class="text-xs text-sky-600 font-bold hover:underline">Rafraîchir 🔄</button>
             </div>
 
-            <div class="text-xs text-slate-600 leading-relaxed space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
-                <div>
-                    <h4 class="font-black text-navy-800 uppercase">ARTICLE 1 : CADRE CONTRACTUEL ET IDENTIFICATION</h4>
-                    <p>Les présentes CGU définissent les droits et obligations régissant les relations entre la société <b>MASTER TOUCH TRADING (MATT SARL)</b>, RCCM CD/KIN/RCCM/24-B-04106, NIF A2441433N, les utilisateurs demandeurs (« Clients ») et les prestataires indépendants agréés (« Partenaires ») sur l'application MATT Clean'App éditée par Global Tech Solutions.</p>
-                </div>
-                <div>
-                    <h4 class="font-black text-navy-800 uppercase">ARTICLE 2 : SOUVERAINETÉ DE LA MONNAIE (CDF)</h4>
-                    <p>En conformité avec les réglementations de la Banque Centrale du Congo (BCC), l'ensemble des prix, devis et règlements s'effectuent obligatoirement en <b>Francs Congolais (CDF)</b>. Les tarifs tiennent compte du découpage sectoriel de Kinshasa (Zone 1 résidentielle, Zone 2 centrale, Zone 3 populaire, Zone 4 périurbaine).</p>
-                </div>
-                <div>
-                    <h4 class="font-black text-navy-800 uppercase">ARTICLE 3 : ENGAGEMENTS ET EXACTITUDE DU CLIENT</h4>
-                    <p>Le client s'engage à renseigner des indications d'accès fidèles (commune, quartier, avenue, numéro, point de repère). Il certifie la disponibilité de l'énergie (SNEL ou groupe) et de l'eau (REGIDESO ou réserve) selon les options indiquées au moment de la commande.</p>
-                </div>
-                <div>
-                    <h4 class="font-black text-navy-800 uppercase">ARTICLE 4 : RÈGLEMENT DES COMMISSIONS ET FORFAITS PARTENAIRES</h4>
-                    <p>Pour le mode commission, un prélèvement automatique de 15 % du montant brut est opéré sur le portefeuille virtuel du partenaire lors de l'acceptation de la mission. Pour le forfait journalier, l'accès illimité expire automatiquement le jour même à 23h59 min 59 s.</p>
-                </div>
-                <div>
-                    <h4 class="font-black text-navy-800 uppercase">ARTICLE 5 : PROTOCOLE D'AUDIT ET D'ANNULATION</h4>
-                    <p>Une commande peut être librement annulée par le client avant l'assignation du prestataire. Toute mission contestée fait l'objet d'un audit contradictoire (photos avant/après) traité par le support technique de MATT SARL.</p>
-                </div>
+            <!-- Ce conteneur reçoit le texte publié en direct depuis l'admin -->
+            <div id="cgu-display-container" class="text-xs text-slate-600 leading-relaxed space-y-4 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
+                <p class="text-slate-400 italic">Chargement des CGU officielles...</p>
             </div>
 
             <div class="pt-4 border-t flex justify-end">
-                <button onclick="showView('view-gateway')" class="px-5 py-2.5 bg-navy-800 text-white text-xs font-bold rounded-xl uppercase">J'accepte les CGU</button>
+                <button onclick="showView('view-gateway')" class="px-5 py-2.5 bg-navy-800 text-white text-xs font-bold rounded-xl uppercase">J'ai compris</button>
             </div>
         </div>
 
@@ -779,7 +762,6 @@
             setTimeout(() => toast.remove(), 4000);
         }
 
-        // Fonction pour afficher / masquer le mot de passe avec l'oeil
         function togglePasswordVisibility(inputId, eyeIconId) {
             const input = document.getElementById(inputId);
             const icon = document.getElementById(eyeIconId);
@@ -821,6 +803,43 @@
                 document.getElementById('zone-detected-badge').innerText = com.label;
             }
             calculerTotal();
+        }
+
+        // ==========================================
+        // SYNCHRONISATION CGU AVEC SUPABASE
+        // ==========================================
+        async function fetchPublishedCgu() {
+            const container = document.getElementById('cgu-display-container');
+            if (!container) return;
+
+            const { data } = await db.from('system_settings').select('value').eq('key', 'cgu_content').single();
+            
+            if (data && data.value) {
+                container.innerHTML = data.value.split('\n\n').map(paragraphe => {
+                    const lines = paragraphe.split('\n');
+                    const titre = lines[0];
+                    const corps = lines.slice(1).join('<br>');
+                    return `
+                        <div class="space-y-1">
+                            <h4 class="font-black text-navy-800 uppercase">${titre}</h4>
+                            <p>${corps || ''}</p>
+                        </div>
+                    `;
+                }).join('');
+            } else {
+                container.innerHTML = `<p class="text-slate-500">Les CGU officielles sont en cours d'actualisation par la Direction.</p>`;
+            }
+        }
+
+        function subscribeToCguUpdates() {
+            db.channel('cgu-realtime-sync')
+                .on('postgres_changes', { event: '*', schema: 'public', table: 'system_settings', filter: 'key=eq.cgu_content' }, payload => {
+                    if (payload.new && payload.new.value) {
+                        fetchPublishedCgu();
+                        showToast("Les CGU officielles viennent d'être actualisées par la Direction.", "info");
+                    }
+                })
+                .subscribe();
         }
 
         // ==========================================
@@ -899,7 +918,6 @@
             document.getElementById('partner-dashboard-meta').innerText = `(${session.user.specialty} - ${session.user.commune})`;
             document.getElementById('partner-wallet-balance').innerText = `${Number(session.user.wallet || 0).toLocaleString('fr-FR')} CDF`;
             
-            // Pré-remplissage modification profil
             document.getElementById('partner-edit-name').value = session.user.name;
             document.getElementById('partner-edit-phone').value = session.user.phone;
             document.getElementById('partner-edit-commune').value = session.user.commune;
@@ -924,7 +942,7 @@
         }
 
         // ==========================================
-        // MODIFICATION DES IDENTIFIANTS DU PARTENAIRE (AVEC ANCIEN & NOUVEAU MOT DE PASSE)
+        // MODIFICATION DES IDENTIFIANTS DU PARTENAIRE
         // ==========================================
         async function savePartnerProfileUpdate() {
             if (!session.user) return;
@@ -943,7 +961,6 @@
                 return showToast("Veuillez saisir votre ancien mot de passe pour confirmer.", "error");
             }
 
-            // Vérification de l'ancien mot de passe dans Supabase
             const { data: checkUser, error: checkErr } = await db.from('partners').select('*').eq('id', session.user.id).eq('password', oldPass).single();
 
             if (checkErr || !checkUser) {
@@ -963,7 +980,6 @@
             const { error } = await db.from('partners').update(updatePayload).eq('id', session.user.id);
             if (error) return showToast(error.message, "error");
 
-            // Mettre à jour l'état de session local
             session.user.name = newName;
             session.user.phone = newPhone;
             session.user.commune = newCommune;
@@ -1336,6 +1352,8 @@
             });
 
             onClientCommuneChange();
+            fetchPublishedCgu();
+            subscribeToCguUpdates();
         };
     </script>
 </body>
