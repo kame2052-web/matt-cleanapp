@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>MATT Clean'App</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Supabase JS Client -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         tailwind.config = {
@@ -44,10 +42,8 @@
 </head>
 <body class="bg-navy-900 text-slate-100 min-h-screen watermark-bg font-sans flex flex-col justify-between select-none">
 
-    <!-- Notifications Toast -->
     <div id="toast-container" class="fixed top-4 inset-x-4 z-[9999] flex flex-col gap-2 max-w-sm mx-auto pointer-events-none"></div>
 
-    <!-- En-tête -->
     <header class="bg-navy-800/95 border-b border-aqua/30 px-4 py-3 md:px-8 flex justify-between items-center sticky top-0 z-40 backdrop-blur-md shadow-lg w-full">
         <div class="flex items-center gap-2.5 cursor-pointer" onclick="showView('view-gateway')">
             <div class="w-11 h-11 bg-white rounded-2xl shadow-md border border-aqua/30 p-1 flex items-center justify-center flex-shrink-0">
@@ -66,10 +62,8 @@
         </div>
     </header>
 
-    <!-- Conteneur Principal -->
     <main class="w-full px-3 py-4 md:px-8 md:py-6 flex-grow flex flex-col justify-start">
 
-        <!-- 1. ACCUEIL -->
         <div id="view-gateway" class="w-full max-w-4xl mx-auto space-y-8 animate-fade-in my-auto py-8">
             <div class="text-center space-y-4">
                 <div class="inline-block w-28 h-28 md:w-32 md:h-32 bg-white rounded-3xl p-2 shadow-2xl border-2 border-aqua/40">
@@ -90,7 +84,7 @@
                     <div class="flex items-center gap-4">
                         <div class="w-14 h-14 rounded-2xl bg-sky-100 text-aqua flex items-center justify-center text-3xl font-black shadow-inner group-hover:bg-aqua group-hover:text-white transition-all">🛒</div>
                         <div>
-                            <h2 class="text-xl font-black text-navy-800 group-hover:text-aqua transition-all">Espace Client</h2>
+                            <h2 class="text-xl font-black text-navy-800 group-hover:text-aqua transition-all"> Client</h2>
                             <p class="text-xs text-slate-500 font-semibold mt-0.5">Commander une prestation</p>
                         </div>
                     </div>
@@ -101,7 +95,7 @@
                     <div class="flex items-center gap-4">
                         <div class="w-14 h-14 rounded-2xl bg-orange-100 text-mattOrange flex items-center justify-center text-3xl font-black shadow-inner group-hover:bg-mattOrange group-hover:text-white transition-all">🤝</div>
                         <div>
-                            <h2 class="text-xl font-black text-navy-800 group-hover:text-mattOrange transition-all">Espace Partenaire</h2>
+                            <h2 class="text-xl font-black text-navy-800 group-hover:text-mattOrange transition-all"> Partenaire</h2>
                             <p class="text-xs text-slate-500 font-semibold mt-0.5">Accès prestataire agréé</p>
                         </div>
                     </div>
@@ -110,10 +104,9 @@
             </div>
         </div>
 
-        <!-- 2. AUTHENTIFICATION CLIENT -->
         <div id="view-client-auth" class="bg-white text-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl hidden animate-fade-in max-w-md mx-auto w-full my-auto">
             <div class="flex items-center justify-between border-b pb-3 mb-5">
-                <h2 class="text-lg font-black text-navy-800">Espace Client</h2>
+                <h2 class="text-lg font-black text-navy-800">Connexion Client</h2>
                 <button onclick="showView('view-gateway')" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 font-bold flex items-center justify-center">✕</button>
             </div>
 
@@ -124,7 +117,7 @@
 
             <div id="form-client-login" class="space-y-3.5">
                 <div>
-                    <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Téléphone</label>
+                    <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Téléphone (+243, 081, 082, 084, 085, 089, 09...)</label>
                     <input type="tel" id="auth-client-login-phone" placeholder="0825556633" class="w-full px-3.5 py-3 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-aqua focus:outline-none">
                 </div>
                 <div>
@@ -145,7 +138,7 @@
                     <input type="text" id="auth-client-reg-name" placeholder="Jean Mukendi" class="w-full px-3.5 py-3 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800">
                 </div>
                 <div>
-                    <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Téléphone</label>
+                    <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Téléphone (+243, 081, 082, 084...)</label>
                     <input type="tel" id="auth-client-reg-phone" placeholder="0825556633" class="w-full px-3.5 py-3 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800">
                 </div>
                 <div>
@@ -161,7 +154,6 @@
             </div>
         </div>
 
-        <!-- 3. AUTHENTIFICATION PARTENAIRE -->
         <div id="view-partner-auth" class="bg-white text-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl hidden animate-fade-in max-w-md mx-auto w-full my-auto">
             <div class="flex items-center justify-between border-b pb-3 mb-5">
                 <h2 class="text-lg font-black text-navy-800">Espace Pro Partenaire</h2>
@@ -175,7 +167,7 @@
 
             <div id="form-partner-login" class="space-y-3.5">
                 <div>
-                    <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Téléphone (Login)</label>
+                    <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Téléphone (+243, 081, 082, 084...)</label>
                     <input type="tel" id="auth-partner-login-phone" placeholder="0819998822" class="w-full px-3.5 py-3 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-mattOrange focus:outline-none">
                 </div>
                 <div>
@@ -196,7 +188,7 @@
                     <input type="text" id="p-reg-name" placeholder="MATT Lavage Pro" class="w-full px-3.5 py-2.5 border rounded-xl text-xs font-bold">
                 </div>
                 <div>
-                    <label class="text-[10px] font-bold text-slate-600 block uppercase">Téléphone</label>
+                    <label class="text-[10px] font-bold text-slate-600 block uppercase">Téléphone (+243, 081...)</label>
                     <input type="tel" id="p-reg-phone" placeholder="0819998822" class="w-full px-3.5 py-2.5 border rounded-xl text-xs font-bold">
                 </div>
                 <div>
@@ -227,48 +219,40 @@
             </div>
         </div>
 
-        <!-- 4. ESPACE CLIENT CONNECTÉ (ÉPURÉ : 6 ICÔNES COMPACTES) -->
         <div id="view-client-app" class="w-full bg-white text-slate-800 rounded-3xl p-4 md:p-8 shadow-2xl hidden animate-fade-in space-y-6">
 
-            <!-- VUE 1 : GRILLE D'ACCÈS DES 6 ICÔNES -->
             <div id="client-home-grid" class="space-y-6">
                 <div class="text-center">
                     <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-md mx-auto p-3 bg-slate-50 border border-slate-200 rounded-3xl shadow-inner">
                         
-                        <!-- 1 : Automobile -->
                         <button type="button" onclick="openFullscreenClientAxis('axis-auto')" class="relative p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
                             <span class="text-3xl group-hover:scale-110 transition">🚗</span>
                             <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Automobile</span>
                             <span id="badge-count-auto" class="absolute top-2 right-2 px-1.5 py-0.2 rounded-full text-[8px] font-black bg-slate-100 text-slate-700 border">0</span>
                         </button>
 
-                        <!-- 2 : Maison -->
                         <button type="button" onclick="openFullscreenClientAxis('axis-maison')" class="relative p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
                             <span class="text-3xl group-hover:scale-110 transition">🏡</span>
                             <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Maison</span>
                             <span id="badge-count-maison" class="absolute top-2 right-2 px-1.5 py-0.2 rounded-full text-[8px] font-black bg-slate-100 text-slate-700 border">0</span>
                         </button>
 
-                        <!-- 3 : 3D & Vidange -->
                         <button type="button" onclick="openFullscreenClientAxis('axis-env')" class="relative p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
                             <span class="text-3xl group-hover:scale-110 transition">🌱</span>
                             <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">3D & Vidange</span>
                             <span id="badge-count-env" class="absolute top-2 right-2 px-1.5 py-0.2 rounded-full text-[8px] font-black bg-slate-100 text-slate-700 border">0</span>
                         </button>
 
-                        <!-- 4 : Logistique -->
                         <button type="button" onclick="openFullscreenClientAxis('axis-logistics')" class="relative p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
                             <span class="text-3xl group-hover:scale-110 transition">⚡</span>
                             <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Logistique</span>
                         </button>
 
-                        <!-- 5 : Mes Commandes -->
                         <button type="button" onclick="openFullscreenClientAxis('axis-tracking')" class="relative p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
                             <span class="text-3xl group-hover:scale-110 transition">📋</span>
                             <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Mes Commandes</span>
                         </button>
 
-                        <!-- 6 : Contact -->
                         <button type="button" onclick="openFullscreenClientAxis('axis-contact')" class="relative p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
                             <span class="text-3xl group-hover:scale-110 transition">📞</span>
                             <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Contact</span>
@@ -277,7 +261,6 @@
                     </div>
                 </div>
 
-                <!-- Bandeau Récapitulatif Global -->
                 <div class="bg-navy-900 text-white p-4 sm:p-5 rounded-3xl flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xl border border-aqua/30 max-w-md sm:max-w-none mx-auto">
                     <div class="space-y-0.5 text-center sm:text-left">
                         <span class="text-[11px] text-slate-400 font-bold uppercase block">Total Panier Estimé :</span>
@@ -290,9 +273,7 @@
                 </div>
             </div>
 
-            <!-- VUE 2 : CONTENEURS PLEIN ÉCRAN AU CLIC -->
             <div id="client-fullscreen-axis" class="hidden space-y-4 animate-fade-in">
-                <!-- En-tête avec flèche compacte et titre sur une seule ligne -->
                 <div class="flex items-center gap-2 bg-slate-50 p-2 rounded-2xl border border-slate-200 flex-nowrap overflow-hidden">
                     <button type="button" onclick="closeFullscreenClientAxis()" class="w-8 h-8 flex-shrink-0 bg-navy-800 hover:bg-navy-900 text-white text-base font-black rounded-xl flex items-center justify-center shadow transition active:scale-95">
                         ←
@@ -300,12 +281,10 @@
                     <span id="client-axis-fullscreen-title" class="text-[10px] sm:text-xs font-black text-navy-800 uppercase tracking-tight truncate flex-1 min-w-0"></span>
                 </div>
 
-                <!-- Section Automobile -->
                 <div id="axis-auto" class="client-axis-view hidden border rounded-2xl p-4 bg-white shadow-sm space-y-3">
                     <div id="vehicle-catalog" class="grid grid-cols-1 md:grid-cols-2 gap-2.5"></div>
                 </div>
 
-                <!-- Section Maison -->
                 <div id="axis-maison" class="client-axis-view hidden border rounded-2xl p-4 bg-white shadow-sm space-y-3">
                     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 text-xs font-bold">
                         <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Tapis (m²)</label><input type="number" id="m2-tapis" placeholder="0" class="w-full p-2 border rounded-xl" oninput="calculerTotal()"></div>
@@ -328,7 +307,6 @@
                     </div>
                 </div>
 
-                <!-- Section 3D & Vidange -->
                 <div id="axis-env" class="client-axis-view hidden border rounded-2xl p-4 bg-white shadow-sm space-y-3">
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs font-bold">
                         <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Désinfection (pièces)</label><input type="number" id="qty-desinfection" placeholder="0" class="w-full p-2 border rounded-xl" oninput="calculerTotal()"></div>
@@ -347,9 +325,7 @@
                     </div>
                 </div>
 
-                <!-- Section Logistique : Demandeur, Quartier et Avenue séparés -->
                 <div id="axis-logistics" class="client-axis-view hidden bg-slate-50 border rounded-2xl p-4 space-y-3 text-xs">
-                    <!-- Demandeur -->
                     <div class="bg-white p-3 rounded-xl border border-slate-200 space-y-2">
                         <span class="text-[10px] font-black text-navy-800 uppercase block">👤 Demandeur :</span>
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
@@ -364,7 +340,6 @@
                         </div>
                     </div>
 
-                    <!-- Énergie et Eau -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                         <div class="bg-white p-2.5 rounded-xl border">
                             <label class="text-[10px] font-black text-slate-600 uppercase block mb-1">🔌 Électricité :</label>
@@ -384,7 +359,6 @@
                         </div>
                     </div>
 
-                    <!-- Localisation avec Quartier et Avenue séparés -->
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                         <div>
                             <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Commune :</label>
@@ -416,7 +390,6 @@
                     </div>
                 </div>
 
-                <!-- Section Mes Commandes -->
                 <div id="axis-tracking" class="client-axis-view hidden space-y-3">
                     <div class="flex justify-between items-center border-b pb-2">
                         <span class="text-xs font-black uppercase text-navy-800">Mes Commandes</span>
@@ -425,7 +398,6 @@
                     <div id="client-orders-tracking-list" class="space-y-2.5"></div>
                 </div>
 
-                <!-- Section Contact : Divisée en 3 Icônes (À Propos, Assistance, CGU) -->
                 <div id="axis-contact" class="client-axis-view hidden space-y-3">
                     <div class="grid grid-cols-3 gap-2 text-center">
                         <button type="button" onclick="switchContactTab('cnt-about', this)" class="contact-tab-btn p-2.5 rounded-2xl border-2 border-mattOrange bg-orange-50/70 text-mattOrange font-black text-xs flex flex-col items-center gap-1 shadow-xs">
@@ -442,7 +414,6 @@
                         </button>
                     </div>
 
-                    <!-- Sous-vue À Propos -->
                     <div id="cnt-about" class="contact-subview border rounded-2xl p-4 bg-slate-50 space-y-2 text-xs">
                         <div class="flex items-center gap-3">
                             <div class="w-10 h-10 bg-white rounded-xl border p-1 flex-shrink-0">
@@ -456,7 +427,6 @@
                         <p class="text-slate-600 leading-relaxed text-[11px]">Plateforme technologique d'assainissement et de nettoyage professionnel à Kinshasa, développée en partenariat avec Global Tech Solutions.</p>
                     </div>
 
-                    <!-- Sous-vue Assistance -->
                     <div id="cnt-support" class="contact-subview hidden grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                         <a href="https://wa.me/243980000338" target="_blank" class="p-3.5 bg-green-50 border border-green-200 rounded-2xl flex items-center gap-3 hover:bg-green-100 transition">
                             <span class="text-2xl">💬</span>
@@ -474,9 +444,8 @@
                         </a>
                     </div>
 
-                    <!-- Sous-vue CGU -->
                     <div id="cnt-cgu" class="contact-subview hidden border rounded-2xl p-4 bg-white space-y-2 text-xs">
-                        <div id="cgu-display-client" class="space-y-2 max-h-56 overflow-y-auto pr-1 custom-scrollbar text-slate-600 leading-relaxed text-[11px]">
+                        <div id="cgu-display-client" class="space-y-2 max-h-60 overflow-y-auto pr-1 custom-scrollbar text-slate-600 leading-relaxed text-[11px]">
                             <p class="text-slate-400 italic">Chargement des CGU...</p>
                         </div>
                     </div>
@@ -486,7 +455,6 @@
 
         </div>
 
-        <!-- 5. ESPACE PARTENAIRE CONNECTÉ -->
         <div id="view-partner-app" class="w-full bg-white text-slate-800 rounded-3xl p-5 md:p-8 shadow-2xl hidden animate-fade-in space-y-6">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b pb-4">
                 <div>
@@ -505,7 +473,6 @@
                 </div>
             </div>
 
-            <!-- VUE 1 : RECTANGLE VERTICAL -->
             <div id="partner-home-column" class="text-center space-y-3">
                 <div class="flex flex-col max-w-sm mx-auto space-y-2.5 p-3 bg-slate-50 border border-slate-200 rounded-3xl shadow-inner">
                     <button type="button" onclick="openFullscreenPartnerTab('partner-tab-missions')" class="w-full p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex items-center justify-between text-xs transition active:scale-95 shadow-xs">
@@ -558,9 +525,7 @@
                 </div>
             </div>
 
-            <!-- VUE 2 : CONTENEUR PLEIN ÉCRAN DU MODULE PARTENAIRE -->
             <div id="partner-fullscreen-tab" class="hidden space-y-4 animate-fade-in">
-                <!-- En-tête avec flèche compacte et titre sur une seule ligne -->
                 <div class="flex items-center gap-2 bg-slate-50 p-2 rounded-2xl border border-slate-200 flex-nowrap overflow-hidden">
                     <button type="button" onclick="closeFullscreenPartnerTab()" class="w-8 h-8 flex-shrink-0 bg-navy-800 hover:bg-navy-900 text-white text-base font-black rounded-xl flex items-center justify-center shadow transition active:scale-95">
                         ←
@@ -568,7 +533,6 @@
                     <span id="partner-tab-fullscreen-title" class="text-[10px] sm:text-xs font-black text-navy-800 uppercase tracking-tight truncate flex-1 min-w-0"></span>
                 </div>
 
-                <!-- Module 1: Missions -->
                 <div id="partner-tab-missions" class="partner-subview hidden space-y-4">
                     <div class="flex justify-between items-center">
                         <span class="text-xs font-black uppercase text-navy-800 tracking-wider">Missions Disponibles dans votre Secteur</span>
@@ -579,7 +543,6 @@
                     <div id="partner-missions-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 min-h-[160px]"></div>
                 </div>
 
-                <!-- Module 2: CA & Périodes -->
                 <div id="partner-tab-ca" class="partner-subview hidden space-y-6">
                     <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex flex-wrap items-end gap-3 text-xs">
                         <div>
@@ -649,7 +612,6 @@
                     </div>
                 </div>
 
-                <!-- Module 3: Portefeuille -->
                 <div id="partner-tab-wallet" class="partner-subview hidden space-y-5">
                     <div class="bg-sky-50 border border-aqua/40 rounded-3xl p-6 text-center max-w-xl mx-auto">
                         <span class="text-[10px] text-slate-500 font-black uppercase tracking-wider block" id="partner-solde-label">Solde Commission Disponible</span>
@@ -669,19 +631,19 @@
                                 COMPTES MOBILES OFFICIELS MATT SARL :
                             </span>
                             
-                            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-100 whitespace-nowrap">
                                 <span class="font-bold text-slate-700 flex items-center gap-2"><span>📱</span> M-Pesa :</span>
-                                <b class="font-mono text-navy-800 text-sm font-black">+243 980 000 338</b>
+                                <b class="font-mono text-navy-800 text-xs sm:text-sm font-black">+243 980 000 338</b>
                             </div>
 
-                            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-100 whitespace-nowrap">
                                 <span class="font-bold text-slate-700 flex items-center gap-2"><span>📱</span> Orange Money :</span>
-                                <b class="font-mono text-navy-800 text-sm font-black">+243 980 000 338</b>
+                                <b class="font-mono text-navy-800 text-xs sm:text-sm font-black">+243 980 000 338</b>
                             </div>
 
-                            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                            <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-100 whitespace-nowrap">
                                 <span class="font-bold text-slate-700 flex items-center gap-2"><span>📱</span> Airtel Money :</span>
-                                <b class="font-mono text-navy-800 text-sm font-black">+243 980 000 338</b>
+                                <b class="font-mono text-navy-800 text-xs sm:text-sm font-black">+243 980 000 338</b>
                             </div>
                         </div>
 
@@ -696,13 +658,11 @@
                     </div>
                 </div>
 
-                <!-- Module 4: Mes Courses -->
                 <div id="partner-tab-courses" class="partner-subview hidden space-y-4">
                     <span class="text-xs font-black uppercase text-navy-800 block">Courses Acceptées & Clôture</span>
                     <div id="partner-accepted-courses-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
                 </div>
 
-                <!-- Module 5: Profil -->
                 <div id="partner-tab-profil" class="partner-subview hidden space-y-4 max-w-xl mx-auto">
                     <span class="text-xs font-black uppercase text-navy-800 block">Modification Sécurisée des Identifiants</span>
                     <div class="bg-slate-50 p-5 rounded-3xl border space-y-3 text-xs">
@@ -741,7 +701,6 @@
                     </div>
                 </div>
 
-                <!-- Module 6: Infos & Support -->
                 <div id="partner-tab-info-support" class="partner-subview hidden space-y-4 text-xs">
                     <div class="border rounded-2xl p-5 bg-slate-50 space-y-2">
                         <h3 class="font-black text-navy-800 text-sm uppercase">Assistance Partenaire MATT SARL</h3>
@@ -765,7 +724,6 @@
 
     </main>
 
-    <!-- Footer Institutionnel -->
     <footer class="border-t border-slate-800/80 bg-navy-800/80 py-4 text-center text-xs text-slate-400 mt-auto">
         <div class="container mx-auto px-4 space-y-1">
             <div class="flex flex-wrap justify-center items-center gap-x-4 gap-y-1 text-[11px] text-slate-300 font-semibold">
@@ -778,7 +736,6 @@
         </div>
     </footer>
 
-    <!-- MODALE DE NOTATION -->
     <div id="modal-rating" class="fixed inset-0 bg-slate-955/70 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
         <div class="bg-white text-slate-900 w-full max-w-sm rounded-3xl p-6 space-y-4 relative text-xs shadow-2xl">
             <button onclick="closeRatingModal()" class="absolute top-4 right-4 text-slate-400 font-bold text-lg">✕</button>
@@ -797,7 +754,6 @@
         </div>
     </div>
 
-    <!-- LOGIQUE JAVASCRIPT ET CONNECTEURS SUPABASE -->
     <script>
         const SUPABASE_URL = "https://vbriworyscymnmtzzdny.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZicml3b3J5c2N5bW5tdHp6ZG55Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzNzQwNTEsImV4cCI6MjEwMzk1MDA1MX0.VBZupVKj0srae0NT5BNZ0OeaIv9pAl2bl5L-Rd8ocJk";
@@ -937,9 +893,9 @@
                 'axis-auto': '🚗 Automobile',
                 'axis-maison': '🏡 Maison & Surfaces',
                 'axis-env': '🌱 3D & Vidange',
-                'axis-logistics': '⚡ Logistique',
+                'axis-logistics': '⚡ Logistique & Demandeur',
                 'axis-tracking': '📋 Mes Commandes',
-                'axis-contact': '📞 Contact'
+                'axis-contact': '📞 Contact & Informations'
             };
 
             document.getElementById('client-axis-fullscreen-title').innerText = titles[viewId] || 'Configuration';
@@ -1130,6 +1086,7 @@
                 }
             });
 
+            // Maison
             const mTapis = parseFloat(document.getElementById('m2-tapis')?.value) || 0;
             if (mTapis > 0) details.push(`Tapis (${mTapis} m²)`);
             const qCanText = parseFloat(document.getElementById('qty-canape-textile')?.value) || 0;
@@ -1137,6 +1094,7 @@
             const qCanCuir = parseFloat(document.getElementById('qty-canape-cuir')?.value) || 0;
             if (qCanCuir > 0) details.push(`Canapé Cuir (${qCanCuir} pl.)`);
 
+            // 3D & Fosse
             const fosse = parseFloat(document.getElementById('vol-fosse')?.value) || 0;
             if (fosse > 0) details.push(`Vidange fosse (${fosse} m³)`);
             const immondices = parseFloat(document.getElementById('vol-immondices')?.value) || 0;
