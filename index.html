@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>MATT Clean'App</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Supabase JS Client -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         tailwind.config = {
@@ -42,6 +44,7 @@
 </head>
 <body class="bg-navy-900 text-slate-100 min-h-screen watermark-bg font-sans flex flex-col justify-between select-none">
 
+    <!-- Notifications Toast -->
     <div id="toast-container" class="fixed top-4 inset-x-4 z-[9999] flex flex-col gap-2 max-w-sm mx-auto pointer-events-none"></div>
 
     <!-- En-tête -->
@@ -63,8 +66,8 @@
         </div>
     </header>
 
-    <!-- Conteneur Plein Écran Flexible -->
-    <main class="w-full px-2 py-3 sm:px-6 sm:py-5 flex-grow flex flex-col justify-start">
+    <!-- Conteneur Principal -->
+    <main class="w-full px-3 py-4 md:px-8 md:py-6 flex-grow flex flex-col justify-start">
 
         <!-- 1. ACCUEIL -->
         <div id="view-gateway" class="w-full max-w-4xl mx-auto space-y-8 animate-fade-in my-auto py-8">
@@ -250,12 +253,12 @@
                         <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Logistique</span>
                     </button>
 
-                    <button type="button" onclick="openFullscreenClientAxis('axis-tracking')" class="relative p-3 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm aspect-square">
+                    <button type="button" onclick="openFullscreenClientAxis('axis-tracking')" class="relative p-3 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
                         <span class="text-3xl sm:text-4xl">📋</span>
                         <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Mes Commandes</span>
                     </button>
 
-                    <button type="button" onclick="openFullscreenClientAxis('axis-contact')" class="relative p-3 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm aspect-square">
+                    <button type="button" onclick="openFullscreenClientAxis('axis-contact')" class="relative p-3 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
                         <span class="text-3xl sm:text-4xl">📞</span>
                         <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Contact</span>
                     </button>
@@ -273,7 +276,7 @@
                 </div>
             </div>
 
-            <!-- CONTENEURS PLEIN ÉCRAN AU CLIC (CLIENT) -->
+            <!-- VUE 2 : CONTENEURS PLEIN ÉCRAN AU CLIC (CLIENT) -->
             <div id="client-fullscreen-axis" class="hidden space-y-4 animate-fade-in flex-grow flex flex-col justify-start">
                 <div class="flex items-center gap-2 bg-slate-50 p-2 rounded-2xl border border-slate-200 flex-nowrap overflow-hidden">
                     <button type="button" onclick="closeFullscreenClientAxis()" class="w-8 h-8 flex-shrink-0 bg-navy-800 hover:bg-navy-900 text-white text-base font-black rounded-xl flex items-center justify-center shadow transition active:scale-95">
@@ -282,10 +285,12 @@
                     <span id="client-axis-fullscreen-title" class="text-[10px] sm:text-xs font-black text-navy-800 uppercase tracking-tight truncate flex-1 min-w-0"></span>
                 </div>
 
+                <!-- Section Automobile -->
                 <div id="axis-auto" class="client-axis-view hidden border rounded-2xl p-4 bg-white shadow-sm space-y-3">
                     <div id="vehicle-catalog" class="grid grid-cols-1 md:grid-cols-2 gap-2.5"></div>
                 </div>
 
+                <!-- Section Maison -->
                 <div id="axis-maison" class="client-axis-view hidden border rounded-2xl p-4 bg-white shadow-sm space-y-3">
                     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 text-xs font-bold">
                         <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Tapis (m²)</label><input type="number" id="m2-tapis" placeholder="0" class="w-full p-2 border rounded-xl" oninput="calculerTotal()"></div>
@@ -308,6 +313,7 @@
                     </div>
                 </div>
 
+                <!-- Section 3D & Vidange -->
                 <div id="axis-env" class="client-axis-view hidden border rounded-2xl p-4 bg-white shadow-sm space-y-3">
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs font-bold">
                         <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Désinfection (pièces)</label><input type="number" id="qty-desinfection" placeholder="0" class="w-full p-2 border rounded-xl" oninput="calculerTotal()"></div>
@@ -316,16 +322,17 @@
                     </div>
                     <div class="border-t pt-2 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-bold">
                         <div class="bg-orange-50/60 p-2.5 rounded-xl border border-orange-200">
-                            <label class="text-[10px] font-black text-mattOrange uppercase block mb-1">🗑️ Évacuation Immondices (m³)</label>
+                            <label class="text-[11px] font-black text-mattOrange uppercase block mb-1">🗑️ Évacuation Immondices (m³)</label>
                             <input type="number" id="vol-immondices" placeholder="Volume en m³" class="w-full p-2 bg-white border rounded-xl font-bold" oninput="calculerTotal()">
                         </div>
                         <div class="bg-sky-50/60 p-2.5 rounded-xl border border-sky-200">
-                            <label class="text-[10px] font-black text-navy-800 uppercase block mb-1">🪠 Vidange Fosse Septique (m³)</label>
+                            <label class="text-[11px] font-black text-navy-800 uppercase block mb-1">🪠 Vidange Fosse Septique (m³)</label>
                             <input type="number" id="vol-fosse" placeholder="Volume en m³" class="w-full p-2 bg-white border rounded-xl font-bold" oninput="calculerTotal()">
                         </div>
                     </div>
                 </div>
 
+                <!-- Section Logistique -->
                 <div id="axis-logistics" class="client-axis-view hidden bg-slate-50 border rounded-2xl p-4 space-y-3 text-xs">
                     <div class="bg-white p-3 rounded-xl border border-slate-200 space-y-2">
                         <span class="text-[10px] font-black text-navy-800 uppercase block">👤 Demandeur :</span>
@@ -391,6 +398,7 @@
                     </div>
                 </div>
 
+                <!-- Section Mes Commandes -->
                 <div id="axis-tracking" class="client-axis-view hidden space-y-3">
                     <div class="flex justify-between items-center border-b pb-2">
                         <span class="text-xs font-black uppercase text-navy-800">Mes Commandes</span>
@@ -399,6 +407,7 @@
                     <div id="client-orders-tracking-list" class="space-y-2.5"></div>
                 </div>
 
+                <!-- Section Contact -->
                 <div id="axis-contact" class="client-axis-view hidden space-y-3">
                     <div class="grid grid-cols-3 gap-2 text-center">
                         <button type="button" onclick="switchContactTab('cnt-about', this)" class="contact-tab-btn p-2.5 rounded-2xl border-2 border-mattOrange bg-orange-50/70 text-mattOrange font-black text-xs flex flex-col items-center gap-1 shadow-xs">
@@ -446,7 +455,7 @@
                     </div>
 
                     <div id="cnt-cgu" class="contact-subview hidden border rounded-2xl p-4 bg-white space-y-2 text-xs">
-                        <div id="cgu-display-client" class="space-y-2 max-h-56 overflow-y-auto pr-1 custom-scrollbar text-slate-600 leading-relaxed text-[11px]">
+                        <div id="cgu-display-client" class="space-y-2 max-h-60 overflow-y-auto pr-1 custom-scrollbar text-slate-600 leading-relaxed text-[11px]">
                             <p class="text-slate-400 italic">Chargement des CGU...</p>
                         </div>
                     </div>
@@ -456,7 +465,7 @@
 
         </div>
 
-        <!-- 5. ESPACE PARTENAIRE CONNECTÉ (OCCUPATION PLEIN ÉCRAN) -->
+        <!-- 5. ESPACE PARTENAIRE CONNECTÉ -->
         <div id="view-partner-app" class="w-full min-h-[calc(100vh-140px)] bg-white text-slate-800 rounded-3xl p-4 md:p-6 shadow-2xl hidden animate-fade-in flex flex-col justify-between space-y-4">
 
             <!-- VUE 1 : RECTANGLE 3 LIGNES X 2 COLONNES -->
@@ -594,9 +603,12 @@
                     </div>
                 </div>
 
-                <!-- Portefeuille -->
+                <!-- Portefeuille (Avec bouton d'actualisation de solde direct) -->
                 <div id="partner-tab-wallet" class="partner-subview hidden space-y-5">
-                    <div class="bg-sky-50 border border-aqua/40 rounded-3xl p-6 text-center max-w-xl mx-auto">
+                    <div class="bg-sky-50 border border-aqua/40 rounded-3xl p-6 text-center max-w-xl mx-auto relative">
+                        <button onclick="refreshPartnerWallet()" type="button" class="absolute top-3 right-3 text-xs bg-white border border-aqua/40 text-aqua hover:bg-sky-100 px-2.5 py-1 rounded-xl font-bold flex items-center gap-1 shadow-xs">
+                            🔄 Actualiser
+                        </button>
                         <span class="text-[10px] text-slate-500 font-black uppercase tracking-wider block" id="partner-solde-label">Solde Commission Disponible</span>
                         <div class="text-4xl font-black text-navy-800 mt-1" id="partner-wallet-balance">0 CDF</div>
                     </div>
@@ -609,6 +621,7 @@
                             <option value="mensuel">Forfait Mois Illimité (150 000 CDF)</option>
                         </select>
 
+                        <!-- COMPTES MOBILES AVEC ALIGNEMENT RIGOUREUX -->
                         <div class="bg-white p-4 rounded-2xl border space-y-2">
                             <span class="font-black text-slate-700 block uppercase text-[10px] tracking-wider mb-1">
                                 COMPTES MOBILES OFFICIELS MATT SARL :
@@ -686,7 +699,7 @@
                     </div>
                 </div>
 
-                <!-- Infos & Support -->
+                <!-- Infos & Support (Scindé en 2 sous-icônes : Assistance & CGU) -->
                 <div id="partner-tab-info-support" class="partner-subview hidden space-y-4 text-xs">
                     <div class="grid grid-cols-2 gap-2 text-center">
                         <button type="button" onclick="switchPartnerSupportTab('psup-support', this)" class="psup-subtab-btn p-2.5 rounded-2xl border-2 border-mattOrange bg-orange-50/70 text-mattOrange font-black text-xs flex flex-col items-center gap-1 shadow-xs">
@@ -820,7 +833,6 @@
         let selectedRatingValue = 5;
         let partnerAllOrders = [];
 
-        // Fonction normalisant les numéros de téléphone (+243, 00243, 081... -> standard)
         function normalizePhoneNumber(phone) {
             if (!phone) return "";
             let p = phone.replace(/[\s\-\.\(\)]/g, "");
@@ -892,6 +904,9 @@
             calculerTotal();
         }
 
+        // ==========================================
+        // RÉVÉLATION PLEIN ÉCRAN EXCLUSIF - CLIENT
+        // ==========================================
         function openFullscreenClientAxis(viewId) {
             document.getElementById('client-home-grid').classList.add('hidden');
             document.querySelectorAll('.client-axis-view').forEach(v => v.classList.add('hidden'));
@@ -900,7 +915,7 @@
                 'axis-auto': '🚗 Automobile',
                 'axis-maison': '🏡 Maison & Surfaces',
                 'axis-env': '🌱 3D & Vidange',
-                'axis-logistics': '⚡ Logistique',
+                'axis-logistics': '⚡ Logistique & Demandeur',
                 'axis-tracking': '📋 Mes Commandes',
                 'axis-contact': '📞 Contact & Informations'
             };
@@ -930,6 +945,9 @@
             }
         }
 
+        // ==========================================
+        // RÉVÉLATION PLEIN ÉCRAN EXCLUSIF - PARTENAIRE
+        // ==========================================
         function openFullscreenPartnerTab(tabId) {
             document.getElementById('partner-home-column').classList.add('hidden');
             document.querySelectorAll('.partner-subview').forEach(v => v.classList.add('hidden'));
@@ -949,6 +967,8 @@
 
             if (tabId === 'partner-tab-ca') {
                 renderPartnerCA();
+            } else if (tabId === 'partner-tab-wallet') {
+                refreshPartnerWallet();
             }
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -983,6 +1003,24 @@
             }
         }
 
+        // ==========================================
+        // ACTUALISATION DU SOLDE DU PORTEFEUILLE
+        // ==========================================
+        async function refreshPartnerWallet() {
+            if (!session.user) return;
+            const { data, error } = await db.from('partners').select('wallet, billing_mode').eq('id', session.user.id).single();
+            if (!error && data) {
+                session.user.wallet = data.wallet || 0;
+                session.user.billing_mode = data.billing_mode || 'commission';
+                document.getElementById('partner-wallet-balance').innerText = `${Number(data.wallet || 0).toLocaleString('fr-FR')} CDF`;
+                document.getElementById('partner-mode-badge').innerText = data.billing_mode === 'commission' ? '15% Comm.' : 'Forfait Actif';
+                showToast("Solde portefeuille synchronisé !");
+            }
+        }
+
+        // ==========================================
+        // VÉHICULES ET CALCUL DU PANIER
+        // ==========================================
         function updateVehicleCount(vid, delta) {
             clientVehiculeSelection[vid] = Math.max(0, (clientVehiculeSelection[vid] || 0) + delta);
             document.getElementById(`qty-${vid}`).innerText = clientVehiculeSelection[vid];
@@ -1068,6 +1106,9 @@
             return total;
         }
 
+        // ==========================================
+        // VALIDATION DE COMMANDE GLOBALE
+        // ==========================================
         async function passerCommande() {
             const client_name = document.getElementById('client-name-input').value.trim();
             const raw_phone = document.getElementById('client-phone-input').value.trim();
@@ -1104,6 +1145,7 @@
                 }
             });
 
+            // Maison
             const mTapis = parseFloat(document.getElementById('m2-tapis')?.value) || 0;
             if (mTapis > 0) details.push(`Tapis (${mTapis} m²)`);
             const qCanText = parseFloat(document.getElementById('qty-canape-textile')?.value) || 0;
@@ -1111,6 +1153,7 @@
             const qCanCuir = parseFloat(document.getElementById('qty-canape-cuir')?.value) || 0;
             if (qCanCuir > 0) details.push(`Canapé Cuir (${qCanCuir} pl.)`);
 
+            // 3D & Fosse
             const fosse = parseFloat(document.getElementById('vol-fosse')?.value) || 0;
             if (fosse > 0) details.push(`Vidange fosse (${fosse} m³)`);
             const immondices = parseFloat(document.getElementById('vol-immondices')?.value) || 0;
@@ -1273,11 +1316,9 @@
             });
         }
 
-        // CHARGEMENT FIABILISÉ DES COURSES ET DU CHIFFRE D'AFFAIRES
         async function loadPartnerAcceptedCourses() {
             if (!session.user) return;
             
-            // On recherche les courses de ce partenaire soit par ID, soit si une course a été clôturée
             const { data } = await db.from('orders')
                 .select('*')
                 .or(`partner_id.eq.${session.user.id},status.eq.Terminée`)
@@ -1553,6 +1594,7 @@
         function openPartnerApp() {
             showView('view-partner-app');
             document.getElementById('partner-dashboard-name').innerText = session.user.name;
+            document.getElementById('partner-dashboard-meta').innerText = `${session.user.specialty} - ${session.user.commune}`;
             document.getElementById('partner-wallet-balance').innerText = `${Number(session.user.wallet || 0).toLocaleString('fr-FR')} CDF`;
 
             document.getElementById('partner-edit-name').value = session.user.name;
@@ -1581,6 +1623,7 @@
                 if (selectPartnerEdit) selectPartnerEdit.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
             });
 
+            // Catalogue Véhicules
             const vCat = document.getElementById('vehicle-catalog');
             typesVehicules.forEach(v => {
                 clientVehiculeSelection[v.id] = 0;
