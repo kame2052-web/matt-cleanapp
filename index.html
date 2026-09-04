@@ -44,10 +44,11 @@
 
     <div id="toast-container" class="fixed top-4 inset-x-4 z-[9999] flex flex-col gap-2 max-w-sm mx-auto pointer-events-none"></div>
 
+    <!-- En-tête -->
     <header class="bg-navy-800/95 border-b border-aqua/30 px-4 py-3 md:px-8 flex justify-between items-center sticky top-0 z-40 backdrop-blur-md shadow-lg w-full">
         <div class="flex items-center gap-2.5 cursor-pointer" onclick="showView('view-gateway')">
             <div class="w-11 h-11 bg-white rounded-2xl shadow-md border border-aqua/30 p-1 flex items-center justify-center flex-shrink-0">
-                <img src="cleanapp.jpg" alt="Logo Clean'App" class="w-full h-full object-contain" onerror="this.src='cleanapp.png'">
+                <img src="cleanapp.jpg" alt="Logo" class="w-full h-full object-contain" onerror="this.src='cleanapp.png'">
             </div>
             <div class="flex flex-col">
                 <span class="text-lg md:text-xl font-black text-white leading-tight tracking-wide">MATT Clean'App</span>
@@ -62,8 +63,10 @@
         </div>
     </header>
 
-    <main class="w-full px-3 py-4 md:px-8 md:py-6 flex-grow flex flex-col justify-start">
+    <!-- Conteneur Plein Écran Flexible -->
+    <main class="w-full px-2 py-3 sm:px-6 sm:py-5 flex-grow flex flex-col justify-start">
 
+        <!-- 1. ACCUEIL -->
         <div id="view-gateway" class="w-full max-w-4xl mx-auto space-y-8 animate-fade-in my-auto py-8">
             <div class="text-center space-y-4">
                 <div class="inline-block w-28 h-28 md:w-32 md:h-32 bg-white rounded-3xl p-2 shadow-2xl border-2 border-aqua/40">
@@ -104,6 +107,7 @@
             </div>
         </div>
 
+        <!-- 2. AUTHENTIFICATION CLIENT -->
         <div id="view-client-auth" class="bg-white text-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl hidden animate-fade-in max-w-md mx-auto w-full my-auto">
             <div class="flex items-center justify-end border-b pb-2 mb-4">
                 <button onclick="showView('view-gateway')" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 font-bold flex items-center justify-center">✕</button>
@@ -117,7 +121,7 @@
             <div id="form-client-login" class="space-y-3.5">
                 <div>
                     <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Numéro de Téléphone</label>
-                    <input type="tel" id="auth-client-login-phone" placeholder="Numéro de téléphone" class="w-full px-3.5 py-3 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-aqua focus:outline-none">
+                    <input type="tel" id="auth-client-login-phone" placeholder="0825556633" class="w-full px-3.5 py-3 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-aqua focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Mot de passe</label>
@@ -153,6 +157,7 @@
             </div>
         </div>
 
+        <!-- 3. AUTHENTIFICATION PARTENAIRE -->
         <div id="view-partner-auth" class="bg-white text-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl hidden animate-fade-in max-w-md mx-auto w-full my-auto">
             <div class="flex items-center justify-end border-b pb-2 mb-4">
                 <button onclick="showView('view-gateway')" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 font-bold flex items-center justify-center">✕</button>
@@ -217,51 +222,48 @@
             </div>
         </div>
 
-        <div id="view-client-app" class="w-full bg-white text-slate-800 rounded-3xl p-4 md:p-8 shadow-2xl hidden animate-fade-in space-y-6">
+        <!-- 4. ESPACE CLIENT CONNECTÉ -->
+        <div id="view-client-app" class="w-full min-h-[calc(100vh-140px)] bg-white text-slate-800 rounded-3xl p-4 md:p-6 shadow-2xl hidden animate-fade-in flex flex-col justify-between space-y-4">
+            
+            <div id="client-home-grid" class="space-y-5 flex-grow flex flex-col justify-between">
+                <div class="grid grid-cols-2 sm:grid-cols-3 gap-3.5 w-full max-w-xl mx-auto p-2">
+                    <button type="button" onclick="openFullscreenClientAxis('axis-auto')" class="relative p-3 rounded-3xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm aspect-square">
+                        <span class="text-3xl sm:text-4xl">🚗</span>
+                        <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Automobile</span>
+                        <span id="badge-count-auto" class="absolute top-2 right-2 px-1.5 py-0.2 rounded-full text-[8px] font-black bg-slate-100 text-slate-700 border">0</span>
+                    </button>
 
-            <div id="client-home-grid" class="space-y-6">
-                <div class="text-center">
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-md mx-auto p-3 bg-slate-50 border border-slate-200 rounded-3xl shadow-inner">
-                        
-                        <button type="button" onclick="openFullscreenClientAxis('axis-auto')" class="relative p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
-                            <span class="text-3xl group-hover:scale-110 transition">🚗</span>
-                            <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Automobile</span>
-                            <span id="badge-count-auto" class="absolute top-2 right-2 px-1.5 py-0.2 rounded-full text-[8px] font-black bg-slate-100 text-slate-700 border">0</span>
-                        </button>
+                    <button type="button" onclick="openFullscreenClientAxis('axis-maison')" class="relative p-3 rounded-3xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm aspect-square">
+                        <span class="text-3xl sm:text-4xl">🏡</span>
+                        <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Maison</span>
+                        <span id="badge-count-maison" class="absolute top-2 right-2 px-1.5 py-0.2 rounded-full text-[8px] font-black bg-slate-100 text-slate-700 border">0</span>
+                    </button>
 
-                        <button type="button" onclick="openFullscreenClientAxis('axis-maison')" class="relative p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
-                            <span class="text-3xl group-hover:scale-110 transition">🏡</span>
-                            <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Maison</span>
-                            <span id="badge-count-maison" class="absolute top-2 right-2 px-1.5 py-0.2 rounded-full text-[8px] font-black bg-slate-100 text-slate-700 border">0</span>
-                        </button>
+                    <button type="button" onclick="openFullscreenClientAxis('axis-env')" class="relative p-3 rounded-3xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm aspect-square">
+                        <span class="text-3xl sm:text-4xl">🌱</span>
+                        <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">3D & Vidange</span>
+                        <span id="badge-count-env" class="absolute top-2 right-2 px-1.5 py-0.2 rounded-full text-[8px] font-black bg-slate-100 text-slate-700 border">0</span>
+                    </button>
 
-                        <button type="button" onclick="openFullscreenClientAxis('axis-env')" class="relative p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
-                            <span class="text-3xl group-hover:scale-110 transition">🌱</span>
-                            <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">3D & Vidange</span>
-                            <span id="badge-count-env" class="absolute top-2 right-2 px-1.5 py-0.2 rounded-full text-[8px] font-black bg-slate-100 text-slate-700 border">0</span>
-                        </button>
+                    <button type="button" onclick="openFullscreenClientAxis('axis-logistics')" class="relative p-3 rounded-3xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm aspect-square">
+                        <span class="text-3xl sm:text-4xl">⚡</span>
+                        <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Logistique</span>
+                    </button>
 
-                        <button type="button" onclick="openFullscreenClientAxis('axis-logistics')" class="relative p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
-                            <span class="text-3xl group-hover:scale-110 transition">⚡</span>
-                            <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Logistique</span>
-                        </button>
+                    <button type="button" onclick="openFullscreenClientAxis('axis-tracking')" class="relative p-3 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm aspect-square">
+                        <span class="text-3xl sm:text-4xl">📋</span>
+                        <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Mes Commandes</span>
+                    </button>
 
-                        <button type="button" onclick="openFullscreenClientAxis('axis-tracking')" class="relative p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
-                            <span class="text-3xl group-hover:scale-110 transition">📋</span>
-                            <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Mes Commandes</span>
-                        </button>
-
-                        <button type="button" onclick="openFullscreenClientAxis('axis-contact')" class="relative p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
-                            <span class="text-3xl group-hover:scale-110 transition">📞</span>
-                            <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Contact</span>
-                        </button>
-
-                    </div>
+                    <button type="button" onclick="openFullscreenClientAxis('axis-contact')" class="relative p-3 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm aspect-square">
+                        <span class="text-3xl sm:text-4xl">📞</span>
+                        <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Contact</span>
+                    </button>
                 </div>
 
-                <div class="bg-navy-900 text-white p-4 sm:p-5 rounded-3xl flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xl border border-aqua/30 max-w-md sm:max-w-none mx-auto">
+                <div class="bg-navy-900 text-white p-4 sm:p-5 rounded-3xl flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xl border border-aqua/30 w-full max-w-xl mx-auto">
                     <div class="space-y-0.5 text-center sm:text-left">
-                        <span class="text-[11px] text-slate-400 font-bold uppercase block">Total Panier Estimé :</span>
+                        <span class="text-[10px] text-slate-400 font-bold uppercase block">Total Panier Estimé :</span>
                         <div class="text-2xl sm:text-3xl font-black text-mattOrange font-mono"><span id="prix-total-affichage">0</span> CDF</div>
                         <div id="cart-summary-badges" class="flex flex-wrap gap-1.5 pt-0.5 text-[9px]"></div>
                     </div>
@@ -271,7 +273,8 @@
                 </div>
             </div>
 
-            <div id="client-fullscreen-axis" class="hidden space-y-4 animate-fade-in">
+            <!-- CONTENEURS PLEIN ÉCRAN AU CLIC (CLIENT) -->
+            <div id="client-fullscreen-axis" class="hidden space-y-4 animate-fade-in flex-grow flex flex-col justify-start">
                 <div class="flex items-center gap-2 bg-slate-50 p-2 rounded-2xl border border-slate-200 flex-nowrap overflow-hidden">
                     <button type="button" onclick="closeFullscreenClientAxis()" class="w-8 h-8 flex-shrink-0 bg-navy-800 hover:bg-navy-900 text-white text-base font-black rounded-xl flex items-center justify-center shadow transition active:scale-95">
                         ←
@@ -443,7 +446,7 @@
                     </div>
 
                     <div id="cnt-cgu" class="contact-subview hidden border rounded-2xl p-4 bg-white space-y-2 text-xs">
-                        <div id="cgu-display-client" class="space-y-2 max-h-60 overflow-y-auto pr-1 custom-scrollbar text-slate-600 leading-relaxed text-[11px]">
+                        <div id="cgu-display-client" class="space-y-2 max-h-56 overflow-y-auto pr-1 custom-scrollbar text-slate-600 leading-relaxed text-[11px]">
                             <p class="text-slate-400 italic">Chargement des CGU...</p>
                         </div>
                     </div>
@@ -453,37 +456,39 @@
 
         </div>
 
-        <div id="view-partner-app" class="w-full bg-white text-slate-800 rounded-3xl p-5 md:p-8 shadow-2xl hidden animate-fade-in space-y-6">
+        <!-- 5. ESPACE PARTENAIRE CONNECTÉ (OCCUPATION PLEIN ÉCRAN) -->
+        <div id="view-partner-app" class="w-full min-h-[calc(100vh-140px)] bg-white text-slate-800 rounded-3xl p-4 md:p-6 shadow-2xl hidden animate-fade-in flex flex-col justify-between space-y-4">
 
-            <div id="partner-home-column" class="text-center space-y-3">
-                <div class="grid grid-cols-2 gap-3 max-w-md mx-auto p-3 bg-slate-50 border border-slate-200 rounded-3xl shadow-inner">
+            <!-- VUE 1 : RECTANGLE 3 LIGNES X 2 COLONNES -->
+            <div id="partner-home-column" class="flex-grow flex flex-col justify-center py-2">
+                <div class="grid grid-cols-2 gap-3.5 w-full max-w-md mx-auto p-2">
                     
-                    <button type="button" onclick="openFullscreenPartnerTab('partner-tab-missions')" class="p-3.5 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex flex-col items-center justify-center gap-1.5 text-xs transition active:scale-95 shadow-xs aspect-video">
+                    <button type="button" onclick="openFullscreenPartnerTab('partner-tab-missions')" class="p-4 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex flex-col items-center justify-center gap-2 text-xs transition active:scale-95 shadow-sm aspect-video">
                         <span class="text-3xl">🚨</span>
                         <span class="font-black text-navy-800 uppercase text-[11px] leading-tight">Missions</span>
                     </button>
 
-                    <button type="button" onclick="openFullscreenPartnerTab('partner-tab-ca')" class="p-3.5 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex flex-col items-center justify-center gap-1.5 text-xs transition active:scale-95 shadow-xs aspect-video">
+                    <button type="button" onclick="openFullscreenPartnerTab('partner-tab-ca')" class="p-4 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex flex-col items-center justify-center gap-2 text-xs transition active:scale-95 shadow-sm aspect-video">
                         <span class="text-3xl">📊</span>
                         <span class="font-black text-navy-800 uppercase text-[11px] leading-tight">Chiffre d'Affaires</span>
                     </button>
 
-                    <button type="button" onclick="openFullscreenPartnerTab('partner-tab-wallet')" class="p-3.5 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex flex-col items-center justify-center gap-1.5 text-xs transition active:scale-95 shadow-xs aspect-video">
+                    <button type="button" onclick="openFullscreenPartnerTab('partner-tab-wallet')" class="p-4 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex flex-col items-center justify-center gap-2 text-xs transition active:scale-95 shadow-sm aspect-video">
                         <span class="text-3xl">💳</span>
                         <span class="font-black text-navy-800 uppercase text-[11px] leading-tight">Portefeuille</span>
                     </button>
 
-                    <button type="button" onclick="openFullscreenPartnerTab('partner-tab-courses')" class="p-3.5 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex flex-col items-center justify-center gap-1.5 text-xs transition active:scale-95 shadow-xs aspect-video">
+                    <button type="button" onclick="openFullscreenPartnerTab('partner-tab-courses')" class="p-4 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex flex-col items-center justify-center gap-2 text-xs transition active:scale-95 shadow-sm aspect-video">
                         <span class="text-3xl">📑</span>
                         <span class="font-black text-navy-800 uppercase text-[11px] leading-tight">Mes Courses</span>
                     </button>
 
-                    <button type="button" onclick="openFullscreenPartnerTab('partner-tab-profil')" class="p-3.5 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex flex-col items-center justify-center gap-1.5 text-xs transition active:scale-95 shadow-xs aspect-video">
+                    <button type="button" onclick="openFullscreenPartnerTab('partner-tab-profil')" class="p-4 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex flex-col items-center justify-center gap-2 text-xs transition active:scale-95 shadow-sm aspect-video">
                         <span class="text-3xl">⚙️</span>
                         <span class="font-black text-navy-800 uppercase text-[11px] leading-tight">Profil & Accès</span>
                     </button>
 
-                    <button type="button" onclick="openFullscreenPartnerTab('partner-tab-info-support')" class="p-3.5 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex flex-col items-center justify-center gap-1.5 text-xs transition active:scale-95 shadow-xs aspect-video">
+                    <button type="button" onclick="openFullscreenPartnerTab('partner-tab-info-support')" class="p-4 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex flex-col items-center justify-center gap-2 text-xs transition active:scale-95 shadow-sm aspect-video">
                         <span class="text-3xl">📜</span>
                         <span class="font-black text-navy-800 uppercase text-[11px] leading-tight">Infos & Support</span>
                     </button>
@@ -491,7 +496,8 @@
                 </div>
             </div>
 
-            <div id="partner-fullscreen-tab" class="hidden space-y-4 animate-fade-in">
+            <!-- VUE 2 : CONTENEUR PLEIN ÉCRAN PARTENAIRE -->
+            <div id="partner-fullscreen-tab" class="hidden space-y-4 animate-fade-in flex-grow flex flex-col justify-start">
                 <div class="flex items-center gap-2 bg-slate-50 p-2 rounded-2xl border border-slate-200 flex-nowrap overflow-hidden">
                     <button type="button" onclick="closeFullscreenPartnerTab()" class="w-8 h-8 flex-shrink-0 bg-navy-800 hover:bg-navy-900 text-white text-base font-black rounded-xl flex items-center justify-center shadow transition active:scale-95">
                         ←
@@ -499,6 +505,7 @@
                     <span id="partner-tab-fullscreen-title" class="text-[10px] sm:text-xs font-black text-navy-800 uppercase tracking-tight truncate flex-1 min-w-0"></span>
                 </div>
 
+                <!-- Missions Disponibles -->
                 <div id="partner-tab-missions" class="partner-subview hidden space-y-4">
                     <div class="flex justify-between items-center">
                         <span class="text-xs font-black uppercase text-navy-800 tracking-wider">Missions Disponibles</span>
@@ -509,6 +516,7 @@
                     <div id="partner-missions-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 min-h-[160px]"></div>
                 </div>
 
+                <!-- Chiffre d'Affaires -->
                 <div id="partner-tab-ca" class="partner-subview hidden space-y-4">
                     <div class="grid grid-cols-2 gap-2 text-center">
                         <button type="button" onclick="switchCaSubTab('ca-sub-calc', this)" class="ca-subtab-btn p-2.5 rounded-2xl border-2 border-mattOrange bg-orange-50/70 text-mattOrange font-black text-xs flex flex-col items-center gap-1 shadow-xs">
@@ -540,19 +548,19 @@
                         </div>
 
                         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                            <div class="bg-white border-2 border-slate-100 rounded-2xl p-4 shadow-xs">
+                            <div class="bg-white border-2 border-slate-100 rounded-2xl p-5 shadow-xs">
                                 <span class="text-[10px] font-black text-slate-400 uppercase tracking-wider block">COURSES EFFECTUÉES</span>
                                 <div class="text-2xl font-black text-navy-800 mt-1" id="ca-stat-count">0</div>
                             </div>
-                            <div class="bg-white border-2 border-slate-100 rounded-2xl p-4 shadow-xs">
+                            <div class="bg-white border-2 border-slate-100 rounded-2xl p-5 shadow-xs">
                                 <span class="text-[10px] font-black text-slate-400 uppercase tracking-wider block">CA TOTAL BRUT</span>
                                 <div class="text-2xl font-black text-sky-600 font-mono mt-1" id="ca-stat-brut">0 CDF</div>
                             </div>
-                            <div class="bg-white border-2 border-slate-100 rounded-2xl p-4 shadow-xs">
+                            <div class="bg-white border-2 border-slate-100 rounded-2xl p-5 shadow-xs">
                                 <span class="text-[10px] font-black text-slate-400 uppercase tracking-wider block">COMMISSIONS DÉDUITES</span>
                                 <div class="text-2xl font-black text-red-500 font-mono mt-1" id="ca-stat-com">0 CDF</div>
                             </div>
-                            <div class="bg-green-50 border-2 border-green-300 rounded-2xl p-4 shadow-xs">
+                            <div class="bg-green-50 border-2 border-green-300 rounded-2xl p-5 shadow-xs">
                                 <span class="text-[10px] font-black text-green-700 uppercase tracking-wider block">GAIN NET ENCAISSÉ</span>
                                 <div class="text-2xl font-black text-green-600 font-mono mt-1" id="ca-stat-net">0 CDF</div>
                             </div>
@@ -586,6 +594,7 @@
                     </div>
                 </div>
 
+                <!-- Portefeuille -->
                 <div id="partner-tab-wallet" class="partner-subview hidden space-y-5">
                     <div class="bg-sky-50 border border-aqua/40 rounded-3xl p-6 text-center max-w-xl mx-auto">
                         <span class="text-[10px] text-slate-500 font-black uppercase tracking-wider block" id="partner-solde-label">Solde Commission Disponible</span>
@@ -632,11 +641,13 @@
                     </div>
                 </div>
 
+                <!-- Mes Courses -->
                 <div id="partner-tab-courses" class="partner-subview hidden space-y-4">
                     <span class="text-xs font-black uppercase text-navy-800 block">Courses Acceptées & Clôture</span>
                     <div id="partner-accepted-courses-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
                 </div>
 
+                <!-- Profil -->
                 <div id="partner-tab-profil" class="partner-subview hidden space-y-4 max-w-xl mx-auto">
                     <span class="text-xs font-black uppercase text-navy-800 block">Modification Sécurisée des Identifiants</span>
                     <div class="bg-slate-50 p-5 rounded-3xl border space-y-3 text-xs">
@@ -675,6 +686,7 @@
                     </div>
                 </div>
 
+                <!-- Infos & Support -->
                 <div id="partner-tab-info-support" class="partner-subview hidden space-y-4 text-xs">
                     <div class="grid grid-cols-2 gap-2 text-center">
                         <button type="button" onclick="switchPartnerSupportTab('psup-support', this)" class="psup-subtab-btn p-2.5 rounded-2xl border-2 border-mattOrange bg-orange-50/70 text-mattOrange font-black text-xs flex flex-col items-center gap-1 shadow-xs">
@@ -709,6 +721,7 @@
 
     </main>
 
+    <!-- Footer Institutionnel -->
     <footer class="border-t border-slate-800/80 bg-navy-800/80 py-4 text-center text-xs text-slate-400 mt-auto">
         <div class="container mx-auto px-4 space-y-1">
             <div class="flex flex-wrap justify-center items-center gap-x-4 gap-y-1 text-[11px] text-slate-300 font-semibold">
@@ -721,6 +734,7 @@
         </div>
     </footer>
 
+    <!-- MODALE DE NOTATION -->
     <div id="modal-rating" class="fixed inset-0 bg-slate-955/70 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
         <div class="bg-white text-slate-900 w-full max-w-sm rounded-3xl p-6 space-y-4 relative text-xs shadow-2xl">
             <button onclick="closeRatingModal()" class="absolute top-4 right-4 text-slate-400 font-bold text-lg">✕</button>
@@ -739,6 +753,7 @@
         </div>
     </div>
 
+    <!-- LOGIQUE JAVASCRIPT ET CONNECTEURS SUPABASE -->
     <script>
         const SUPABASE_URL = "https://vbriworyscymnmtzzdny.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZicml3b3J5c2N5bW5tdHp6ZG55Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzNzQwNTEsImV4cCI6MjEwMzk1MDA1MX0.VBZupVKj0srae0NT5BNZ0OeaIv9pAl2bl5L-Rd8ocJk";
@@ -805,6 +820,16 @@
         let selectedRatingValue = 5;
         let partnerAllOrders = [];
 
+        // Fonction normalisant les numéros de téléphone (+243, 00243, 081... -> standard)
+        function normalizePhoneNumber(phone) {
+            if (!phone) return "";
+            let p = phone.replace(/[\s\-\.\(\)]/g, "");
+            if (p.startsWith("+243")) p = "0" + p.slice(4);
+            else if (p.startsWith("00243")) p = "0" + p.slice(5);
+            else if (p.startsWith("243")) p = "0" + p.slice(3);
+            return p;
+        }
+
         function showToast(message, type = "success") {
             const container = document.getElementById('toast-container');
             if (!container) return;
@@ -867,7 +892,6 @@
             calculerTotal();
         }
 
-        // RÉVÉLATION PLEIN ÉCRAN EXCLUSIF - CLIENT
         function openFullscreenClientAxis(viewId) {
             document.getElementById('client-home-grid').classList.add('hidden');
             document.querySelectorAll('.client-axis-view').forEach(v => v.classList.add('hidden'));
@@ -876,7 +900,7 @@
                 'axis-auto': '🚗 Automobile',
                 'axis-maison': '🏡 Maison & Surfaces',
                 'axis-env': '🌱 3D & Vidange',
-                'axis-logistics': '⚡ Logistique & Demandeur',
+                'axis-logistics': '⚡ Logistique',
                 'axis-tracking': '📋 Mes Commandes',
                 'axis-contact': '📞 Contact & Informations'
             };
@@ -906,7 +930,6 @@
             }
         }
 
-        // RÉVÉLATION PLEIN ÉCRAN EXCLUSIF - PARTENAIRE
         function openFullscreenPartnerTab(tabId) {
             document.getElementById('partner-home-column').classList.add('hidden');
             document.querySelectorAll('.partner-subview').forEach(v => v.classList.add('hidden'));
@@ -960,9 +983,6 @@
             }
         }
 
-        // ==========================================
-        // VÉHICULES ET CALCUL DU PANIER
-        // ==========================================
         function updateVehicleCount(vid, delta) {
             clientVehiculeSelection[vid] = Math.max(0, (clientVehiculeSelection[vid] || 0) + delta);
             document.getElementById(`qty-${vid}`).innerText = clientVehiculeSelection[vid];
@@ -985,7 +1005,6 @@
             let total = 0;
             const tarifsZone = grilleTarifaireParZone[currentActiveZone] || grilleTarifaireParZone['zone1'];
 
-            // 1. Calcul Véhicules
             let countVehicules = 0;
             typesVehicules.forEach(v => {
                 const count = clientVehiculeSelection[v.id] || 0;
@@ -1003,7 +1022,6 @@
             });
             document.getElementById('badge-count-auto').innerText = countVehicules;
 
-            // 2. Calcul Maison & Surfaces
             let countMaison = 0;
             const mTapis = parseFloat(document.getElementById('m2-tapis')?.value) || 0;
             const mMoq = parseFloat(document.getElementById('m2-moquette')?.value) || 0;
@@ -1023,7 +1041,6 @@
             countMaison = (mTapis > 0 ? 1 : 0) + (mMoq > 0 ? 1 : 0) + (mVit > 0 ? 1 : 0) + (mBaie > 0 ? 1 : 0) + (mCarr > 0 ? 1 : 0) + (qPan > 0 ? 1 : 0) + (qCanText > 0 ? 1 : 0) + (qCanLin > 0 ? 1 : 0) + (qCanVel > 0 ? 1 : 0) + (qCanCuir > 0 ? 1 : 0) + (qMat > 0 ? 1 : 0);
             document.getElementById('badge-count-maison').innerText = countMaison;
 
-            // 3. Calcul 3D & Vidange
             let countEnv = 0;
             const qDesinf = parseFloat(document.getElementById('qty-desinfection')?.value) || 0;
             const qDesins = parseFloat(document.getElementById('qty-desinsectisation')?.value) || 0;
@@ -1051,12 +1068,10 @@
             return total;
         }
 
-        // ==========================================
-        // VALIDATION DE COMMANDE GLOBALE
-        // ==========================================
         async function passerCommande() {
             const client_name = document.getElementById('client-name-input').value.trim();
-            const client_phone = document.getElementById('client-phone-input').value.trim();
+            const raw_phone = document.getElementById('client-phone-input').value.trim();
+            const client_phone = normalizePhoneNumber(raw_phone);
             const commune = document.getElementById('client-commune').value;
             const quartier = document.getElementById('client-quartier-input').value.trim();
             const avenue = document.getElementById('client-avenue-input').value.trim();
@@ -1089,7 +1104,6 @@
                 }
             });
 
-            // Maison
             const mTapis = parseFloat(document.getElementById('m2-tapis')?.value) || 0;
             if (mTapis > 0) details.push(`Tapis (${mTapis} m²)`);
             const qCanText = parseFloat(document.getElementById('qty-canape-textile')?.value) || 0;
@@ -1097,7 +1111,6 @@
             const qCanCuir = parseFloat(document.getElementById('qty-canape-cuir')?.value) || 0;
             if (qCanCuir > 0) details.push(`Canapé Cuir (${qCanCuir} pl.)`);
 
-            // 3D & Fosse
             const fosse = parseFloat(document.getElementById('vol-fosse')?.value) || 0;
             if (fosse > 0) details.push(`Vidange fosse (${fosse} m³)`);
             const immondices = parseFloat(document.getElementById('vol-immondices')?.value) || 0;
@@ -1131,10 +1144,11 @@
         }
 
         async function detectClientOrders() {
-            const phone = document.getElementById('client-phone-input').value.trim();
+            const raw = document.getElementById('client-phone-input').value.trim();
+            const phone = normalizePhoneNumber(raw);
             if (!phone) return;
 
-            const { data } = await db.from('orders').select('*').eq('client_phone', phone).order('id', { ascending: false });
+            const { data } = await db.from('orders').select('*').or(`client_phone.eq.${phone},client_phone.ilike.%${phone.slice(-8)}%`).order('id', { ascending: false });
             const list = document.getElementById('client-orders-tracking-list');
             list.innerHTML = '';
 
@@ -1209,9 +1223,6 @@
             detectClientOrders();
         }
 
-        // ==========================================
-        // GESTION DES MISSIONS DU PARTENAIRE
-        // ==========================================
         async function loadPartnerMissions() {
             const btn = document.getElementById('btn-refresh-missions');
             const icon = document.getElementById('refresh-icon');
@@ -1262,12 +1273,23 @@
             });
         }
 
+        // CHARGEMENT FIABILISÉ DES COURSES ET DU CHIFFRE D'AFFAIRES
         async function loadPartnerAcceptedCourses() {
             if (!session.user) return;
-            const { data } = await db.from('orders').select('*').eq('partner_id', session.user.id).order('id', { ascending: false });
+            
+            // On recherche les courses de ce partenaire soit par ID, soit si une course a été clôturée
+            const { data } = await db.from('orders')
+                .select('*')
+                .or(`partner_id.eq.${session.user.id},status.eq.Terminée`)
+                .order('id', { ascending: false });
+            
             partnerAllOrders = data || [];
             const container = document.getElementById('partner-accepted-courses-list');
             container.innerHTML = '';
+
+            if (partnerAllOrders.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-8 col-span-full">Aucune mission dans votre historique pour le moment.</p>`;
+            }
 
             partnerAllOrders.forEach(o => {
                 container.innerHTML += `
@@ -1338,7 +1360,6 @@
                         <td class="p-3 font-mono font-bold text-sky-600">${brut.toLocaleString('fr-FR')} CDF</td>
                         <td class="p-3 font-mono font-bold text-red-500">-${com.toLocaleString('fr-FR')} CDF</td>
                         <td class="p-3 font-mono font-bold text-green-600">${gain.toLocaleString('fr-FR')} CDF</td>
-                        <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-800">${o.status}</span></td>
                     </tr>
                 `;
             }).join('');
@@ -1414,7 +1435,8 @@
         async function savePartnerProfileUpdate() {
             if (!session.user) return;
             const newName = document.getElementById('partner-edit-name').value.trim();
-            const newPhone = document.getElementById('partner-edit-phone').value.trim();
+            const rawPhone = document.getElementById('partner-edit-phone').value.trim();
+            const newPhone = normalizePhoneNumber(rawPhone);
             const newCommune = document.getElementById('partner-edit-commune').value;
             const oldPass = document.getElementById('partner-edit-old-pass').value.trim();
             const newPass = document.getElementById('partner-edit-new-pass').value.trim();
@@ -1435,7 +1457,6 @@
             if (newPass) session.user.password = newPass;
 
             document.getElementById('partner-dashboard-name').innerText = newName;
-            document.getElementById('partner-dashboard-meta').innerText = `${session.user.specialty} - ${newCommune}`;
             showToast("Identifiants mis à jour !");
         }
 
@@ -1454,7 +1475,8 @@
 
         async function registerClient() {
             const name = document.getElementById('auth-client-reg-name').value.trim();
-            const phone = document.getElementById('auth-client-reg-phone').value.trim();
+            const rawPhone = document.getElementById('auth-client-reg-phone').value.trim();
+            const phone = normalizePhoneNumber(rawPhone);
             const password = document.getElementById('auth-client-reg-pass').value.trim();
             if (!name || !phone || !password) return showToast("Remplissez tous les champs.", "error");
 
@@ -1467,9 +1489,16 @@
         }
 
         async function loginClient() {
-            const phone = document.getElementById('auth-client-login-phone').value.trim();
+            const raw = document.getElementById('auth-client-login-phone').value.trim();
+            const phone = normalizePhoneNumber(raw);
             const password = document.getElementById('auth-client-login-pass').value.trim();
-            const { data, error } = await db.from('clients').select('*').eq('phone', phone).eq('password', password).single();
+            
+            const { data, error } = await db.from('clients')
+                .select('*')
+                .or(`phone.eq.${phone},phone.ilike.%${phone.slice(-8)}%`)
+                .eq('password', password)
+                .single();
+
             if (error || !data) return showToast("Identifiants incorrects.", "error");
 
             session = { role: 'client', user: data };
@@ -1488,7 +1517,8 @@
 
         async function registerPartner() {
             const name = document.getElementById('p-reg-name').value.trim();
-            const phone = document.getElementById('p-reg-phone').value.trim();
+            const raw = document.getElementById('p-reg-phone').value.trim();
+            const phone = normalizePhoneNumber(raw);
             const password = document.getElementById('p-reg-pass').value.trim();
             const commune = document.getElementById('p-reg-commune').value;
             const specialty = document.getElementById('p-reg-specialty').value;
@@ -1503,9 +1533,16 @@
         }
 
         async function loginPartner() {
-            const phone = document.getElementById('auth-partner-login-phone').value.trim();
+            const raw = document.getElementById('auth-partner-login-phone').value.trim();
+            const phone = normalizePhoneNumber(raw);
             const password = document.getElementById('auth-partner-login-pass').value.trim();
-            const { data, error } = await db.from('partners').select('*').eq('phone', phone).eq('password', password).single();
+            
+            const { data, error } = await db.from('partners')
+                .select('*')
+                .or(`phone.eq.${phone},phone.ilike.%${phone.slice(-8)}%`)
+                .eq('password', password)
+                .single();
+
             if (error || !data) return showToast("Accès partenaire refusé.", "error");
 
             session = { role: 'partner', user: data };
@@ -1516,15 +1553,11 @@
         function openPartnerApp() {
             showView('view-partner-app');
             document.getElementById('partner-dashboard-name').innerText = session.user.name;
-            document.getElementById('partner-dashboard-meta').innerText = `${session.user.specialty} - ${session.user.commune}`;
             document.getElementById('partner-wallet-balance').innerText = `${Number(session.user.wallet || 0).toLocaleString('fr-FR')} CDF`;
 
             document.getElementById('partner-edit-name').value = session.user.name;
             document.getElementById('partner-edit-phone').value = session.user.phone;
             document.getElementById('partner-edit-commune').value = session.user.commune;
-
-            const mode = session.user.billing_mode || 'commission';
-            document.getElementById('partner-mode-badge').innerText = mode === 'commission' ? '15% Comm.' : 'Forfait Actif';
 
             loadPartnerMissions();
             loadPartnerAcceptedCourses();
@@ -1548,7 +1581,6 @@
                 if (selectPartnerEdit) selectPartnerEdit.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
             });
 
-            // Catalogue Véhicules
             const vCat = document.getElementById('vehicle-catalog');
             typesVehicules.forEach(v => {
                 clientVehiculeSelection[v.id] = 0;
