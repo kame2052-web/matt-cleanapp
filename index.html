@@ -617,6 +617,7 @@
                             <option value="mensuel">Forfait Mois Illimité (150 000 CDF)</option>
                         </select>
 
+                        <!-- COMPTES MOBILES AVEC ALIGNEMENT RIGOUREUX -->
                         <div class="bg-white p-4 rounded-2xl border space-y-2">
                             <span class="font-black text-slate-700 block uppercase text-[10px] tracking-wider mb-1">
                                 COMPTES MOBILES OFFICIELS MATT SARL :
@@ -747,7 +748,7 @@
         </div>
     </footer>
 
-    <!-- MODALE NOTATION -->
+    <!-- MODALE DE NOTATION -->
     <div id="modal-rating" class="fixed inset-0 bg-slate-955/70 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
         <div class="bg-white text-slate-900 w-full max-w-sm rounded-3xl p-6 space-y-4 relative text-xs shadow-2xl">
             <button onclick="closeRatingModal()" class="absolute top-4 right-4 text-slate-400 font-bold text-lg">✕</button>
@@ -766,7 +767,7 @@
         </div>
     </div>
 
-    <!-- LOGIQUE JAVASCRIPT & SUPABASE -->
+    <!-- LOGIQUE JAVASCRIPT ET CONNECTEURS SUPABASE -->
     <script>
         const SUPABASE_URL = "https://vbriworyscymnmtzzdny.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZicml3b3J5c2N5bW5tdHp6ZG55Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzNzQwNTEsImV4cCI6MjEwMzk1MDA1MX0.VBZupVKj0srae0NT5BNZ0OeaIv9pAl2bl5L-Rd8ocJk";
@@ -1093,11 +1094,7 @@
             return total;
         }
 
-        // =========================================================================
-        // RÉINITIALISATION COMPLÈTE APRÈS VALIDATION (VIDER LES FORMULAIRES)
-        // =========================================================================
         function reinitialiserFormulaireCommande() {
-            // 1. Réinitialiser la sélection de véhicules
             typesVehicules.forEach(v => {
                 clientVehiculeSelection[v.id] = 0;
                 const qtyEl = document.getElementById(`qty-${v.id}`);
@@ -1111,7 +1108,6 @@
                 if (document.getElementById(`opt-${v.id}-sieges`)) document.getElementById(`opt-${v.id}-sieges`).checked = false;
             });
 
-            // 2. Vider tous les champs Maison & Surfaces
             ['m2-tapis', 'm2-moquette', 'm2-vitres', 'm2-baies', 'm2-carreaux', 'qty-panneaux',
              'qty-canape-textile', 'qty-canape-lin', 'qty-canape-velours', 'qty-canape-cuir', 'qty-matelas'
             ].forEach(id => {
@@ -1119,19 +1115,16 @@
                 if (el) el.value = '';
             });
 
-            // 3. Vider les champs 3D & Vidange
             ['qty-desinfection', 'qty-desinsectisation', 'qty-deratisation', 'vol-immondices', 'vol-fosse'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.value = '';
             });
 
-            // 4. Vider les champs logistiques (adresse, date, heure, repère)
             ['client-quartier-input', 'client-avenue-input', 'client-ref-input', 'client-date-input', 'client-time-input'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.value = '';
             });
 
-            // 5. Recalculer et remettre à zéro le panier & badges
             calculerTotal();
         }
 
@@ -1222,9 +1215,7 @@
 
             if (error) return showToast(error.message, "error");
 
-            // Réinitialisation immédiate du formulaire et du panier
             reinitialiserFormulaireCommande();
-
             showToast("Commande validée et transmise à la Direction !", "success");
             openFullscreenClientAxis('axis-tracking');
             detectClientOrders();
@@ -1398,12 +1389,14 @@
             });
         }
 
+        // CHARGEMENT STRICT DES COURSES ASSIGNÉES AU PARTENAIRE CONNECTÉ
         async function loadPartnerAcceptedCourses() {
             if (!session.user) return;
             
+            // Filtre strict : UNIQUEMENT les courses affectées à ce partenaire (partner_id = user.id)
             const { data } = await db.from('orders')
                 .select('*')
-                .or(`partner_id.eq.${session.user.id},status.eq.Terminée`)
+                .eq('partner_id', session.user.id)
                 .order('id', { ascending: false });
             
             partnerAllOrders = data || [];
@@ -1710,6 +1703,7 @@
         function openPartnerApp() {
             showView('view-partner-app');
             document.getElementById('partner-dashboard-name').innerText = session.user.name;
+            document.getElementById('partner-dashboard-meta').innerText = `${session.user.specialty} - ${session.user.commune}`;
             document.getElementById('partner-wallet-balance').innerText = `${Number(session.user.wallet || 0).toLocaleString('fr-FR')} CDF`;
 
             document.getElementById('partner-edit-name').value = session.user.name;
@@ -1738,6 +1732,7 @@
                 if (selectPartnerEdit) selectPartnerEdit.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
             });
 
+            // Catalogue Véhicules
             const vCat = document.getElementById('vehicle-catalog');
             typesVehicules.forEach(v => {
                 clientVehiculeSelection[v.id] = 0;
