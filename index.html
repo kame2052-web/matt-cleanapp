@@ -60,12 +60,8 @@
         </div>
 
         <div class="flex items-center gap-2">
-            <div id="logged-user-chip" class="hidden items-center gap-1.5 bg-navy-900 px-3 py-1.5 rounded-xl border border-aqua/40 text-xs">
-                <span id="logged-user-name" class="font-bold text-aqua max-w-[120px] truncate">Utilisateur</span>
-                <button onclick="logoutCurrentSession()" class="text-red-400 hover:text-red-300 font-bold ml-1.5">✕</button>
-            </div>
-            <button onclick="showView('view-gateway')" id="btn-back-home" class="hidden px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold border border-slate-700 transition">
-                🏠 Accueil
+            <button onclick="logoutCurrentSession()" id="btn-header-logout" class="hidden px-3.5 py-1.5 rounded-xl bg-red-600/80 hover:bg-red-600 text-white text-xs font-bold transition shadow flex items-center gap-1.5">
+                🚪 Déconnexion
             </button>
         </div>
     </header>
@@ -231,188 +227,155 @@
             </div>
         </div>
 
-        <!-- 4. ESPACE CLIENT CONNECTÉ (ORGANISÉ EN 6 ICÔNES) -->
+        <!-- 4. ESPACE CLIENT CONNECTÉ (ÉPURÉ : 6 ICÔNES COMPACTES) -->
         <div id="view-client-app" class="w-full bg-white text-slate-800 rounded-3xl p-4 md:p-8 shadow-2xl hidden animate-fade-in space-y-6">
-            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b pb-4">
-                <div>
-                    <h2 class="text-xl font-black text-navy-800 flex items-center gap-2">
-                        <span>🛒</span> Espace Client
-                    </h2>
-                    <span class="text-xs text-slate-500 font-medium">Sélectionnez une icône pour relever les options en plein écran. Les prestations s'additionnent.</span>
-                </div>
-                <button onclick="logoutCurrentSession()" class="px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold rounded-xl border border-red-200 transition flex items-center gap-1.5">
-                    🚪 Déconnexion
-                </button>
-            </div>
 
-            <!-- VUE 1 : GRILLE D'ACCÈS PAR ICÔNES (CARRÉ ET COMPLÉMENTS) -->
+            <!-- VUE 1 : GRILLE D'ACCÈS DES 6 ICÔNES -->
             <div id="client-home-grid" class="space-y-6">
-                <div class="text-center space-y-2">
-                    <span class="text-xs font-black text-slate-600 uppercase tracking-widest block">
-                        Touchez une icône pour afficher ses informations :
-                    </span>
-
-                    <!-- Grille équilibrée : les 4 axes principaux + 2 modules de gestion -->
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3.5 max-w-lg mx-auto p-3 bg-slate-50 border border-slate-200 rounded-3xl shadow-inner">
+                <div class="text-center">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 max-w-md mx-auto p-3 bg-slate-50 border border-slate-200 rounded-3xl shadow-inner">
                         
-                        <!-- Icône 1 : Automobile -->
-                        <button type="button" onclick="openFullscreenClientAxis('axis-auto')" class="relative p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
-                            <span class="text-4xl group-hover:scale-110 transition">🚗</span>
-                            <span class="text-xs font-black text-navy-800 uppercase block leading-tight">Automobile</span>
-                            <span id="badge-count-auto" class="absolute top-2 right-2 px-2 py-0.5 rounded-full text-[9px] font-black bg-slate-100 text-slate-700 border">0</span>
+                        <!-- 1 : Automobile -->
+                        <button type="button" onclick="openFullscreenClientAxis('axis-auto')" class="relative p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
+                            <span class="text-3xl group-hover:scale-110 transition">🚗</span>
+                            <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Automobile</span>
+                            <span id="badge-count-auto" class="absolute top-2 right-2 px-1.5 py-0.2 rounded-full text-[8px] font-black bg-slate-100 text-slate-700 border">0</span>
                         </button>
 
-                        <!-- Icône 2 : Maison -->
-                        <button type="button" onclick="openFullscreenClientAxis('axis-maison')" class="relative p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
-                            <span class="text-4xl group-hover:scale-110 transition">🏡</span>
-                            <span class="text-xs font-black text-navy-800 uppercase block leading-tight">Maison</span>
-                            <span id="badge-count-maison" class="absolute top-2 right-2 px-2 py-0.5 rounded-full text-[9px] font-black bg-slate-100 text-slate-700 border">0</span>
+                        <!-- 2 : Maison -->
+                        <button type="button" onclick="openFullscreenClientAxis('axis-maison')" class="relative p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
+                            <span class="text-3xl group-hover:scale-110 transition">🏡</span>
+                            <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Maison</span>
+                            <span id="badge-count-maison" class="absolute top-2 right-2 px-1.5 py-0.2 rounded-full text-[8px] font-black bg-slate-100 text-slate-700 border">0</span>
                         </button>
 
-                        <!-- Icône 3 : 3D & Vidange -->
-                        <button type="button" onclick="openFullscreenClientAxis('axis-env')" class="relative p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
-                            <span class="text-4xl group-hover:scale-110 transition">🌱</span>
-                            <span class="text-xs font-black text-navy-800 uppercase block leading-tight">3D & Vidange</span>
-                            <span id="badge-count-env" class="absolute top-2 right-2 px-2 py-0.5 rounded-full text-[9px] font-black bg-slate-100 text-slate-700 border">0</span>
+                        <!-- 3 : 3D & Vidange -->
+                        <button type="button" onclick="openFullscreenClientAxis('axis-env')" class="relative p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
+                            <span class="text-3xl group-hover:scale-110 transition">🌱</span>
+                            <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">3D & Vidange</span>
+                            <span id="badge-count-env" class="absolute top-2 right-2 px-1.5 py-0.2 rounded-full text-[8px] font-black bg-slate-100 text-slate-700 border">0</span>
                         </button>
 
-                        <!-- Icône 4 : Logistique & Coordonnées Demandeur -->
-                        <button type="button" onclick="openFullscreenClientAxis('axis-logistics')" class="relative p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
-                            <span class="text-4xl group-hover:scale-110 transition">⚡</span>
-                            <span class="text-xs font-black text-navy-800 uppercase block leading-tight">Logistique</span>
-                            <span class="absolute top-2 right-2 px-1.5 py-0.5 rounded-full text-[9px] font-black bg-sky-100 text-sky-800">Lieu</span>
+                        <!-- 4 : Logistique -->
+                        <button type="button" onclick="openFullscreenClientAxis('axis-logistics')" class="relative p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
+                            <span class="text-3xl group-hover:scale-110 transition">⚡</span>
+                            <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Logistique</span>
                         </button>
 
-                        <!-- Icône 5 : Mes Commandes -->
-                        <button type="button" onclick="openFullscreenClientAxis('axis-tracking')" class="relative p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
-                            <span class="text-4xl group-hover:scale-110 transition">📋</span>
-                            <span class="text-xs font-black text-navy-800 uppercase block leading-tight">Mes Commandes</span>
+                        <!-- 5 : Mes Commandes -->
+                        <button type="button" onclick="openFullscreenClientAxis('axis-tracking')" class="relative p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
+                            <span class="text-3xl group-hover:scale-110 transition">📋</span>
+                            <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Mes Commandes</span>
                         </button>
 
-                        <!-- Icône 6 : Infos & CGU -->
-                        <button type="button" onclick="openFullscreenClientAxis('axis-info-support')" class="relative p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
-                            <span class="text-4xl group-hover:scale-110 transition">ℹ️</span>
-                            <span class="text-xs font-black text-navy-800 uppercase block leading-tight">Infos & CGU</span>
+                        <!-- 6 : Contact -->
+                        <button type="button" onclick="openFullscreenClientAxis('axis-contact')" class="relative p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
+                            <span class="text-3xl group-hover:scale-110 transition">📞</span>
+                            <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Contact</span>
                         </button>
 
                     </div>
                 </div>
 
-                <!-- Bandeau Global de Commande (Toujours présent sur la page principale) -->
-                <div class="bg-navy-900 text-white p-5 rounded-3xl flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl border border-aqua/30">
-                    <div class="space-y-1 text-center sm:text-left">
-                        <span class="text-xs text-slate-400 font-bold uppercase block">Total Panier Global (Tous Axes Inclus) :</span>
+                <!-- Bandeau Récapitulatif Global -->
+                <div class="bg-navy-900 text-white p-4 sm:p-5 rounded-3xl flex flex-col sm:flex-row items-center justify-between gap-3 shadow-xl border border-aqua/30 max-w-md sm:max-w-none mx-auto">
+                    <div class="space-y-0.5 text-center sm:text-left">
+                        <span class="text-[11px] text-slate-400 font-bold uppercase block">Total Panier Estimé :</span>
                         <div class="text-2xl sm:text-3xl font-black text-mattOrange font-mono"><span id="prix-total-affichage">0</span> CDF</div>
-                        <div id="cart-summary-badges" class="flex flex-wrap gap-1.5 pt-1 text-[10px]"></div>
+                        <div id="cart-summary-badges" class="flex flex-wrap gap-1.5 pt-0.5 text-[9px]"></div>
                     </div>
-                    <button onclick="passerCommande()" class="w-full sm:w-auto px-8 py-4 bg-mattOrange hover:bg-orange-600 text-white font-black text-sm rounded-2xl uppercase tracking-wider shadow transition">
-                        Valider la Commande Globale 🚀
+                    <button onclick="passerCommande()" class="w-full sm:w-auto px-7 py-3 bg-mattOrange hover:bg-orange-600 text-white font-black text-xs rounded-xl uppercase tracking-wider shadow transition">
+                        Valider la Commande 🚀
                     </button>
                 </div>
             </div>
 
-            <!-- VUE 2 : CONTENEUR PLEIN ÉCRAN D'UNE ICÔNE SÉLECTIONNÉE (Caché au départ) -->
+            <!-- VUE 2 : CONTENEURS PLEIN ÉCRAN AU CLIC -->
             <div id="client-fullscreen-axis" class="hidden space-y-4 animate-fade-in">
-                <!-- Barre d'action avec bouton Retour bien visible -->
-                <div class="flex items-center justify-between bg-slate-50 p-3.5 rounded-2xl border border-slate-200">
-                    <button type="button" onclick="closeFullscreenClientAxis()" class="px-4 py-2.5 bg-navy-800 hover:bg-navy-900 text-white text-xs font-black rounded-xl uppercase flex items-center gap-2 shadow transition">
-                        ⬅ Retour aux icônes
+                <!-- En-tête avec flèche compacte et titre sur une seule ligne -->
+                <div class="flex items-center gap-2 bg-slate-50 p-2 rounded-2xl border border-slate-200 flex-nowrap overflow-hidden">
+                    <button type="button" onclick="closeFullscreenClientAxis()" class="w-8 h-8 flex-shrink-0 bg-navy-800 hover:bg-navy-900 text-white text-base font-black rounded-xl flex items-center justify-center shadow transition active:scale-95">
+                        ←
                     </button>
-                    <span id="client-axis-fullscreen-title" class="text-xs font-black text-navy-800 uppercase">Configuration</span>
+                    <span id="client-axis-fullscreen-title" class="text-[10px] sm:text-xs font-black text-navy-800 uppercase tracking-tight truncate flex-1 min-w-0"></span>
                 </div>
 
-                <!-- Section Plein Écran Auto -->
-                <div id="axis-auto" class="client-axis-view hidden border rounded-2xl p-5 bg-white shadow-sm space-y-4">
-                    <div class="flex justify-between items-center border-b pb-2">
-                        <h3 class="text-sm font-black text-navy-800 uppercase">🚗 Véhicules & Options Spécifiques</h3>
-                        <span class="text-[10px] text-slate-400 font-bold">Ajustez les quantités</span>
-                    </div>
-                    <div id="vehicle-catalog" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
+                <!-- Section Automobile -->
+                <div id="axis-auto" class="client-axis-view hidden border rounded-2xl p-4 bg-white shadow-sm space-y-3">
+                    <div id="vehicle-catalog" class="grid grid-cols-1 md:grid-cols-2 gap-2.5"></div>
                 </div>
 
-                <!-- Section Plein Écran Maison -->
-                <div id="axis-maison" class="client-axis-view hidden border rounded-2xl p-5 bg-white shadow-sm space-y-4">
-                    <div class="flex justify-between items-center border-b pb-2">
-                        <h3 class="text-sm font-black text-navy-800 uppercase">🏡 Canapés, Tapis, Vitres & Sols</h3>
-                        <span class="text-[10px] text-slate-400 font-bold">Surfaces en m² et places assises</span>
-                    </div>
-                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-xs font-bold">
-                        <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Tapis (m²)</label><input type="number" id="m2-tapis" placeholder="0" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()"></div>
-                        <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Moquette (m²)</label><input type="number" id="m2-moquette" placeholder="0" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()"></div>
-                        <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Vitres (m²)</label><input type="number" id="m2-vitres" placeholder="0" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()"></div>
-                        <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Baies (m²)</label><input type="number" id="m2-baies" placeholder="0" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()"></div>
-                        <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Carreaux (m²)</label><input type="number" id="m2-carreaux" placeholder="0" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()"></div>
-                        <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Panneaux (pce)</label><input type="number" id="qty-panneaux" placeholder="0" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()"></div>
+                <!-- Section Maison -->
+                <div id="axis-maison" class="client-axis-view hidden border rounded-2xl p-4 bg-white shadow-sm space-y-3">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 text-xs font-bold">
+                        <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Tapis (m²)</label><input type="number" id="m2-tapis" placeholder="0" class="w-full p-2 border rounded-xl" oninput="calculerTotal()"></div>
+                        <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Moquette (m²)</label><input type="number" id="m2-moquette" placeholder="0" class="w-full p-2 border rounded-xl" oninput="calculerTotal()"></div>
+                        <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Vitres (m²)</label><input type="number" id="m2-vitres" placeholder="0" class="w-full p-2 border rounded-xl" oninput="calculerTotal()"></div>
+                        <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Baies (m²)</label><input type="number" id="m2-baies" placeholder="0" class="w-full p-2 border rounded-xl" oninput="calculerTotal()"></div>
+                        <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Carreaux (m²)</label><input type="number" id="m2-carreaux" placeholder="0" class="w-full p-2 border rounded-xl" oninput="calculerTotal()"></div>
+                        <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Panneaux (pce)</label><input type="number" id="qty-panneaux" placeholder="0" class="w-full p-2 border rounded-xl" oninput="calculerTotal()"></div>
                     </div>
 
-                    <div class="border-t pt-3 space-y-2">
-                        <span class="text-[11px] font-black text-navy-800 uppercase block">🛋️ Salons, Canapés & Matelas (par place assise) :</span>
-                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 text-xs font-bold">
-                            <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Textile</label><input type="number" id="qty-canape-textile" placeholder="Places" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()"></div>
-                            <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Lin</label><input type="number" id="qty-canape-lin" placeholder="Places" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()"></div>
-                            <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Velours</label><input type="number" id="qty-canape-velours" placeholder="Places" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()"></div>
-                            <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Cuir</label><input type="number" id="qty-canape-cuir" placeholder="Places" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()"></div>
-                            <div class="col-span-2 sm:col-span-1"><label class="text-[10px] text-slate-500 uppercase block mb-1">Matelas</label><input type="number" id="qty-matelas" placeholder="Unités" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()"></div>
+                    <div class="border-t pt-3 space-y-1.5">
+                        <span class="text-[10px] font-black text-navy-800 uppercase block">🛋️ Salons, Canapés & Matelas :</span>
+                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-xs font-bold">
+                            <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Textile</label><input type="number" id="qty-canape-textile" placeholder="Places" class="w-full p-2 border rounded-xl" oninput="calculerTotal()"></div>
+                            <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Lin</label><input type="number" id="qty-canape-lin" placeholder="Places" class="w-full p-2 border rounded-xl" oninput="calculerTotal()"></div>
+                            <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Velours</label><input type="number" id="qty-canape-velours" placeholder="Places" class="w-full p-2 border rounded-xl" oninput="calculerTotal()"></div>
+                            <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Cuir</label><input type="number" id="qty-canape-cuir" placeholder="Places" class="w-full p-2 border rounded-xl" oninput="calculerTotal()"></div>
+                            <div class="col-span-2 sm:col-span-1"><label class="text-[10px] text-slate-500 uppercase block mb-1">Matelas</label><input type="number" id="qty-matelas" placeholder="Unités" class="w-full p-2 border rounded-xl" oninput="calculerTotal()"></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- Section Plein Écran 3D & Vidange -->
-                <div id="axis-env" class="client-axis-view hidden border rounded-2xl p-5 bg-white shadow-sm space-y-4">
-                    <div class="flex justify-between items-center border-b pb-2">
-                        <h3 class="text-sm font-black text-navy-800 uppercase">🌱 Hygiène 3D & Vidange Hydrocurage</h3>
-                        <span class="text-[10px] text-slate-400 font-bold">Volumes et pièces</span>
+                <!-- Section 3D & Vidange -->
+                <div id="axis-env" class="client-axis-view hidden border rounded-2xl p-4 bg-white shadow-sm space-y-3">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs font-bold">
+                        <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Désinfection (pièces)</label><input type="number" id="qty-desinfection" placeholder="0" class="w-full p-2 border rounded-xl" oninput="calculerTotal()"></div>
+                        <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Désinsectisation (pièces)</label><input type="number" id="qty-desinsectisation" placeholder="0" class="w-full p-2 border rounded-xl" oninput="calculerTotal()"></div>
+                        <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Dératisation (pièces)</label><input type="number" id="qty-deratisation" placeholder="0" class="w-full p-2 border rounded-xl" oninput="calculerTotal()"></div>
                     </div>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-bold">
-                        <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Désinfection (pièces)</label><input type="number" id="qty-desinfection" placeholder="0" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()"></div>
-                        <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Désinsectisation (pièces)</label><input type="number" id="qty-desinsectisation" placeholder="0" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()"></div>
-                        <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Dératisation (pièces)</label><input type="number" id="qty-deratisation" placeholder="0" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()"></div>
-                    </div>
-                    <div class="border-t pt-3 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-bold">
-                        <div class="bg-orange-50/60 p-3 rounded-2xl border border-orange-200">
-                            <label class="text-[11px] font-black text-mattOrange uppercase block mb-1">🗑️ Évacuation Immondices (m³)</label>
-                            <input type="number" id="vol-immondices" placeholder="Volume en m³" class="w-full p-2.5 bg-white border rounded-xl font-bold" oninput="calculerTotal()">
+                    <div class="border-t pt-2 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-bold">
+                        <div class="bg-orange-50/60 p-2.5 rounded-xl border border-orange-200">
+                            <label class="text-[10px] font-black text-mattOrange uppercase block mb-1">🗑️ Évacuation Immondices (m³)</label>
+                            <input type="number" id="vol-immondices" placeholder="Volume en m³" class="w-full p-2 bg-white border rounded-xl font-bold" oninput="calculerTotal()">
                         </div>
-                        <div class="bg-sky-50/60 p-3 rounded-2xl border border-sky-200">
-                            <label class="text-[11px] font-black text-navy-800 uppercase block mb-1">🪠 Vidange Fosse Septique (m³)</label>
-                            <input type="number" id="vol-fosse" placeholder="Volume en m³" class="w-full p-2.5 bg-white border rounded-xl font-bold" oninput="calculerTotal()">
+                        <div class="bg-sky-50/60 p-2.5 rounded-xl border border-sky-200">
+                            <label class="text-[10px] font-black text-navy-800 uppercase block mb-1">🪠 Vidange Fosse Septique (m³)</label>
+                            <input type="number" id="vol-fosse" placeholder="Volume en m³" class="w-full p-2 bg-white border rounded-xl font-bold" oninput="calculerTotal()">
                         </div>
                     </div>
                 </div>
 
-                <!-- Section Plein Écran Logistique & Coordonnées Demandeur (Regroupées) -->
-                <div id="axis-logistics" class="client-axis-view hidden bg-slate-50 border rounded-2xl p-5 space-y-4 text-xs">
-                    <div class="flex justify-between items-center border-b pb-2">
-                        <span class="text-xs font-black text-navy-800 uppercase">⚡ Coordonnées du Demandeur & Logistique Terrain</span>
-                        <span id="zone-detected-badge" class="px-3 py-1 rounded-lg text-[11px] font-black bg-sky-100 text-sky-800">Zone 1 - Résidentielle</span>
-                    </div>
-
-                    <!-- Coordonnées du demandeur rapatriées ici -->
-                    <div class="bg-white p-4 rounded-xl border border-slate-200 space-y-2">
-                        <span class="text-[10px] font-black text-navy-800 uppercase block">👤 Informations du Demandeur :</span>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <!-- Section Logistique : Demandeur, Quartier et Avenue séparés -->
+                <div id="axis-logistics" class="client-axis-view hidden bg-slate-50 border rounded-2xl p-4 space-y-3 text-xs">
+                    <!-- Demandeur -->
+                    <div class="bg-white p-3 rounded-xl border border-slate-200 space-y-2">
+                        <span class="text-[10px] font-black text-navy-800 uppercase block">👤 Demandeur :</span>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
                             <div>
                                 <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Nom complet :</label>
-                                <input type="text" id="client-name-input" placeholder="Ex: Jean Mukendi" class="w-full px-3.5 py-2.5 bg-slate-50 border rounded-xl font-bold text-xs">
+                                <input type="text" id="client-name-input" placeholder="Ex: Jean Mukendi" class="w-full px-3 py-2 bg-slate-50 border rounded-xl font-bold text-xs">
                             </div>
                             <div>
-                                <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Numéro de téléphone :</label>
-                                <input type="tel" id="client-phone-input" placeholder="Ex: 0825556633" class="w-full px-3.5 py-2.5 bg-slate-50 border rounded-xl font-bold text-xs" onchange="detectClientOrders();">
+                                <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Téléphone :</label>
+                                <input type="tel" id="client-phone-input" placeholder="Ex: 0825556633" class="w-full px-3 py-2 bg-slate-50 border rounded-xl font-bold text-xs" onchange="detectClientOrders();">
                             </div>
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <div class="bg-white p-3 rounded-xl border">
-                            <label class="text-[10px] font-black text-slate-600 uppercase block mb-1">🔌 Alimentation Électrique :</label>
+                    <!-- Énergie et Eau -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div class="bg-white p-2.5 rounded-xl border">
+                            <label class="text-[10px] font-black text-slate-600 uppercase block mb-1">🔌 Électricité :</label>
                             <select id="client-elec" class="w-full p-2 border rounded-lg text-xs font-bold bg-slate-50">
                                 <option value="SNEL disponible sur place">SNEL disponible sur place</option>
                                 <option value="Groupe électrogène client disponible">Groupe électrogène disponible</option>
                                 <option value="Pas d'électricité (Prévoir groupe mobile)">Pas d'électricité (Prévoir groupe)</option>
                             </select>
                         </div>
-                        <div class="bg-white p-3 rounded-xl border">
-                            <label class="text-[10px] font-black text-slate-600 uppercase block mb-1">🚰 Approvisionnement en Eau :</label>
+                        <div class="bg-white p-2.5 rounded-xl border">
+                            <label class="text-[10px] font-black text-slate-600 uppercase block mb-1">🚰 Eau :</label>
                             <select id="client-water" class="w-full p-2 border rounded-lg text-xs font-bold bg-slate-50">
                                 <option value="REGIDESO fonctionnelle sur place">REGIDESO fonctionnelle sur place</option>
                                 <option value="Citerne / Forage disponible sur place">Citerne / Forage disponible</option>
@@ -421,93 +384,109 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <!-- Localisation avec Quartier et Avenue séparés -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                         <div>
                             <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Commune :</label>
-                            <select id="client-commune" class="w-full p-2.5 border rounded-xl bg-white font-bold text-xs" onchange="onClientCommuneChange()"></select>
+                            <select id="client-commune" class="w-full p-2 border rounded-xl bg-white font-bold text-xs" onchange="onClientCommuneChange()"></select>
                         </div>
                         <div>
-                            <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Avenue, N° et Quartier :</label>
-                            <input type="text" id="client-avenue-input" placeholder="Ex: Av. Kimbondo N° 12, Q/ Lubudi" class="w-full p-2.5 border rounded-xl font-medium text-xs">
+                            <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Quartier :</label>
+                            <input type="text" id="client-quartier-input" placeholder="Ex: Lubudi" class="w-full p-2 border rounded-xl font-medium text-xs">
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Avenue & N° :</label>
+                            <input type="text" id="client-avenue-input" placeholder="Ex: Av. Kimbondo N° 12" class="w-full p-2 border rounded-xl font-medium text-xs">
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
                         <div>
                             <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Point de repère :</label>
-                            <input type="text" id="client-ref-input" placeholder="Ex: Pharmacie Principale" class="w-full p-2.5 border rounded-xl font-medium text-xs">
+                            <input type="text" id="client-ref-input" placeholder="Ex: Pharmacie Principale" class="w-full p-2 border rounded-xl font-medium text-xs">
                         </div>
                         <div>
                             <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Date souhaitée :</label>
-                            <input type="date" id="client-date-input" class="w-full p-2.5 border rounded-xl text-xs font-bold">
+                            <input type="date" id="client-date-input" class="w-full p-2 border rounded-xl text-xs font-bold">
                         </div>
                         <div>
                             <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Heure souhaitée :</label>
-                            <input type="time" id="client-time-input" class="w-full p-2.5 border rounded-xl text-xs font-bold">
+                            <input type="time" id="client-time-input" class="w-full p-2 border rounded-xl text-xs font-bold">
                         </div>
                     </div>
                 </div>
 
-                <!-- Section Plein Écran Suivi des Commandes -->
-                <div id="axis-tracking" class="client-axis-view hidden space-y-4">
+                <!-- Section Mes Commandes -->
+                <div id="axis-tracking" class="client-axis-view hidden space-y-3">
                     <div class="flex justify-between items-center border-b pb-2">
-                        <span class="text-sm font-black uppercase text-navy-800">Historique de vos Commandes</span>
+                        <span class="text-xs font-black uppercase text-navy-800">Mes Commandes</span>
                         <button onclick="detectClientOrders()" class="text-xs text-sky-600 font-bold hover:underline">Actualiser 🔄</button>
                     </div>
-                    <div id="client-orders-tracking-list" class="space-y-3"></div>
+                    <div id="client-orders-tracking-list" class="space-y-2.5"></div>
                 </div>
 
-                <!-- Section Plein Écran Infos & Support -->
-                <div id="axis-info-support" class="client-axis-view hidden space-y-5 text-xs">
-                    <div class="border rounded-2xl p-5 bg-slate-50 space-y-3">
+                <!-- Section Contact : Divisée en 3 Icônes (À Propos, Assistance, CGU) -->
+                <div id="axis-contact" class="client-axis-view hidden space-y-3">
+                    <div class="grid grid-cols-3 gap-2 text-center">
+                        <button type="button" onclick="switchContactTab('cnt-about', this)" class="contact-tab-btn p-2.5 rounded-2xl border-2 border-mattOrange bg-orange-50/70 text-mattOrange font-black text-xs flex flex-col items-center gap-1 shadow-xs">
+                            <span class="text-2xl">🏢</span>
+                            <span class="text-[10px] uppercase">À Propos</span>
+                        </button>
+                        <button type="button" onclick="switchContactTab('cnt-support', this)" class="contact-tab-btn p-2.5 rounded-2xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-1 shadow-xs hover:border-aqua">
+                            <span class="text-2xl">🛠️</span>
+                            <span class="text-[10px] uppercase">Assistance</span>
+                        </button>
+                        <button type="button" onclick="switchContactTab('cnt-cgu', this)" class="contact-tab-btn p-2.5 rounded-2xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-1 shadow-xs hover:border-aqua">
+                            <span class="text-2xl">📜</span>
+                            <span class="text-[10px] uppercase">CGU</span>
+                        </button>
+                    </div>
+
+                    <!-- Sous-vue À Propos -->
+                    <div id="cnt-about" class="contact-subview border rounded-2xl p-4 bg-slate-50 space-y-2 text-xs">
                         <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 bg-white rounded-xl border p-1 flex-shrink-0">
+                            <div class="w-10 h-10 bg-white rounded-xl border p-1 flex-shrink-0">
                                 <img src="matt.jpg" alt="MATT" class="w-full h-full object-cover">
                             </div>
                             <div>
-                                <h3 class="font-black text-navy-800 text-base">MASTER TOUCH TRADING (MATT SARL)</h3>
-                                <span class="text-xs text-slate-500">RCCM CD/KIN/RCCM/24-B-04106 • NIF A2441433N</span>
+                                <h3 class="font-black text-navy-800 text-sm">MASTER TOUCH TRADING (MATT SARL)</h3>
+                                <span class="text-[10px] text-slate-500">RCCM CD/KIN/RCCM/24-B-04106 • NIF A2441433N</span>
                             </div>
                         </div>
-                        <p class="text-slate-600 leading-relaxed">Plateforme d'assainissement et nettoyage opérée en partenariat avec Global Tech Solutions.</p>
+                        <p class="text-slate-600 leading-relaxed text-[11px]">Plateforme technologique d'assainissement et de nettoyage professionnel à Kinshasa, développée en partenariat avec Global Tech Solutions.</p>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <a href="https://wa.me/243980000338" target="_blank" class="p-4 bg-green-50 border border-green-200 rounded-2xl flex items-center gap-3 hover:bg-green-100 transition">
+                    <!-- Sous-vue Assistance -->
+                    <div id="cnt-support" class="contact-subview hidden grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        <a href="https://wa.me/243980000338" target="_blank" class="p-3.5 bg-green-50 border border-green-200 rounded-2xl flex items-center gap-3 hover:bg-green-100 transition">
                             <span class="text-2xl">💬</span>
                             <div>
-                                <span class="text-[10px] text-green-700 uppercase font-black block">Assistance WhatsApp</span>
+                                <span class="text-[9px] text-green-700 uppercase font-black block">Assistance WhatsApp</span>
                                 <b class="text-slate-800 text-xs font-bold">+243 980 000 338</b>
                             </div>
                         </a>
-                        <a href="tel:+243980000338" class="p-4 bg-sky-50 border border-sky-200 rounded-2xl flex items-center gap-3 hover:bg-sky-100 transition">
+                        <a href="tel:+243980000338" class="p-3.5 bg-sky-50 border border-sky-200 rounded-2xl flex items-center gap-3 hover:bg-sky-100 transition">
                             <span class="text-2xl">📞</span>
                             <div>
-                                <span class="text-[10px] text-sky-700 uppercase font-black block">Ligne Téléphonique</span>
+                                <span class="text-[9px] text-sky-700 uppercase font-black block">Ligne Téléphonique</span>
                                 <b class="text-slate-800 text-xs font-bold">+243 980 000 338</b>
                             </div>
                         </a>
                     </div>
 
-                    <div class="border rounded-2xl p-5 bg-white space-y-3">
-                        <h3 class="font-black text-navy-800 text-sm uppercase">Conditions Générales d'Utilisation (CGU)</h3>
-                        <div id="cgu-display-client" class="space-y-2 max-h-60 overflow-y-auto pr-1 custom-scrollbar text-slate-600 leading-relaxed">
+                    <!-- Sous-vue CGU -->
+                    <div id="cnt-cgu" class="contact-subview hidden border rounded-2xl p-4 bg-white space-y-2 text-xs">
+                        <div id="cgu-display-client" class="space-y-2 max-h-56 overflow-y-auto pr-1 custom-scrollbar text-slate-600 leading-relaxed text-[11px]">
                             <p class="text-slate-400 italic">Chargement des CGU...</p>
                         </div>
                     </div>
                 </div>
 
-                <!-- Bouton Retour bas de page -->
-                <div class="pt-3">
-                    <button type="button" onclick="closeFullscreenClientAxis()" class="w-full py-3 bg-navy-800 text-white text-xs font-black rounded-xl uppercase tracking-wider shadow">
-                        ⬅ Valider cette sélection et retourner aux icônes
-                    </button>
-                </div>
             </div>
 
         </div>
 
-        <!-- 5. ESPACE PARTENAIRE CONNECTÉ : RECTANGLE VERTICAL & PLEIN ÉCRAN AU CLIC -->
+        <!-- 5. ESPACE PARTENAIRE CONNECTÉ -->
         <div id="view-partner-app" class="w-full bg-white text-slate-800 rounded-3xl p-5 md:p-8 shadow-2xl hidden animate-fade-in space-y-6">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b pb-4">
                 <div>
@@ -526,12 +505,8 @@
                 </div>
             </div>
 
-            <!-- VUE 1 : RECTANGLE VERTICAL (COLONNE DE BOUTONS ÉTIRÉS) -->
+            <!-- VUE 1 : RECTANGLE VERTICAL -->
             <div id="partner-home-column" class="text-center space-y-3">
-                <span class="text-xs font-black text-slate-600 uppercase tracking-widest block">
-                    Menu Prestataire (Sélectionnez pour ouvrir en plein écran) :
-                </span>
-
                 <div class="flex flex-col max-w-sm mx-auto space-y-2.5 p-3 bg-slate-50 border border-slate-200 rounded-3xl shadow-inner">
                     <button type="button" onclick="openFullscreenPartnerTab('partner-tab-missions')" class="w-full p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex items-center justify-between text-xs transition active:scale-95 shadow-xs">
                         <div class="flex items-center gap-3">
@@ -585,11 +560,12 @@
 
             <!-- VUE 2 : CONTENEUR PLEIN ÉCRAN DU MODULE PARTENAIRE -->
             <div id="partner-fullscreen-tab" class="hidden space-y-4 animate-fade-in">
-                <div class="flex items-center justify-between bg-slate-50 p-3 rounded-2xl border border-slate-200">
-                    <button type="button" onclick="closeFullscreenPartnerTab()" class="px-4 py-2 bg-navy-800 hover:bg-navy-900 text-white text-xs font-black rounded-xl uppercase flex items-center gap-2 shadow">
-                        ⬅ Retour au Menu
+                <!-- En-tête avec flèche compacte et titre sur une seule ligne -->
+                <div class="flex items-center gap-2 bg-slate-50 p-2 rounded-2xl border border-slate-200 flex-nowrap overflow-hidden">
+                    <button type="button" onclick="closeFullscreenPartnerTab()" class="w-8 h-8 flex-shrink-0 bg-navy-800 hover:bg-navy-900 text-white text-base font-black rounded-xl flex items-center justify-center shadow transition active:scale-95">
+                        ←
                     </button>
-                    <span id="partner-tab-fullscreen-title" class="text-xs font-black text-navy-800 uppercase">Module Actif</span>
+                    <span id="partner-tab-fullscreen-title" class="text-[10px] sm:text-xs font-black text-navy-800 uppercase tracking-tight truncate flex-1 min-w-0"></span>
                 </div>
 
                 <!-- Module 1: Missions -->
@@ -605,15 +581,6 @@
 
                 <!-- Module 2: CA & Périodes -->
                 <div id="partner-tab-ca" class="partner-subview hidden space-y-6">
-                    <div>
-                        <h3 class="text-base font-black text-navy-800 uppercase flex items-center gap-2">
-                            <span>📊</span> Suivi du Chiffre d'Affaires & Historique Financier
-                        </h3>
-                        <p class="text-xs text-slate-500 font-semibold mt-0.5">
-                            Sélectionnez une période pour calculer le cumul précis de vos gains bruts, commissions et bénéfice net.
-                        </p>
-                    </div>
-
                     <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex flex-wrap items-end gap-3 text-xs">
                         <div>
                             <label class="text-[10px] font-black text-slate-600 uppercase block mb-1">DATE DE DÉBUT :</label>
@@ -929,8 +896,8 @@
             const target = document.getElementById(viewId);
             if (target) target.classList.remove('hidden');
 
-            const btnHome = document.getElementById('btn-back-home');
-            if (btnHome) btnHome.classList.toggle('hidden', viewId === 'view-gateway');
+            const btnLogout = document.getElementById('btn-header-logout');
+            if (btnLogout) btnLogout.classList.toggle('hidden', viewId === 'view-gateway' || viewId === 'view-client-auth' || viewId === 'view-partner-auth');
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
@@ -955,25 +922,24 @@
             const com = communesKinshasa.find(c => c.name === selectedName);
             if (com) {
                 currentActiveZone = com.zone;
-                document.getElementById('zone-detected-badge').innerText = com.label;
             }
             calculerTotal();
         }
 
         // =========================================================================
-        // RÉVÉLATION PLEIN ÉCRAN EXCLUSIF - CLIENT (6 ICÔNES)
+        // RÉVÉLATION PLEIN ÉCRAN EXCLUSIF - CLIENT
         // =========================================================================
         function openFullscreenClientAxis(viewId) {
             document.getElementById('client-home-grid').classList.add('hidden');
             document.querySelectorAll('.client-axis-view').forEach(v => v.classList.add('hidden'));
 
             const titles = {
-                'axis-auto': '🚗 Configuration Axe Automobile',
-                'axis-maison': '🏡 Configuration Axe Maison & Surfaces',
-                'axis-env': '🌱 Configuration Axe 3D & Vidange',
-                'axis-logistics': '⚡ Logistique & Coordonnées Demandeur',
-                'axis-tracking': '📋 Suivi de vos Commandes',
-                'axis-info-support': 'ℹ️ Informations & Assistance Direction'
+                'axis-auto': '🚗 Automobile',
+                'axis-maison': '🏡 Maison & Surfaces',
+                'axis-env': '🌱 3D & Vidange',
+                'axis-logistics': '⚡ Logistique',
+                'axis-tracking': '📋 Mes Commandes',
+                'axis-contact': '📞 Contact'
             };
 
             document.getElementById('client-axis-fullscreen-title').innerText = titles[viewId] || 'Configuration';
@@ -990,20 +956,31 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        function switchContactTab(tabId, btn) {
+            document.querySelectorAll('.contact-subview').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.contact-tab-btn').forEach(b => {
+                b.className = "contact-tab-btn p-2.5 rounded-2xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-1 shadow-xs hover:border-aqua";
+            });
+            document.getElementById(tabId)?.classList.remove('hidden');
+            if (btn) {
+                btn.className = "contact-tab-btn p-2.5 rounded-2xl border-2 border-mattOrange bg-orange-50/70 text-mattOrange font-black text-xs flex flex-col items-center gap-1 shadow-xs";
+            }
+        }
+
         // =========================================================================
-        // RÉVÉLATION PLEIN ÉCRAN EXCLUSIF - PARTENAIRE (RECTANGLE VERTICAL)
+        // RÉVÉLATION PLEIN ÉCRAN EXCLUSIF - PARTENAIRE
         // =========================================================================
         function openFullscreenPartnerTab(tabId) {
             document.getElementById('partner-home-column').classList.add('hidden');
             document.querySelectorAll('.partner-subview').forEach(v => v.classList.add('hidden'));
 
             const titles = {
-                'partner-tab-missions': '🚨 Missions Disponibles dans votre Secteur',
-                'partner-tab-ca': '📊 Suivi du Chiffre d\'Affaires & Périodes',
-                'partner-tab-wallet': '💳 Portefeuille Virtuel & Rechargement',
-                'partner-tab-courses': '📑 Mes Courses Acceptées & Clôture',
-                'partner-tab-profil': '⚙️ Mon Profil & Sécurité des Identifiants',
-                'partner-tab-info-support': '📜 Informations & Support Technique Direction'
+                'partner-tab-missions': '🚨 Missions Disponibles',
+                'partner-tab-ca': '📊 Chiffre d\'Affaires & Périodes',
+                'partner-tab-wallet': '💳 Portefeuille & Forfaits',
+                'partner-tab-courses': '📑 Mes Courses & Clôture',
+                'partner-tab-profil': '⚙️ Mon Profil & Sécurité',
+                'partner-tab-info-support': '📜 Infos & Support'
             };
 
             document.getElementById('partner-tab-fullscreen-title').innerText = titles[tabId] || 'Module Partenaire';
@@ -1103,7 +1080,6 @@
 
             document.getElementById('prix-total-affichage').innerText = total.toLocaleString('fr-FR');
 
-            // Badges récapitulatifs globaux
             const badgesContainer = document.getElementById('cart-summary-badges');
             if (badgesContainer) {
                 let badges = [];
@@ -1123,6 +1099,7 @@
             const client_name = document.getElementById('client-name-input').value.trim();
             const client_phone = document.getElementById('client-phone-input').value.trim();
             const commune = document.getElementById('client-commune').value;
+            const quartier = document.getElementById('client-quartier-input').value.trim();
             const avenue = document.getElementById('client-avenue-input').value.trim();
             const reference = document.getElementById('client-ref-input').value.trim();
             const date = document.getElementById('client-date-input').value;
@@ -1133,7 +1110,7 @@
 
             if (!client_name || !client_phone || !avenue || !date || !time) {
                 openFullscreenClientAxis('axis-logistics');
-                return showToast("Veuillez renseigner vos coordonnées et planification dans la case 'Logistique'.", "error");
+                return showToast("Veuillez renseigner vos coordonnées et votre adresse dans la case 'Logistique'.", "error");
             }
             if (total_amount <= 0) return showToast("Votre panier est vide.", "error");
 
@@ -1153,7 +1130,6 @@
                 }
             });
 
-            // Maison
             const mTapis = parseFloat(document.getElementById('m2-tapis')?.value) || 0;
             if (mTapis > 0) details.push(`Tapis (${mTapis} m²)`);
             const qCanText = parseFloat(document.getElementById('qty-canape-textile')?.value) || 0;
@@ -1161,7 +1137,6 @@
             const qCanCuir = parseFloat(document.getElementById('qty-canape-cuir')?.value) || 0;
             if (qCanCuir > 0) details.push(`Canapé Cuir (${qCanCuir} pl.)`);
 
-            // 3D & Fosse
             const fosse = parseFloat(document.getElementById('vol-fosse')?.value) || 0;
             if (fosse > 0) details.push(`Vidange fosse (${fosse} m³)`);
             const immondices = parseFloat(document.getElementById('vol-immondices')?.value) || 0;
@@ -1177,6 +1152,7 @@
                 client_phone,
                 description: details.join(' • ') || 'Prestation d\'assainissement sur mesure',
                 commune,
+                quartier: quartier || 'N/A',
                 avenue,
                 reference,
                 logistics: `Élec: ${elec} | Eau: ${water}`,
@@ -1188,7 +1164,7 @@
             }]);
 
             if (error) return showToast(error.message, "error");
-            showToast("Commande globale validée et transmise à la Direction !", "success");
+            showToast("Commande validée et transmise à la Direction !", "success");
             openFullscreenClientAxis('axis-tracking');
             detectClientOrders();
         }
@@ -1221,6 +1197,7 @@
                             </div>
                         </div>
                         <p class="text-slate-600 text-[11px]"><b>Détails :</b> ${o.description}</p>
+                        <p class="text-[10px] text-slate-500"><b>Lieu :</b> ${o.quartier ? o.quartier + ' - ' : ''}${o.avenue}</p>
                         <p class="text-[10px] text-slate-500"><b>Logistique :</b> ${o.logistics || 'SNEL / REGIDESO'}</p>
                         ${o.rating_service ? `<div class="text-[10px] text-mattOrange font-bold">Note attribuée : ${'⭐'.repeat(o.rating_service)}</div>` : ''}
                         <div class="flex justify-end gap-1.5 pt-1">
@@ -1312,6 +1289,7 @@
                         </div>
                         <div class="bg-slate-50 p-3 rounded-xl border text-[11px] text-slate-700 space-y-1">
                             <div><b>Prestations :</b> ${o.description}</div>
+                            <div><b>Quartier :</b> ${o.quartier || 'N/A'}</div>
                             <div><b>Logistique :</b> <span class="text-aqua font-black">${o.logistics || 'SNEL / REGIDESO'}</span></div>
                             <div><b>Repère :</b> ${o.reference || 'Aucun'}</div>
                         </div>
@@ -1339,7 +1317,7 @@
                         </div>
                         <div class="text-[11px] text-slate-600">
                             <b>Client :</b> ${o.client_name} • <a href="tel:${o.client_phone}" class="text-aqua font-bold font-mono underline">${o.client_phone}</a><br>
-                            <b>Adresse :</b> ${o.avenue} (Repère : ${o.reference || 'N/A'})<br>
+                            <b>Adresse :</b> ${o.quartier ? o.quartier + ' - ' : ''}${o.avenue} (Repère : ${o.reference || 'N/A'})<br>
                             <b>Conditions :</b> ${o.logistics || 'SNEL / REGIDESO'}
                         </div>
                         ${o.status === 'Acceptée' ? `
@@ -1542,8 +1520,6 @@
             showView('view-client-app');
             document.getElementById('client-name-input').value = session.user.name;
             document.getElementById('client-phone-input').value = session.user.phone;
-            document.getElementById('logged-user-chip').classList.remove('hidden');
-            document.getElementById('logged-user-name').innerText = session.user.name;
             detectClientOrders();
             onClientCommuneChange();
             fetchPublishedCgu();
@@ -1588,8 +1564,6 @@
 
             const mode = session.user.billing_mode || 'commission';
             document.getElementById('partner-mode-badge').innerText = mode === 'commission' ? '15% Comm.' : 'Forfait Actif';
-            document.getElementById('logged-user-chip').classList.remove('hidden');
-            document.getElementById('logged-user-name').innerText = session.user.name;
 
             loadPartnerMissions();
             loadPartnerAcceptedCourses();
@@ -1598,7 +1572,6 @@
 
         function logoutCurrentSession() {
             session = { role: null, user: null };
-            document.getElementById('logged-user-chip').classList.add('hidden');
             showView('view-gateway');
             showToast("Vous avez été déconnecté.", "info");
         }
@@ -1623,20 +1596,20 @@
                 let optionsHtml = '';
                 if (v.hasOptions && pOpt) {
                     optionsHtml = `
-                        <div id="options-box-${v.id}" class="hidden mt-2 p-2.5 bg-slate-50 rounded-xl border border-slate-200 text-[11px] space-y-1.5 transition-all">
-                            <span class="text-[10px] font-black text-navy-800 uppercase block">Options techniques pour ${v.label} :</span>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-1.5">
-                                <label class="flex items-center gap-1.5 p-1.5 bg-white rounded-lg border cursor-pointer">
+                        <div id="options-box-${v.id}" class="hidden mt-2 p-2 bg-slate-50 rounded-xl border border-slate-200 text-[10px] space-y-1 transition-all">
+                            <span class="font-black text-navy-800 uppercase block">Options :</span>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-1">
+                                <label class="flex items-center gap-1 p-1 bg-white rounded border cursor-pointer">
                                     <input type="checkbox" id="opt-${v.id}-moteur" class="rounded text-mattOrange" onchange="calculerTotal()">
-                                    <span>Moteur+Rad. (+${pOpt.moteur.toLocaleString('fr-FR')} CDF)</span>
+                                    <span>Moteur (+${pOpt.moteur.toLocaleString('fr-FR')})</span>
                                 </label>
-                                <label class="flex items-center gap-1.5 p-1.5 bg-white rounded-lg border cursor-pointer">
+                                <label class="flex items-center gap-1 p-1 bg-white rounded border cursor-pointer">
                                     <input type="checkbox" id="opt-${v.id}-chassis" class="rounded text-mattOrange" onchange="calculerTotal()">
-                                    <span>Châssis (+${pOpt.chassis.toLocaleString('fr-FR')} CDF)</span>
+                                    <span>Châssis (+${pOpt.chassis.toLocaleString('fr-FR')})</span>
                                 </label>
-                                <label class="flex items-center gap-1.5 p-1.5 bg-white rounded-lg border cursor-pointer">
+                                <label class="flex items-center gap-1 p-1 bg-white rounded border cursor-pointer">
                                     <input type="checkbox" id="opt-${v.id}-sieges" class="rounded text-mattOrange" onchange="calculerTotal()">
-                                    <span>Sièges+Plafond (+${pOpt.sieges.toLocaleString('fr-FR')} CDF)</span>
+                                    <span>Sièges (+${pOpt.sieges.toLocaleString('fr-FR')})</span>
                                 </label>
                             </div>
                         </div>
@@ -1644,13 +1617,13 @@
                 }
 
                 vCat.innerHTML += `
-                    <div class="border rounded-xl p-3 bg-white shadow-xs">
+                    <div class="border rounded-xl p-2.5 bg-white shadow-xs">
                         <div class="flex justify-between items-center text-xs">
-                            <span class="font-bold text-slate-800 text-sm sm:text-xs">${v.label}</span>
+                            <span class="font-bold text-slate-800">${v.label}</span>
                             <div class="flex gap-2 items-center">
-                                <button class="w-8 h-8 bg-slate-200 active:bg-slate-300 rounded-lg font-bold flex items-center justify-center text-base" onclick="updateVehicleCount('${v.id}', -1)">-</button>
-                                <span id="qty-${v.id}" class="w-5 text-center font-black text-navy-800 text-sm">0</span>
-                                <button class="w-8 h-8 bg-slate-200 active:bg-slate-300 rounded-lg font-bold flex items-center justify-center text-base" onclick="updateVehicleCount('${v.id}', 1)">+</button>
+                                <button class="w-7 h-7 bg-slate-200 active:bg-slate-300 rounded-lg font-bold flex items-center justify-center text-sm" onclick="updateVehicleCount('${v.id}', -1)">-</button>
+                                <span id="qty-${v.id}" class="w-4 text-center font-black text-navy-800 text-xs">0</span>
+                                <button class="w-7 h-7 bg-slate-200 active:bg-slate-300 rounded-lg font-bold flex items-center justify-center text-sm" onclick="updateVehicleCount('${v.id}', 1)">+</button>
                             </div>
                         </div>
                         ${optionsHtml}
