@@ -97,11 +97,11 @@
         </div>
     </div>
 
-    <!-- Dashboard Principal Plein Écran -->
+    <!-- Dashboard Plein Écran -->
     <main id="admin-dashboard-screen" class="w-full px-4 py-6 md:px-8 md:py-8 flex-grow hidden">
         <div class="bg-white text-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl space-y-6 w-full">
             
-            <!-- Navigation par Onglets -->
+            <!-- Navigation Onglets -->
             <div class="flex gap-2 border-b border-slate-200 pb-3 overflow-x-auto custom-scrollbar text-xs font-bold">
                 <button onclick="switchAdminTab('admin-liaisons', this)" class="admin-tab-btn px-4 py-2.5 bg-navy-800 text-white rounded-xl whitespace-nowrap active shadow-sm">Suivi des Liaisons</button>
                 <button onclick="switchAdminTab('admin-partenaires', this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap">Gestion Partenaires</button>
@@ -112,7 +112,7 @@
                 <button onclick="switchAdminTab('admin-config', this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap">⚙️ Configuration Système</button>
             </div>
 
-            <!-- ONGLET 1: SUIVI DES COMMANDES AVEC DÉTAIL PAR AXE -->
+            <!-- ONGLET 1: SUIVI DES COMMANDES -->
             <div id="admin-liaisons" class="admin-subview space-y-5">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b pb-3">
                     <div class="flex gap-2 text-xs">
@@ -153,9 +153,10 @@
                                 <th class="p-3 uppercase">Date & Heure</th>
                                 <th class="p-3 uppercase">Client & Contact</th>
                                 <th class="p-3 uppercase">Prestations & Panier</th>
+                                <th class="p-3 uppercase">Axe Affecté</th>
                                 <th class="p-3 uppercase">Commune & Adresse</th>
                                 <th class="p-3 uppercase">Montant Brut</th>
-                                <th class="p-3 uppercase">Commission par Axe</th>
+                                <th class="p-3 uppercase">Commission</th>
                                 <th class="p-3 uppercase">Statut</th>
                                 <th class="p-3 uppercase text-right">Actions</th>
                             </tr>
@@ -198,35 +199,40 @@
                 </div>
             </div>
 
-            <!-- ONGLET 3: CAISSE CENTRALE & CAISSES PAR AXES -->
+            <!-- ONGLET 3: CAISSE CENTRALE & CAISSES PAR AXE RESPECTIF -->
             <div id="admin-recharges" class="admin-subview hidden space-y-6">
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <!-- CAISSE CENTRALE (CUMUL RÉEL DES 3 AXES) -->
                     <div class="bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-400 rounded-2xl p-5 text-center shadow-md">
                         <span class="text-[10px] font-black text-green-800 block uppercase tracking-widest font-mono">🏛️ CAISSE CENTRALE GLOBALE</span>
                         <div class="text-3xl font-black text-green-900 my-2 font-mono" id="admin-caisse-centrale">0 CDF</div>
-                        <span class="text-[9px] text-green-700 font-bold block uppercase">Total Commissions Encaissées</span>
+                        <span class="text-[9px] text-green-700 font-bold block uppercase">Cumul Strict des Caisses</span>
                     </div>
 
+                    <!-- CAISSE AUTOMOBILE -->
                     <div class="bg-blue-50/70 border-2 border-blue-300 rounded-2xl p-5 text-center shadow-xs">
                         <span class="text-[10px] font-black text-blue-800 block uppercase tracking-wider font-mono">🚗 Caisse Automobile</span>
                         <div class="text-2xl font-black text-blue-900 my-2 font-mono" id="admin-caisse-auto">0 CDF</div>
-                        <span class="text-[9px] text-blue-600 font-semibold block">Véhicules & Remorques</span>
+                        <span class="text-[9px] text-blue-600 font-semibold block">Commissions Véhicules</span>
                     </div>
 
+                    <!-- CAISSE MAISON -->
                     <div class="bg-orange-50/70 border-2 border-orange-300 rounded-2xl p-5 text-center shadow-xs">
                         <span class="text-[10px] font-black text-mattOrange block uppercase tracking-wider font-mono">🏡 Caisse Maison</span>
                         <div class="text-2xl font-black text-orange-900 my-2 font-mono" id="admin-caisse-maison">0 CDF</div>
-                        <span class="text-[9px] text-orange-600 font-semibold block">Canapés, Tapis & Vitres</span>
+                        <span class="text-[9px] text-orange-600 font-semibold block">Commissions Canapés, Tapis, Vitres</span>
                     </div>
 
+                    <!-- CAISSE 3D & VIDANGE -->
                     <div class="bg-emerald-50/70 border-2 border-emerald-300 rounded-2xl p-5 text-center shadow-xs">
                         <span class="text-[10px] font-black text-emerald-800 block uppercase tracking-wider font-mono">🌱 Caisse 3D & Vidange</span>
                         <div class="text-2xl font-black text-emerald-900 my-2 font-mono" id="admin-caisse-env">0 CDF</div>
-                        <span class="text-[9px] text-emerald-600 font-semibold block">Désinfection & Fosses</span>
+                        <span class="text-[9px] text-emerald-600 font-semibold block">Commissions Traitement 3D & Fosses</span>
                     </div>
                 </div>
 
+                <!-- Retrait & Rechargement -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-4">
                         <h4 class="text-xs font-black text-navy-800 uppercase tracking-wide flex items-center gap-1.5">
@@ -295,6 +301,7 @@
                     </div>
                 </div>
 
+                <!-- Déclarations Mobile Money en attente -->
                 <div class="space-y-3">
                     <div class="flex justify-between items-center">
                         <h4 class="text-xs font-black text-navy-800 uppercase tracking-wide">🕒 Déclarations Mobile Money en attente de validation</h4>
@@ -761,7 +768,7 @@
         </div>
     </footer>
 
-    <!-- LOGIQUE JAVASCRIPT & VENTILATION DÉTAILLÉE -->
+    <!-- LOGIQUE JAVASCRIPT : AFFECTATION STRICTE PAR AXE -->
     <script>
         const SUPABASE_URL = "https://vbriworyscymnmtzzdny.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZicml3b3J5c2N5bW5tdHp6ZG55Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzNzQwNTEsImV4cCI6MjEwMzk1MDA1MX0.VBZupVKj0srae0NT5BNZ0OeaIv9pAl2bl5L-Rd8ocJk";
@@ -891,35 +898,29 @@
         }
 
         // =========================================================================
-        // ANALYSE & VENTILATION DÉTAILLÉE PAR AXE (CORRECTION AXE MAISON)
+        // ATTRIBUTION STRICTE PAR COMMANDE À SA CAISSE PROPRE
         // =========================================================================
-        function analyserCommissionCommande(order) {
+        function determinerAxeCommande(order) {
             const desc = (order.description || '').toLowerCase();
             const axe = (order.axe || '').toLowerCase();
-            const totalCom = Number(order.commission || 0);
 
-            // Détection stricte et sans confusion de chaque axe
+            // Mots clés formels Maison
             const hasMaison = axe.includes('maison') || desc.includes('tapis') || desc.includes('canapé') || desc.includes('vitre') || desc.includes('carreaux') || desc.includes('moquette') || desc.includes('matelas') || desc.includes('baie') || desc.includes('panneau');
+            
+            // Mots clés formels 3D & Vidange
             const hasEnv = axe.includes('3d') || axe.includes('vidange') || desc.includes('fosse') || desc.includes('immondices') || desc.includes('désinfection') || desc.includes('dératisation') || desc.includes('désinsectisation');
+            
+            // Mots clés formels Automobile
             const hasAuto = axe.includes('auto') || desc.includes('berline') || desc.includes('suv') || desc.includes('moto') || desc.includes('bus') || desc.includes('remorque') || desc.includes('poids lourd') || desc.includes('châssis') || desc.includes('moteur');
 
-            let axesPresents = [];
-            if (hasAuto) axesPresents.push('auto');
-            if (hasMaison) axesPresents.push('maison');
-            if (hasEnv) axesPresents.push('env');
+            if (hasMaison && !hasAuto && !hasEnv) return 'maison';
+            if (hasEnv && !hasAuto && !hasMaison) return 'env';
+            if (hasAuto && !hasMaison && !hasEnv) return 'auto';
 
-            // Si rien n'est formellement détecté mais qu'une commission existe
-            if (axesPresents.length === 0) axesPresents.push('auto');
-
-            const part = Math.floor(totalCom / axesPresents.length);
-
-            return {
-                auto: axesPresents.includes('auto') ? part : 0,
-                maison: axesPresents.includes('maison') ? part : 0,
-                env: axesPresents.includes('env') ? (totalCom - part * (axesPresents.length - 1)) : 0,
-                total: totalCom,
-                axes: axesPresents
-            };
+            // Si mixte ou axe explicite
+            if (axe.includes('maison') && !axe.includes('auto')) return 'maison';
+            if (axe.includes('3d') && !axe.includes('auto')) return 'env';
+            return 'auto';
         }
 
         async function loadSupabaseOrders() {
@@ -938,21 +939,29 @@
             }
         }
 
+        // REMPLISSAGE STRICT ET INTÉGRAL DE CHAQUE CAISSE SANS DIVISION
         function ventilerCaissesActivites() {
-            let totalCentral = 0;
             let cAuto = 0;
             let cMaison = 0;
             let cEnv = 0;
 
             state.orders.forEach(o => {
                 if (o.status === 'Acceptée' || o.status === 'Terminée') {
-                    const comAxe = analyserCommissionCommande(o);
-                    totalCentral += comAxe.total;
-                    cAuto += comAxe.auto;
-                    cMaison += comAxe.maison;
-                    cEnv += comAxe.env;
+                    const com = Number(o.commission || 0);
+                    const axe = determinerAxeCommande(o);
+
+                    if (axe === 'maison') {
+                        cMaison += com;
+                    } else if (axe === 'env') {
+                        cEnv += com;
+                    } else {
+                        cAuto += com;
+                    }
                 }
             });
+
+            // La Caisse Centrale est le cumul des 3 caisses
+            const totalCentral = cAuto + cMaison + cEnv;
 
             state.caisses.centrale = totalCentral;
             state.caisses.auto = cAuto;
@@ -982,7 +991,10 @@
                     if (o.status !== filterStatus) return false;
                 }
 
-                if (filterAxe !== "Tous" && o.axe && !o.axe.toLowerCase().includes(filterAxe.toLowerCase())) return false;
+                const axeCommande = determinerAxeCommande(o);
+                if (filterAxe === "Auto" && axeCommande !== 'auto') return false;
+                if (filterAxe === "Maison" && axeCommande !== 'maison') return false;
+                if (filterAxe === "3D" && axeCommande !== 'env') return false;
 
                 if (search) {
                     const idMatch = String(o.id).includes(search);
@@ -1000,11 +1012,12 @@
                 else if (o.status === 'Terminée') badgeClass = 'bg-green-100 text-green-800';
                 else if (o.status === 'Annulée') badgeClass = 'bg-red-100 text-red-800';
 
-                const comAxe = analyserCommissionCommande(o);
-                let comDisplayParts = [];
-                if (comAxe.auto > 0) comDisplayParts.push(`🚗 Auto: ${comAxe.auto.toLocaleString('fr-FR')} CDF`);
-                if (comAxe.maison > 0) comDisplayParts.push(`🏡 Maison: ${comAxe.maison.toLocaleString('fr-FR')} CDF`);
-                if (comAxe.env > 0) comDisplayParts.push(`🌱 3D: ${comAxe.env.toLocaleString('fr-FR')} CDF`);
+                const axeKey = determinerAxeCommande(o);
+                const axeLabels = {
+                    'auto': '<span class="px-2 py-0.5 bg-blue-100 text-blue-800 rounded font-bold">🚗 Automobile</span>',
+                    'maison': '<span class="px-2 py-0.5 bg-orange-100 text-orange-800 rounded font-bold">🏡 Maison</span>',
+                    'env': '<span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-bold">🌱 3D & Vidange</span>'
+                };
 
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50 border-b">
@@ -1012,16 +1025,10 @@
                         <td class="p-3 text-slate-500">${o.date || '-'}<br><span class="font-bold text-slate-700">${o.time || ''}</span></td>
                         <td class="p-3"><b>${o.client_name}</b><br><span class="text-slate-400 font-mono">${o.client_phone}</span></td>
                         <td class="p-3 max-w-[200px] truncate" title="${o.description}">${o.description || '-'}</td>
+                        <td class="p-3">${axeLabels[axeKey]}</td>
                         <td class="p-3 font-bold">${o.commune} <span class="text-[10px] text-slate-400 font-normal">(${o.avenue || ''})</span></td>
                         <td class="p-3 font-mono font-bold">${Number(o.total_amount || 0).toLocaleString('fr-FR')} CDF</td>
-                        
-                        <td class="p-3 font-mono text-xs">
-                            <span class="font-black text-mattOrange block">${Number(o.commission || 0).toLocaleString('fr-FR')} CDF</span>
-                            <div class="text-[10px] text-slate-500 space-y-0.5 mt-0.5">
-                                ${comDisplayParts.map(p => `<div>${p}</div>`).join('')}
-                            </div>
-                        </td>
-
+                        <td class="p-3 font-mono font-black text-mattOrange">${Number(o.commission || 0).toLocaleString('fr-FR')} CDF</td>
                         <td class="p-3"><span class="px-2.5 py-1 rounded-md text-[10px] font-bold ${badgeClass}">${o.status}</span></td>
                         <td class="p-3 text-right">
                             <button onclick="openOrderDetailsModal(${o.id})" class="px-3 py-1.5 bg-sky-50 hover:bg-sky-100 text-sky-800 font-bold rounded-xl border border-sky-200 transition text-[11px]">
@@ -1033,7 +1040,7 @@
             });
 
             if (filteredOrders.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="9" class="p-8 text-center text-slate-400 font-medium">Aucune commande trouvée.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="10" class="p-8 text-center text-slate-400 font-medium">Aucune commande trouvée.</td></tr>`;
             }
         }
 
@@ -1051,12 +1058,9 @@
             document.getElementById('dtl-order-brut').innerText = `${Number(o.total_amount || 0).toLocaleString('fr-FR')} CDF`;
             document.getElementById('dtl-order-com').innerText = `${Number(o.commission || 0).toLocaleString('fr-FR')} CDF`;
 
-            const comAxe = analyserCommissionCommande(o);
-            let breakdownHtml = [];
-            if (comAxe.auto > 0) breakdownHtml.push(`🚗 Axe Automobile : ${comAxe.auto.toLocaleString('fr-FR')} CDF`);
-            if (comAxe.maison > 0) breakdownHtml.push(`🏡 Axe Maison : ${comAxe.maison.toLocaleString('fr-FR')} CDF`);
-            if (comAxe.env > 0) breakdownHtml.push(`🌱 Axe 3D & Vidange : ${comAxe.env.toLocaleString('fr-FR')} CDF`);
-            document.getElementById('dtl-order-com-breakdown').innerHTML = breakdownHtml.join('<br>') || 'Commission Standard';
+            const axeKey = determinerAxeCommande(o);
+            const axeNoms = { 'auto': '🚗 Caisse Automobile', 'maison': '🏡 Caisse Maison', 'env': '🌱 Caisse 3D & Vidange' };
+            document.getElementById('dtl-order-com-breakdown').innerHTML = `Affectée à la <b>${axeNoms[axeKey]}</b>`;
 
             const badge = document.getElementById('dtl-order-badge');
             badge.innerText = o.status;
@@ -1252,7 +1256,10 @@
             tbody.innerHTML = communesList.map((c, i) => {
                 const ordersInCommune = state.orders.filter(o => {
                     if (o.commune !== c.name) return false;
-                    if (filtreAxe !== "Tous" && o.axe && !o.axe.toLowerCase().includes(filtreAxe.toLowerCase())) return false;
+                    const axe = determinerAxeCommande(o);
+                    if (filtreAxe === "Auto" && axe !== 'auto') return false;
+                    if (filtreAxe === "Maison" && axe !== 'maison') return false;
+                    if (filtreAxe === "3D" && axe !== 'env') return false;
                     return true;
                 });
 
@@ -1262,11 +1269,7 @@
                 ordersInCommune.forEach(o => {
                     brutCommune += Number(o.total_amount || 0);
                     if (o.status === 'Acceptée' || o.status === 'Terminée') {
-                        const comAxe = analyserCommissionCommande(o);
-                        if (filtreAxe === "Auto") comCommune += comAxe.auto;
-                        else if (filtreAxe === "Maison") comCommune += comAxe.maison;
-                        else if (filtreAxe === "3D") comCommune += comAxe.env;
-                        else comCommune += comAxe.total;
+                        comCommune += Number(o.commission || 0);
                     }
                 });
 
