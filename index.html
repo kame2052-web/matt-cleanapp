@@ -259,7 +259,7 @@
                     </div>
                 </div>
 
-                <!-- 1. AXE AUTO & OPTIONS -->
+                <!-- Axe Auto & Options -->
                 <div class="border rounded-2xl p-5 bg-white shadow-sm space-y-4">
                     <div class="flex justify-between items-center border-b pb-2">
                         <h3 class="text-sm font-black text-navy-800 uppercase flex items-center gap-2">
@@ -270,7 +270,7 @@
                     <div id="vehicle-catalog" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
                 </div>
 
-                <!-- 2. AXE MAISON & SURFACES -->
+                <!-- Axe Maison & Surfaces -->
                 <div class="border rounded-2xl p-5 bg-white shadow-sm space-y-4">
                     <div class="flex justify-between items-center border-b pb-2">
                         <h3 class="text-sm font-black text-navy-800 uppercase flex items-center gap-2">
@@ -333,7 +333,7 @@
                     </div>
                 </div>
 
-                <!-- 3. AXE ENVIRONNEMENT 3D & VIDANGE -->
+                <!-- Axe Environnement 3D & Vidange -->
                 <div class="border rounded-2xl p-5 bg-white shadow-sm space-y-4">
                     <div class="flex justify-between items-center border-b pb-2">
                         <h3 class="text-sm font-black text-navy-800 uppercase flex items-center gap-2">
@@ -369,7 +369,7 @@
                     </div>
                 </div>
 
-                <!-- 4. LOGISTIQUE & PLANIFICATION -->
+                <!-- Logistique & Planification -->
                 <div class="bg-slate-50 border rounded-2xl p-5 space-y-4 text-xs">
                     <div class="flex justify-between items-center border-b pb-2">
                         <span class="text-xs font-black text-navy-800 uppercase">⚡ Logistique Terrain & Localisation</span>
@@ -484,7 +484,7 @@
             </div>
         </div>
 
-        <!-- 5. ESPACE PARTENAIRE CONNECTÉ (PLEIN ÉCRAN) -->
+        <!-- 5. ESPACE PARTENAIRE CONNECTÉ (AVEC CHIFFRE D'AFFAIRES & PÉRIODES) -->
         <div id="view-partner-app" class="w-full bg-white text-slate-800 rounded-3xl p-5 md:p-8 shadow-2xl hidden animate-fade-in space-y-6">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b pb-4">
                 <div>
@@ -506,23 +506,26 @@
             <!-- Onglets Partenaire -->
             <div class="flex gap-2 border-b pb-3 overflow-x-auto custom-scrollbar text-xs font-bold">
                 <button onclick="switchPartnerTab('partner-tab-missions', this)" class="partner-tab-btn px-4 py-2.5 bg-mattOrange text-white rounded-xl whitespace-nowrap active shadow-sm">
-                    🚨 Missions Disponibles
+                    📥 Missions Disponibles
+                </button>
+                <button onclick="switchPartnerTab('partner-tab-ca', this)" class="partner-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 rounded-xl whitespace-nowrap">
+                    📊 Chiffre d'Affaires & Périodes
                 </button>
                 <button onclick="switchPartnerTab('partner-tab-wallet', this)" class="partner-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 rounded-xl whitespace-nowrap">
                     💳 Portefeuille & Forfait
                 </button>
                 <button onclick="switchPartnerTab('partner-tab-courses', this)" class="partner-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 rounded-xl whitespace-nowrap">
-                    📑 Courses en Cours
+                    📑 Mes Courses & Clôture
                 </button>
                 <button onclick="switchPartnerTab('partner-tab-profil', this)" class="partner-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 rounded-xl whitespace-nowrap">
-                    ⚙️ Sécurité & Profil
+                    ⚙️ Mon Profil & Informations
                 </button>
                 <button onclick="switchPartnerTab('partner-tab-info-support', this)" class="partner-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 rounded-xl whitespace-nowrap">
                     📜 Infos & Support
                 </button>
             </div>
 
-            <!-- Missions Disponibles -->
+            <!-- SOUS-ONGLET 1 : MISSIONS DISPONIBLES -->
             <div id="partner-tab-missions" class="partner-subview space-y-4">
                 <div class="flex justify-between items-center">
                     <span class="text-xs font-black uppercase text-navy-800">Missions Disponibles dans votre Secteur</span>
@@ -531,7 +534,89 @@
                 <div id="partner-missions-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </div>
 
-            <!-- Portefeuille & Recharge -->
+            <!-- SOUS-ONGLET 2 : SUIVI DU CHIFFRE D'AFFAIRES & PÉRIODES (FIDÈLE À LA MAQUETTE) -->
+            <div id="partner-tab-ca" class="partner-subview hidden space-y-6">
+                <div>
+                    <h3 class="text-base font-black text-navy-800 uppercase flex items-center gap-2">
+                        <span>📊</span> SUIVI DU CHIFFRE D'AFFAIRES & HISTORIQUE FINANCIER
+                    </h3>
+                    <p class="text-xs text-slate-500 font-semibold mt-0.5">
+                        Sélectionnez une période pour calculer le cumul précis de vos gains bruts, commissions et bénéfice net.
+                    </p>
+                </div>
+
+                <!-- Filtrage par période -->
+                <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex flex-wrap items-end gap-3 text-xs">
+                    <div>
+                        <label class="text-[10px] font-black text-slate-600 uppercase block mb-1">DATE DE DÉBUT :</label>
+                        <input type="date" id="ca-date-start" class="px-3 py-2 bg-white border rounded-xl font-bold text-slate-800">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-black text-slate-600 uppercase block mb-1">DATE DE FIN :</label>
+                        <input type="date" id="ca-date-end" class="px-3 py-2 bg-white border rounded-xl font-bold text-slate-800">
+                    </div>
+                    <button onclick="filtrerChiffreAffaires()" class="px-5 py-2.5 bg-navy-800 hover:bg-navy-900 text-white font-black rounded-xl uppercase text-xs tracking-wider transition shadow">
+                        CALCULER LE CHIFFRE D'AFFAIRES
+                    </button>
+                    <button onclick="resetFiltreCA()" class="text-sky-600 font-bold hover:underline py-2 text-xs">
+                        Réinitialiser
+                    </button>
+                </div>
+
+                <!-- 4 Boîtes statistiques de CA -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="bg-white border-2 border-slate-100 rounded-2xl p-5 shadow-xs">
+                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-wider block">COURSES EFFECTUÉES</span>
+                        <div class="text-3xl font-black text-navy-800 mt-1" id="ca-stat-count">0</div>
+                    </div>
+                    <div class="bg-white border-2 border-slate-100 rounded-2xl p-5 shadow-xs">
+                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-wider block">CA TOTAL BRUT</span>
+                        <div class="text-3xl font-black text-sky-600 font-mono mt-1" id="ca-stat-brut">0 CDF</div>
+                    </div>
+                    <div class="bg-white border-2 border-slate-100 rounded-2xl p-5 shadow-xs">
+                        <span class="text-[10px] font-black text-slate-400 uppercase tracking-wider block">COMMISSIONS DÉDUITES</span>
+                        <div class="text-3xl font-black text-red-500 font-mono mt-1" id="ca-stat-com">0 CDF</div>
+                    </div>
+                    <div class="bg-green-50 border-2 border-green-300 rounded-2xl p-5 shadow-xs">
+                        <span class="text-[10px] font-black text-green-700 uppercase tracking-wider block">GAIN NET ENCAISSÉ</span>
+                        <div class="text-3xl font-black text-green-600 font-mono mt-1" id="ca-stat-net">0 CDF</div>
+                    </div>
+                </div>
+
+                <!-- Tableau détaillé des prestations de la période -->
+                <div class="space-y-3">
+                    <div class="flex justify-between items-center text-xs">
+                        <span class="font-black text-navy-800 uppercase">Détail des Prestations de la Période Sélectionnée</span>
+                        <span class="text-[11px] text-slate-400 font-medium" id="ca-period-label">Toutes les dates confondues</span>
+                    </div>
+
+                    <div class="overflow-x-auto border border-slate-200 rounded-2xl bg-white shadow-inner custom-scrollbar">
+                        <table class="w-full text-left border-collapse text-xs">
+                            <thead>
+                                <tr class="bg-slate-50 text-slate-500 border-b">
+                                    <th class="p-3 font-bold uppercase">ID</th>
+                                    <th class="p-3 font-bold uppercase">DATE</th>
+                                    <th class="p-3 font-bold uppercase">PANIER</th>
+                                    <th class="p-3 font-bold uppercase">COMMUNE & QUARTIER</th>
+                                    <th class="p-3 font-bold uppercase">MONTANT BRUT</th>
+                                    <th class="p-3 font-bold uppercase">COMMISSION</th>
+                                    <th class="p-3 font-bold uppercase">GAIN NET</th>
+                                    <th class="p-3 font-bold uppercase">STATUT</th>
+                                </tr>
+                            </thead>
+                            <tbody id="ca-table-body" class="divide-y divide-slate-100 font-medium">
+                                <tr>
+                                    <td colspan="8" class="p-8 text-center text-slate-400 font-medium">
+                                        Aucune course enregistrée pour cette période.
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SOUS-ONGLET 3 : PORTEFEUILLE & FORFAIT -->
             <div id="partner-tab-wallet" class="partner-subview hidden space-y-5">
                 <div class="bg-sky-50 border border-aqua/40 rounded-3xl p-6 text-center max-w-xl mx-auto">
                     <span class="text-[10px] text-slate-500 font-black uppercase tracking-wider block" id="partner-solde-label">Solde Commission Disponible</span>
@@ -562,13 +647,13 @@
                 </div>
             </div>
 
-            <!-- Courses en cours -->
+            <!-- SOUS-ONGLET 4 : MES COURSES & CLÔTURE -->
             <div id="partner-tab-courses" class="partner-subview hidden space-y-4">
                 <span class="text-xs font-black uppercase text-navy-800 block">Courses Acceptées & Clôture</span>
                 <div id="partner-accepted-courses-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </div>
 
-            <!-- Profil & Mot de passe -->
+            <!-- SOUS-ONGLET 5 : SÉCURITÉ & PROFIL -->
             <div id="partner-tab-profil" class="partner-subview hidden space-y-4 max-w-xl mx-auto">
                 <span class="text-xs font-black uppercase text-navy-800 block">Modification Sécurisée des Identifiants</span>
                 <div class="bg-slate-50 p-5 rounded-3xl border space-y-3 text-xs">
@@ -607,7 +692,7 @@
                 </div>
             </div>
 
-            <!-- Infos & Support Partenaire -->
+            <!-- SOUS-ONGLET 6 : INFOS & SUPPORT -->
             <div id="partner-tab-info-support" class="partner-subview hidden space-y-4 text-xs">
                 <div class="border rounded-2xl p-5 bg-slate-50 space-y-2">
                     <h3 class="font-black text-navy-800 text-sm uppercase">Assistance Partenaire MATT SARL</h3>
@@ -629,7 +714,20 @@
 
     </main>
 
-    <!-- MODALE DE NOTATION MOBILE -->
+    <!-- Footer Institutionnel -->
+    <footer class="border-t border-slate-800/80 bg-navy-800/80 py-4 text-center text-xs text-slate-400 mt-auto">
+        <div class="container mx-auto px-4 space-y-1">
+            <div class="flex flex-wrap justify-center items-center gap-x-4 gap-y-1 text-[11px] text-slate-300 font-semibold">
+                <span>Éditeur : <b>MATT SARL</b></span>
+                <span>RCCM : <b class="text-aqua font-mono">CD/KIN/RCCM/24-B-04106</b></span>
+                <span>NIF : <b class="text-aqua font-mono">A2441433N</b></span>
+                <span>Siège : <b>Kinshasa, RDC</b></span>
+            </div>
+            <p class="text-[9px] text-slate-500">© 2026 MATT SARL. Tous droits réservés. Plateforme technologique régie par le droit congolais et les Actes uniformes de l'OHADA.</p>
+        </div>
+    </footer>
+
+    <!-- MODALE DE NOTATION -->
     <div id="modal-rating" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
         <div class="bg-white text-slate-900 w-full max-w-sm rounded-3xl p-6 space-y-4 relative text-xs shadow-2xl">
             <button onclick="closeRatingModal()" class="absolute top-4 right-4 text-slate-400 font-bold text-lg">✕</button>
@@ -713,6 +811,7 @@
         let clientVehiculeSelection = {};
         let currentRatingOrderId = null;
         let selectedRatingValue = 5;
+        let partnerAllOrders = [];
 
         function showToast(message, type = "success") {
             const container = document.getElementById('toast-container');
@@ -1142,7 +1241,11 @@
                 b.className = "partner-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 rounded-xl whitespace-nowrap";
             });
             document.getElementById(tabId).classList.remove('hidden');
-            if (btn) btn.className = "partner-tab-btn px-4 py-2.5 bg-mattOrange text-white rounded-xl whitespace-nowrap shadow-sm active";
+            if (btn) btn.className = "partner-tab-btn px-4 py-2.5 bg-mattOrange text-white rounded-xl whitespace-nowrap active shadow-sm";
+
+            if (tabId === 'partner-tab-ca') {
+                renderPartnerCA();
+            }
         }
 
         function adjustPartnerRechargeMode() {
@@ -1190,10 +1293,11 @@
         async function loadPartnerAcceptedCourses() {
             if (!session.user) return;
             const { data } = await db.from('orders').select('*').eq('partner_id', session.user.id).order('id', { ascending: false });
+            partnerAllOrders = data || [];
             const container = document.getElementById('partner-accepted-courses-list');
             container.innerHTML = '';
 
-            (data || []).forEach(o => {
+            partnerAllOrders.forEach(o => {
                 container.innerHTML += `
                     <div class="p-4 border rounded-2xl bg-white shadow-sm space-y-2 text-xs">
                         <div class="flex justify-between font-bold">
@@ -1213,6 +1317,90 @@
                     </div>
                 `;
             });
+
+            renderPartnerCA();
+        }
+
+        // ==========================================
+        // SUIVI FINANCIER & CA PARTENAIRE
+        // ==========================================
+        function renderPartnerCA(filteredOrders = null) {
+            const orders = filteredOrders || partnerAllOrders.filter(o => o.status === 'Terminée');
+            let totalBrut = 0;
+            let totalCom = 0;
+
+            orders.forEach(o => {
+                totalBrut += Number(o.total_amount || 0);
+                totalCom += Number(o.commission || 0);
+            });
+
+            const net = totalBrut - totalCom;
+
+            document.getElementById('ca-stat-count').innerText = orders.length;
+            document.getElementById('ca-stat-brut').innerText = `${totalBrut.toLocaleString('fr-FR')} CDF`;
+            document.getElementById('ca-stat-com').innerText = `${totalCom.toLocaleString('fr-FR')} CDF`;
+            document.getElementById('ca-stat-net').innerText = `${net.toLocaleString('fr-FR')} CDF`;
+
+            const tbody = document.getElementById('ca-table-body');
+            if (!tbody) return;
+
+            if (orders.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8" class="p-8 text-center text-slate-400 font-medium">
+                            Aucune course enregistrée pour cette période.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = orders.map(o => {
+                const com = Number(o.commission || 0);
+                const brut = Number(o.total_amount || 0);
+                const gain = brut - com;
+
+                return `
+                    <tr class="hover:bg-slate-50 border-b">
+                        <td class="p-3 font-mono font-bold">#${o.id}</td>
+                        <td class="p-3">${o.date || '-'}</td>
+                        <td class="p-3 font-bold">${o.description || '-'}</td>
+                        <td class="p-3">${o.commune} <span class="text-slate-400">(${o.avenue || ''})</span></td>
+                        <td class="p-3 font-mono font-bold text-sky-600">${brut.toLocaleString('fr-FR')} CDF</td>
+                        <td class="p-3 font-mono font-bold text-red-500">-${com.toLocaleString('fr-FR')} CDF</td>
+                        <td class="p-3 font-mono font-bold text-green-600">${gain.toLocaleString('fr-FR')} CDF</td>
+                        <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-800">${o.status}</span></td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function filtrerChiffreAffaires() {
+            const start = document.getElementById('ca-date-start').value;
+            const end = document.getElementById('ca-date-end').value;
+
+            if (!start && !end) {
+                return renderPartnerCA();
+            }
+
+            const filtered = partnerAllOrders.filter(o => {
+                if (o.status !== 'Terminée') return false;
+                if (!o.date) return false;
+                if (start && o.date < start) return false;
+                if (end && o.date > end) return false;
+                return true;
+            });
+
+            document.getElementById('ca-period-label').innerText = `Du ${start || 'Début'} au ${end || 'Fin'}`;
+            renderPartnerCA(filtered);
+            showToast("Chiffre d'affaires recalculé pour la période.");
+        }
+
+        function resetFiltreCA() {
+            document.getElementById('ca-date-start').value = '';
+            document.getElementById('ca-date-end').value = '';
+            document.getElementById('ca-period-label').innerText = "Toutes les dates confondues";
+            renderPartnerCA();
         }
 
         async function accepterMission(orderId, commission) {
@@ -1227,7 +1415,7 @@
 
             session.user.wallet = newWallet;
             document.getElementById('partner-wallet-balance').innerText = `${newWallet.toLocaleString('fr-FR')} CDF`;
-            showToast("Mission acceptée ! Coordonnées débloquées.");
+            showToast("Mission acceptée ! Coordonnées client débloquées.");
             loadPartnerMissions();
             loadPartnerAcceptedCourses();
         }
@@ -1271,6 +1459,7 @@
                 if (selectPartnerEdit) selectPartnerEdit.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
             });
 
+            // Génération dynamique des véhicules et tiroirs d'options
             const vCat = document.getElementById('vehicle-catalog');
             typesVehicules.forEach(v => {
                 clientVehiculeSelection[v.id] = 0;
