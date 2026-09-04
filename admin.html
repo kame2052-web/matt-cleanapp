@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MATT Clean'App - Portail Direction Master</title>
+    <title>MATT Clean'App - Direction Master</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Supabase JS Client -->
@@ -63,7 +63,7 @@
         </div>
     </header>
 
-    <!-- Écran d'authentification (Affiché uniquement si non connecté) -->
+    <!-- Écran d'authentification -->
     <div id="admin-auth-screen" class="container mx-auto px-4 py-16 max-w-md flex-grow flex items-center justify-center">
         <div class="bg-white text-slate-900 p-8 rounded-3xl shadow-2xl border border-slate-200 w-full space-y-5 text-center">
             <div class="w-16 h-16 bg-navy-900 text-mattOrange rounded-2xl mx-auto flex items-center justify-center text-3xl font-mono shadow-inner">
@@ -112,7 +112,7 @@
                 <button onclick="switchAdminTab('admin-config', this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap">⚙️ Configuration Système</button>
             </div>
 
-            <!-- ONGLET 1: SUIVI & HISTORIQUE DES COMMANDES -->
+            <!-- ONGLET 1: SUIVI DES COMMANDES AVEC DÉTAIL PAR AXE -->
             <div id="admin-liaisons" class="admin-subview space-y-5">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b pb-3">
                     <div class="flex gap-2 text-xs">
@@ -155,7 +155,7 @@
                                 <th class="p-3 uppercase">Prestations & Panier</th>
                                 <th class="p-3 uppercase">Commune & Adresse</th>
                                 <th class="p-3 uppercase">Montant Brut</th>
-                                <th class="p-3 uppercase">Commission</th>
+                                <th class="p-3 uppercase">Commission par Axe</th>
                                 <th class="p-3 uppercase">Statut</th>
                                 <th class="p-3 uppercase text-right">Actions</th>
                             </tr>
@@ -198,7 +198,7 @@
                 </div>
             </div>
 
-            <!-- ONGLET 3: CAISSE CENTRALE & CAISSES PAR AXES D'ACTIVITÉS -->
+            <!-- ONGLET 3: CAISSE CENTRALE & CAISSES PAR AXES -->
             <div id="admin-recharges" class="admin-subview hidden space-y-6">
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -318,7 +318,7 @@
 
             </div>
 
-            <!-- ONGLET 4: CONFIGURATION DES PRIX (AVEC ASCENSEURS ET DÉTAIL OPTIONS) -->
+            <!-- ONGLET 4: CONFIGURATION DES PRIX -->
             <div id="admin-prix" class="admin-subview hidden space-y-6">
                 <div class="flex flex-col lg:flex-row justify-between lg:items-center gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-200">
                     <div>
@@ -532,10 +532,8 @@
                 </div>
             </div>
 
-            <!-- ONGLET 7: CONFIGURATION SYSTÈME (COMMUNES, CONTACTS, ADMINS, AXES) -->
+            <!-- ONGLET 7: CONFIGURATION SYSTÈME -->
             <div id="admin-config" class="admin-subview hidden space-y-8">
-                
-                <!-- Contacts Mobile Money & WhatsApp -->
                 <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
                     <div class="flex justify-between items-center border-b pb-3">
                         <h3 class="text-md font-black text-navy-800 uppercase tracking-wide">📱 Numéros Mobile Money & Assistance WhatsApp</h3>
@@ -575,7 +573,6 @@
                     </div>
                 </div>
 
-                <!-- Communes par zones -->
                 <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
                     <h3 class="text-md font-black text-navy-800 uppercase tracking-wide">📍 Ajout & Attribution des Communes par Zones</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-white p-4 rounded-xl border border-slate-200 items-end">
@@ -613,7 +610,6 @@
                     </div>
                 </div>
 
-                <!-- Gestion Administrateurs -->
                 <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
                     <h3 class="text-md font-black text-navy-800 uppercase tracking-wide">🔑 Gestion & Accès Administrateurs</h3>
                     <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 bg-white p-4 rounded-xl border border-slate-200">
@@ -696,14 +692,16 @@
                 <div><span class="text-slate-500 font-bold">Conditions terrain :</span> <span id="dtl-order-logistics" class="font-semibold text-aqua"></span></div>
             </div>
 
-            <div class="grid grid-cols-2 gap-3 text-xs">
+            <!-- Grille Financière avec Commissions par Axe -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                 <div class="bg-sky-50 p-3 rounded-xl border border-sky-200">
-                    <span class="text-[10px] text-sky-800 uppercase font-bold block">Montant Brut Payé</span>
+                    <span class="text-[10px] text-sky-800 uppercase font-bold block">Montant Brut Facturé</span>
                     <b class="text-base font-black text-navy-800 font-mono" id="dtl-order-brut">0 CDF</b>
                 </div>
-                <div class="bg-green-50 p-3 rounded-xl border border-green-200">
-                    <span class="text-[10px] text-green-800 uppercase font-bold block">Commission MATT (15%)</span>
-                    <b class="text-base font-black text-green-700 font-mono" id="dtl-order-com">0 CDF</b>
+                <div class="bg-green-50 p-3 rounded-xl border border-green-200 space-y-1">
+                    <span class="text-[10px] text-green-800 uppercase font-bold block">Commission MATT Totale (15%)</span>
+                    <b class="text-base font-black text-green-700 font-mono block" id="dtl-order-com">0 CDF</b>
+                    <div id="dtl-order-com-breakdown" class="text-[10px] font-bold text-slate-600 pt-1 border-t border-green-200"></div>
                 </div>
             </div>
 
@@ -763,7 +761,7 @@
         </div>
     </footer>
 
-    <!-- LOGIQUE JAVASCRIPT & SUPABASE -->
+    <!-- LOGIQUE JAVASCRIPT & VENTILATION DÉTAILLÉE -->
     <script>
         const SUPABASE_URL = "https://vbriworyscymnmtzzdny.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZicml3b3J5c2N5bW5tdHp6ZG55Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzNzQwNTEsImV4cCI6MjEwMzk1MDA1MX0.VBZupVKj0srae0NT5BNZ0OeaIv9pAl2bl5L-Rd8ocJk";
@@ -830,7 +828,6 @@
             else { pass.type = 'password'; icon.innerText = '👁️'; }
         }
 
-        // PERSISTANCE DE SESSION : CONSERVE L'ACCÈS MÊME APRÈS F5
         function verifyAdminAuth() {
             const login = document.getElementById('admin-login-input').value.trim();
             const pass = document.getElementById('admin-pass-input').value.trim();
@@ -893,9 +890,38 @@
             renderAdminOrders();
         }
 
-        // ==========================================
-        // COMMANDES ET VENTILATION EXACTE DES COMMISSIONS
-        // ==========================================
+        // =========================================================================
+        // ANALYSE & VENTILATION DÉTAILLÉE PAR AXE (CORRECTION AXE MAISON)
+        // =========================================================================
+        function analyserCommissionCommande(order) {
+            const desc = (order.description || '').toLowerCase();
+            const axe = (order.axe || '').toLowerCase();
+            const totalCom = Number(order.commission || 0);
+
+            // Détection stricte et sans confusion de chaque axe
+            const hasMaison = axe.includes('maison') || desc.includes('tapis') || desc.includes('canapé') || desc.includes('vitre') || desc.includes('carreaux') || desc.includes('moquette') || desc.includes('matelas') || desc.includes('baie') || desc.includes('panneau');
+            const hasEnv = axe.includes('3d') || axe.includes('vidange') || desc.includes('fosse') || desc.includes('immondices') || desc.includes('désinfection') || desc.includes('dératisation') || desc.includes('désinsectisation');
+            const hasAuto = axe.includes('auto') || desc.includes('berline') || desc.includes('suv') || desc.includes('moto') || desc.includes('bus') || desc.includes('remorque') || desc.includes('poids lourd') || desc.includes('châssis') || desc.includes('moteur');
+
+            let axesPresents = [];
+            if (hasAuto) axesPresents.push('auto');
+            if (hasMaison) axesPresents.push('maison');
+            if (hasEnv) axesPresents.push('env');
+
+            // Si rien n'est formellement détecté mais qu'une commission existe
+            if (axesPresents.length === 0) axesPresents.push('auto');
+
+            const part = Math.floor(totalCom / axesPresents.length);
+
+            return {
+                auto: axesPresents.includes('auto') ? part : 0,
+                maison: axesPresents.includes('maison') ? part : 0,
+                env: axesPresents.includes('env') ? (totalCom - part * (axesPresents.length - 1)) : 0,
+                total: totalCom,
+                axes: axesPresents
+            };
+        }
+
         async function loadSupabaseOrders() {
             const { data, error } = await db.from('orders').select('*').order('id', { ascending: false });
             if (!error && data) {
@@ -919,29 +945,12 @@
             let cEnv = 0;
 
             state.orders.forEach(o => {
-                // Seules les commissions des missions actives ou terminées constituent la caisse
                 if (o.status === 'Acceptée' || o.status === 'Terminée') {
-                    const com = Number(o.commission || 0);
-                    totalCentral += com;
-
-                    const desc = (o.description || '').toLowerCase();
-                    const axe = (o.axe || '').toLowerCase();
-
-                    // Vos commissions enregistrées jusqu'à présent concernent des véhicules
-                    const isMaison = axe.includes('maison') || desc.includes('tapis') || desc.includes('canapé') || desc.includes('vitre') || desc.includes('carreaux');
-                    const isEnv = axe.includes('3d') || desc.includes('fosse') || desc.includes('immondices') || desc.includes('désinfection') || desc.includes('dératisation');
-                    const isAuto = axe.includes('auto') || desc.includes('berline') || desc.includes('suv') || desc.includes('moto') || desc.includes('véhicule') || desc.includes('remorque') || (!isMaison && !isEnv);
-
-                    if (isAuto && !isMaison && !isEnv) {
-                        cAuto += com;
-                    } else if (isMaison && !isAuto && !isEnv) {
-                        cMaison += com;
-                    } else if (isEnv && !isAuto && !isMaison) {
-                        cEnv += com;
-                    } else {
-                        // Mixte
-                        cAuto += com;
-                    }
+                    const comAxe = analyserCommissionCommande(o);
+                    totalCentral += comAxe.total;
+                    cAuto += comAxe.auto;
+                    cMaison += comAxe.maison;
+                    cEnv += comAxe.env;
                 }
             });
 
@@ -950,10 +959,10 @@
             state.caisses.maison = cMaison;
             state.caisses.env = cEnv;
 
-            document.getElementById('admin-caisse-centrale').innerText = `${totalCentral.toLocaleString('fr-FR')} CDF`;
-            document.getElementById('admin-caisse-auto').innerText = `${cAuto.toLocaleString('fr-FR')} CDF`;
-            document.getElementById('admin-caisse-maison').innerText = `${cMaison.toLocaleString('fr-FR')} CDF`;
-            document.getElementById('admin-caisse-env').innerText = `${cEnv.toLocaleString('fr-FR')} CDF`;
+            if (document.getElementById('admin-caisse-centrale')) document.getElementById('admin-caisse-centrale').innerText = `${totalCentral.toLocaleString('fr-FR')} CDF`;
+            if (document.getElementById('admin-caisse-auto')) document.getElementById('admin-caisse-auto').innerText = `${cAuto.toLocaleString('fr-FR')} CDF`;
+            if (document.getElementById('admin-caisse-maison')) document.getElementById('admin-caisse-maison').innerText = `${cMaison.toLocaleString('fr-FR')} CDF`;
+            if (document.getElementById('admin-caisse-env')) document.getElementById('admin-caisse-env').innerText = `${cEnv.toLocaleString('fr-FR')} CDF`;
         }
 
         function renderAdminOrders() {
@@ -991,6 +1000,12 @@
                 else if (o.status === 'Terminée') badgeClass = 'bg-green-100 text-green-800';
                 else if (o.status === 'Annulée') badgeClass = 'bg-red-100 text-red-800';
 
+                const comAxe = analyserCommissionCommande(o);
+                let comDisplayParts = [];
+                if (comAxe.auto > 0) comDisplayParts.push(`🚗 Auto: ${comAxe.auto.toLocaleString('fr-FR')} CDF`);
+                if (comAxe.maison > 0) comDisplayParts.push(`🏡 Maison: ${comAxe.maison.toLocaleString('fr-FR')} CDF`);
+                if (comAxe.env > 0) comDisplayParts.push(`🌱 3D: ${comAxe.env.toLocaleString('fr-FR')} CDF`);
+
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50 border-b">
                         <td class="p-3 font-mono font-bold">#${o.id}</td>
@@ -999,7 +1014,14 @@
                         <td class="p-3 max-w-[200px] truncate" title="${o.description}">${o.description || '-'}</td>
                         <td class="p-3 font-bold">${o.commune} <span class="text-[10px] text-slate-400 font-normal">(${o.avenue || ''})</span></td>
                         <td class="p-3 font-mono font-bold">${Number(o.total_amount || 0).toLocaleString('fr-FR')} CDF</td>
-                        <td class="p-3 font-mono font-bold text-mattOrange">${Number(o.commission || 0).toLocaleString('fr-FR')} CDF</td>
+                        
+                        <td class="p-3 font-mono text-xs">
+                            <span class="font-black text-mattOrange block">${Number(o.commission || 0).toLocaleString('fr-FR')} CDF</span>
+                            <div class="text-[10px] text-slate-500 space-y-0.5 mt-0.5">
+                                ${comDisplayParts.map(p => `<div>${p}</div>`).join('')}
+                            </div>
+                        </td>
+
                         <td class="p-3"><span class="px-2.5 py-1 rounded-md text-[10px] font-bold ${badgeClass}">${o.status}</span></td>
                         <td class="p-3 text-right">
                             <button onclick="openOrderDetailsModal(${o.id})" class="px-3 py-1.5 bg-sky-50 hover:bg-sky-100 text-sky-800 font-bold rounded-xl border border-sky-200 transition text-[11px]">
@@ -1011,7 +1033,7 @@
             });
 
             if (filteredOrders.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="9" class="p-8 text-center text-slate-400 font-medium">Aucune commande trouvée pour ces critères.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="9" class="p-8 text-center text-slate-400 font-medium">Aucune commande trouvée.</td></tr>`;
             }
         }
 
@@ -1029,10 +1051,17 @@
             document.getElementById('dtl-order-brut').innerText = `${Number(o.total_amount || 0).toLocaleString('fr-FR')} CDF`;
             document.getElementById('dtl-order-com').innerText = `${Number(o.commission || 0).toLocaleString('fr-FR')} CDF`;
 
+            const comAxe = analyserCommissionCommande(o);
+            let breakdownHtml = [];
+            if (comAxe.auto > 0) breakdownHtml.push(`🚗 Axe Automobile : ${comAxe.auto.toLocaleString('fr-FR')} CDF`);
+            if (comAxe.maison > 0) breakdownHtml.push(`🏡 Axe Maison : ${comAxe.maison.toLocaleString('fr-FR')} CDF`);
+            if (comAxe.env > 0) breakdownHtml.push(`🌱 Axe 3D & Vidange : ${comAxe.env.toLocaleString('fr-FR')} CDF`);
+            document.getElementById('dtl-order-com-breakdown').innerHTML = breakdownHtml.join('<br>') || 'Commission Standard';
+
             const badge = document.getElementById('dtl-order-badge');
             badge.innerText = o.status;
             badge.className = `px-2.5 py-0.5 rounded text-[10px] font-bold uppercase mt-1 inline-block ${
-                o.status === 'Terminée' ? 'bg-green-100 text-green-800' : (o.status === 'Annulée' ? 'bg-red-100 text-red-700' : 'bg-sky-100 text-sky-800')
+                o.status === 'Terminée' ? 'bg-green-100 text-green-800' : (o.status === 'Annulée' ? 'bg-red-100 text-red-800' : 'bg-sky-100 text-sky-800')
             }`;
 
             const partner = state.partners.find(p => p.id === o.partner_id);
@@ -1055,9 +1084,6 @@
             document.getElementById('modal-order-details').classList.add('hidden');
         }
 
-        // ==========================================
-        // PARTENAIRES & RETRAITS
-        // ==========================================
         async function loadSupabasePartners() {
             const { data, error } = await db.from('partners').select('*').order('created_at', { ascending: false });
             if (!error && data) {
@@ -1194,9 +1220,6 @@
             loadSupabasePartners();
         }
 
-        // ==========================================
-        // CONFIGURATION DES PRIX
-        // ==========================================
         function scrollPriceSection(elementId, offset) {
             document.getElementById(elementId)?.scrollBy({ top: offset, behavior: 'smooth' });
         }
@@ -1221,9 +1244,6 @@
             showToast("Grille tarifaire enregistrée pour ce groupe.", "success");
         }
 
-        // ==========================================
-        // STATISTIQUES & CGU
-        // ==========================================
         function genererTableauStatistiques() {
             const tbody = document.getElementById('stats-table-body');
             if (!tbody) return;
@@ -1242,7 +1262,11 @@
                 ordersInCommune.forEach(o => {
                     brutCommune += Number(o.total_amount || 0);
                     if (o.status === 'Acceptée' || o.status === 'Terminée') {
-                        comCommune += Number(o.commission || 0);
+                        const comAxe = analyserCommissionCommande(o);
+                        if (filtreAxe === "Auto") comCommune += comAxe.auto;
+                        else if (filtreAxe === "Maison") comCommune += comAxe.maison;
+                        else if (filtreAxe === "3D") comCommune += comAxe.env;
+                        else comCommune += comAxe.total;
                     }
                 });
 
@@ -1300,9 +1324,6 @@
             document.getElementById('admin-cgu-preview').innerHTML = text.split('\n\n').map(p => `<p class="mb-2">${p.replace(/\n/g, '<br>')}</p>`).join('');
         }
 
-        // ==========================================
-        // CONFIGURATION SYSTÈME (COMMUNES, ADMINS, CONTACTS)
-        // ==========================================
         function saveSysContactConfig() {
             showToast("Coordonnées de paiement et WhatsApp sauvegardées !", "success");
         }
@@ -1404,7 +1425,6 @@
             }
         }
 
-        // VÉRIFICATION INITIALE AU CHARGEMENT DE LA PAGE
         window.onload = function() {
             const selCommune = document.getElementById('admin-filter-commune');
             if (selCommune) {
@@ -1412,7 +1432,6 @@
             }
             onCommuneGroupChange();
 
-            // Si la session était déjà déverrouillée, on reste directement sur le tableau de bord
             if (localStorage.getItem('matt_admin_auth') === 'true') {
                 ouvrirConsoleAdmin();
             }
