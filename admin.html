@@ -35,7 +35,7 @@
     <!-- Toast Notifications -->
     <div id="toast-container" class="fixed top-4 right-4 z-[9999] flex flex-col gap-2 max-w-sm w-full pointer-events-none"></div>
 
-    <!-- En-tête Plein Écran -->
+    <!-- En-tête Plein Écran avec Bouton Actualisation Globale -->
     <header class="bg-navy-800/95 border-b-2 border-mattOrange px-4 py-3 md:px-8 flex justify-between items-center sticky top-0 z-50 backdrop-blur-md shadow-xl w-full">
         <div class="flex items-center gap-3">
             <div class="w-11 h-11 bg-white rounded-2xl shadow-md border border-mattOrange/40 p-1 flex items-center justify-center flex-shrink-0">
@@ -49,15 +49,15 @@
             </div>
         </div>
         
-        <div class="flex items-center gap-3">
-            <div class="text-right hidden md:block border-r border-slate-700 pr-4">
-                <span class="text-[11px] font-black text-white block tracking-wide">MATT Clean'App</span>
-                <span class="text-[9px] text-aqua uppercase font-bold tracking-widest">by Global Tech Solutions</span>
-            </div>
+        <div class="flex items-center gap-2.5">
+            <!-- Bouton d'actualisation générale de l'application -->
+            <button onclick="refreshAllAppData()" id="btn-global-refresh" class="hidden px-3.5 py-2 bg-navy-900 hover:bg-slate-800 text-aqua border border-aqua/40 rounded-xl text-xs font-bold transition shadow flex items-center gap-1.5">
+                <span id="global-refresh-icon" class="inline-block transition-transform">🔄</span> Actualiser
+            </button>
             <a href="index.html" class="px-3.5 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white bg-navy-900 border border-slate-700 transition">
                 ⬅ Portail Public
             </a>
-            <button onclick="lockAdminSession()" id="btn-lock-session" class="hidden px-4 py-2 bg-red-600/90 hover:bg-red-600 text-white rounded-xl text-xs font-bold transition shadow flex items-center gap-1.5">
+            <button onclick="lockAdminSession()" id="btn-lock-session" class="hidden px-3.5 py-2 bg-red-600/90 hover:bg-red-600 text-white rounded-xl text-xs font-bold transition shadow flex items-center gap-1.5">
                 Verrouiller 🔒
             </button>
         </div>
@@ -139,7 +139,7 @@
                             <option value="Maison">🏡 Maison</option>
                             <option value="3D">🌱 3D & Vidange</option>
                         </select>
-                        <button onclick="loadSupabaseOrders()" class="px-3 py-2 bg-sky-50 hover:bg-sky-100 text-sky-800 font-bold rounded-xl border border-sky-200">
+                        <button onclick="refreshAllAppData()" class="px-3 py-2 bg-sky-50 hover:bg-sky-100 text-sky-800 font-bold rounded-xl border border-sky-200">
                             Actualiser 🔄
                         </button>
                     </div>
@@ -199,15 +199,15 @@
                 </div>
             </div>
 
-            <!-- ONGLET 3: CAISSE CENTRALE & CAISSES PAR AXE RESPECTIF -->
+            <!-- ONGLET 3: CAISSE CENTRALE & CAISSES PAR AXE DIRECT -->
             <div id="admin-recharges" class="admin-subview hidden space-y-6">
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <!-- CAISSE CENTRALE (CUMUL RÉEL DES 3 AXES) -->
+                    <!-- CAISSE CENTRALE -->
                     <div class="bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-400 rounded-2xl p-5 text-center shadow-md">
                         <span class="text-[10px] font-black text-green-800 block uppercase tracking-widest font-mono">🏛️ CAISSE CENTRALE GLOBALE</span>
                         <div class="text-3xl font-black text-green-900 my-2 font-mono" id="admin-caisse-centrale">0 CDF</div>
-                        <span class="text-[9px] text-green-700 font-bold block uppercase">Cumul Strict des Caisses</span>
+                        <span class="text-[9px] text-green-700 font-bold block uppercase">Cumul Réel des Caisses</span>
                     </div>
 
                     <!-- CAISSE AUTOMOBILE -->
@@ -221,14 +221,14 @@
                     <div class="bg-orange-50/70 border-2 border-orange-300 rounded-2xl p-5 text-center shadow-xs">
                         <span class="text-[10px] font-black text-mattOrange block uppercase tracking-wider font-mono">🏡 Caisse Maison</span>
                         <div class="text-2xl font-black text-orange-900 my-2 font-mono" id="admin-caisse-maison">0 CDF</div>
-                        <span class="text-[9px] text-orange-600 font-semibold block">Commissions Canapés, Tapis, Vitres</span>
+                        <span class="text-[9px] text-orange-600 font-semibold block">Canapés, Tapis, Vitres, Sols</span>
                     </div>
 
                     <!-- CAISSE 3D & VIDANGE -->
                     <div class="bg-emerald-50/70 border-2 border-emerald-300 rounded-2xl p-5 text-center shadow-xs">
                         <span class="text-[10px] font-black text-emerald-800 block uppercase tracking-wider font-mono">🌱 Caisse 3D & Vidange</span>
                         <div class="text-2xl font-black text-emerald-900 my-2 font-mono" id="admin-caisse-env">0 CDF</div>
-                        <span class="text-[9px] text-emerald-600 font-semibold block">Commissions Traitement 3D & Fosses</span>
+                        <span class="text-[9px] text-emerald-600 font-semibold block">Traitement 3D & Fosses</span>
                     </div>
                 </div>
 
@@ -699,7 +699,6 @@
                 <div><span class="text-slate-500 font-bold">Conditions terrain :</span> <span id="dtl-order-logistics" class="font-semibold text-aqua"></span></div>
             </div>
 
-            <!-- Grille Financière avec Commissions par Axe -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
                 <div class="bg-sky-50 p-3 rounded-xl border border-sky-200">
                     <span class="text-[10px] text-sky-800 uppercase font-bold block">Montant Brut Facturé</span>
@@ -768,7 +767,7 @@
         </div>
     </footer>
 
-    <!-- LOGIQUE JAVASCRIPT : AFFECTATION STRICTE PAR AXE -->
+    <!-- LOGIQUE JAVASCRIPT & AFFECTATION STRICTE DES CAISSES -->
     <script>
         const SUPABASE_URL = "https://vbriworyscymnmtzzdny.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZicml3b3J5c2N5bW5tdHp6ZG55Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzNzQwNTEsImV4cCI6MjEwMzk1MDA1MX0.VBZupVKj0srae0NT5BNZ0OeaIv9pAl2bl5L-Rd8ocJk";
@@ -853,10 +852,8 @@
             document.getElementById('admin-auth-screen').classList.add('hidden');
             document.getElementById('admin-dashboard-screen').classList.remove('hidden');
             document.getElementById('btn-lock-session').classList.remove('hidden');
-            loadSupabaseOrders();
-            loadSupabasePartners();
-            loadSupabaseRecharges();
-            loadPublishedCgu();
+            document.getElementById('btn-global-refresh').classList.remove('hidden');
+            refreshAllAppData();
             renderCommunesTable();
             renderAdminUsersTable();
         }
@@ -866,6 +863,7 @@
             document.getElementById('admin-dashboard-screen').classList.add('hidden');
             document.getElementById('admin-auth-screen').classList.remove('hidden');
             document.getElementById('btn-lock-session').classList.add('hidden');
+            document.getElementById('btn-global-refresh').classList.add('hidden');
             document.getElementById('admin-login-input').value = '';
             document.getElementById('admin-pass-input').value = '';
             showToast("Session verrouillée.", "info");
@@ -898,28 +896,52 @@
         }
 
         // =========================================================================
-        // ATTRIBUTION STRICTE PAR COMMANDE À SA CAISSE PROPRE
+        // FONCTION ACTUALISATION GLOBALE DE L'APPLICATION
+        // =========================================================================
+        async function refreshAllAppData() {
+            const icon = document.getElementById('global-refresh-icon');
+            if (icon) icon.classList.add('animate-spin');
+
+            await Promise.all([
+                loadSupabaseOrders(),
+                loadSupabasePartners(),
+                loadSupabaseRecharges(),
+                loadPublishedCgu()
+            ]);
+
+            if (icon) setTimeout(() => icon.classList.remove('animate-spin'), 600);
+            showToast("Application et caisses synchronisées avec Supabase !", "success");
+        }
+
+        // =========================================================================
+        // DÉTECTION RIGOUREUSE DE L'AXE (CORRECTION DIRECTE MAISON)
         // =========================================================================
         function determinerAxeCommande(order) {
-            const desc = (order.description || '').toLowerCase();
-            const axe = (order.axe || '').toLowerCase();
-
-            // Mots clés formels Maison
-            const hasMaison = axe.includes('maison') || desc.includes('tapis') || desc.includes('canapé') || desc.includes('vitre') || desc.includes('carreaux') || desc.includes('moquette') || desc.includes('matelas') || desc.includes('baie') || desc.includes('panneau');
+            // Nettoyage et normalisation des accents et de la casse
+            const normalize = str => (str || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
             
-            // Mots clés formels 3D & Vidange
-            const hasEnv = axe.includes('3d') || axe.includes('vidange') || desc.includes('fosse') || desc.includes('immondices') || desc.includes('désinfection') || desc.includes('dératisation') || desc.includes('désinsectisation');
-            
-            // Mots clés formels Automobile
-            const hasAuto = axe.includes('auto') || desc.includes('berline') || desc.includes('suv') || desc.includes('moto') || desc.includes('bus') || desc.includes('remorque') || desc.includes('poids lourd') || desc.includes('châssis') || desc.includes('moteur');
+            const desc = normalize(order.description);
+            const axe = normalize(order.axe);
 
+            // Mots-clés déterminants pour chaque secteur
+            const hasMaison = axe.includes('maison') || desc.includes('tapis') || desc.includes('canape') || desc.includes('vitre') || desc.includes('carreau') || desc.includes('moquette') || desc.includes('matelas') || desc.includes('baie') || desc.includes('panneau');
+            const hasEnv = axe.includes('3d') || axe.includes('vidange') || desc.includes('fosse') || desc.includes('immondice') || desc.includes('desinfection') || desc.includes('deratisation') || desc.includes('desinsectisation');
+            const hasAuto = axe.includes('auto') || desc.includes('berline') || desc.includes('suv') || desc.includes('moto') || desc.includes('bus') || desc.includes('remorque') || desc.includes('poids lourd') || desc.includes('chassis') || desc.includes('moteur');
+
+            // 1. Si spécifique
             if (hasMaison && !hasAuto && !hasEnv) return 'maison';
             if (hasEnv && !hasAuto && !hasMaison) return 'env';
             if (hasAuto && !hasMaison && !hasEnv) return 'auto';
 
-            // Si mixte ou axe explicite
+            // 2. Par priorité sur le champ axe
             if (axe.includes('maison') && !axe.includes('auto')) return 'maison';
-            if (axe.includes('3d') && !axe.includes('auto')) return 'env';
+            if (axe.includes('3d') || axe.includes('vidange')) return 'env';
+            if (axe.includes('auto')) return 'auto';
+
+            // 3. Analyse du texte du panier si multi-axe
+            if (desc.includes('tapis') || desc.includes('canape') || desc.includes('vitre')) return 'maison';
+            if (desc.includes('fosse') || desc.includes('desinfection')) return 'env';
+
             return 'auto';
         }
 
@@ -939,13 +961,14 @@
             }
         }
 
-        // REMPLISSAGE STRICT ET INTÉGRAL DE CHAQUE CAISSE SANS DIVISION
+        // VENTILATION DES CAISSES (ALIMENTATION AUTOMATIQUE DES CAISSES RESPECTIVES)
         function ventilerCaissesActivites() {
             let cAuto = 0;
             let cMaison = 0;
             let cEnv = 0;
 
             state.orders.forEach(o => {
+                // S'applique aux commandes validées (Acceptée ou Terminée)
                 if (o.status === 'Acceptée' || o.status === 'Terminée') {
                     const com = Number(o.commission || 0);
                     const axe = determinerAxeCommande(o);
@@ -960,7 +983,6 @@
                 }
             });
 
-            // La Caisse Centrale est le cumul des 3 caisses
             const totalCentral = cAuto + cMaison + cEnv;
 
             state.caisses.centrale = totalCentral;
@@ -1269,7 +1291,11 @@
                 ordersInCommune.forEach(o => {
                     brutCommune += Number(o.total_amount || 0);
                     if (o.status === 'Acceptée' || o.status === 'Terminée') {
-                        comCommune += Number(o.commission || 0);
+                        const axe = determinerAxeCommande(o);
+                        if (filtreAxe === "Auto" && axe === 'auto') comCommune += Number(o.commission || 0);
+                        else if (filtreAxe === "Maison" && axe === 'maison') comCommune += Number(o.commission || 0);
+                        else if (filtreAxe === "3D" && axe === 'env') comCommune += Number(o.commission || 0);
+                        else if (filtreAxe === "Tous") comCommune += Number(o.commission || 0);
                     }
                 });
 
