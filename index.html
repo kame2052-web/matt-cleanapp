@@ -42,10 +42,8 @@
 </head>
 <body class="bg-navy-900 text-slate-100 min-h-screen watermark-bg font-sans flex flex-col justify-between select-none">
 
-    <!-- Toast Notifications -->
     <div id="toast-container" class="fixed top-4 inset-x-4 z-[9999] flex flex-col gap-2 max-w-sm mx-auto pointer-events-none"></div>
 
-    <!-- En-tête -->
     <header class="bg-navy-800/95 border-b border-aqua/30 px-4 py-3 md:px-8 flex justify-between items-center sticky top-0 z-40 backdrop-blur-md shadow-lg w-full">
         <div class="flex items-center gap-2.5 cursor-pointer" onclick="showView('view-gateway')">
             <div class="w-11 h-11 bg-white rounded-2xl shadow-md border border-aqua/30 p-1 flex items-center justify-center flex-shrink-0">
@@ -68,10 +66,9 @@
         </div>
     </header>
 
-    <!-- Conteneur Plein Écran -->
     <main class="w-full px-3 py-4 md:px-8 md:py-6 flex-grow flex flex-col justify-start">
 
-        <!-- 1. ACCUEIL ÉPURÉ -->
+        <!-- 1. ACCUEIL -->
         <div id="view-gateway" class="w-full max-w-4xl mx-auto space-y-8 animate-fade-in my-auto py-8">
             <div class="text-center space-y-4">
                 <div class="inline-block w-28 h-28 md:w-32 md:h-32 bg-white rounded-3xl p-2 shadow-2xl border-2 border-aqua/40">
@@ -229,7 +226,7 @@
             </div>
         </div>
 
-        <!-- 4. ESPACE CLIENT CONNECTÉ (PLEIN ÉCRAN) -->
+        <!-- 4. ESPACE CLIENT CONNECTÉ -->
         <div id="view-client-app" class="w-full bg-white text-slate-800 rounded-3xl p-5 md:p-8 shadow-2xl hidden animate-fade-in space-y-6">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b pb-4">
                 <div>
@@ -249,7 +246,6 @@
                 <button onclick="switchClientTab('client-info-support')" id="tab-btn-client-info-support" class="flex-1 min-w-[130px] py-3 font-bold border-b-2 border-transparent text-slate-500">ℹ️ Infos & CGU</button>
             </div>
 
-            <!-- Sous-onglet 1 : Composer la commande -->
             <div id="client-compose" class="space-y-6">
                 <div class="bg-slate-50 border border-slate-200 p-4 rounded-2xl">
                     <span class="text-[11px] font-black text-navy-800 uppercase block mb-2">👤 Coordonnées du Demandeur</span>
@@ -259,7 +255,6 @@
                     </div>
                 </div>
 
-                <!-- Axe Auto & Options -->
                 <div class="border rounded-2xl p-5 bg-white shadow-sm space-y-4">
                     <div class="flex justify-between items-center border-b pb-2">
                         <h3 class="text-sm font-black text-navy-800 uppercase flex items-center gap-2">
@@ -270,7 +265,6 @@
                     <div id="vehicle-catalog" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
                 </div>
 
-                <!-- Axe Maison & Surfaces -->
                 <div class="border rounded-2xl p-5 bg-white shadow-sm space-y-4">
                     <div class="flex justify-between items-center border-b pb-2">
                         <h3 class="text-sm font-black text-navy-800 uppercase flex items-center gap-2">
@@ -333,7 +327,6 @@
                     </div>
                 </div>
 
-                <!-- Axe Environnement 3D & Vidange -->
                 <div class="border rounded-2xl p-5 bg-white shadow-sm space-y-4">
                     <div class="flex justify-between items-center border-b pb-2">
                         <h3 class="text-sm font-black text-navy-800 uppercase flex items-center gap-2">
@@ -369,7 +362,6 @@
                     </div>
                 </div>
 
-                <!-- Logistique & Planification -->
                 <div class="bg-slate-50 border rounded-2xl p-5 space-y-4 text-xs">
                     <div class="flex justify-between items-center border-b pb-2">
                         <span class="text-xs font-black text-navy-800 uppercase">⚡ Logistique Terrain & Localisation</span>
@@ -422,7 +414,6 @@
                     </div>
                 </div>
 
-                <!-- Récapitulatif et validation -->
                 <div class="bg-navy-900 text-white p-5 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl border border-aqua/30">
                     <div>
                         <span class="text-xs text-slate-400 font-bold uppercase block">Montant Total Estimé :</span>
@@ -434,7 +425,6 @@
                 </div>
             </div>
 
-            <!-- Sous-onglet 2 : Historique Client -->
             <div id="client-tracking" class="hidden space-y-4">
                 <div class="flex justify-between items-center border-b pb-2">
                     <span class="text-sm font-black uppercase text-navy-800">Historique des Commandes</span>
@@ -443,7 +433,6 @@
                 <div id="client-orders-tracking-list" class="space-y-3"></div>
             </div>
 
-            <!-- Sous-onglet 3 : Support & CGU Client -->
             <div id="client-info-support" class="hidden space-y-5 text-xs">
                 <div class="border rounded-2xl p-5 bg-slate-50 space-y-3">
                     <div class="flex items-center gap-3">
@@ -484,12 +473,12 @@
             </div>
         </div>
 
-        <!-- 5. ESPACE PARTENAIRE CONNECTÉ (AVEC CHIFFRE D'AFFAIRES & PÉRIODES) -->
+        <!-- 5. ESPACE PARTENAIRE CONNECTÉ -->
         <div id="view-partner-app" class="w-full bg-white text-slate-800 rounded-3xl p-5 md:p-8 shadow-2xl hidden animate-fade-in space-y-6">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b pb-4">
                 <div>
                     <h2 class="text-xl font-black text-navy-800 flex items-center gap-2">
-                        <span>👤</span> <span id="partner-dashboard-name">MATT</span>
+                        <span>👤</span> <span id="partner-dashboard-name">MASTER</span>
                     </h2>
                     <span id="partner-dashboard-meta" class="text-xs text-slate-500 font-semibold block mt-0.5">Lavage auto - Bandalungwa</span>
                 </div>
@@ -525,16 +514,24 @@
                 </button>
             </div>
 
-            <!-- SOUS-ONGLET 1 : MISSIONS DISPONIBLES -->
+            <!-- SOUS-ONGLET 1 : MISSIONS DISPONIBLES (AFFICHAGE MULTI-LIGNES GARANTI) -->
             <div id="partner-tab-missions" class="partner-subview space-y-4">
                 <div class="flex justify-between items-center">
-                    <span class="text-xs font-black uppercase text-navy-800">Missions Disponibles dans votre Secteur</span>
-                    <button onclick="loadPartnerMissions()" class="text-xs text-sky-600 font-bold hover:underline">Actualiser 🔄</button>
+                    <span class="text-xs font-black uppercase text-navy-800 tracking-wider">MISSIONS DISPONIBLES DANS VOTRE SECTEUR</span>
+                    <button id="btn-refresh-missions" onclick="loadPartnerMissions()" class="px-3 py-1.5 bg-sky-50 text-sky-700 hover:bg-sky-100 rounded-xl text-xs font-black transition flex items-center gap-1.5 border border-sky-200">
+                        <span id="refresh-icon" class="inline-block transition-transform">🔄</span> Actualiser
+                    </button>
                 </div>
-                <div id="partner-missions-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+
+                <!-- Grille dynamique extensible sans limite -->
+                <div id="partner-missions-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 min-h-[160px]">
+                    <div class="col-span-full p-12 text-center text-slate-400 font-medium">
+                        Aucune mission disponible dans votre secteur.
+                    </div>
+                </div>
             </div>
 
-            <!-- SOUS-ONGLET 2 : SUIVI DU CHIFFRE D'AFFAIRES & PÉRIODES (FIDÈLE À LA MAQUETTE) -->
+            <!-- SOUS-ONGLET 2 : SUIVI DU CHIFFRE D'AFFAIRES & PÉRIODES -->
             <div id="partner-tab-ca" class="partner-subview hidden space-y-6">
                 <div>
                     <h3 class="text-base font-black text-navy-800 uppercase flex items-center gap-2">
@@ -545,7 +542,6 @@
                     </p>
                 </div>
 
-                <!-- Filtrage par période -->
                 <div class="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex flex-wrap items-end gap-3 text-xs">
                     <div>
                         <label class="text-[10px] font-black text-slate-600 uppercase block mb-1">DATE DE DÉBUT :</label>
@@ -563,7 +559,6 @@
                     </button>
                 </div>
 
-                <!-- 4 Boîtes statistiques de CA -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div class="bg-white border-2 border-slate-100 rounded-2xl p-5 shadow-xs">
                         <span class="text-[10px] font-black text-slate-400 uppercase tracking-wider block">COURSES EFFECTUÉES</span>
@@ -583,7 +578,6 @@
                     </div>
                 </div>
 
-                <!-- Tableau détaillé des prestations de la période -->
                 <div class="space-y-3">
                     <div class="flex justify-between items-center text-xs">
                         <span class="font-black text-navy-800 uppercase">Détail des Prestations de la Période Sélectionnée</span>
@@ -616,7 +610,7 @@
                 </div>
             </div>
 
-            <!-- SOUS-ONGLET 3 : PORTEFEUILLE & FORFAIT -->
+            <!-- SOUS-ONGLET 3 : PORTEFEUILLE (NUMÉROS INDIVIDUALISÉS LIGNE PAR LIGNE) -->
             <div id="partner-tab-wallet" class="partner-subview hidden space-y-5">
                 <div class="bg-sky-50 border border-aqua/40 rounded-3xl p-6 text-center max-w-xl mx-auto">
                     <span class="text-[10px] text-slate-500 font-black uppercase tracking-wider block" id="partner-solde-label">Solde Commission Disponible</span>
@@ -631,18 +625,41 @@
                         <option value="mensuel">Forfait Mois Illimité (150 000 CDF)</option>
                     </select>
 
-                    <div class="bg-white p-3.5 rounded-xl border text-xs space-y-1.5">
-                        <span class="font-bold text-slate-500 block uppercase text-[10px]">Comptes Mobiles Officiels MATT SARL :</span>
-                        <div class="text-slate-800">📱 M-Pesa / Orange / Airtel : <b class="font-mono text-navy-800 font-black">+243980000338</b></div>
+                    <!-- COMPTES MOBILES SÉPARÉS SUR PROPRES LIGNES -->
+                    <div class="bg-white p-4 rounded-2xl border space-y-2">
+                        <span class="font-black text-slate-700 block uppercase text-[10px] tracking-wider mb-1">
+                            COMPTES MOBILES OFFICIELS MATT SARL :
+                        </span>
+                        
+                        <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                            <span class="font-bold text-slate-700 flex items-center gap-2">
+                                <span>📱</span> M-Pesa :
+                            </span>
+                            <b class="font-mono text-navy-800 text-sm font-black">+243 980 000 338</b>
+                        </div>
+
+                        <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                            <span class="font-bold text-slate-700 flex items-center gap-2">
+                                <span>📱</span> Orange Money :
+                            </span>
+                            <b class="font-mono text-navy-800 text-sm font-black">+243 980 000 338</b>
+                        </div>
+
+                        <div class="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+                            <span class="font-bold text-slate-700 flex items-center gap-2">
+                                <span>📱</span> Airtel Money :
+                            </span>
+                            <b class="font-mono text-navy-800 text-sm font-black">+243 980 000 338</b>
+                        </div>
                     </div>
 
-                    <input type="number" id="p-recharge-amount" placeholder="Montant en CDF" class="w-full p-3 border rounded-xl font-bold text-xs bg-white">
-                    <input type="text" id="p-recharge-ref" placeholder="Réf Mobile Money (ex: TX12345)" class="w-full p-3 border rounded-xl font-mono text-xs bg-white">
+                    <input type="number" id="p-recharge-amount" placeholder="Montant déposé (CDF)" class="w-full p-3 border rounded-xl font-bold text-xs bg-white">
+                    <input type="text" id="p-recharge-ref" placeholder="Référence de transaction (ex: TX12345)" class="w-full p-3 border rounded-xl font-mono text-xs bg-white">
                     <button onclick="sendRechargeDeclaration()" class="w-full py-3.5 bg-mattOrange hover:bg-orange-600 text-white font-black rounded-xl uppercase text-xs transition shadow">
-                        Déclarer le Paiement
+                        TRANSMETTRE LA DÉCLARATION
                     </button>
-                    <a href="https://wa.me/243980000338?text=Preuve%20de%20dépôt%20MATT" target="_blank" class="w-full py-3 bg-whatsapp hover:bg-green-600 text-white font-bold rounded-xl text-center block text-xs transition shadow">
-                        📲 Envoyer la preuve sur WhatsApp (+243 980 000 338)
+                    <a href="https://wa.me/243980000338?text=Bonjour%20MATT,%20je%20viens%20d'effectuer%20un%20dépôt%20de%20recharge." target="_blank" class="w-full py-3 bg-whatsapp hover:bg-green-600 text-white font-black rounded-xl text-center block text-xs transition shadow flex items-center justify-center gap-2">
+                        <span>📲</span> Envoyer la preuve sur WhatsApp
                     </a>
                 </div>
             </div>
@@ -650,7 +667,7 @@
             <!-- SOUS-ONGLET 4 : MES COURSES & CLÔTURE -->
             <div id="partner-tab-courses" class="partner-subview hidden space-y-4">
                 <span class="text-xs font-black uppercase text-navy-800 block">Courses Acceptées & Clôture</span>
-                <div id="partner-accepted-courses-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                <div id="partner-accepted-courses-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
             </div>
 
             <!-- SOUS-ONGLET 5 : SÉCURITÉ & PROFIL -->
@@ -714,7 +731,6 @@
 
     </main>
 
-    <!-- Footer Institutionnel -->
     <footer class="border-t border-slate-800/80 bg-navy-800/80 py-4 text-center text-xs text-slate-400 mt-auto">
         <div class="container mx-auto px-4 space-y-1">
             <div class="flex flex-wrap justify-center items-center gap-x-4 gap-y-1 text-[11px] text-slate-300 font-semibold">
@@ -727,8 +743,7 @@
         </div>
     </footer>
 
-    <!-- MODALE DE NOTATION -->
-    <div id="modal-rating" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
+    <div id="modal-rating" class="fixed inset-0 bg-slate-955/70 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
         <div class="bg-white text-slate-900 w-full max-w-sm rounded-3xl p-6 space-y-4 relative text-xs shadow-2xl">
             <button onclick="closeRatingModal()" class="absolute top-4 right-4 text-slate-400 font-bold text-lg">✕</button>
             <h3 class="text-sm font-black text-navy-800">⭐ Noter la course #<span id="rating-order-id"></span></h3>
@@ -746,7 +761,6 @@
         </div>
     </div>
 
-    <!-- LOGIQUE JAVASCRIPT ET CONNECTEURS SUPABASE -->
     <script>
         const SUPABASE_URL = "https://vbriworyscymnmtzzdny.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZicml3b3J5c2N5bW5tdHp6ZG55Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzNzQwNTEsImV4cCI6MjEwMzk1MDA1MX0.VBZupVKj0srae0NT5BNZ0OeaIv9pAl2bl5L-Rd8ocJk";
@@ -817,7 +831,7 @@
             const container = document.getElementById('toast-container');
             if (!container) return;
             const toast = document.createElement('div');
-            let bg = type === "error" ? "bg-red-600" : "bg-green-600";
+            let bg = type === "error" ? "bg-red-600" : (type === "info" ? "bg-sky-600" : "bg-green-600");
             toast.className = `${bg} text-white px-4 py-2.5 rounded-2xl shadow-2xl flex items-center justify-between gap-3 text-xs font-bold pointer-events-auto transition-all`;
             toast.innerHTML = `<span>${message}</span><button onclick="this.parentElement.remove()" class="text-white font-black">✕</button>`;
             container.appendChild(toast);
@@ -876,9 +890,6 @@
             calculerTotal();
         }
 
-        // ==========================================
-        // SYNCHRONISATION CGU SUPABASE
-        // ==========================================
         async function fetchPublishedCgu() {
             const { data } = await db.from('system_settings').select('value').eq('key', 'cgu_content').single();
             const text = data && data.value ? data.value.split('\n\n').map(p => {
@@ -903,9 +914,6 @@
                 .subscribe();
         }
 
-        // ==========================================
-        // AUTHENTIFICATION CLIENT & PARTENAIRE
-        // ==========================================
         async function registerClient() {
             const name = document.getElementById('auth-client-reg-name').value.trim();
             const phone = document.getElementById('auth-client-reg-phone').value.trim();
@@ -996,7 +1004,6 @@
             showToast("Vous avez été déconnecté.", "info");
         }
 
-        // Modification profil prestataire
         async function savePartnerProfileUpdate() {
             if (!session.user) return;
             const newName = document.getElementById('partner-edit-name').value.trim();
@@ -1025,9 +1032,6 @@
             showToast("Identifiants mis à jour !");
         }
 
-        // ==========================================
-        // VÉHICULES ET CALCUL DU PANIER
-        // ==========================================
         function updateVehicleCount(vid, delta) {
             clientVehiculeSelection[vid] = Math.max(0, (clientVehiculeSelection[vid] || 0) + delta);
             document.getElementById(`qty-${vid}`).innerText = clientVehiculeSelection[vid];
@@ -1087,9 +1091,6 @@
             return total;
         }
 
-        // ==========================================
-        // VALIDATION DE COMMANDE
-        // ==========================================
         async function passerCommande() {
             const client_name = document.getElementById('client-name-input').value.trim();
             const client_phone = document.getElementById('client-phone-input').value.trim();
@@ -1232,9 +1233,6 @@
             detectClientOrders();
         }
 
-        // ==========================================
-        // GESTION MISSIONS PARTENAIRE
-        // ==========================================
         function switchPartnerTab(tabId, btn) {
             document.querySelectorAll('.partner-subview').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('.partner-tab-btn').forEach(b => {
@@ -1254,33 +1252,49 @@
             input.value = mode === 'journalier' ? 15000 : (mode === 'mensuel' ? 150000 : '');
         }
 
+        // CHARGEMENT FIABLE DES MISSIONS AVEC FEEDBACK VISUEL
         async function loadPartnerMissions() {
-            const { data } = await db.from('orders').select('*').eq('status', 'En attente').order('id', { ascending: false });
+            const btn = document.getElementById('btn-refresh-missions');
+            const icon = document.getElementById('refresh-icon');
+            if (icon) icon.classList.add('animate-spin');
+            if (btn) btn.disabled = true;
+
+            const { data, error } = await db.from('orders').select('*').eq('status', 'En attente').order('id', { ascending: false });
             const container = document.getElementById('partner-missions-container');
             container.innerHTML = '';
 
+            if (icon) icon.classList.remove('animate-spin');
+            if (btn) btn.disabled = false;
+
+            if (error) {
+                showToast("Erreur de connexion : " + error.message, "error");
+                container.innerHTML = `<p class="text-xs text-red-500 text-center py-8 col-span-full font-bold">Impossible de joindre le serveur. Vérifiez votre connexion.</p>`;
+                return;
+            }
+
             if (!data || data.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-8 col-span-2">Aucune mission disponible dans votre secteur.</p>`;
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-12 col-span-full font-medium">Aucune mission disponible dans votre secteur.</p>`;
+                showToast("Fil des missions à jour (0 nouvelle course).", "info");
                 return;
             }
 
             data.forEach(o => {
                 container.innerHTML += `
-                    <div class="p-4 border rounded-2xl bg-white space-y-2.5 text-xs shadow-sm">
+                    <div class="p-4 border border-slate-200 hover:border-aqua rounded-2xl bg-white space-y-3 text-xs shadow-sm transition">
                         <div class="flex justify-between items-start">
                             <div>
-                                <b class="text-navy-800 uppercase text-sm">${o.commune}</b>
-                                <span class="text-[10px] text-slate-500 block">${o.date} à ${o.time}</span>
+                                <b class="text-navy-800 uppercase text-sm font-black">${o.commune}</b>
+                                <span class="text-[10px] text-slate-500 block font-medium">${o.date} à ${o.time}</span>
                             </div>
                             <div class="text-right font-mono">
                                 <span class="font-black text-navy-800 text-base">${Number(o.total_amount).toLocaleString('fr-FR')} CDF</span>
                                 <span class="block text-[10px] text-mattOrange font-bold">Commission : ${Number(o.commission).toLocaleString('fr-FR')} CDF</span>
                             </div>
                         </div>
-                        <div class="bg-slate-50 p-2.5 rounded-xl border text-[11px] text-slate-600">
-                            <b>Prestations :</b> ${o.description}<br>
-                            <b>Logistique :</b> <span class="text-aqua font-bold">${o.logistics || 'SNEL / REGIDESO'}</span><br>
-                            <b>Repère :</b> ${o.reference || 'Aucun'}
+                        <div class="bg-slate-50 p-3 rounded-xl border text-[11px] text-slate-700 space-y-1">
+                            <div><b>Prestations :</b> ${o.description}</div>
+                            <div><b>Logistique :</b> <span class="text-aqua font-black">${o.logistics || 'SNEL / REGIDESO'}</span></div>
+                            <div><b>Repère :</b> ${o.reference || 'Aucun'}</div>
                         </div>
                         <button onclick="accepterMission(${o.id}, ${o.commission})" class="w-full py-2.5 bg-mattOrange active:bg-orange-600 text-white rounded-xl font-black uppercase text-xs shadow transition">
                             Accepter la course (${Number(o.commission).toLocaleString('fr-FR')} CDF)
@@ -1288,6 +1302,8 @@
                     </div>
                 `;
             });
+
+            showToast(`${data.length} course(s) disponible(s) actualisée(s) !`, "success");
         }
 
         async function loadPartnerAcceptedCourses() {
@@ -1321,9 +1337,6 @@
             renderPartnerCA();
         }
 
-        // ==========================================
-        // SUIVI FINANCIER & CA PARTENAIRE
-        // ==========================================
         function renderPartnerCA(filteredOrders = null) {
             const orders = filteredOrders || partnerAllOrders.filter(o => o.status === 'Terminée');
             let totalBrut = 0;
@@ -1379,9 +1392,7 @@
             const start = document.getElementById('ca-date-start').value;
             const end = document.getElementById('ca-date-end').value;
 
-            if (!start && !end) {
-                return renderPartnerCA();
-            }
+            if (!start && !end) return renderPartnerCA();
 
             const filtered = partnerAllOrders.filter(o => {
                 if (o.status !== 'Terminée') return false;
@@ -1415,7 +1426,7 @@
 
             session.user.wallet = newWallet;
             document.getElementById('partner-wallet-balance').innerText = `${newWallet.toLocaleString('fr-FR')} CDF`;
-            showToast("Mission acceptée ! Coordonnées client débloquées.");
+            showToast("Mission acceptée ! Coordonnées débloquées.");
             loadPartnerMissions();
             loadPartnerAcceptedCourses();
         }
@@ -1459,7 +1470,6 @@
                 if (selectPartnerEdit) selectPartnerEdit.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
             });
 
-            // Génération dynamique des véhicules et tiroirs d'options
             const vCat = document.getElementById('vehicle-catalog');
             typesVehicules.forEach(v => {
                 clientVehiculeSelection[v.id] = 0;
