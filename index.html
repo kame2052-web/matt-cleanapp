@@ -67,7 +67,7 @@
     </header>
 
     <!-- Conteneur Principal -->
-    <main class="w-full px-3 py-4 md:px-8 md:py-6 flex-grow flex flex-col justify-start">
+    <main class="w-full px-2 py-3 sm:px-6 sm:py-5 flex-grow flex flex-col justify-start">
 
         <!-- 1. ACCUEIL -->
         <div id="view-gateway" class="w-full max-w-4xl mx-auto space-y-8 animate-fade-in my-auto py-8">
@@ -213,12 +213,11 @@
                 <div>
                     <label class="text-[10px] font-bold text-slate-600 block uppercase">Spécialité</label>
                     <select id="p-reg-specialty" class="w-full px-3.5 py-2.5 border rounded-xl text-xs text-slate-800 font-bold bg-white">
-                        <option>Lavage auto & Engins</option>
-                        <option>Maison (Canapés, Vitres, Tapis)</option>
-                        <option>Polyvalent Auto et Maison</option>
-                        <option>Assainissement & Traitement 3D</option>
-                        <option>Évacuation des immondices</option>
-                        <option>Vidange fosse septique</option>
+                        <option value="Polyvalent Auto et Maison">Polyvalent (Auto et Maison)</option>
+                        <option value="Lavage auto & Engins">Lavage auto & Engins</option>
+                        <option value="Maison (Canapés, Vitres, Tapis)">Maison (Canapés, Vitres, Tapis)</option>
+                        <option value="Assainissement & Traitement 3D">Assainissement & Traitement 3D</option>
+                        <option value="Vidange fosse septique">Vidange fosse septique & Immondices</option>
                     </select>
                 </div>
                 <button onclick="registerPartner()" class="w-full py-3.5 bg-navy-800 text-white font-bold text-xs rounded-xl uppercase tracking-wide mt-2">Soumettre mon dossier</button>
@@ -253,12 +252,12 @@
                         <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Logistique</span>
                     </button>
 
-                    <button type="button" onclick="openFullscreenClientAxis('axis-tracking')" class="relative p-3 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
+                    <button type="button" onclick="openFullscreenClientAxis('axis-tracking')" class="relative p-3 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm aspect-square">
                         <span class="text-3xl sm:text-4xl">📋</span>
                         <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Mes Commandes</span>
                     </button>
 
-                    <button type="button" onclick="openFullscreenClientAxis('axis-contact')" class="relative p-3 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
+                    <button type="button" onclick="openFullscreenClientAxis('axis-contact')" class="relative p-3 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm aspect-square">
                         <span class="text-3xl sm:text-4xl">📞</span>
                         <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Contact</span>
                     </button>
@@ -276,7 +275,7 @@
                 </div>
             </div>
 
-            <!-- VUE 2 : CONTENEURS PLEIN ÉCRAN AU CLIC (CLIENT) -->
+            <!-- CONTENEURS PLEIN ÉCRAN CLIENT -->
             <div id="client-fullscreen-axis" class="hidden space-y-4 animate-fade-in flex-grow flex flex-col justify-start">
                 <div class="flex items-center gap-2 bg-slate-50 p-2 rounded-2xl border border-slate-200 flex-nowrap overflow-hidden">
                     <button type="button" onclick="closeFullscreenClientAxis()" class="w-8 h-8 flex-shrink-0 bg-navy-800 hover:bg-navy-900 text-white text-base font-black rounded-xl flex items-center justify-center shadow transition active:scale-95">
@@ -285,12 +284,10 @@
                     <span id="client-axis-fullscreen-title" class="text-[10px] sm:text-xs font-black text-navy-800 uppercase tracking-tight truncate flex-1 min-w-0"></span>
                 </div>
 
-                <!-- Section Automobile -->
                 <div id="axis-auto" class="client-axis-view hidden border rounded-2xl p-4 bg-white shadow-sm space-y-3">
                     <div id="vehicle-catalog" class="grid grid-cols-1 md:grid-cols-2 gap-2.5"></div>
                 </div>
 
-                <!-- Section Maison -->
                 <div id="axis-maison" class="client-axis-view hidden border rounded-2xl p-4 bg-white shadow-sm space-y-3">
                     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 text-xs font-bold">
                         <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Tapis (m²)</label><input type="number" id="m2-tapis" placeholder="0" class="w-full p-2 border rounded-xl" oninput="calculerTotal()"></div>
@@ -313,7 +310,6 @@
                     </div>
                 </div>
 
-                <!-- Section 3D & Vidange -->
                 <div id="axis-env" class="client-axis-view hidden border rounded-2xl p-4 bg-white shadow-sm space-y-3">
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs font-bold">
                         <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Désinfection (pièces)</label><input type="number" id="qty-desinfection" placeholder="0" class="w-full p-2 border rounded-xl" oninput="calculerTotal()"></div>
@@ -322,7 +318,7 @@
                     </div>
                     <div class="border-t pt-2 grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs font-bold">
                         <div class="bg-orange-50/60 p-2.5 rounded-xl border border-orange-200">
-                            <label class="text-[11px] font-black text-mattOrange uppercase block mb-1">🗑️ Évacuation Immondices (m³)</label>
+                            <label class="text-[10px] font-black text-mattOrange uppercase block mb-1">🗑️ Évacuation Immondices (m³)</label>
                             <input type="number" id="vol-immondices" placeholder="Volume en m³" class="w-full p-2 bg-white border rounded-xl font-bold" oninput="calculerTotal()">
                         </div>
                         <div class="bg-sky-50/60 p-2.5 rounded-xl border border-sky-200">
@@ -332,7 +328,6 @@
                     </div>
                 </div>
 
-                <!-- Section Logistique -->
                 <div id="axis-logistics" class="client-axis-view hidden bg-slate-50 border rounded-2xl p-4 space-y-3 text-xs">
                     <div class="bg-white p-3 rounded-xl border border-slate-200 space-y-2">
                         <span class="text-[10px] font-black text-navy-800 uppercase block">👤 Demandeur :</span>
@@ -398,7 +393,6 @@
                     </div>
                 </div>
 
-                <!-- Section Mes Commandes -->
                 <div id="axis-tracking" class="client-axis-view hidden space-y-3">
                     <div class="flex justify-between items-center border-b pb-2">
                         <span class="text-xs font-black uppercase text-navy-800">Mes Commandes</span>
@@ -407,7 +401,6 @@
                     <div id="client-orders-tracking-list" class="space-y-2.5"></div>
                 </div>
 
-                <!-- Section Contact -->
                 <div id="axis-contact" class="client-axis-view hidden space-y-3">
                     <div class="grid grid-cols-3 gap-2 text-center">
                         <button type="button" onclick="switchContactTab('cnt-about', this)" class="contact-tab-btn p-2.5 rounded-2xl border-2 border-mattOrange bg-orange-50/70 text-mattOrange font-black text-xs flex flex-col items-center gap-1 shadow-xs">
@@ -603,7 +596,7 @@
                     </div>
                 </div>
 
-                <!-- Portefeuille (Avec bouton d'actualisation de solde direct) -->
+                <!-- Portefeuille -->
                 <div id="partner-tab-wallet" class="partner-subview hidden space-y-5">
                     <div class="bg-sky-50 border border-aqua/40 rounded-3xl p-6 text-center max-w-xl mx-auto relative">
                         <button onclick="refreshPartnerWallet()" type="button" class="absolute top-3 right-3 text-xs bg-white border border-aqua/40 text-aqua hover:bg-sky-100 px-2.5 py-1 rounded-xl font-bold flex items-center gap-1 shadow-xs">
@@ -621,7 +614,6 @@
                             <option value="mensuel">Forfait Mois Illimité (150 000 CDF)</option>
                         </select>
 
-                        <!-- COMPTES MOBILES AVEC ALIGNEMENT RIGOUREUX -->
                         <div class="bg-white p-4 rounded-2xl border space-y-2">
                             <span class="font-black text-slate-700 block uppercase text-[10px] tracking-wider mb-1">
                                 COMPTES MOBILES OFFICIELS MATT SARL :
@@ -656,7 +648,12 @@
 
                 <!-- Mes Courses -->
                 <div id="partner-tab-courses" class="partner-subview hidden space-y-4">
-                    <span class="text-xs font-black uppercase text-navy-800 block">Courses Acceptées & Clôture</span>
+                    <div class="flex justify-between items-center border-b pb-2">
+                        <span class="text-xs font-black uppercase text-navy-800">Courses Acceptées & Clôturées</span>
+                        <button onclick="clearCompletedCourses()" type="button" class="px-2.5 py-1 bg-red-50 hover:bg-red-100 text-red-600 border border-red-200 rounded-lg font-bold text-[10px] flex items-center gap-1">
+                            🗑️ Vider l'historique clôturé
+                        </button>
+                    </div>
                     <div id="partner-accepted-courses-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
                 </div>
 
@@ -699,7 +696,7 @@
                     </div>
                 </div>
 
-                <!-- Infos & Support (Scindé en 2 sous-icônes : Assistance & CGU) -->
+                <!-- Infos & Support -->
                 <div id="partner-tab-info-support" class="partner-subview hidden space-y-4 text-xs">
                     <div class="grid grid-cols-2 gap-2 text-center">
                         <button type="button" onclick="switchPartnerSupportTab('psup-support', this)" class="psup-subtab-btn p-2.5 rounded-2xl border-2 border-mattOrange bg-orange-50/70 text-mattOrange font-black text-xs flex flex-col items-center gap-1 shadow-xs">
@@ -904,9 +901,6 @@
             calculerTotal();
         }
 
-        // ==========================================
-        // RÉVÉLATION PLEIN ÉCRAN EXCLUSIF - CLIENT
-        // ==========================================
         function openFullscreenClientAxis(viewId) {
             document.getElementById('client-home-grid').classList.add('hidden');
             document.querySelectorAll('.client-axis-view').forEach(v => v.classList.add('hidden'));
@@ -945,9 +939,6 @@
             }
         }
 
-        // ==========================================
-        // RÉVÉLATION PLEIN ÉCRAN EXCLUSIF - PARTENAIRE
-        // ==========================================
         function openFullscreenPartnerTab(tabId) {
             document.getElementById('partner-home-column').classList.add('hidden');
             document.querySelectorAll('.partner-subview').forEach(v => v.classList.add('hidden'));
@@ -1003,9 +994,6 @@
             }
         }
 
-        // ==========================================
-        // ACTUALISATION DU SOLDE DU PORTEFEUILLE
-        // ==========================================
         async function refreshPartnerWallet() {
             if (!session.user) return;
             const { data, error } = await db.from('partners').select('wallet, billing_mode').eq('id', session.user.id).single();
@@ -1013,14 +1001,10 @@
                 session.user.wallet = data.wallet || 0;
                 session.user.billing_mode = data.billing_mode || 'commission';
                 document.getElementById('partner-wallet-balance').innerText = `${Number(data.wallet || 0).toLocaleString('fr-FR')} CDF`;
-                document.getElementById('partner-mode-badge').innerText = data.billing_mode === 'commission' ? '15% Comm.' : 'Forfait Actif';
-                showToast("Solde portefeuille synchronisé !");
+                showToast("Solde portefeuille actualisé !");
             }
         }
 
-        // ==========================================
-        // VÉHICULES ET CALCUL DU PANIER
-        // ==========================================
         function updateVehicleCount(vid, delta) {
             clientVehiculeSelection[vid] = Math.max(0, (clientVehiculeSelection[vid] || 0) + delta);
             document.getElementById(`qty-${vid}`).innerText = clientVehiculeSelection[vid];
@@ -1106,9 +1090,6 @@
             return total;
         }
 
-        // ==========================================
-        // VALIDATION DE COMMANDE GLOBALE
-        // ==========================================
         async function passerCommande() {
             const client_name = document.getElementById('client-name-input').value.trim();
             const raw_phone = document.getElementById('client-phone-input').value.trim();
@@ -1130,9 +1111,13 @@
             if (total_amount <= 0) return showToast("Votre panier est vide.", "error");
 
             let details = [];
+            let axeParts = [];
+
+            let hasAuto = false;
             typesVehicules.forEach(v => {
                 const count = clientVehiculeSelection[v.id] || 0;
                 if (count > 0) {
+                    hasAuto = true;
                     let vDesc = `${count}x ${v.label}`;
                     let vOpts = [];
                     if (v.hasOptions) {
@@ -1144,27 +1129,32 @@
                     details.push(vDesc);
                 }
             });
+            if (hasAuto) axeParts.push('Automobile');
 
-            // Maison
+            let hasMaison = false;
             const mTapis = parseFloat(document.getElementById('m2-tapis')?.value) || 0;
-            if (mTapis > 0) details.push(`Tapis (${mTapis} m²)`);
+            if (mTapis > 0) { details.push(`Tapis (${mTapis} m²)`); hasMaison = true; }
             const qCanText = parseFloat(document.getElementById('qty-canape-textile')?.value) || 0;
-            if (qCanText > 0) details.push(`Canapé Textile (${qCanText} pl.)`);
+            if (qCanText > 0) { details.push(`Canapé Textile (${qCanText} pl.)`); hasMaison = true; }
             const qCanCuir = parseFloat(document.getElementById('qty-canape-cuir')?.value) || 0;
-            if (qCanCuir > 0) details.push(`Canapé Cuir (${qCanCuir} pl.)`);
+            if (qCanCuir > 0) { details.push(`Canapé Cuir (${qCanCuir} pl.)`); hasMaison = true; }
+            const mVitres = parseFloat(document.getElementById('m2-vitres')?.value) || 0;
+            if (mVitres > 0) { details.push(`Vitres (${mVitres} m²)`); hasMaison = true; }
+            if (hasMaison) axeParts.push('Maison');
 
-            // 3D & Fosse
+            let hasEnv = false;
             const fosse = parseFloat(document.getElementById('vol-fosse')?.value) || 0;
-            if (fosse > 0) details.push(`Vidange fosse (${fosse} m³)`);
+            if (fosse > 0) { details.push(`Vidange fosse (${fosse} m³)`); hasEnv = true; }
             const immondices = parseFloat(document.getElementById('vol-immondices')?.value) || 0;
-            if (immondices > 0) details.push(`Immondices (${immondices} m³)`);
+            if (immondices > 0) { details.push(`Immondices (${immondices} m³)`); hasEnv = true; }
             const desinf = parseFloat(document.getElementById('qty-desinfection')?.value) || 0;
-            if (desinf > 0) details.push(`3D Désinfection (${desinf} pces)`);
+            if (desinf > 0) { details.push(`3D Désinfection (${desinf} pces)`); hasEnv = true; }
+            if (hasEnv) axeParts.push('Environnement 3D & Vidange');
 
             const commission = Math.floor(total_amount * 0.15);
 
             const { error } = await db.from('orders').insert([{
-                axe: 'Multi-Axes (Auto, Maison, 3D)',
+                axe: axeParts.join(' / ') || 'Multi-Axes',
                 client_name,
                 client_phone,
                 description: details.join(' • ') || 'Prestation d\'assainissement sur mesure',
@@ -1266,6 +1256,9 @@
             detectClientOrders();
         }
 
+        // ==========================================
+        // FILTRAGE DES MISSIONS SELON LE PROFIL DU PARTENAIRE
+        // ==========================================
         async function loadPartnerMissions() {
             const btn = document.getElementById('btn-refresh-missions');
             const icon = document.getElementById('refresh-icon');
@@ -1289,7 +1282,52 @@
                 return;
             }
 
-            data.forEach(o => {
+            const pSpec = (session.user?.specialty || '').toLowerCase();
+
+            // Filtrage rigoureux par profil
+            const missionsFiltrees = data.filter(o => {
+                const desc = (o.description || '').toLowerCase();
+                const axe = (o.axe || '').toLowerCase();
+
+                const hasAuto = axe.includes('auto') || desc.includes('berline') || desc.includes('suv') || desc.includes('moto') || desc.includes('bus') || desc.includes('remorque') || desc.includes('poids lourd');
+                const hasMaison = axe.includes('maison') || desc.includes('tapis') || desc.includes('canapé') || desc.includes('vitre') || desc.includes('carreaux') || desc.includes('moquette') || desc.includes('matelas') || desc.includes('panneau');
+                const has3D = axe.includes('3d') || desc.includes('désinfection') || desc.includes('dératisation') || desc.includes('désinsectisation');
+                const hasVidange = desc.includes('fosse') || desc.includes('immondices') || desc.includes('vidange');
+
+                // 1. Polyvalent : UNIQUEMENT Auto et Maison (jamais 3D ni Vidange)
+                if (pSpec.includes('polyvalent')) {
+                    return hasAuto || hasMaison;
+                }
+
+                // 2. Traitement 3D & Assainissement : UNIQUEMENT les 3D
+                if (pSpec.includes('3d') || pSpec.includes('traitement') || pSpec.includes('assainissement')) {
+                    return has3D;
+                }
+
+                // 3. Vidange et Évacuation
+                if (pSpec.includes('vidange') || pSpec.includes('immondices')) {
+                    return hasVidange;
+                }
+
+                // 4. Lavage Auto seul
+                if (pSpec.includes('auto') || pSpec.includes('lavage')) {
+                    return hasAuto;
+                }
+
+                // 5. Maison seule
+                if (pSpec.includes('maison')) {
+                    return hasMaison;
+                }
+
+                return false;
+            });
+
+            if (missionsFiltrees.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-12 col-span-full font-medium">Aucune mission disponible pour votre spécialité (${session.user?.specialty || 'Général'}).</p>`;
+                return;
+            }
+
+            missionsFiltrees.forEach(o => {
                 container.innerHTML += `
                     <div class="p-4 border border-slate-200 hover:border-aqua rounded-2xl bg-white space-y-3 text-xs shadow-sm transition">
                         <div class="flex justify-between items-start">
@@ -1325,14 +1363,23 @@
                 .order('id', { ascending: false });
             
             partnerAllOrders = data || [];
+            renderAcceptedCoursesList();
+            renderPartnerCA();
+        }
+
+        function renderAcceptedCoursesList() {
             const container = document.getElementById('partner-accepted-courses-list');
+            if (!container) return;
             container.innerHTML = '';
 
-            if (partnerAllOrders.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-8 col-span-full">Aucune mission dans votre historique pour le moment.</p>`;
+            const visibleOrders = partnerAllOrders.filter(o => !o.partner_cleared);
+
+            if (visibleOrders.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-8 col-span-full">Aucune mission dans votre liste.</p>`;
+                return;
             }
 
-            partnerAllOrders.forEach(o => {
+            visibleOrders.forEach(o => {
                 container.innerHTML += `
                     <div class="p-4 border rounded-2xl bg-white shadow-sm space-y-2 text-xs">
                         <div class="flex justify-between font-bold">
@@ -1348,12 +1395,37 @@
                             <button onclick="cloturerMission(${o.id})" class="w-full py-2.5 bg-green-600 active:bg-green-700 text-white rounded-xl font-bold text-xs mt-1">
                                 ✅ Clôturer cette mission (Terminée)
                             </button>
-                        ` : `<span class="text-green-600 font-bold text-xs block text-right">Mission clôturée ✔</span>`}
+                        ` : `
+                            <div class="flex justify-between items-center pt-1 border-t">
+                                <span class="text-green-600 font-bold text-xs">Mission clôturée ✔</span>
+                                <button onclick="deleteSinglePartnerCourse(${o.id})" class="text-slate-400 hover:text-red-500 font-bold text-[10px] px-2 py-0.5 rounded bg-slate-50 border">
+                                    Retirer ✕
+                                </button>
+                            </div>
+                        `}
                     </div>
                 `;
             });
+        }
 
-            renderPartnerCA();
+        function clearCompletedCourses() {
+            let count = 0;
+            partnerAllOrders.forEach(o => {
+                if (o.status === 'Terminée') {
+                    o.partner_cleared = true;
+                    count++;
+                }
+            });
+
+            renderAcceptedCoursesList();
+            showToast(count > 0 ? `${count} course(s) clôturée(s) retirée(s) de l'affichage.` : "Aucune course clôturée à vider.", "info");
+        }
+
+        function deleteSinglePartnerCourse(orderId) {
+            const o = partnerAllOrders.find(x => x.id === orderId);
+            if (o) o.partner_cleared = true;
+            renderAcceptedCoursesList();
+            showToast("Course retirée de votre affichage.");
         }
 
         function renderPartnerCA(filteredOrders = null) {
@@ -1379,7 +1451,7 @@
             if (orders.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="8" class="p-8 text-center text-slate-400 font-medium">
+                        <td colspan="7" class="p-8 text-center text-slate-400 font-medium">
                             Aucune course enregistrée pour cette période.
                         </td>
                     </tr>
@@ -1397,7 +1469,7 @@
                         <td class="p-3 font-mono font-bold">#${o.id}</td>
                         <td class="p-3">${o.date || '-'}</td>
                         <td class="p-3 font-bold">${o.description || '-'}</td>
-                        <td class="p-3">${o.commune} <span class="text-slate-400">(${o.avenue || ''})</span></td>
+                        <td class="p-3">${o.commune}</td>
                         <td class="p-3 font-mono font-bold text-sky-600">${brut.toLocaleString('fr-FR')} CDF</td>
                         <td class="p-3 font-mono font-bold text-red-500">-${com.toLocaleString('fr-FR')} CDF</td>
                         <td class="p-3 font-mono font-bold text-green-600">${gain.toLocaleString('fr-FR')} CDF</td>
@@ -1422,13 +1494,13 @@
 
             document.getElementById('ca-period-label').innerText = `Du ${start || 'Début'} au ${end || 'Fin'}`;
             renderPartnerCA(filtered);
-            showToast("Chiffre d'affaires recalculé pour la période.");
+            showToast("Chiffre d'affaires recalculé.");
         }
 
         function resetFiltreCA() {
             document.getElementById('ca-date-start').value = '';
             document.getElementById('ca-date-end').value = '';
-            document.getElementById('ca-period-label').innerText = "Toutes les dates confondues";
+            document.getElementById('ca-period-label').innerText = "Toutes dates";
             renderPartnerCA();
         }
 
@@ -1594,7 +1666,6 @@
         function openPartnerApp() {
             showView('view-partner-app');
             document.getElementById('partner-dashboard-name').innerText = session.user.name;
-            document.getElementById('partner-dashboard-meta').innerText = `${session.user.specialty} - ${session.user.commune}`;
             document.getElementById('partner-wallet-balance').innerText = `${Number(session.user.wallet || 0).toLocaleString('fr-FR')} CDF`;
 
             document.getElementById('partner-edit-name').value = session.user.name;
