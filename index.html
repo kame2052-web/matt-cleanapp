@@ -231,14 +231,14 @@
             </div>
         </div>
 
-        <!-- 4. ESPACE CLIENT CONNECTÉ : 4 ICÔNES EN CARRÉ (2x2) -->
+        <!-- 4. ESPACE CLIENT CONNECTÉ -->
         <div id="view-client-app" class="w-full bg-white text-slate-800 rounded-3xl p-4 md:p-8 shadow-2xl hidden animate-fade-in space-y-6">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b pb-4">
                 <div>
                     <h2 class="text-xl font-black text-navy-800 flex items-center gap-2">
                         <span>🛒</span> Panier & Commande Multi-Axes
                     </h2>
-                    <span class="text-xs text-slate-500 font-medium">Cliquez sur une icône pour faire apparaître ses options. Toutes vos sélections s'additionnent.</span>
+                    <span class="text-xs text-slate-500 font-medium">Configurez vos services puis validez votre commande.</span>
                 </div>
                 <button onclick="logoutCurrentSession()" class="px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold rounded-xl border border-red-200 transition flex items-center gap-1.5">
                     🚪 Déconnexion
@@ -254,74 +254,93 @@
 
             <!-- SOUS-ONGLET 1 : COMPOSER LE PANIER -->
             <div id="client-compose" class="space-y-6">
-                <!-- Donneur d'ordre -->
-                <div class="bg-slate-50 border border-slate-200 p-4 rounded-2xl">
-                    <span class="text-[11px] font-black text-navy-800 uppercase block mb-2">👤 Coordonnées du Demandeur</span>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <input type="text" id="client-name-input" placeholder="Nom complet" class="px-3.5 py-2.5 bg-white border rounded-xl font-bold text-xs">
-                        <input type="tel" id="client-phone-input" placeholder="Téléphone de contact" class="px-3.5 py-2.5 bg-white border rounded-xl font-bold text-xs" onchange="detectClientOrders();">
+                
+                <!-- VUE 1 : GRILLE EN CARRÉ PARFAIT (2x2) + BANDEAU TOTAL (Visible au départ) -->
+                <div id="client-home-grid" class="space-y-6">
+                    <!-- Coordonnées demandeur -->
+                    <div class="bg-slate-50 border border-slate-200 p-4 rounded-2xl">
+                        <span class="text-[11px] font-black text-navy-800 uppercase block mb-2">👤 Coordonnées du Demandeur</span>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <input type="text" id="client-name-input" placeholder="Nom complet" class="px-3.5 py-2.5 bg-white border rounded-xl font-bold text-xs">
+                            <input type="tel" id="client-phone-input" placeholder="Téléphone de contact" class="px-3.5 py-2.5 bg-white border rounded-xl font-bold text-xs" onchange="detectClientOrders();">
+                        </div>
+                    </div>
+
+                    <!-- Grille carrée 2x2 -->
+                    <div class="text-center space-y-2">
+                        <span class="text-xs font-black text-slate-600 uppercase tracking-widest block">
+                            Sélectionnez une catégorie pour afficher ses options :
+                        </span>
+
+                        <div class="grid grid-cols-2 gap-4 max-w-sm mx-auto aspect-square p-2 bg-slate-50 border border-slate-200 rounded-3xl shadow-inner">
+                            
+                            <!-- Carré 1 : Auto -->
+                            <button type="button" onclick="openFullscreenClientAxis('axis-auto')" class="relative p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-2 shadow-sm group">
+                                <span class="text-4xl group-hover:scale-110 transition">🚗</span>
+                                <span class="text-xs font-black text-navy-800 uppercase block leading-tight">Automobile</span>
+                                <span id="badge-count-auto" class="absolute top-2 right-2 px-2 py-0.5 rounded-full text-[9px] font-black bg-slate-100 text-slate-700 border">0</span>
+                            </button>
+
+                            <!-- Carré 2 : Maison -->
+                            <button type="button" onclick="openFullscreenClientAxis('axis-maison')" class="relative p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-2 shadow-sm group">
+                                <span class="text-4xl group-hover:scale-110 transition">🏡</span>
+                                <span class="text-xs font-black text-navy-800 uppercase block leading-tight">Maison</span>
+                                <span id="badge-count-maison" class="absolute top-2 right-2 px-2 py-0.5 rounded-full text-[9px] font-black bg-slate-100 text-slate-700 border">0</span>
+                            </button>
+
+                            <!-- Carré 3 : 3D & Vidange -->
+                            <button type="button" onclick="openFullscreenClientAxis('axis-env')" class="relative p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-2 shadow-sm group">
+                                <span class="text-4xl group-hover:scale-110 transition">🌱</span>
+                                <span class="text-xs font-black text-navy-800 uppercase block leading-tight">3D & Vidange</span>
+                                <span id="badge-count-env" class="absolute top-2 right-2 px-2 py-0.5 rounded-full text-[9px] font-black bg-slate-100 text-slate-700 border">0</span>
+                            </button>
+
+                            <!-- Carré 4 : Logistique & Date -->
+                            <button type="button" onclick="openFullscreenClientAxis('axis-logistics')" class="relative p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-2 shadow-sm group">
+                                <span class="text-4xl group-hover:scale-110 transition">⚡</span>
+                                <span class="text-xs font-black text-navy-800 uppercase block leading-tight">Logistique</span>
+                                <span class="absolute top-2 right-2 px-2 py-0.5 rounded-full text-[9px] font-black bg-sky-100 text-sky-800">Lieu</span>
+                            </button>
+
+                        </div>
+                    </div>
+
+                    <!-- Bandeau Global de Commande (Toujours accessible depuis la vue carrée) -->
+                    <div class="bg-navy-900 text-white p-5 rounded-3xl flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl border border-aqua/30">
+                        <div class="space-y-1 text-center sm:text-left">
+                            <span class="text-xs text-slate-400 font-bold uppercase block">Total Panier Global (Tous Axes Inclus) :</span>
+                            <div class="text-2xl sm:text-3xl font-black text-mattOrange font-mono"><span id="prix-total-affichage">0</span> CDF</div>
+                            <div id="cart-summary-badges" class="flex flex-wrap gap-1.5 pt-1 text-[10px]"></div>
+                        </div>
+                        <button onclick="passerCommande()" class="w-full sm:w-auto px-8 py-4 bg-mattOrange hover:bg-orange-600 text-white font-black text-sm rounded-2xl uppercase tracking-wider shadow transition">
+                            Valider la Commande Globale 🚀
+                        </button>
                     </div>
                 </div>
 
-                <!-- DISPOSITION EN CARRÉ PARFAIT (2x2) DES 4 ICÔNES -->
-                <div class="text-center space-y-2">
-                    <span class="text-xs font-black text-slate-600 uppercase tracking-widest block">
-                        Cliquez sur une case pour relever et configurer les prestations :
-                    </span>
-
-                    <div class="grid grid-cols-2 gap-3.5 max-w-sm mx-auto aspect-square p-2 bg-slate-50 border border-slate-200 rounded-3xl shadow-inner">
-                        
-                        <!-- Carré 1 : Auto -->
-                        <button type="button" onclick="revealClientAxis('axis-auto', this)" class="client-sq-btn relative p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group">
-                            <span class="text-3xl sm:text-4xl group-hover:scale-110 transition">🚗</span>
-                            <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Automobile</span>
-                            <span id="badge-count-auto" class="absolute top-2 right-2 px-2 py-0.5 rounded-full text-[9px] font-black bg-slate-100 text-slate-700 border">0</span>
+                <!-- VUE 2 : CONTENEUR PLEIN ÉCRAN D'UNE ICÔNE SÉLECTIONNÉE (Caché au départ) -->
+                <div id="client-fullscreen-axis" class="hidden space-y-4 animate-fade-in">
+                    <!-- Bouton Retour officiel -->
+                    <div class="flex items-center justify-between bg-slate-50 p-3 rounded-2xl border border-slate-200">
+                        <button type="button" onclick="closeFullscreenClientAxis()" class="px-4 py-2 bg-navy-800 hover:bg-navy-900 text-white text-xs font-black rounded-xl uppercase flex items-center gap-2 shadow">
+                            ⬅ Retour aux icônes
                         </button>
-
-                        <!-- Carré 2 : Maison -->
-                        <button type="button" onclick="revealClientAxis('axis-maison', this)" class="client-sq-btn relative p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group">
-                            <span class="text-3xl sm:text-4xl group-hover:scale-110 transition">🏡</span>
-                            <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Maison</span>
-                            <span id="badge-count-maison" class="absolute top-2 right-2 px-2 py-0.5 rounded-full text-[9px] font-black bg-slate-100 text-slate-700 border">0</span>
-                        </button>
-
-                        <!-- Carré 3 : 3D & Vidange -->
-                        <button type="button" onclick="revealClientAxis('axis-env', this)" class="client-sq-btn relative p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group">
-                            <span class="text-3xl sm:text-4xl group-hover:scale-110 transition">🌱</span>
-                            <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">3D & Vidange</span>
-                            <span id="badge-count-env" class="absolute top-2 right-2 px-2 py-0.5 rounded-full text-[9px] font-black bg-slate-100 text-slate-700 border">0</span>
-                        </button>
-
-                        <!-- Carré 4 : Logistique & Date -->
-                        <button type="button" onclick="revealClientAxis('axis-logistics', this)" class="client-sq-btn relative p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group">
-                            <span class="text-3xl sm:text-4xl group-hover:scale-110 transition">⚡</span>
-                            <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Logistique</span>
-                            <span class="absolute top-2 right-2 px-1.5 py-0.5 rounded-full text-[9px] font-black bg-sky-100 text-sky-800">Lieu</span>
-                        </button>
-
-                    </div>
-                </div>
-
-                <!-- ZONE DE RÉVÉLATION (CACHÉE PAR DÉFAUT, APPARAÎT APRÈS CLIC SUR ICÔNE) -->
-                <div id="client-reveal-container" class="hidden space-y-4">
-                    <div class="flex justify-between items-center bg-slate-100 px-4 py-2 rounded-xl text-xs font-black text-navy-800 uppercase">
-                        <span id="client-reveal-title">Section en cours de relevé</span>
-                        <button type="button" onclick="hideClientReveal()" class="text-red-500 hover:text-red-700 font-bold">Masquer / Valider ✕</button>
+                        <span id="client-axis-fullscreen-title" class="text-xs font-black text-navy-800 uppercase">Configuration</span>
                     </div>
 
-                    <!-- Tiroir Auto -->
+                    <!-- Sous-vue Plein Écran Auto -->
                     <div id="axis-auto" class="client-axis-view hidden border rounded-2xl p-5 bg-white shadow-sm space-y-4">
                         <div class="flex justify-between items-center border-b pb-2">
-                            <h3 class="text-xs font-black text-navy-800 uppercase">🚗 Véhicules & Options Spécifiques</h3>
-                            <span class="text-[10px] text-slate-400 font-bold">Indiquez le nombre</span>
+                            <h3 class="text-sm font-black text-navy-800 uppercase">🚗 Véhicules & Options Spécifiques</h3>
+                            <span class="text-[10px] text-slate-400 font-bold">Ajustez les quantités</span>
                         </div>
                         <div id="vehicle-catalog" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
                     </div>
 
-                    <!-- Tiroir Maison -->
+                    <!-- Sous-vue Plein Écran Maison -->
                     <div id="axis-maison" class="client-axis-view hidden border rounded-2xl p-5 bg-white shadow-sm space-y-4">
                         <div class="flex justify-between items-center border-b pb-2">
-                            <h3 class="text-xs font-black text-navy-800 uppercase">🏡 Canapés, Tapis, Vitres & Sols</h3>
+                            <h3 class="text-sm font-black text-navy-800 uppercase">🏡 Canapés, Tapis, Vitres & Sols</h3>
                             <span class="text-[10px] text-slate-400 font-bold">Surfaces en m² et places</span>
                         </div>
                         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-xs font-bold">
@@ -345,11 +364,11 @@
                         </div>
                     </div>
 
-                    <!-- Tiroir 3D & Vidange -->
+                    <!-- Sous-vue Plein Écran 3D & Vidange -->
                     <div id="axis-env" class="client-axis-view hidden border rounded-2xl p-5 bg-white shadow-sm space-y-4">
                         <div class="flex justify-between items-center border-b pb-2">
-                            <h3 class="text-xs font-black text-navy-800 uppercase">🌱 Hygiène 3D & Vidange Hydrocurage</h3>
-                            <span class="text-[10px] text-slate-400 font-bold">Pièces et volumes</span>
+                            <h3 class="text-sm font-black text-navy-800 uppercase">🌱 Hygiène 3D & Vidange Hydrocurage</h3>
+                            <span class="text-[10px] text-slate-400 font-bold">Volumes et pièces</span>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-bold">
                             <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Désinfection (pièces)</label><input type="number" id="qty-desinfection" placeholder="0" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()"></div>
@@ -368,10 +387,10 @@
                         </div>
                     </div>
 
-                    <!-- Tiroir Logistique -->
+                    <!-- Sous-vue Plein Écran Logistique -->
                     <div id="axis-logistics" class="client-axis-view hidden bg-slate-50 border rounded-2xl p-5 space-y-4 text-xs">
                         <div class="flex justify-between items-center border-b pb-2">
-                            <span class="text-xs font-black text-navy-800 uppercase">⚡ Localisation & Planification d'Intervention</span>
+                            <span class="text-xs font-black text-navy-800 uppercase">⚡ Localisation & Planification Terrain</span>
                             <span id="zone-detected-badge" class="px-3 py-1 rounded-lg text-[11px] font-black bg-sky-100 text-sky-800">Zone 1 - Résidentielle</span>
                         </div>
 
@@ -385,7 +404,7 @@
                                 </select>
                             </div>
                             <div class="bg-white p-3 rounded-xl border">
-                                <label class="text-[10px] font-black text-slate-600 uppercase block mb-1">🚰 Source d'Approvisionnement en Eau :</label>
+                                <label class="text-[10px] font-black text-slate-600 uppercase block mb-1">🚰 Approvisionnement en Eau :</label>
                                 <select id="client-water" class="w-full p-2 border rounded-lg text-xs font-bold bg-slate-50">
                                     <option value="REGIDESO fonctionnelle sur place">REGIDESO fonctionnelle sur place</option>
                                     <option value="Citerne / Forage disponible sur place">Citerne / Forage disponible</option>
@@ -407,7 +426,7 @@
 
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                             <div>
-                                <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Point de repère visible :</label>
+                                <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Point de repère :</label>
                                 <input type="text" id="client-ref-input" placeholder="Ex: Pharmacie Principale" class="w-full p-2.5 border rounded-xl font-medium text-xs">
                             </div>
                             <div>
@@ -415,24 +434,20 @@
                                 <input type="date" id="client-date-input" class="w-full p-2.5 border rounded-xl text-xs font-bold">
                             </div>
                             <div>
-                                <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Heure d'arrivée :</label>
+                                <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Heure souhaitée :</label>
                                 <input type="time" id="client-time-input" class="w-full p-2.5 border rounded-xl text-xs font-bold">
                             </div>
                         </div>
                     </div>
+
+                    <!-- Bouton retour en bas de page pour confort mobile -->
+                    <div class="pt-3">
+                        <button type="button" onclick="closeFullscreenClientAxis()" class="w-full py-3 bg-navy-800 text-white text-xs font-black rounded-xl uppercase tracking-wider shadow">
+                            ⬅ Enregistrer et Retourner aux Catégories
+                        </button>
+                    </div>
                 </div>
 
-                <!-- BANDEAU GLOBAL RÉCAPITULATIF & COMMANDE EN 1 CLIC -->
-                <div class="bg-navy-900 text-white p-5 rounded-3xl flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl border border-aqua/30">
-                    <div class="space-y-1 text-center sm:text-left">
-                        <span class="text-xs text-slate-400 font-bold uppercase block">Total Panier Global (Tous Axes Inclus) :</span>
-                        <div class="text-2xl sm:text-3xl font-black text-mattOrange font-mono"><span id="prix-total-affichage">0</span> CDF</div>
-                        <div id="cart-summary-badges" class="flex flex-wrap gap-1.5 pt-1 text-[10px]"></div>
-                    </div>
-                    <button onclick="passerCommande()" class="w-full sm:w-auto px-8 py-4 bg-mattOrange hover:bg-orange-600 text-white font-black text-sm rounded-2xl uppercase tracking-wider shadow transition">
-                        Valider la Commande Globale 🚀
-                    </button>
-                </div>
             </div>
 
             <!-- SOUS-ONGLET 2 : SUIVI DES COMMANDES -->
@@ -485,7 +500,7 @@
             </div>
         </div>
 
-        <!-- 5. ESPACE PARTENAIRE CONNECTÉ : RECTANGLE VERTICAL (COLONNE DE BOUTONS) -->
+        <!-- 5. ESPACE PARTENAIRE CONNECTÉ : RECTANGLE VERTICAL & PLEIN ÉCRAN AU CLIC -->
         <div id="view-partner-app" class="w-full bg-white text-slate-800 rounded-3xl p-5 md:p-8 shadow-2xl hidden animate-fade-in space-y-6">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b pb-4">
                 <div>
@@ -504,14 +519,14 @@
                 </div>
             </div>
 
-            <!-- DISPOSITION EN RECTANGLE VERTICAL DES ICÔNES PARTENAIRES -->
-            <div class="text-center space-y-2">
+            <!-- VUE 1 : RECTANGLE VERTICAL (COLONNE DE BOUTONS ÉTIRÉS) -->
+            <div id="partner-home-column" class="text-center space-y-3">
                 <span class="text-xs font-black text-slate-600 uppercase tracking-widest block">
-                    Menu Prestataire (Sélectionnez pour ouvrir) :
+                    Menu Prestataire (Sélectionnez pour ouvrir en plein écran) :
                 </span>
 
                 <div class="flex flex-col max-w-sm mx-auto space-y-2.5 p-3 bg-slate-50 border border-slate-200 rounded-3xl shadow-inner">
-                    <button type="button" onclick="revealPartnerTab('partner-tab-missions', this)" class="partner-rect-btn w-full p-3.5 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex items-center justify-between text-xs transition active:scale-95 shadow-xs">
+                    <button type="button" onclick="openFullscreenPartnerTab('partner-tab-missions')" class="w-full p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex items-center justify-between text-xs transition active:scale-95 shadow-xs">
                         <div class="flex items-center gap-3">
                             <span class="text-2xl">🚨</span>
                             <span class="font-black text-navy-800 uppercase">Missions Disponibles</span>
@@ -519,7 +534,7 @@
                         <span class="text-slate-400 font-bold">➔</span>
                     </button>
 
-                    <button type="button" onclick="revealPartnerTab('partner-tab-ca', this)" class="partner-rect-btn w-full p-3.5 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex items-center justify-between text-xs transition active:scale-95 shadow-xs">
+                    <button type="button" onclick="openFullscreenPartnerTab('partner-tab-ca')" class="w-full p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex items-center justify-between text-xs transition active:scale-95 shadow-xs">
                         <div class="flex items-center gap-3">
                             <span class="text-2xl">📊</span>
                             <span class="font-black text-navy-800 uppercase">Chiffre d'Affaires & Périodes</span>
@@ -527,7 +542,7 @@
                         <span class="text-slate-400 font-bold">➔</span>
                     </button>
 
-                    <button type="button" onclick="revealPartnerTab('partner-tab-wallet', this)" class="partner-rect-btn w-full p-3.5 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex items-center justify-between text-xs transition active:scale-95 shadow-xs">
+                    <button type="button" onclick="openFullscreenPartnerTab('partner-tab-wallet')" class="w-full p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex items-center justify-between text-xs transition active:scale-95 shadow-xs">
                         <div class="flex items-center gap-3">
                             <span class="text-2xl">💳</span>
                             <span class="font-black text-navy-800 uppercase">Portefeuille & Forfaits</span>
@@ -535,7 +550,7 @@
                         <span class="text-slate-400 font-bold">➔</span>
                     </button>
 
-                    <button type="button" onclick="revealPartnerTab('partner-tab-courses', this)" class="partner-rect-btn w-full p-3.5 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex items-center justify-between text-xs transition active:scale-95 shadow-xs">
+                    <button type="button" onclick="openFullscreenPartnerTab('partner-tab-courses')" class="w-full p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex items-center justify-between text-xs transition active:scale-95 shadow-xs">
                         <div class="flex items-center gap-3">
                             <span class="text-2xl">📑</span>
                             <span class="font-black text-navy-800 uppercase">Mes Courses & Clôture</span>
@@ -543,7 +558,7 @@
                         <span class="text-slate-400 font-bold">➔</span>
                     </button>
 
-                    <button type="button" onclick="revealPartnerTab('partner-tab-profil', this)" class="partner-rect-btn w-full p-3.5 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex items-center justify-between text-xs transition active:scale-95 shadow-xs">
+                    <button type="button" onclick="openFullscreenPartnerTab('partner-tab-profil')" class="w-full p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex items-center justify-between text-xs transition active:scale-95 shadow-xs">
                         <div class="flex items-center gap-3">
                             <span class="text-2xl">⚙️</span>
                             <span class="font-black text-navy-800 uppercase">Mon Profil & Sécurité</span>
@@ -551,7 +566,7 @@
                         <span class="text-slate-400 font-bold">➔</span>
                     </button>
 
-                    <button type="button" onclick="revealPartnerTab('partner-tab-info-support', this)" class="partner-rect-btn w-full p-3.5 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex items-center justify-between text-xs transition active:scale-95 shadow-xs">
+                    <button type="button" onclick="openFullscreenPartnerTab('partner-tab-info-support')" class="w-full p-4 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex items-center justify-between text-xs transition active:scale-95 shadow-xs">
                         <div class="flex items-center gap-3">
                             <span class="text-2xl">📜</span>
                             <span class="font-black text-navy-800 uppercase">Infos & Support Direction</span>
@@ -561,14 +576,17 @@
                 </div>
             </div>
 
-            <!-- CONTENEUR DE RÉVÉLATION PARTENAIRE (CACHÉ AU DÉBUT, OUVERT AU CLIC) -->
-            <div id="partner-reveal-container" class="hidden space-y-4 pt-2">
-                <div class="flex justify-between items-center bg-slate-100 px-4 py-2 rounded-xl text-xs font-black text-navy-800 uppercase">
-                    <span id="partner-reveal-title">Détail du module</span>
-                    <button type="button" onclick="hidePartnerReveal()" class="text-red-500 hover:text-red-700 font-bold">Refermer la vue ✕</button>
+            <!-- VUE 2 : CONTENEUR PLEIN ÉCRAN DU MODULE PARTENAIRE CHOISI -->
+            <div id="partner-fullscreen-tab" class="hidden space-y-4 animate-fade-in">
+                <!-- Bouton Retour officiel -->
+                <div class="flex items-center justify-between bg-slate-50 p-3 rounded-2xl border border-slate-200">
+                    <button type="button" onclick="closeFullscreenPartnerTab()" class="px-4 py-2 bg-navy-800 hover:bg-navy-900 text-white text-xs font-black rounded-xl uppercase flex items-center gap-2 shadow">
+                        ⬅ Retour au Menu
+                    </button>
+                    <span id="partner-tab-fullscreen-title" class="text-xs font-black text-navy-800 uppercase">Module Actif</span>
                 </div>
 
-                <!-- 1. Missions -->
+                <!-- Module 1: Missions -->
                 <div id="partner-tab-missions" class="partner-subview hidden space-y-4">
                     <div class="flex justify-between items-center">
                         <span class="text-xs font-black uppercase text-navy-800 tracking-wider">Missions Disponibles dans votre Secteur</span>
@@ -579,7 +597,7 @@
                     <div id="partner-missions-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 min-h-[160px]"></div>
                 </div>
 
-                <!-- 2. CA & Périodes -->
+                <!-- Module 2: CA & Périodes -->
                 <div id="partner-tab-ca" class="partner-subview hidden space-y-6">
                     <div>
                         <h3 class="text-base font-black text-navy-800 uppercase flex items-center gap-2">
@@ -658,7 +676,7 @@
                     </div>
                 </div>
 
-                <!-- 3. Portefeuille -->
+                <!-- Module 3: Portefeuille -->
                 <div id="partner-tab-wallet" class="partner-subview hidden space-y-5">
                     <div class="bg-sky-50 border border-aqua/40 rounded-3xl p-6 text-center max-w-xl mx-auto">
                         <span class="text-[10px] text-slate-500 font-black uppercase tracking-wider block" id="partner-solde-label">Solde Commission Disponible</span>
@@ -705,13 +723,13 @@
                     </div>
                 </div>
 
-                <!-- 4. Mes Courses -->
+                <!-- Module 4: Mes Courses -->
                 <div id="partner-tab-courses" class="partner-subview hidden space-y-4">
                     <span class="text-xs font-black uppercase text-navy-800 block">Courses Acceptées & Clôture</span>
                     <div id="partner-accepted-courses-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
                 </div>
 
-                <!-- 5. Profil -->
+                <!-- Module 5: Profil -->
                 <div id="partner-tab-profil" class="partner-subview hidden space-y-4 max-w-xl mx-auto">
                     <span class="text-xs font-black uppercase text-navy-800 block">Modification Sécurisée des Identifiants</span>
                     <div class="bg-slate-50 p-5 rounded-3xl border space-y-3 text-xs">
@@ -750,7 +768,7 @@
                     </div>
                 </div>
 
-                <!-- 6. Infos & Support -->
+                <!-- Module 6: Infos & Support -->
                 <div id="partner-tab-info-support" class="partner-subview hidden space-y-4 text-xs">
                     <div class="border rounded-2xl p-5 bg-slate-50 space-y-2">
                         <h3 class="font-black text-navy-800 text-sm uppercase">Assistance Partenaire MATT SARL</h3>
@@ -937,88 +955,76 @@
         }
 
         // =========================================================================
-        // RÉVÉLATION AU CLIC UNIQUEMENT - CLIENT (CARRÉ 2x2)
+        // GESTION DU PLEIN ÉCRAN EXCLUSIF AU CLIC - CLIENT
         // =========================================================================
-        function revealClientAxis(viewId, btnEl) {
-            const container = document.getElementById('client-reveal-container');
-            const titleEl = document.getElementById('client-reveal-title');
-
-            // Masquer les autres vues internes
+        function openFullscreenClientAxis(viewId) {
+            // Masque la grille carrée et le total
+            document.getElementById('client-home-grid').classList.add('hidden');
+            
+            // Masque les autres sous-vues
             document.querySelectorAll('.client-axis-view').forEach(v => v.classList.add('hidden'));
-            
-            // Stylisation du bouton actif
-            document.querySelectorAll('.client-sq-btn').forEach(b => {
-                b.className = "client-sq-btn relative p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group";
-            });
-
-            if (btnEl) {
-                btnEl.className = "client-sq-btn relative p-3 rounded-2xl border-2 border-aqua bg-sky-50 shadow-md flex flex-col items-center justify-center gap-1.5 group";
-            }
 
             const titles = {
-                'axis-auto': '🚗 Configuration Axe Automobile',
-                'axis-maison': '🏡 Configuration Axe Maison & Surfaces',
-                'axis-env': '🌱 Configuration Axe Environnement 3D & Vidange',
-                'axis-logistics': '⚡ Logistique Terrain & Localisation'
+                'axis-auto': '🚗 Configuration Automobile',
+                'axis-maison': '🏡 Configuration Maison & Surfaces',
+                'axis-env': '🌱 Configuration 3D & Vidange',
+                'axis-logistics': '⚡ Logistique & Planification'
             };
 
-            titleEl.innerText = titles[viewId] || 'Configuration de la Prestation';
+            document.getElementById('client-axis-fullscreen-title').innerText = titles[viewId] || 'Configuration';
             document.getElementById(viewId)?.classList.remove('hidden');
-            container.classList.remove('hidden');
+            document.getElementById('client-fullscreen-axis').classList.remove('hidden');
 
-            // Scroll fluide jusqu'au tiroir révélé
-            container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function hideClientReveal() {
-            document.getElementById('client-reveal-container')?.classList.add('hidden');
-            document.querySelectorAll('.client-sq-btn').forEach(b => {
-                b.className = "client-sq-btn relative p-3 rounded-2xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group";
-            });
+        function closeFullscreenClientAxis() {
+            // Masque le conteneur plein écran
+            document.getElementById('client-fullscreen-axis').classList.add('hidden');
+            document.querySelectorAll('.client-axis-view').forEach(v => v.classList.add('hidden'));
+
+            // Réaffiche la grille carrée
+            document.getElementById('client-home-grid').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // =========================================================================
-        // RÉVÉLATION AU CLIC UNIQUEMENT - PARTENAIRE (RECTANGLE VERTICAL)
+        // GESTION DU PLEIN ÉCRAN EXCLUSIF AU CLIC - PARTENAIRE
         // =========================================================================
-        function revealPartnerTab(tabId, btnEl) {
-            const container = document.getElementById('partner-reveal-container');
-            const titleEl = document.getElementById('partner-reveal-title');
-
-            document.querySelectorAll('.partner-subview').forEach(v => v.classList.add('hidden'));
+        function openFullscreenPartnerTab(tabId) {
+            // Masque la colonne de menu verticale
+            document.getElementById('partner-home-column').classList.add('hidden');
             
-            document.querySelectorAll('.partner-rect-btn').forEach(b => {
-                b.className = "partner-rect-btn w-full p-3.5 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex items-center justify-between text-xs transition active:scale-95 shadow-xs";
-            });
-
-            if (btnEl) {
-                btnEl.className = "partner-rect-btn w-full p-3.5 rounded-2xl border-2 border-mattOrange bg-orange-50 text-mattOrange font-black flex items-center justify-between text-xs shadow-sm";
-            }
+            // Masque les autres sous-vues
+            document.querySelectorAll('.partner-subview').forEach(v => v.classList.add('hidden'));
 
             const titles = {
-                'partner-tab-missions': '🚨 Missions Disponibles dans votre Secteur',
-                'partner-tab-ca': '📊 Suivi du Chiffre d\'Affaires & Périodes',
-                'partner-tab-wallet': '💳 Portefeuille Virtuel & Rechargement Mobile Money',
-                'partner-tab-courses': '📑 Mes Courses Acceptées & Clôture',
-                'partner-tab-profil': '⚙️ Mon Profil & Sécurité des Identifiants',
-                'partner-tab-info-support': '📜 Informations & Support Technique Direction'
+                'partner-tab-missions': '🚨 Missions Disponibles',
+                'partner-tab-ca': '📊 Chiffre d\'Affaires & Périodes',
+                'partner-tab-wallet': '💳 Portefeuille & Forfaits',
+                'partner-tab-courses': '📑 Mes Courses & Clôture',
+                'partner-tab-profil': '⚙️ Mon Profil & Sécurité',
+                'partner-tab-info-support': '📜 Infos & Support Direction'
             };
 
-            titleEl.innerText = titles[tabId] || 'Détails du module';
+            document.getElementById('partner-tab-fullscreen-title').innerText = titles[tabId] || 'Module Partenaire';
             document.getElementById(tabId)?.classList.remove('hidden');
-            container.classList.remove('hidden');
+            document.getElementById('partner-fullscreen-tab').classList.remove('hidden');
 
             if (tabId === 'partner-tab-ca') {
                 renderPartnerCA();
             }
 
-            container.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        function hidePartnerReveal() {
-            document.getElementById('partner-reveal-container')?.classList.add('hidden');
-            document.querySelectorAll('.partner-rect-btn').forEach(b => {
-                b.className = "partner-rect-btn w-full p-3.5 rounded-2xl border-2 border-slate-200 bg-white hover:border-mattOrange text-slate-700 font-bold flex items-center justify-between text-xs transition active:scale-95 shadow-xs";
-            });
+        function closeFullscreenPartnerTab() {
+            document.getElementById('partner-fullscreen-tab').classList.add('hidden');
+            document.querySelectorAll('.partner-subview').forEach(v => v.classList.add('hidden'));
+            
+            // Réaffiche la colonne verticale
+            document.getElementById('partner-home-column').classList.remove('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         // ==========================================
@@ -1129,8 +1135,8 @@
             const total_amount = calculerTotal();
 
             if (!client_name || !client_phone || !avenue || !date || !time) {
-                revealClientAxis('axis-logistics', document.querySelectorAll('.client-sq-btn')[3]);
-                return showToast("Veuillez renseigner votre adresse et planification dans la case 'Logistique'.", "error");
+                openFullscreenClientAxis('axis-logistics');
+                return showToast("Veuillez renseigner votre adresse et planification dans la section 'Logistique'.", "error");
             }
             if (total_amount <= 0) return showToast("Votre panier est vide.", "error");
 
