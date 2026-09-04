@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>MATT Clean'App</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Supabase JS Client -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         tailwind.config = {
@@ -32,23 +30,23 @@
             background-repeat: no-repeat;
             background-position: center;
             background-attachment: fixed;
-            background-size: 50%;
+            background-size: 35%;
             opacity: 0.03;
             z-index: -1;
             pointer-events: none;
         }
-        .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
+        .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
         .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
     </style>
 </head>
 <body class="bg-navy-900 text-slate-100 min-h-screen watermark-bg font-sans flex flex-col justify-between select-none">
 
-    <!-- Notifications Toast -->
+    <!-- Toast Notifications -->
     <div id="toast-container" class="fixed top-4 inset-x-4 z-[9999] flex flex-col gap-2 max-w-sm mx-auto pointer-events-none"></div>
 
-    <!-- En-tête simplifié -->
-    <header class="bg-navy-800/95 border-b border-aqua/30 px-4 py-3 md:px-8 flex justify-between items-center sticky top-0 z-40 backdrop-blur-md shadow-lg">
+    <!-- En-tête -->
+    <header class="bg-navy-800/95 border-b border-aqua/30 px-4 py-3 md:px-8 flex justify-between items-center sticky top-0 z-40 backdrop-blur-md shadow-lg w-full">
         <div class="flex items-center gap-2.5 cursor-pointer" onclick="showView('view-gateway')">
             <div class="w-11 h-11 bg-white rounded-2xl shadow-md border border-aqua/30 p-1 flex items-center justify-center flex-shrink-0">
                 <img src="cleanapp.jpg" alt="Logo" class="w-full h-full object-contain" onerror="this.src='cleanapp.png'">
@@ -62,20 +60,19 @@
         <div class="flex items-center gap-2">
             <div id="logged-user-chip" class="hidden items-center gap-1.5 bg-navy-900 px-3 py-1.5 rounded-xl border border-aqua/40 text-xs">
                 <span id="logged-user-name" class="font-bold text-aqua max-w-[120px] truncate">Utilisateur</span>
-                <button onclick="logoutCurrentSession()" class="text-red-400 font-bold ml-1.5">✕</button>
+                <button onclick="logoutCurrentSession()" class="text-red-400 hover:text-red-300 font-bold ml-1.5">✕</button>
             </div>
-            <button onclick="showView('view-gateway')" id="btn-back-home" class="hidden px-3 py-1.5 rounded-xl bg-slate-800 text-slate-300 text-xs font-bold border border-slate-700">
+            <button onclick="showView('view-gateway')" id="btn-back-home" class="hidden px-3.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-bold border border-slate-700 transition">
                 🏠 Accueil
             </button>
         </div>
     </header>
 
-    <!-- Conteneur Principal -->
-    <main class="container mx-auto px-4 py-6 max-w-4xl flex-grow flex flex-col justify-center">
+    <!-- Conteneur Plein Écran -->
+    <main class="w-full px-3 py-4 md:px-8 md:py-6 flex-grow flex flex-col justify-start">
 
-        <!-- 1. PAGE D'ACCUEIL : UNIQUE, CENTRÉE ET ÉPURÉE -->
-        <div id="view-gateway" class="space-y-8 animate-fade-in my-auto py-6">
-            <!-- Logo et Message de Bienvenue -->
+        <!-- 1. ACCUEIL ÉPURÉ -->
+        <div id="view-gateway" class="w-full max-w-4xl mx-auto space-y-8 animate-fade-in my-auto py-8">
             <div class="text-center space-y-4">
                 <div class="inline-block w-28 h-28 md:w-32 md:h-32 bg-white rounded-3xl p-2 shadow-2xl border-2 border-aqua/40">
                     <img src="cleanapp.jpg" alt="Logo Clean'App" class="w-full h-full object-contain" onerror="this.src='cleanapp.png'">
@@ -90,7 +87,6 @@
                 </div>
             </div>
 
-            <!-- Deux grandes cartes d'accès exclusives -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 max-w-2xl mx-auto pt-2">
                 <div onclick="goToAuth('client')" class="bg-white text-slate-800 rounded-3xl p-6 shadow-2xl border-2 border-transparent hover:border-aqua active:scale-95 transition-all flex items-center justify-between cursor-pointer group">
                     <div class="flex items-center gap-4">
@@ -117,7 +113,7 @@
         </div>
 
         <!-- 2. AUTHENTIFICATION CLIENT -->
-        <div id="view-client-auth" class="bg-white text-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl hidden animate-fade-in max-w-md mx-auto w-full">
+        <div id="view-client-auth" class="bg-white text-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl hidden animate-fade-in max-w-md mx-auto w-full my-auto">
             <div class="flex items-center justify-between border-b pb-3 mb-5">
                 <h2 class="text-lg font-black text-navy-800">Espace Client</h2>
                 <button onclick="showView('view-gateway')" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 font-bold flex items-center justify-center">✕</button>
@@ -168,7 +164,7 @@
         </div>
 
         <!-- 3. AUTHENTIFICATION PARTENAIRE -->
-        <div id="view-partner-auth" class="bg-white text-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl hidden animate-fade-in max-w-md mx-auto w-full">
+        <div id="view-partner-auth" class="bg-white text-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl hidden animate-fade-in max-w-md mx-auto w-full my-auto">
             <div class="flex items-center justify-between border-b pb-3 mb-5">
                 <h2 class="text-lg font-black text-navy-800">Espace Pro Partenaire</h2>
                 <button onclick="showView('view-gateway')" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 font-bold flex items-center justify-center">✕</button>
@@ -233,144 +229,155 @@
             </div>
         </div>
 
-        <!-- 4. ESPACE CLIENT CONNECTÉ -->
-        <div id="view-client-app" class="bg-white text-slate-800 rounded-3xl p-4 md:p-6 shadow-2xl hidden animate-fade-in space-y-5">
-            <!-- Navigation interne Client -->
+        <!-- 4. ESPACE CLIENT CONNECTÉ (PLEIN ÉCRAN) -->
+        <div id="view-client-app" class="w-full bg-white text-slate-800 rounded-3xl p-5 md:p-8 shadow-2xl hidden animate-fade-in space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b pb-4">
+                <div>
+                    <h2 class="text-xl font-black text-navy-800 flex items-center gap-2">
+                        <span>🛒</span> Espace Client
+                    </h2>
+                    <span class="text-xs text-slate-500 font-medium">Commandes & Suivi d'Intervention</span>
+                </div>
+                <button onclick="logoutCurrentSession()" class="px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold rounded-xl border border-red-200 transition flex items-center gap-1.5">
+                    🚪 Déconnexion
+                </button>
+            </div>
+
             <div class="flex border-b border-slate-200 text-xs overflow-x-auto custom-scrollbar">
-                <button onclick="switchClientTab('client-compose')" id="tab-btn-client-compose" class="flex-1 min-w-[120px] py-2.5 font-black border-b-2 border-mattOrange text-mattOrange">🛒 Commander</button>
-                <button onclick="switchClientTab('client-tracking')" id="tab-btn-client-tracking" class="flex-1 min-w-[120px] py-2.5 font-bold border-b-2 border-transparent text-slate-500">📋 Mes Commandes</button>
-                <button onclick="switchClientTab('client-info-support')" id="tab-btn-client-info-support" class="flex-1 min-w-[120px] py-2.5 font-bold border-b-2 border-transparent text-slate-500">ℹ️ Infos & Assistance</button>
+                <button onclick="switchClientTab('client-compose')" id="tab-btn-client-compose" class="flex-1 min-w-[130px] py-3 font-black border-b-2 border-mattOrange text-mattOrange">🛒 Commander</button>
+                <button onclick="switchClientTab('client-tracking')" id="tab-btn-client-tracking" class="flex-1 min-w-[130px] py-3 font-bold border-b-2 border-transparent text-slate-500">📋 Mes Commandes</button>
+                <button onclick="switchClientTab('client-info-support')" id="tab-btn-client-info-support" class="flex-1 min-w-[130px] py-3 font-bold border-b-2 border-transparent text-slate-500">ℹ️ Infos & CGU</button>
             </div>
 
             <!-- Sous-onglet 1 : Composer la commande -->
-            <div id="client-compose" class="space-y-4">
-                <div class="bg-slate-50 border border-slate-200 p-3.5 rounded-2xl">
-                    <span class="text-[10px] font-black text-navy-800 uppercase block mb-2">👤 Donneur d'Ordre</span>
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
-                        <input type="text" id="client-name-input" placeholder="Nom complet" class="px-3 py-2 bg-white border rounded-xl font-bold text-xs">
-                        <input type="tel" id="client-phone-input" placeholder="Téléphone de contact" class="px-3 py-2 bg-white border rounded-xl font-bold text-xs" onchange="detectClientOrders();">
+            <div id="client-compose" class="space-y-6">
+                <div class="bg-slate-50 border border-slate-200 p-4 rounded-2xl">
+                    <span class="text-[11px] font-black text-navy-800 uppercase block mb-2">👤 Coordonnées du Demandeur</span>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <input type="text" id="client-name-input" placeholder="Nom complet" class="px-3.5 py-2.5 bg-white border rounded-xl font-bold text-xs">
+                        <input type="tel" id="client-phone-input" placeholder="Téléphone de contact" class="px-3.5 py-2.5 bg-white border rounded-xl font-bold text-xs" onchange="detectClientOrders();">
                     </div>
                 </div>
 
                 <!-- 1. AXE AUTO & OPTIONS -->
-                <div class="border rounded-2xl p-4 bg-white shadow-sm space-y-3">
+                <div class="border rounded-2xl p-5 bg-white shadow-sm space-y-4">
                     <div class="flex justify-between items-center border-b pb-2">
-                        <h3 class="text-xs font-black text-navy-800 uppercase flex items-center gap-1.5">
+                        <h3 class="text-sm font-black text-navy-800 uppercase flex items-center gap-2">
                             <span>🚗</span> Axe Automobile & Engins
                         </h3>
-                        <span class="text-[9px] text-slate-400 font-bold uppercase">Lavage de base & Options rattachées</span>
+                        <span class="text-xs text-slate-400 font-bold uppercase">Lavage de base & Options</span>
                     </div>
-                    <div id="vehicle-catalog" class="space-y-3"></div>
+                    <div id="vehicle-catalog" class="grid grid-cols-1 md:grid-cols-2 gap-3"></div>
                 </div>
 
                 <!-- 2. AXE MAISON & SURFACES -->
-                <div class="border rounded-2xl p-4 bg-white shadow-sm space-y-3">
+                <div class="border rounded-2xl p-5 bg-white shadow-sm space-y-4">
                     <div class="flex justify-between items-center border-b pb-2">
-                        <h3 class="text-xs font-black text-navy-800 uppercase flex items-center gap-1.5">
+                        <h3 class="text-sm font-black text-navy-800 uppercase flex items-center gap-2">
                             <span>🏡</span> Axe Maison & Surfaces
                         </h3>
-                        <span class="text-[9px] text-slate-400 font-bold uppercase">Nettoyage Approfondi</span>
+                        <span class="text-xs text-slate-400 font-bold uppercase">Nettoyage Approfondi</span>
                     </div>
 
-                    <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-[11px] font-bold">
+                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 text-xs font-bold">
                         <div>
-                            <label class="text-[10px] text-slate-500 uppercase block mb-0.5">Tapis (m²)</label>
-                            <input type="number" id="m2-tapis" placeholder="0" class="w-full p-2 border rounded-lg text-xs" oninput="calculerTotal()">
+                            <label class="text-[10px] text-slate-500 uppercase block mb-1">Tapis (m²)</label>
+                            <input type="number" id="m2-tapis" placeholder="0" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()">
                         </div>
                         <div>
-                            <label class="text-[10px] text-slate-500 uppercase block mb-0.5">Moquette (m²)</label>
-                            <input type="number" id="m2-moquette" placeholder="0" class="w-full p-2 border rounded-lg text-xs" oninput="calculerTotal()">
+                            <label class="text-[10px] text-slate-500 uppercase block mb-1">Moquette (m²)</label>
+                            <input type="number" id="m2-moquette" placeholder="0" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()">
                         </div>
                         <div>
-                            <label class="text-[10px] text-slate-500 uppercase block mb-0.5">Vitres simples (m²)</label>
-                            <input type="number" id="m2-vitres" placeholder="0" class="w-full p-2 border rounded-lg text-xs" oninput="calculerTotal()">
+                            <label class="text-[10px] text-slate-500 uppercase block mb-1">Vitres (m²)</label>
+                            <input type="number" id="m2-vitres" placeholder="0" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()">
                         </div>
                         <div>
-                            <label class="text-[10px] text-slate-500 uppercase block mb-0.5">Baies Vitrées (m²)</label>
-                            <input type="number" id="m2-baies" placeholder="0" class="w-full p-2 border rounded-lg text-xs" oninput="calculerTotal()">
+                            <label class="text-[10px] text-slate-500 uppercase block mb-1">Baies Vitrées (m²)</label>
+                            <input type="number" id="m2-baies" placeholder="0" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()">
                         </div>
                         <div>
-                            <label class="text-[10px] text-slate-500 uppercase block mb-0.5">Carreaux & Sols (m²)</label>
-                            <input type="number" id="m2-carreaux" placeholder="0" class="w-full p-2 border rounded-lg text-xs" oninput="calculerTotal()">
+                            <label class="text-[10px] text-slate-500 uppercase block mb-1">Carreaux (m²)</label>
+                            <input type="number" id="m2-carreaux" placeholder="0" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()">
                         </div>
                         <div>
-                            <label class="text-[10px] text-slate-500 uppercase block mb-0.5">Panneaux Solaires (pce)</label>
-                            <input type="number" id="qty-panneaux" placeholder="0" class="w-full p-2 border rounded-lg text-xs" oninput="calculerTotal()">
+                            <label class="text-[10px] text-slate-500 uppercase block mb-1">Panneaux (pce)</label>
+                            <input type="number" id="qty-panneaux" placeholder="0" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()">
                         </div>
                     </div>
 
-                    <div class="border-t pt-2 space-y-2">
-                        <span class="text-[10px] font-black text-navy-800 uppercase block">🛋️ Salons, Canapés & Matelas (par place assise) :</span>
-                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 text-[11px] font-bold">
+                    <div class="border-t pt-3 space-y-2">
+                        <span class="text-[11px] font-black text-navy-800 uppercase block">🛋️ Salons, Canapés & Matelas (par place assise) :</span>
+                        <div class="grid grid-cols-2 sm:grid-cols-5 gap-3 text-xs font-bold">
                             <div>
-                                <label class="text-[9px] text-slate-500 uppercase block">Textile</label>
-                                <input type="number" id="qty-canape-textile" placeholder="Places" class="w-full p-2 border rounded-lg text-xs" oninput="calculerTotal()">
+                                <label class="text-[10px] text-slate-500 uppercase block mb-1">Textile</label>
+                                <input type="number" id="qty-canape-textile" placeholder="Places" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()">
                             </div>
                             <div>
-                                <label class="text-[9px] text-slate-500 uppercase block">Lin</label>
-                                <input type="number" id="qty-canape-lin" placeholder="Places" class="w-full p-2 border rounded-lg text-xs" oninput="calculerTotal()">
+                                <label class="text-[10px] text-slate-500 uppercase block mb-1">Lin</label>
+                                <input type="number" id="qty-canape-lin" placeholder="Places" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()">
                             </div>
                             <div>
-                                <label class="text-[9px] text-slate-500 uppercase block">Velours</label>
-                                <input type="number" id="qty-canape-velours" placeholder="Places" class="w-full p-2 border rounded-lg text-xs" oninput="calculerTotal()">
+                                <label class="text-[10px] text-slate-500 uppercase block mb-1">Velours</label>
+                                <input type="number" id="qty-canape-velours" placeholder="Places" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()">
                             </div>
                             <div>
-                                <label class="text-[9px] text-slate-500 uppercase block">Cuir</label>
-                                <input type="number" id="qty-canape-cuir" placeholder="Places" class="w-full p-2 border rounded-lg text-xs" oninput="calculerTotal()">
+                                <label class="text-[10px] text-slate-500 uppercase block mb-1">Cuir</label>
+                                <input type="number" id="qty-canape-cuir" placeholder="Places" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()">
                             </div>
                             <div class="col-span-2 sm:col-span-1">
-                                <label class="text-[9px] text-slate-500 uppercase block">Matelas</label>
-                                <input type="number" id="qty-matelas" placeholder="Unités" class="w-full p-2 border rounded-lg text-xs" oninput="calculerTotal()">
+                                <label class="text-[10px] text-slate-500 uppercase block mb-1">Matelas</label>
+                                <input type="number" id="qty-matelas" placeholder="Unités" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()">
                             </div>
                         </div>
                     </div>
                 </div>
 
                 <!-- 3. AXE ENVIRONNEMENT 3D & VIDANGE -->
-                <div class="border rounded-2xl p-4 bg-white shadow-sm space-y-3">
+                <div class="border rounded-2xl p-5 bg-white shadow-sm space-y-4">
                     <div class="flex justify-between items-center border-b pb-2">
-                        <h3 class="text-xs font-black text-navy-800 uppercase flex items-center gap-1.5">
+                        <h3 class="text-sm font-black text-navy-800 uppercase flex items-center gap-2">
                             <span>🌱</span> Axe Environnement 3D & Vidange Fosse
                         </h3>
-                        <span class="text-[9px] text-slate-400 font-bold uppercase">Assainissement Lourd</span>
+                        <span class="text-xs text-slate-400 font-bold uppercase">Hygiène Publique</span>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-[11px] font-bold">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs font-bold">
                         <div>
-                            <label class="text-[10px] text-slate-500 uppercase block mb-0.5">Désinfection (pièces)</label>
-                            <input type="number" id="qty-desinfection" placeholder="0" class="w-full p-2 border rounded-lg text-xs" oninput="calculerTotal()">
+                            <label class="text-[10px] text-slate-500 uppercase block mb-1">Désinfection (pièces)</label>
+                            <input type="number" id="qty-desinfection" placeholder="0" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()">
                         </div>
                         <div>
-                            <label class="text-[10px] text-slate-500 uppercase block mb-0.5">Désinsectisation (pièces)</label>
-                            <input type="number" id="qty-desinsectisation" placeholder="0" class="w-full p-2 border rounded-lg text-xs" oninput="calculerTotal()">
+                            <label class="text-[10px] text-slate-500 uppercase block mb-1">Désinsectisation (pièces)</label>
+                            <input type="number" id="qty-desinsectisation" placeholder="0" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()">
                         </div>
                         <div>
-                            <label class="text-[10px] text-slate-500 uppercase block mb-0.5">Dératisation (pièces)</label>
-                            <input type="number" id="qty-deratisation" placeholder="0" class="w-full p-2 border rounded-lg text-xs" oninput="calculerTotal()">
+                            <label class="text-[10px] text-slate-500 uppercase block mb-1">Dératisation (pièces)</label>
+                            <input type="number" id="qty-deratisation" placeholder="0" class="w-full p-2.5 border rounded-xl" oninput="calculerTotal()">
                         </div>
                     </div>
 
-                    <div class="border-t pt-2 grid grid-cols-1 sm:grid-cols-2 gap-3 text-[11px] font-bold">
-                        <div class="bg-orange-50/50 p-2.5 rounded-xl border border-orange-200">
-                            <label class="text-[10px] font-black text-mattOrange uppercase block mb-1">🗑️ Évacuation des Immondices (m³)</label>
-                            <input type="number" id="vol-immondices" placeholder="Volume en m³" class="w-full p-2 bg-white border rounded-lg text-xs font-bold" oninput="calculerTotal()">
+                    <div class="border-t pt-3 grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs font-bold">
+                        <div class="bg-orange-50/60 p-3 rounded-2xl border border-orange-200">
+                            <label class="text-[11px] font-black text-mattOrange uppercase block mb-1">🗑️ Évacuation des Immondices (m³)</label>
+                            <input type="number" id="vol-immondices" placeholder="Volume en m³" class="w-full p-2.5 bg-white border rounded-xl font-bold" oninput="calculerTotal()">
                         </div>
-                        <div class="bg-sky-50/50 p-2.5 rounded-xl border border-sky-200">
-                            <label class="text-[10px] font-black text-navy-800 uppercase block mb-1">🪠 Vidange Fosse Septique Hydrocurage (m³)</label>
-                            <input type="number" id="vol-fosse" placeholder="Volume en m³" class="w-full p-2 bg-white border rounded-lg text-xs font-bold" oninput="calculerTotal()">
+                        <div class="bg-sky-50/60 p-3 rounded-2xl border border-sky-200">
+                            <label class="text-[11px] font-black text-navy-800 uppercase block mb-1">🪠 Vidange Fosse Septique Hydrocurage (m³)</label>
+                            <input type="number" id="vol-fosse" placeholder="Volume en m³" class="w-full p-2.5 bg-white border rounded-xl font-bold" oninput="calculerTotal()">
                         </div>
                     </div>
                 </div>
 
                 <!-- 4. LOGISTIQUE & PLANIFICATION -->
-                <div class="bg-slate-50 border rounded-2xl p-4 space-y-3 text-xs">
+                <div class="bg-slate-50 border rounded-2xl p-5 space-y-4 text-xs">
                     <div class="flex justify-between items-center border-b pb-2">
-                        <span class="text-[10px] font-black text-navy-800 uppercase">⚡ Logistique Terrain (Courant, Eau & Localisation)</span>
-                        <span id="zone-detected-badge" class="px-2.5 py-0.5 rounded text-[10px] font-black bg-sky-100 text-sky-800">Zone 1 - Résidentielle</span>
+                        <span class="text-xs font-black text-navy-800 uppercase">⚡ Logistique Terrain & Localisation</span>
+                        <span id="zone-detected-badge" class="px-3 py-1 rounded-lg text-[11px] font-black bg-sky-100 text-sky-800">Zone 1 - Résidentielle</span>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-                        <div class="bg-white p-2.5 rounded-xl border">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div class="bg-white p-3 rounded-xl border">
                             <label class="text-[10px] font-black text-slate-600 uppercase block mb-1">🔌 Source d'Énergie Électrique :</label>
                             <select id="client-elec" class="w-full p-2 border rounded-lg text-xs font-bold bg-slate-50">
                                 <option value="SNEL disponible sur place">SNEL disponible sur place</option>
@@ -378,7 +385,7 @@
                                 <option value="Pas d'électricité (Prévoir groupe mobile)">Pas d'électricité (Prévoir groupe mobile)</option>
                             </select>
                         </div>
-                        <div class="bg-white p-2.5 rounded-xl border">
+                        <div class="bg-white p-3 rounded-xl border">
                             <label class="text-[10px] font-black text-slate-600 uppercase block mb-1">🚰 Source d'Eau :</label>
                             <select id="client-water" class="w-full p-2 border rounded-lg text-xs font-bold bg-slate-50">
                                 <option value="REGIDESO fonctionnelle sur place">REGIDESO fonctionnelle sur place</option>
@@ -388,194 +395,213 @@
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         <div>
-                            <label class="text-[10px] font-bold text-slate-500 uppercase block mb-0.5">Commune :</label>
+                            <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Commune :</label>
                             <select id="client-commune" class="w-full p-2.5 border rounded-xl bg-white font-bold text-xs" onchange="onClientCommuneChange()"></select>
                         </div>
                         <div>
-                            <label class="text-[10px] font-bold text-slate-500 uppercase block mb-0.5">Avenue, N° et Quartier :</label>
+                            <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Avenue, N° et Quartier :</label>
                             <input type="text" id="client-avenue-input" placeholder="Ex: Av. Kimbondo N° 12, Q/ Lubudi" class="w-full p-2.5 border rounded-xl font-medium text-xs">
                         </div>
                     </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
                         <div>
-                            <label class="text-[10px] font-bold text-slate-500 uppercase block mb-0.5">Point de repère :</label>
-                            <input type="text" id="client-ref-input" placeholder="Ex: Réf. Pharmacie Principale" class="w-full p-2 border rounded-xl font-medium text-xs">
+                            <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Point de repère :</label>
+                            <input type="text" id="client-ref-input" placeholder="Ex: Réf. Pharmacie Principale" class="w-full p-2.5 border rounded-xl font-medium text-xs">
                         </div>
                         <div>
-                            <label class="text-[10px] font-bold text-slate-500 uppercase block mb-0.5">Date souhaitée :</label>
-                            <input type="date" id="client-date-input" class="w-full p-2 border rounded-xl text-xs font-bold">
+                            <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Date souhaitée :</label>
+                            <input type="date" id="client-date-input" class="w-full p-2.5 border rounded-xl text-xs font-bold">
                         </div>
                         <div>
-                            <label class="text-[10px] font-bold text-slate-500 uppercase block mb-0.5">Heure d'arrivée :</label>
-                            <input type="time" id="client-time-input" class="w-full p-2 border rounded-xl text-xs font-bold">
+                            <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Heure d'arrivée :</label>
+                            <input type="time" id="client-time-input" class="w-full p-2.5 border rounded-xl text-xs font-bold">
                         </div>
                     </div>
                 </div>
 
-                <!-- Récapitulatif -->
-                <div class="bg-navy-900 text-white p-4 rounded-2xl flex items-center justify-between shadow-xl border border-aqua/30">
+                <!-- Récapitulatif et validation -->
+                <div class="bg-navy-900 text-white p-5 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4 shadow-xl border border-aqua/30">
                     <div>
-                        <span class="text-[10px] text-slate-400 font-bold uppercase block">Montant Total Estimé :</span>
-                        <span class="text-xl sm:text-2xl font-black text-mattOrange font-mono"><span id="prix-total-affichage">0</span> CDF</span>
+                        <span class="text-xs text-slate-400 font-bold uppercase block">Montant Total Estimé :</span>
+                        <span class="text-2xl sm:text-3xl font-black text-mattOrange font-mono"><span id="prix-total-affichage">0</span> CDF</span>
                     </div>
-                    <button onclick="passerCommande()" class="px-6 py-3 bg-mattOrange active:bg-orange-600 text-white font-black text-xs rounded-xl uppercase tracking-wider shadow">
+                    <button onclick="passerCommande()" class="w-full sm:w-auto px-8 py-3.5 bg-mattOrange hover:bg-orange-600 text-white font-black text-sm rounded-xl uppercase tracking-wider shadow transition">
                         Valider la Commande 🚀
                     </button>
                 </div>
             </div>
 
-            <!-- Sous-onglet 2 : Suivi & Historique Client -->
-            <div id="client-tracking" class="hidden space-y-3">
+            <!-- Sous-onglet 2 : Historique Client -->
+            <div id="client-tracking" class="hidden space-y-4">
                 <div class="flex justify-between items-center border-b pb-2">
-                    <span class="text-xs font-black uppercase text-navy-800">Historique des Commandes</span>
-                    <button onclick="detectClientOrders()" class="text-xs text-sky-600 font-bold">Actualiser 🔄</button>
+                    <span class="text-sm font-black uppercase text-navy-800">Historique des Commandes</span>
+                    <button onclick="detectClientOrders()" class="text-xs text-sky-600 font-bold hover:underline">Actualiser 🔄</button>
                 </div>
-                <div id="client-orders-tracking-list" class="space-y-2.5"></div>
+                <div id="client-orders-tracking-list" class="space-y-3"></div>
             </div>
 
-            <!-- Sous-onglet 3 : Informations, CGU & Support Client -->
-            <div id="client-info-support" class="hidden space-y-4 text-xs">
-                <!-- Présentation MATT -->
-                <div class="border rounded-2xl p-4 bg-slate-50 space-y-2">
+            <!-- Sous-onglet 3 : Support & CGU Client -->
+            <div id="client-info-support" class="hidden space-y-5 text-xs">
+                <div class="border rounded-2xl p-5 bg-slate-50 space-y-3">
                     <div class="flex items-center gap-3">
-                        <div class="w-10 h-10 bg-white rounded-xl border p-0.5 flex-shrink-0">
+                        <div class="w-12 h-12 bg-white rounded-xl border p-1 flex-shrink-0">
                             <img src="matt.jpg" alt="MATT" class="w-full h-full object-cover">
                         </div>
                         <div>
-                            <h3 class="font-black text-navy-800 text-sm">MASTER TOUCH TRADING (MATT SARL)</h3>
-                            <span class="text-[10px] text-slate-500">RCCM CD/KIN/RCCM/24-B-04106 • NIF A2441433N</span>
+                            <h3 class="font-black text-navy-800 text-base">MASTER TOUCH TRADING (MATT SARL)</h3>
+                            <span class="text-xs text-slate-500">RCCM CD/KIN/RCCM/24-B-04106 • NIF A2441433N</span>
                         </div>
                     </div>
-                    <p class="text-slate-600">Entreprise générale d'assainissement, d'entretien automobile et de services à Kinshasa, en partenariat avec Global Tech Solutions.</p>
+                    <p class="text-slate-600 leading-relaxed">Plateforme d'assainissement et nettoyage opérée en partenariat avec Global Tech Solutions.</p>
                 </div>
 
-                <!-- Assistance rapide -->
-                <div class="grid grid-cols-2 gap-2">
-                    <a href="https://wa.me/243980000338" target="_blank" class="p-3 bg-green-50 border border-green-200 rounded-xl flex items-center gap-2">
-                        <span class="text-xl">💬</span>
-                        <span class="font-bold text-green-800 text-[11px]">WhatsApp (+243 980 000 338)</span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <a href="https://wa.me/243980000338" target="_blank" class="p-4 bg-green-50 border border-green-200 rounded-2xl flex items-center gap-3 hover:bg-green-100 transition">
+                        <span class="text-2xl">💬</span>
+                        <div>
+                            <span class="text-[10px] text-green-700 uppercase font-black block">Assistance WhatsApp</span>
+                            <b class="text-slate-800 text-xs font-bold">+243 980 000 338</b>
+                        </div>
                     </a>
-                    <a href="tel:+243980000338" class="p-3 bg-sky-50 border border-sky-200 rounded-xl flex items-center gap-2">
-                        <span class="text-xl">📞</span>
-                        <span class="font-bold text-sky-800 text-[11px]">Appel Direct</span>
+                    <a href="tel:+243980000338" class="p-4 bg-sky-50 border border-sky-200 rounded-2xl flex items-center gap-3 hover:bg-sky-100 transition">
+                        <span class="text-2xl">📞</span>
+                        <div>
+                            <span class="text-[10px] text-sky-700 uppercase font-black block">Ligne Téléphonique</span>
+                            <b class="text-slate-800 text-xs font-bold">+243 980 000 338</b>
+                        </div>
                     </a>
                 </div>
 
-                <!-- CGU Client -->
-                <div class="border rounded-2xl p-4 bg-white space-y-2">
+                <div class="border rounded-2xl p-5 bg-white space-y-3">
                     <h3 class="font-black text-navy-800 text-sm uppercase">Conditions Générales d'Utilisation (CGU)</h3>
-                    <div id="cgu-display-client" class="space-y-2 max-h-48 overflow-y-auto pr-1 custom-scrollbar text-slate-600 leading-relaxed">
+                    <div id="cgu-display-client" class="space-y-2 max-h-60 overflow-y-auto pr-1 custom-scrollbar text-slate-600 leading-relaxed">
                         <p class="text-slate-400 italic">Chargement des CGU...</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- 5. ESPACE PARTENAIRE CONNECTÉ -->
-        <div id="view-partner-app" class="bg-white text-slate-800 rounded-3xl p-4 md:p-6 shadow-2xl hidden animate-fade-in space-y-4">
-            <div class="flex justify-between items-center border-b pb-3">
+        <!-- 5. ESPACE PARTENAIRE CONNECTÉ (PLEIN ÉCRAN) -->
+        <div id="view-partner-app" class="w-full bg-white text-slate-800 rounded-3xl p-5 md:p-8 shadow-2xl hidden animate-fade-in space-y-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b pb-4">
                 <div>
-                    <h2 class="text-base font-black text-navy-800 flex items-center gap-1.5">
+                    <h2 class="text-xl font-black text-navy-800 flex items-center gap-2">
                         <span>👤</span> <span id="partner-dashboard-name">MATT</span>
                     </h2>
-                    <span id="partner-dashboard-meta" class="text-[10px] text-slate-500 font-semibold block">Lavage auto - Bandalungwa</span>
+                    <span id="partner-dashboard-meta" class="text-xs text-slate-500 font-semibold block mt-0.5">Lavage auto - Bandalungwa</span>
                 </div>
-                <span id="partner-mode-badge" class="px-2.5 py-1 bg-slate-100 text-slate-700 text-[10px] font-bold rounded-lg border">
-                    15% Comm.
-                </span>
+                <div class="flex items-center gap-2 w-full sm:w-auto justify-between sm:justify-end">
+                    <span id="partner-mode-badge" class="px-3 py-1.5 bg-slate-100 text-slate-700 text-xs font-bold rounded-xl border">
+                        15% Comm.
+                    </span>
+                    <button onclick="logoutCurrentSession()" class="px-4 py-2 bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold rounded-xl border border-red-200 transition flex items-center gap-1.5">
+                        🚪 Déconnexion
+                    </button>
+                </div>
             </div>
 
             <!-- Onglets Partenaire -->
-            <div class="flex gap-1.5 border-b pb-2 overflow-x-auto custom-scrollbar text-xs font-bold">
-                <button onclick="switchPartnerTab('partner-tab-missions', this)" class="partner-tab-btn px-3 py-2 bg-mattOrange text-white rounded-xl whitespace-nowrap active text-[11px]">
+            <div class="flex gap-2 border-b pb-3 overflow-x-auto custom-scrollbar text-xs font-bold">
+                <button onclick="switchPartnerTab('partner-tab-missions', this)" class="partner-tab-btn px-4 py-2.5 bg-mattOrange text-white rounded-xl whitespace-nowrap active shadow-sm">
                     🚨 Missions Disponibles
                 </button>
-                <button onclick="switchPartnerTab('partner-tab-wallet', this)" class="partner-tab-btn px-3 py-2 bg-slate-100 text-slate-600 rounded-xl whitespace-nowrap text-[11px]">
+                <button onclick="switchPartnerTab('partner-tab-wallet', this)" class="partner-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 rounded-xl whitespace-nowrap">
                     💳 Portefeuille & Forfait
                 </button>
-                <button onclick="switchPartnerTab('partner-tab-courses', this)" class="partner-tab-btn px-3 py-2 bg-slate-100 text-slate-600 rounded-xl whitespace-nowrap text-[11px]">
+                <button onclick="switchPartnerTab('partner-tab-courses', this)" class="partner-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 rounded-xl whitespace-nowrap">
                     📑 Courses en Cours
                 </button>
-                <button onclick="switchPartnerTab('partner-tab-profil', this)" class="partner-tab-btn px-3 py-2 bg-slate-100 text-slate-600 rounded-xl whitespace-nowrap text-[11px]">
+                <button onclick="switchPartnerTab('partner-tab-profil', this)" class="partner-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 rounded-xl whitespace-nowrap">
                     ⚙️ Sécurité & Profil
                 </button>
-                <button onclick="switchPartnerTab('partner-tab-info-support', this)" class="partner-tab-btn px-3 py-2 bg-slate-100 text-slate-600 rounded-xl whitespace-nowrap text-[11px]">
+                <button onclick="switchPartnerTab('partner-tab-info-support', this)" class="partner-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 rounded-xl whitespace-nowrap">
                     📜 Infos & Support
                 </button>
             </div>
 
             <!-- Missions Disponibles -->
-            <div id="partner-tab-missions" class="partner-subview space-y-3">
+            <div id="partner-tab-missions" class="partner-subview space-y-4">
                 <div class="flex justify-between items-center">
-                    <span class="text-[11px] font-black uppercase text-navy-800">Missions Disponibles dans votre Secteur</span>
-                    <button onclick="loadPartnerMissions()" class="text-xs text-sky-600 font-bold">Actualiser 🔄</button>
+                    <span class="text-xs font-black uppercase text-navy-800">Missions Disponibles dans votre Secteur</span>
+                    <button onclick="loadPartnerMissions()" class="text-xs text-sky-600 font-bold hover:underline">Actualiser 🔄</button>
                 </div>
-                <div id="partner-missions-container" class="space-y-3"></div>
+                <div id="partner-missions-container" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </div>
 
             <!-- Portefeuille & Recharge -->
-            <div id="partner-tab-wallet" class="partner-subview hidden space-y-4">
-                <div class="bg-sky-50 border border-aqua/40 rounded-2xl p-4 text-center">
-                    <span class="text-[9px] text-slate-500 font-black uppercase tracking-wider block" id="partner-solde-label">Solde Commission Disponible</span>
-                    <div class="text-3xl font-black text-navy-800 mt-0.5" id="partner-wallet-balance">0 CDF</div>
+            <div id="partner-tab-wallet" class="partner-subview hidden space-y-5">
+                <div class="bg-sky-50 border border-aqua/40 rounded-3xl p-6 text-center max-w-xl mx-auto">
+                    <span class="text-[10px] text-slate-500 font-black uppercase tracking-wider block" id="partner-solde-label">Solde Commission Disponible</span>
+                    <div class="text-4xl font-black text-navy-800 mt-1" id="partner-wallet-balance">0 CDF</div>
                 </div>
 
-                <div class="border rounded-2xl p-3.5 space-y-3 text-xs">
-                    <span class="font-black text-navy-800 uppercase block">Recharger / Souscrire un Forfait</span>
-                    <select id="p-billing-mode-select" class="w-full p-2.5 border rounded-xl font-bold bg-white" onchange="adjustPartnerRechargeMode()">
+                <div class="border rounded-3xl p-6 space-y-4 text-xs max-w-xl mx-auto bg-slate-50">
+                    <span class="font-black text-navy-800 uppercase block text-sm">Recharger / Souscrire un Forfait</span>
+                    <select id="p-billing-mode-select" class="w-full p-3 border rounded-xl font-bold bg-white" onchange="adjustPartnerRechargeMode()">
                         <option value="commission">Recharge Solde Commission (À la course)</option>
                         <option value="journalier">Forfait Jour Illimité (15 000 CDF)</option>
                         <option value="mensuel">Forfait Mois Illimité (150 000 CDF)</option>
                     </select>
 
-                    <div class="bg-slate-50 p-2.5 rounded-xl border text-[10px] space-y-1">
-                        <span class="font-bold text-slate-500 block uppercase">Comptes Mobiles Officiels MATT SARL :</span>
-                        <div>📱 M-Pesa / Orange / Airtel Money : <b class="text-slate-900 font-mono">+243980000338</b></div>
+                    <div class="bg-white p-3.5 rounded-xl border text-xs space-y-1.5">
+                        <span class="font-bold text-slate-500 block uppercase text-[10px]">Comptes Mobiles Officiels MATT SARL :</span>
+                        <div class="text-slate-800">📱 M-Pesa / Orange / Airtel : <b class="font-mono text-navy-800 font-black">+243980000338</b></div>
                     </div>
 
-                    <input type="number" id="p-recharge-amount" placeholder="Montant en CDF" class="w-full p-2.5 border rounded-xl font-bold text-xs">
-                    <input type="text" id="p-recharge-ref" placeholder="Réf Mobile Money (ex: TX12345)" class="w-full p-2.5 border rounded-xl font-mono text-xs">
-                    <button onclick="sendRechargeDeclaration()" class="w-full py-3 bg-mattOrange active:bg-orange-600 text-white font-black rounded-xl uppercase text-xs">
+                    <input type="number" id="p-recharge-amount" placeholder="Montant en CDF" class="w-full p-3 border rounded-xl font-bold text-xs bg-white">
+                    <input type="text" id="p-recharge-ref" placeholder="Réf Mobile Money (ex: TX12345)" class="w-full p-3 border rounded-xl font-mono text-xs bg-white">
+                    <button onclick="sendRechargeDeclaration()" class="w-full py-3.5 bg-mattOrange hover:bg-orange-600 text-white font-black rounded-xl uppercase text-xs transition shadow">
                         Déclarer le Paiement
                     </button>
-                    <a href="https://wa.me/243980000338?text=Preuve%20de%20dépôt%20MATT" target="_blank" class="w-full py-2.5 bg-whatsapp text-white font-bold rounded-xl text-center block text-xs">
+                    <a href="https://wa.me/243980000338?text=Preuve%20de%20dépôt%20MATT" target="_blank" class="w-full py-3 bg-whatsapp hover:bg-green-600 text-white font-bold rounded-xl text-center block text-xs transition shadow">
                         📲 Envoyer la preuve sur WhatsApp (+243 980 000 338)
                     </a>
                 </div>
             </div>
 
-            <!-- Courses en cours & Clôture -->
-            <div id="partner-tab-courses" class="partner-subview hidden space-y-3">
-                <span class="text-[11px] font-black uppercase text-navy-800 block">Courses Acceptées & Clôture</span>
-                <div id="partner-accepted-courses-list" class="space-y-2.5"></div>
+            <!-- Courses en cours -->
+            <div id="partner-tab-courses" class="partner-subview hidden space-y-4">
+                <span class="text-xs font-black uppercase text-navy-800 block">Courses Acceptées & Clôture</span>
+                <div id="partner-accepted-courses-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
             </div>
 
-            <!-- Profil & Code secret -->
-            <div id="partner-tab-profil" class="partner-subview hidden space-y-3">
-                <span class="text-[11px] font-black uppercase text-navy-800 block">Modification Sécurisée des Identifiants</span>
-                <div class="bg-slate-50 p-3.5 rounded-2xl border space-y-2.5 text-xs">
-                    <input type="text" id="partner-edit-name" placeholder="Nom ou Raison Sociale" class="w-full p-2.5 bg-white border rounded-xl font-bold">
-                    <input type="tel" id="partner-edit-phone" placeholder="Numéro de téléphone (Login)" class="w-full p-2.5 bg-white border rounded-xl font-bold font-mono">
-                    <select id="partner-edit-commune" class="w-full p-2.5 bg-white border rounded-xl font-bold"></select>
+            <!-- Profil & Mot de passe -->
+            <div id="partner-tab-profil" class="partner-subview hidden space-y-4 max-w-xl mx-auto">
+                <span class="text-xs font-black uppercase text-navy-800 block">Modification Sécurisée des Identifiants</span>
+                <div class="bg-slate-50 p-5 rounded-3xl border space-y-3 text-xs">
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Raison Sociale / Nom</label>
+                        <input type="text" id="partner-edit-name" class="w-full p-3 bg-white border rounded-xl font-bold">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Téléphone (Login)</label>
+                        <input type="tel" id="partner-edit-phone" class="w-full p-3 bg-white border rounded-xl font-bold font-mono">
+                    </div>
+                    <div>
+                        <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Commune</label>
+                        <select id="partner-edit-commune" class="w-full p-3 bg-white border rounded-xl font-bold"></select>
+                    </div>
                     
-                    <div class="relative">
-                        <input type="password" id="partner-edit-old-pass" placeholder="Ancien mot de passe *" class="w-full p-2.5 pr-10 bg-white border rounded-xl font-bold">
-                        <button type="button" onclick="togglePasswordVisibility('partner-edit-old-pass', 'eye-p-old')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400">
+                    <div class="relative pt-2">
+                        <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Ancien mot de passe *</label>
+                        <input type="password" id="partner-edit-old-pass" placeholder="Requis pour valider" class="w-full p-3 pr-10 bg-white border rounded-xl font-bold">
+                        <button type="button" onclick="togglePasswordVisibility('partner-edit-old-pass', 'eye-p-old')" class="absolute bottom-3 right-0 pr-3 flex items-center text-slate-400">
                             <span id="eye-p-old">👁️</span>
                         </button>
                     </div>
 
                     <div class="relative">
-                        <input type="password" id="partner-edit-new-pass" placeholder="Nouveau mot de passe (facultatif)" class="w-full p-2.5 pr-10 bg-white border rounded-xl font-bold">
-                        <button type="button" onclick="togglePasswordVisibility('partner-edit-new-pass', 'eye-p-new')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400">
+                        <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Nouveau mot de passe (facultatif)</label>
+                        <input type="password" id="partner-edit-new-pass" placeholder="Laisser vide si inchangé" class="w-full p-3 pr-10 bg-white border rounded-xl font-bold">
+                        <button type="button" onclick="togglePasswordVisibility('partner-edit-new-pass', 'eye-p-new')" class="absolute bottom-3 right-0 pr-3 flex items-center text-slate-400">
                             <span id="eye-p-new">👁️</span>
                         </button>
                     </div>
 
-                    <button onclick="savePartnerProfileUpdate()" class="w-full py-3 bg-navy-800 text-white font-black rounded-xl uppercase text-xs">
+                    <button onclick="savePartnerProfileUpdate()" class="w-full py-3.5 bg-navy-800 hover:bg-navy-900 text-white font-black rounded-xl uppercase text-xs transition mt-2">
                         Mettre à jour mes accès
                     </button>
                 </div>
@@ -583,18 +609,18 @@
 
             <!-- Infos & Support Partenaire -->
             <div id="partner-tab-info-support" class="partner-subview hidden space-y-4 text-xs">
-                <div class="border rounded-2xl p-4 bg-slate-50 space-y-2">
-                    <h3 class="font-black text-navy-800 text-sm">Assistance Partenaire MATT SARL</h3>
-                    <p class="text-slate-600">Un problème sur une course ou un rechargement ? Contactez la permanence :</p>
-                    <div class="flex gap-2 pt-1">
-                        <a href="https://wa.me/243980000338" target="_blank" class="px-4 py-2 bg-whatsapp text-white rounded-xl font-bold">WhatsApp Direct</a>
-                        <a href="tel:+243980000338" class="px-4 py-2 bg-sky-600 text-white rounded-xl font-bold">Appel Téléphonique</a>
+                <div class="border rounded-2xl p-5 bg-slate-50 space-y-2">
+                    <h3 class="font-black text-navy-800 text-sm uppercase">Assistance Partenaire MATT SARL</h3>
+                    <p class="text-slate-600">Permanence technique et validation des forfaits :</p>
+                    <div class="flex flex-wrap gap-2 pt-1">
+                        <a href="https://wa.me/243980000338" target="_blank" class="px-4 py-2.5 bg-whatsapp text-white rounded-xl font-bold">WhatsApp Direct</a>
+                        <a href="tel:+243980000338" class="px-4 py-2.5 bg-sky-600 text-white rounded-xl font-bold">Appel Téléphonique</a>
                     </div>
                 </div>
 
-                <div class="border rounded-2xl p-4 bg-white space-y-2">
+                <div class="border rounded-2xl p-5 bg-white space-y-2">
                     <h3 class="font-black text-navy-800 text-sm uppercase">Conditions Générales d'Utilisation (CGU)</h3>
-                    <div id="cgu-display-partner" class="space-y-2 max-h-48 overflow-y-auto pr-1 custom-scrollbar text-slate-600 leading-relaxed">
+                    <div id="cgu-display-partner" class="space-y-2 max-h-60 overflow-y-auto pr-1 custom-scrollbar text-slate-600 leading-relaxed">
                         <p class="text-slate-400 italic">Chargement des CGU...</p>
                     </div>
                 </div>
@@ -604,8 +630,8 @@
     </main>
 
     <!-- MODALE DE NOTATION MOBILE -->
-    <div id="modal-rating" class="fixed inset-0 bg-slate-955/70 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
-        <div class="bg-white text-slate-900 w-full max-w-sm rounded-3xl p-5 space-y-3 relative text-xs">
+    <div id="modal-rating" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
+        <div class="bg-white text-slate-900 w-full max-w-sm rounded-3xl p-6 space-y-4 relative text-xs shadow-2xl">
             <button onclick="closeRatingModal()" class="absolute top-4 right-4 text-slate-400 font-bold text-lg">✕</button>
             <h3 class="text-sm font-black text-navy-800">⭐ Noter la course #<span id="rating-order-id"></span></h3>
             
@@ -617,8 +643,8 @@
                 <span onclick="setRating('service', 5)">★</span>
             </div>
 
-            <textarea id="rating-comment" rows="2" placeholder="Votre commentaire..." class="w-full p-2.5 border rounded-xl"></textarea>
-            <button onclick="submitOrderRating()" class="w-full py-3 bg-mattOrange text-white font-black rounded-xl uppercase">Enregistrer ma note</button>
+            <textarea id="rating-comment" rows="2" placeholder="Votre commentaire..." class="w-full p-3 border rounded-xl"></textarea>
+            <button onclick="submitOrderRating()" class="w-full py-3.5 bg-mattOrange text-white font-black rounded-xl uppercase">Enregistrer ma note</button>
         </div>
     </div>
 
@@ -868,6 +894,7 @@
             session = { role: null, user: null };
             document.getElementById('logged-user-chip').classList.add('hidden');
             showView('view-gateway');
+            showToast("Vous avez été déconnecté.", "info");
         }
 
         // Modification profil prestataire
@@ -924,7 +951,6 @@
             let total = 0;
             const tarifsZone = grilleTarifaireParZone[currentActiveZone] || grilleTarifaireParZone['zone1'];
 
-            // 1. Véhicules et options rattachées
             typesVehicules.forEach(v => {
                 const count = clientVehiculeSelection[v.id] || 0;
                 if (count > 0) {
@@ -939,7 +965,6 @@
                 }
             });
 
-            // 2. Maison & Surfaces
             total += (parseFloat(document.getElementById('m2-tapis')?.value) || 0) * 2000;
             total += (parseFloat(document.getElementById('m2-moquette')?.value) || 0) * 2000;
             total += (parseFloat(document.getElementById('m2-vitres')?.value) || 0) * 1500;
@@ -947,14 +972,12 @@
             total += (parseFloat(document.getElementById('m2-carreaux')?.value) || 0) * 1000;
             total += (parseFloat(document.getElementById('qty-panneaux')?.value) || 0) * 4000;
 
-            // Salons & Matelas
             total += (parseFloat(document.getElementById('qty-canape-textile')?.value) || 0) * 4500;
             total += (parseFloat(document.getElementById('qty-canape-lin')?.value) || 0) * 6000;
             total += (parseFloat(document.getElementById('qty-canape-velours')?.value) || 0) * 8000;
             total += (parseFloat(document.getElementById('qty-canape-cuir')?.value) || 0) * 12000;
             total += (parseFloat(document.getElementById('qty-matelas')?.value) || 0) * 5000;
 
-            // 3. Environnement 3D & Vidange
             total += (parseFloat(document.getElementById('qty-desinfection')?.value) || 0) * 10000;
             total += (parseFloat(document.getElementById('qty-desinsectisation')?.value) || 0) * 12000;
             total += (parseFloat(document.getElementById('qty-deratisation')?.value) || 0) * 14000;
@@ -1116,10 +1139,10 @@
         function switchPartnerTab(tabId, btn) {
             document.querySelectorAll('.partner-subview').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('.partner-tab-btn').forEach(b => {
-                b.className = "partner-tab-btn px-3 py-2 bg-slate-100 text-slate-600 rounded-xl whitespace-nowrap text-[11px]";
+                b.className = "partner-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 rounded-xl whitespace-nowrap";
             });
             document.getElementById(tabId).classList.remove('hidden');
-            if (btn) btn.className = "partner-tab-btn px-3 py-2 bg-mattOrange text-white rounded-xl whitespace-nowrap text-[11px] active";
+            if (btn) btn.className = "partner-tab-btn px-4 py-2.5 bg-mattOrange text-white rounded-xl whitespace-nowrap shadow-sm active";
         }
 
         function adjustPartnerRechargeMode() {
@@ -1134,21 +1157,21 @@
             container.innerHTML = '';
 
             if (!data || data.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-8">Aucune mission disponible dans votre secteur.</p>`;
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-8 col-span-2">Aucune mission disponible dans votre secteur.</p>`;
                 return;
             }
 
             data.forEach(o => {
                 container.innerHTML += `
-                    <div class="p-4 border rounded-2xl bg-white space-y-2 text-xs shadow-sm">
+                    <div class="p-4 border rounded-2xl bg-white space-y-2.5 text-xs shadow-sm">
                         <div class="flex justify-between items-start">
                             <div>
-                                <b class="text-navy-800 uppercase">${o.commune}</b>
+                                <b class="text-navy-800 uppercase text-sm">${o.commune}</b>
                                 <span class="text-[10px] text-slate-500 block">${o.date} à ${o.time}</span>
                             </div>
                             <div class="text-right font-mono">
-                                <span class="font-black text-navy-800">${Number(o.total_amount).toLocaleString('fr-FR')} CDF</span>
-                                <span class="block text-[9px] text-mattOrange font-bold">Commission : ${Number(o.commission).toLocaleString('fr-FR')} CDF</span>
+                                <span class="font-black text-navy-800 text-base">${Number(o.total_amount).toLocaleString('fr-FR')} CDF</span>
+                                <span class="block text-[10px] text-mattOrange font-bold">Commission : ${Number(o.commission).toLocaleString('fr-FR')} CDF</span>
                             </div>
                         </div>
                         <div class="bg-slate-50 p-2.5 rounded-xl border text-[11px] text-slate-600">
@@ -1156,7 +1179,7 @@
                             <b>Logistique :</b> <span class="text-aqua font-bold">${o.logistics || 'SNEL / REGIDESO'}</span><br>
                             <b>Repère :</b> ${o.reference || 'Aucun'}
                         </div>
-                        <button onclick="accepterMission(${o.id}, ${o.commission})" class="w-full py-2.5 bg-mattOrange active:bg-orange-600 text-white rounded-xl font-black uppercase text-[11px] shadow">
+                        <button onclick="accepterMission(${o.id}, ${o.commission})" class="w-full py-2.5 bg-mattOrange active:bg-orange-600 text-white rounded-xl font-black uppercase text-xs shadow transition">
                             Accepter la course (${Number(o.commission).toLocaleString('fr-FR')} CDF)
                         </button>
                     </div>
@@ -1172,21 +1195,21 @@
 
             (data || []).forEach(o => {
                 container.innerHTML += `
-                    <div class="p-3.5 border rounded-2xl bg-white shadow-sm space-y-1.5 text-xs">
+                    <div class="p-4 border rounded-2xl bg-white shadow-sm space-y-2 text-xs">
                         <div class="flex justify-between font-bold">
                             <span>#${o.id} - ${o.commune}</span>
-                            <span class="text-navy-800">${Number(o.total_amount).toLocaleString('fr-FR')} CDF</span>
+                            <span class="text-navy-800 font-mono">${Number(o.total_amount).toLocaleString('fr-FR')} CDF</span>
                         </div>
                         <div class="text-[11px] text-slate-600">
-                            <b>Client :</b> ${o.client_name} • <a href="tel:${o.client_phone}" class="text-aqua font-bold font-mono">${o.client_phone}</a><br>
+                            <b>Client :</b> ${o.client_name} • <a href="tel:${o.client_phone}" class="text-aqua font-bold font-mono underline">${o.client_phone}</a><br>
                             <b>Adresse :</b> ${o.avenue} (Repère : ${o.reference || 'N/A'})<br>
                             <b>Conditions :</b> ${o.logistics || 'SNEL / REGIDESO'}
                         </div>
                         ${o.status === 'Acceptée' ? `
-                            <button onclick="cloturerMission(${o.id})" class="w-full py-2 bg-green-600 active:bg-green-700 text-white rounded-xl font-bold text-xs mt-1">
+                            <button onclick="cloturerMission(${o.id})" class="w-full py-2.5 bg-green-600 active:bg-green-700 text-white rounded-xl font-bold text-xs mt-1">
                                 ✅ Clôturer cette mission (Terminée)
                             </button>
-                        ` : `<span class="text-green-600 font-bold text-[10px] block text-right">Mission clôturée ✔</span>`}
+                        ` : `<span class="text-green-600 font-bold text-xs block text-right">Mission clôturée ✔</span>`}
                     </div>
                 `;
             });
@@ -1204,7 +1227,7 @@
 
             session.user.wallet = newWallet;
             document.getElementById('partner-wallet-balance').innerText = `${newWallet.toLocaleString('fr-FR')} CDF`;
-            showToast("Mission acceptée ! Coordonnées client débloquées.");
+            showToast("Mission acceptée ! Coordonnées débloquées.");
             loadPartnerMissions();
             loadPartnerAcceptedCourses();
         }
@@ -1232,9 +1255,9 @@
             document.getElementById('client-tracking').classList.toggle('hidden', t !== 'client-tracking');
             document.getElementById('client-info-support').classList.toggle('hidden', t !== 'client-info-support');
 
-            document.getElementById('tab-btn-client-compose').className = t === 'client-compose' ? 'flex-1 min-w-[120px] py-2.5 font-black border-b-2 border-mattOrange text-mattOrange' : 'flex-1 min-w-[120px] py-2.5 font-bold border-b-2 border-transparent text-slate-500';
-            document.getElementById('tab-btn-client-tracking').className = t === 'client-tracking' ? 'flex-1 min-w-[120px] py-2.5 font-black border-b-2 border-mattOrange text-mattOrange' : 'flex-1 min-w-[120px] py-2.5 font-bold border-b-2 border-transparent text-slate-500';
-            document.getElementById('tab-btn-client-info-support').className = t === 'client-info-support' ? 'flex-1 min-w-[120px] py-2.5 font-black border-b-2 border-mattOrange text-mattOrange' : 'flex-1 min-w-[120px] py-2.5 font-bold border-b-2 border-transparent text-slate-500';
+            document.getElementById('tab-btn-client-compose').className = t === 'client-compose' ? 'flex-1 min-w-[130px] py-3 font-black border-b-2 border-mattOrange text-mattOrange' : 'flex-1 min-w-[130px] py-3 font-bold border-b-2 border-transparent text-slate-500';
+            document.getElementById('tab-btn-client-tracking').className = t === 'client-tracking' ? 'flex-1 min-w-[130px] py-3 font-black border-b-2 border-mattOrange text-mattOrange' : 'flex-1 min-w-[130px] py-3 font-bold border-b-2 border-transparent text-slate-500';
+            document.getElementById('tab-btn-client-info-support').className = t === 'client-info-support' ? 'flex-1 min-w-[130px] py-3 font-black border-b-2 border-mattOrange text-mattOrange' : 'flex-1 min-w-[130px] py-3 font-bold border-b-2 border-transparent text-slate-500';
         }
 
         window.onload = function() {
@@ -1248,7 +1271,6 @@
                 if (selectPartnerEdit) selectPartnerEdit.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
             });
 
-            // Génération dynamique des véhicules et tiroirs d'options
             const vCat = document.getElementById('vehicle-catalog');
             typesVehicules.forEach(v => {
                 clientVehiculeSelection[v.id] = 0;
@@ -1278,7 +1300,7 @@
                 }
 
                 vCat.innerHTML += `
-                    <div class="border rounded-xl p-2.5 bg-white shadow-xs">
+                    <div class="border rounded-xl p-3 bg-white shadow-xs">
                         <div class="flex justify-between items-center text-xs">
                             <span class="font-bold text-slate-800 text-sm sm:text-xs">${v.label}</span>
                             <div class="flex gap-2 items-center">
