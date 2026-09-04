@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>MATT Clean'App</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Supabase JS Client -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         tailwind.config = {
@@ -44,7 +42,6 @@
 </head>
 <body class="bg-navy-900 text-slate-100 min-h-screen watermark-bg font-sans flex flex-col justify-between select-none">
 
-    <!-- Notifications Toast -->
     <div id="toast-container" class="fixed top-4 inset-x-4 z-[9999] flex flex-col gap-2 max-w-sm mx-auto pointer-events-none"></div>
 
     <!-- En-tête -->
@@ -252,12 +249,12 @@
                         <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Logistique</span>
                     </button>
 
-                    <button type="button" onclick="openFullscreenClientAxis('axis-tracking')" class="relative p-3 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm aspect-square">
+                    <button type="button" onclick="openFullscreenClientAxis('axis-tracking')" class="relative p-3 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
                         <span class="text-3xl sm:text-4xl">📋</span>
                         <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Mes Commandes</span>
                     </button>
 
-                    <button type="button" onclick="openFullscreenClientAxis('axis-contact')" class="relative p-3 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm aspect-square">
+                    <button type="button" onclick="openFullscreenClientAxis('axis-contact')" class="relative p-3 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
                         <span class="text-3xl sm:text-4xl">📞</span>
                         <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Contact</span>
                     </button>
@@ -269,7 +266,7 @@
                         <div class="text-2xl sm:text-3xl font-black text-mattOrange font-mono"><span id="prix-total-affichage">0</span> CDF</div>
                         <div id="cart-summary-badges" class="flex flex-wrap gap-1.5 pt-0.5 text-[9px]"></div>
                     </div>
-                    <button onclick="passerCommande()" class="w-full sm:w-auto px-7 py-3 bg-mattOrange hover:bg-orange-600 text-white font-black text-xs rounded-xl uppercase tracking-wider shadow transition">
+                    <button id="btn-valider-commande" onclick="passerCommande()" class="w-full sm:w-auto px-7 py-3 bg-mattOrange hover:bg-orange-600 text-white font-black text-xs rounded-xl uppercase tracking-wider shadow transition">
                         Valider la Commande 🚀
                     </button>
                 </div>
@@ -284,10 +281,12 @@
                     <span id="client-axis-fullscreen-title" class="text-[10px] sm:text-xs font-black text-navy-800 uppercase tracking-tight truncate flex-1 min-w-0"></span>
                 </div>
 
+                <!-- Automobile -->
                 <div id="axis-auto" class="client-axis-view hidden border rounded-2xl p-4 bg-white shadow-sm space-y-3">
                     <div id="vehicle-catalog" class="grid grid-cols-1 md:grid-cols-2 gap-2.5"></div>
                 </div>
 
+                <!-- Maison -->
                 <div id="axis-maison" class="client-axis-view hidden border rounded-2xl p-4 bg-white shadow-sm space-y-3">
                     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 text-xs font-bold">
                         <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Tapis (m²)</label><input type="number" id="m2-tapis" placeholder="0" class="w-full p-2 border rounded-xl" oninput="calculerTotal()"></div>
@@ -310,6 +309,7 @@
                     </div>
                 </div>
 
+                <!-- 3D & Vidange -->
                 <div id="axis-env" class="client-axis-view hidden border rounded-2xl p-4 bg-white shadow-sm space-y-3">
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs font-bold">
                         <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Désinfection (pièces)</label><input type="number" id="qty-desinfection" placeholder="0" class="w-full p-2 border rounded-xl" oninput="calculerTotal()"></div>
@@ -328,6 +328,7 @@
                     </div>
                 </div>
 
+                <!-- Logistique -->
                 <div id="axis-logistics" class="client-axis-view hidden bg-slate-50 border rounded-2xl p-4 space-y-3 text-xs">
                     <div class="bg-white p-3 rounded-xl border border-slate-200 space-y-2">
                         <span class="text-[10px] font-black text-navy-800 uppercase block">👤 Demandeur :</span>
@@ -393,6 +394,7 @@
                     </div>
                 </div>
 
+                <!-- Mes Commandes -->
                 <div id="axis-tracking" class="client-axis-view hidden space-y-3">
                     <div class="flex justify-between items-center border-b pb-2">
                         <span class="text-xs font-black uppercase text-navy-800">Mes Commandes</span>
@@ -401,6 +403,7 @@
                     <div id="client-orders-tracking-list" class="space-y-2.5"></div>
                 </div>
 
+                <!-- Contact -->
                 <div id="axis-contact" class="client-axis-view hidden space-y-3">
                     <div class="grid grid-cols-3 gap-2 text-center">
                         <button type="button" onclick="switchContactTab('cnt-about', this)" class="contact-tab-btn p-2.5 rounded-2xl border-2 border-mattOrange bg-orange-50/70 text-mattOrange font-black text-xs flex flex-col items-center gap-1 shadow-xs">
@@ -461,7 +464,7 @@
         <!-- 5. ESPACE PARTENAIRE CONNECTÉ -->
         <div id="view-partner-app" class="w-full min-h-[calc(100vh-140px)] bg-white text-slate-800 rounded-3xl p-4 md:p-6 shadow-2xl hidden animate-fade-in flex flex-col justify-between space-y-4">
 
-            <!-- VUE 1 : RECTANGLE 3 LIGNES X 2 COLONNES -->
+            <!-- 3 LIGNES X 2 COLONNES -->
             <div id="partner-home-column" class="flex-grow flex flex-col justify-center py-2">
                 <div class="grid grid-cols-2 gap-3.5 w-full max-w-md mx-auto p-2">
                     
@@ -498,7 +501,7 @@
                 </div>
             </div>
 
-            <!-- VUE 2 : CONTENEUR PLEIN ÉCRAN PARTENAIRE -->
+            <!-- CONTENEUR PLEIN ÉCRAN PARTENAIRE -->
             <div id="partner-fullscreen-tab" class="hidden space-y-4 animate-fade-in flex-grow flex flex-col justify-start">
                 <div class="flex items-center gap-2 bg-slate-50 p-2 rounded-2xl border border-slate-200 flex-nowrap overflow-hidden">
                     <button type="button" onclick="closeFullscreenPartnerTab()" class="w-8 h-8 flex-shrink-0 bg-navy-800 hover:bg-navy-900 text-white text-base font-black rounded-xl flex items-center justify-center shadow transition active:scale-95">
@@ -731,7 +734,7 @@
 
     </main>
 
-    <!-- Footer Institutionnel -->
+    <!-- Footer -->
     <footer class="border-t border-slate-800/80 bg-navy-800/80 py-4 text-center text-xs text-slate-400 mt-auto">
         <div class="container mx-auto px-4 space-y-1">
             <div class="flex flex-wrap justify-center items-center gap-x-4 gap-y-1 text-[11px] text-slate-300 font-semibold">
@@ -744,7 +747,7 @@
         </div>
     </footer>
 
-    <!-- MODALE DE NOTATION -->
+    <!-- MODALE NOTATION -->
     <div id="modal-rating" class="fixed inset-0 bg-slate-955/70 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
         <div class="bg-white text-slate-900 w-full max-w-sm rounded-3xl p-6 space-y-4 relative text-xs shadow-2xl">
             <button onclick="closeRatingModal()" class="absolute top-4 right-4 text-slate-400 font-bold text-lg">✕</button>
@@ -763,7 +766,7 @@
         </div>
     </div>
 
-    <!-- LOGIQUE JAVASCRIPT ET CONNECTEURS SUPABASE -->
+    <!-- LOGIQUE JAVASCRIPT & SUPABASE -->
     <script>
         const SUPABASE_URL = "https://vbriworyscymnmtzzdny.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZicml3b3J5c2N5bW5tdHp6ZG55Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzNzQwNTEsImV4cCI6MjEwMzk1MDA1MX0.VBZupVKj0srae0NT5BNZ0OeaIv9pAl2bl5L-Rd8ocJk";
@@ -1090,7 +1093,50 @@
             return total;
         }
 
+        // =========================================================================
+        // RÉINITIALISATION COMPLÈTE APRÈS VALIDATION (VIDER LES FORMULAIRES)
+        // =========================================================================
+        function reinitialiserFormulaireCommande() {
+            // 1. Réinitialiser la sélection de véhicules
+            typesVehicules.forEach(v => {
+                clientVehiculeSelection[v.id] = 0;
+                const qtyEl = document.getElementById(`qty-${v.id}`);
+                if (qtyEl) qtyEl.innerText = "0";
+
+                const optBox = document.getElementById(`options-box-${v.id}`);
+                if (optBox) optBox.classList.add('hidden');
+
+                if (document.getElementById(`opt-${v.id}-moteur`)) document.getElementById(`opt-${v.id}-moteur`).checked = false;
+                if (document.getElementById(`opt-${v.id}-chassis`)) document.getElementById(`opt-${v.id}-chassis`).checked = false;
+                if (document.getElementById(`opt-${v.id}-sieges`)) document.getElementById(`opt-${v.id}-sieges`).checked = false;
+            });
+
+            // 2. Vider tous les champs Maison & Surfaces
+            ['m2-tapis', 'm2-moquette', 'm2-vitres', 'm2-baies', 'm2-carreaux', 'qty-panneaux',
+             'qty-canape-textile', 'qty-canape-lin', 'qty-canape-velours', 'qty-canape-cuir', 'qty-matelas'
+            ].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+
+            // 3. Vider les champs 3D & Vidange
+            ['qty-desinfection', 'qty-desinsectisation', 'qty-deratisation', 'vol-immondices', 'vol-fosse'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+
+            // 4. Vider les champs logistiques (adresse, date, heure, repère)
+            ['client-quartier-input', 'client-avenue-input', 'client-ref-input', 'client-date-input', 'client-time-input'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+
+            // 5. Recalculer et remettre à zéro le panier & badges
+            calculerTotal();
+        }
+
         async function passerCommande() {
+            const btnValider = document.getElementById('btn-valider-commande');
             const client_name = document.getElementById('client-name-input').value.trim();
             const raw_phone = document.getElementById('client-phone-input').value.trim();
             const client_phone = normalizePhoneNumber(raw_phone);
@@ -1153,6 +1199,8 @@
 
             const commission = Math.floor(total_amount * 0.15);
 
+            if (btnValider) btnValider.disabled = true;
+
             const { error } = await db.from('orders').insert([{
                 axe: axeParts.join(' / ') || 'Multi-Axes',
                 client_name,
@@ -1170,7 +1218,13 @@
                 status: 'En attente'
             }]);
 
+            if (btnValider) btnValider.disabled = false;
+
             if (error) return showToast(error.message, "error");
+
+            // Réinitialisation immédiate du formulaire et du panier
+            reinitialiserFormulaireCommande();
+
             showToast("Commande validée et transmise à la Direction !", "success");
             openFullscreenClientAxis('axis-tracking');
             detectClientOrders();
@@ -1284,7 +1338,6 @@
 
             const pSpec = (session.user?.specialty || '').toLowerCase();
 
-            // Filtrage rigoureux par profil
             const missionsFiltrees = data.filter(o => {
                 const desc = (o.description || '').toLowerCase();
                 const axe = (o.axe || '').toLowerCase();
@@ -1294,27 +1347,18 @@
                 const has3D = axe.includes('3d') || desc.includes('désinfection') || desc.includes('dératisation') || desc.includes('désinsectisation');
                 const hasVidange = desc.includes('fosse') || desc.includes('immondices') || desc.includes('vidange');
 
-                // 1. Polyvalent : UNIQUEMENT Auto et Maison (jamais 3D ni Vidange)
                 if (pSpec.includes('polyvalent')) {
                     return hasAuto || hasMaison;
                 }
-
-                // 2. Traitement 3D & Assainissement : UNIQUEMENT les 3D
                 if (pSpec.includes('3d') || pSpec.includes('traitement') || pSpec.includes('assainissement')) {
                     return has3D;
                 }
-
-                // 3. Vidange et Évacuation
                 if (pSpec.includes('vidange') || pSpec.includes('immondices')) {
                     return hasVidange;
                 }
-
-                // 4. Lavage Auto seul
                 if (pSpec.includes('auto') || pSpec.includes('lavage')) {
                     return hasAuto;
                 }
-
-                // 5. Maison seule
                 if (pSpec.includes('maison')) {
                     return hasMaison;
                 }
@@ -1694,7 +1738,6 @@
                 if (selectPartnerEdit) selectPartnerEdit.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
             });
 
-            // Catalogue Véhicules
             const vCat = document.getElementById('vehicle-catalog');
             typesVehicules.forEach(v => {
                 clientVehiculeSelection[v.id] = 0;
