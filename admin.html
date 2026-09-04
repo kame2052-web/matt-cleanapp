@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MATT Clean'App - Direction Master</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Supabase JS Client -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         tailwind.config = {
@@ -32,10 +30,8 @@
 </head>
 <body class="bg-navy-900 text-slate-100 min-h-screen font-sans flex flex-col justify-between select-none w-full">
 
-    <!-- Toast Notifications -->
     <div id="toast-container" class="fixed top-4 right-4 z-[9999] flex flex-col gap-2 max-w-sm w-full pointer-events-none"></div>
 
-    <!-- En-tête Plein Écran avec Bouton Actualisation Globale -->
     <header class="bg-navy-800/95 border-b-2 border-mattOrange px-4 py-3 md:px-8 flex justify-between items-center sticky top-0 z-50 backdrop-blur-md shadow-xl w-full">
         <div class="flex items-center gap-3">
             <div class="w-11 h-11 bg-white rounded-2xl shadow-md border border-mattOrange/40 p-1 flex items-center justify-center flex-shrink-0">
@@ -50,7 +46,6 @@
         </div>
         
         <div class="flex items-center gap-2.5">
-            <!-- Bouton d'actualisation générale de l'application -->
             <button onclick="refreshAllAppData()" id="btn-global-refresh" class="hidden px-3.5 py-2 bg-navy-900 hover:bg-slate-800 text-aqua border border-aqua/40 rounded-xl text-xs font-bold transition shadow flex items-center gap-1.5">
                 <span id="global-refresh-icon" class="inline-block transition-transform">🔄</span> Actualiser
             </button>
@@ -63,7 +58,6 @@
         </div>
     </header>
 
-    <!-- Écran d'authentification -->
     <div id="admin-auth-screen" class="container mx-auto px-4 py-16 max-w-md flex-grow flex items-center justify-center">
         <div class="bg-white text-slate-900 p-8 rounded-3xl shadow-2xl border border-slate-200 w-full space-y-5 text-center">
             <div class="w-16 h-16 bg-navy-900 text-mattOrange rounded-2xl mx-auto flex items-center justify-center text-3xl font-mono shadow-inner">
@@ -97,11 +91,9 @@
         </div>
     </div>
 
-    <!-- Dashboard Plein Écran -->
     <main id="admin-dashboard-screen" class="w-full px-4 py-6 md:px-8 md:py-8 flex-grow hidden">
         <div class="bg-white text-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl space-y-6 w-full">
             
-            <!-- Navigation Onglets -->
             <div class="flex gap-2 border-b border-slate-200 pb-3 overflow-x-auto custom-scrollbar text-xs font-bold">
                 <button onclick="switchAdminTab('admin-liaisons', this)" class="admin-tab-btn px-4 py-2.5 bg-navy-800 text-white rounded-xl whitespace-nowrap active shadow-sm">Suivi des Liaisons</button>
                 <button onclick="switchAdminTab('admin-partenaires', this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap">Gestion Partenaires</button>
@@ -112,7 +104,7 @@
                 <button onclick="switchAdminTab('admin-config', this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap">⚙️ Configuration Système</button>
             </div>
 
-            <!-- ONGLET 1: SUIVI DES COMMANDES -->
+            <!-- SUIVI DES COMMANDES -->
             <div id="admin-liaisons" class="admin-subview space-y-5">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b pb-3">
                     <div class="flex gap-2 text-xs">
@@ -166,7 +158,7 @@
                 </div>
             </div>
 
-            <!-- ONGLET 2: GESTION PARTENAIRES -->
+            <!-- GESTION PARTENAIRES -->
             <div id="admin-partenaires" class="admin-subview hidden space-y-4">
                 <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3">
                     <div>
@@ -199,32 +191,28 @@
                 </div>
             </div>
 
-            <!-- ONGLET 3: CAISSE CENTRALE & CAISSES PAR AXE DIRECT -->
+            <!-- CAISSE CENTRALE & CAISSES PAR AXES -->
             <div id="admin-recharges" class="admin-subview hidden space-y-6">
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                    <!-- CAISSE CENTRALE -->
                     <div class="bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-400 rounded-2xl p-5 text-center shadow-md">
                         <span class="text-[10px] font-black text-green-800 block uppercase tracking-widest font-mono">🏛️ CAISSE CENTRALE GLOBALE</span>
                         <div class="text-3xl font-black text-green-900 my-2 font-mono" id="admin-caisse-centrale">0 CDF</div>
                         <span class="text-[9px] text-green-700 font-bold block uppercase">Cumul Réel des Caisses</span>
                     </div>
 
-                    <!-- CAISSE AUTOMOBILE -->
                     <div class="bg-blue-50/70 border-2 border-blue-300 rounded-2xl p-5 text-center shadow-xs">
                         <span class="text-[10px] font-black text-blue-800 block uppercase tracking-wider font-mono">🚗 Caisse Automobile</span>
                         <div class="text-2xl font-black text-blue-900 my-2 font-mono" id="admin-caisse-auto">0 CDF</div>
                         <span class="text-[9px] text-blue-600 font-semibold block">Commissions Véhicules</span>
                     </div>
 
-                    <!-- CAISSE MAISON -->
                     <div class="bg-orange-50/70 border-2 border-orange-300 rounded-2xl p-5 text-center shadow-xs">
                         <span class="text-[10px] font-black text-mattOrange block uppercase tracking-wider font-mono">🏡 Caisse Maison</span>
                         <div class="text-2xl font-black text-orange-900 my-2 font-mono" id="admin-caisse-maison">0 CDF</div>
                         <span class="text-[9px] text-orange-600 font-semibold block">Canapés, Tapis, Vitres, Sols</span>
                     </div>
 
-                    <!-- CAISSE 3D & VIDANGE -->
                     <div class="bg-emerald-50/70 border-2 border-emerald-300 rounded-2xl p-5 text-center shadow-xs">
                         <span class="text-[10px] font-black text-emerald-800 block uppercase tracking-wider font-mono">🌱 Caisse 3D & Vidange</span>
                         <div class="text-2xl font-black text-emerald-900 my-2 font-mono" id="admin-caisse-env">0 CDF</div>
@@ -232,7 +220,6 @@
                     </div>
                 </div>
 
-                <!-- Retrait & Rechargement -->
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div class="bg-slate-50 border border-slate-200 rounded-2xl p-5 space-y-4">
                         <h4 class="text-xs font-black text-navy-800 uppercase tracking-wide flex items-center gap-1.5">
@@ -301,7 +288,6 @@
                     </div>
                 </div>
 
-                <!-- Déclarations Mobile Money en attente -->
                 <div class="space-y-3">
                     <div class="flex justify-between items-center">
                         <h4 class="text-xs font-black text-navy-800 uppercase tracking-wide">🕒 Déclarations Mobile Money en attente de validation</h4>
@@ -325,7 +311,7 @@
 
             </div>
 
-            <!-- ONGLET 4: CONFIGURATION DES PRIX -->
+            <!-- CONFIGURATION DES PRIX -->
             <div id="admin-prix" class="admin-subview hidden space-y-6">
                 <div class="flex flex-col lg:flex-row justify-between lg:items-center gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-200">
                     <div>
@@ -347,7 +333,6 @@
                 </div>
                 
                 <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                    <!-- Axe Auto -->
                     <div class="border-2 border-slate-200 rounded-2xl p-4 bg-white shadow-sm flex flex-col justify-between">
                         <div>
                             <div class="flex justify-between items-center border-b pb-2 mb-3">
@@ -416,7 +401,6 @@
                         </div>
                     </div>
 
-                    <!-- Axe Maison -->
                     <div class="border-2 border-slate-200 rounded-2xl p-4 bg-white shadow-sm flex flex-col justify-between">
                         <div>
                             <div class="flex justify-between items-center border-b pb-2 mb-3">
@@ -446,7 +430,6 @@
                         </div>
                     </div>
 
-                    <!-- Axe Environnement -->
                     <div class="border-2 border-slate-200 rounded-2xl p-4 bg-white shadow-sm flex flex-col justify-between">
                         <div>
                             <div class="flex justify-between items-center border-b pb-2 mb-3">
@@ -474,7 +457,7 @@
                 </div>
             </div>
 
-            <!-- ONGLET 5: ÉDITEUR DES CGU -->
+            <!-- ÉDITEUR DES CGU -->
             <div id="admin-cgu" class="admin-subview hidden space-y-6">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b pb-3">
                     <div>
@@ -498,7 +481,7 @@
                 </div>
             </div>
 
-            <!-- ONGLET 6: STATISTIQUES D'ACTIVITÉ -->
+            <!-- STATISTIQUES D'ACTIVITÉ -->
             <div id="admin-stats" class="admin-subview hidden space-y-4">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b pb-3">
                     <div>
@@ -539,7 +522,7 @@
                 </div>
             </div>
 
-            <!-- ONGLET 7: CONFIGURATION SYSTÈME -->
+            <!-- CONFIGURATION SYSTÈME -->
             <div id="admin-config" class="admin-subview hidden space-y-8">
                 <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
                     <div class="flex justify-between items-center border-b pb-3">
@@ -668,7 +651,7 @@
         </div>
     </main>
 
-    <!-- MODALE AUDIT ET HISTORIQUE DÉTAILLÉ DE LA COMMANDE -->
+    <!-- MODALE AUDIT COMMANDE -->
     <div id="modal-order-details" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
         <div class="bg-white text-slate-900 w-full max-w-xl rounded-3xl shadow-2xl p-6 border border-slate-200 space-y-4 relative">
             <button onclick="closeOrderDetailsModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 font-bold text-xl">✕</button>
@@ -725,7 +708,7 @@
         </div>
     </div>
 
-    <!-- MODALE MODIFICATION IDENTIFIANT ADMIN -->
+    <!-- MODALE MODIFICATION ADMIN -->
     <div id="admin-edit-user-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
         <div class="bg-white text-slate-900 w-full max-w-md rounded-2xl shadow-2xl p-6 border border-slate-200 flex flex-col gap-4 relative">
             <button onclick="closeEditUserModal()" class="absolute top-4 right-4 text-slate-500 hover:text-slate-800 font-bold text-xl">✕</button>
@@ -760,14 +743,13 @@
         </div>
     </div>
 
-    <!-- Pied de page -->
     <footer class="border-t border-slate-800 bg-navy-800/90 py-5 text-center text-xs text-slate-400">
         <div class="container mx-auto px-4 space-y-1">
             <span>MATT SARL • RCCM <b class="text-aqua font-mono">CD/KIN/RCCM/24-B-04106</b> • NIF <b class="text-aqua font-mono">A2441433N</b> • Kinshasa, RDC</span>
         </div>
     </footer>
 
-    <!-- LOGIQUE JAVASCRIPT & AFFECTATION STRICTE DES CAISSES -->
+    <!-- LOGIQUE JAVASCRIPT ET VENTILATION RIGOUREUSE -->
     <script>
         const SUPABASE_URL = "https://vbriworyscymnmtzzdny.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZicml3b3J5c2N5bW5tdHp6ZG55Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzNzQwNTEsImV4cCI6MjEwMzk1MDA1MX0.VBZupVKj0srae0NT5BNZ0OeaIv9pAl2bl5L-Rd8ocJk";
@@ -895,9 +877,6 @@
             renderAdminOrders();
         }
 
-        // =========================================================================
-        // FONCTION ACTUALISATION GLOBALE DE L'APPLICATION
-        // =========================================================================
         async function refreshAllAppData() {
             const icon = document.getElementById('global-refresh-icon');
             if (icon) icon.classList.add('animate-spin');
@@ -914,35 +893,28 @@
         }
 
         // =========================================================================
-        // DÉTECTION RIGOUREUSE DE L'AXE (CORRECTION DIRECTE MAISON)
+        // DÉTECTION RATIONNELLE DE L'AXE BASÉE SUR LE PANIER RÉEL
         // =========================================================================
         function determinerAxeCommande(order) {
-            // Nettoyage et normalisation des accents et de la casse
-            const normalize = str => (str || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
-            
-            const desc = normalize(order.description);
-            const axe = normalize(order.axe);
+            const clean = str => (str || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+            const desc = clean(order.description);
 
-            // Mots-clés déterminants pour chaque secteur
-            const hasMaison = axe.includes('maison') || desc.includes('tapis') || desc.includes('canape') || desc.includes('vitre') || desc.includes('carreau') || desc.includes('moquette') || desc.includes('matelas') || desc.includes('baie') || desc.includes('panneau');
-            const hasEnv = axe.includes('3d') || axe.includes('vidange') || desc.includes('fosse') || desc.includes('immondice') || desc.includes('desinfection') || desc.includes('deratisation') || desc.includes('desinsectisation');
-            const hasAuto = axe.includes('auto') || desc.includes('berline') || desc.includes('suv') || desc.includes('moto') || desc.includes('bus') || desc.includes('remorque') || desc.includes('poids lourd') || desc.includes('chassis') || desc.includes('moteur');
+            // Mots-clés discriminants
+            const isAuto = desc.includes('berline') || desc.includes('suv') || desc.includes('moto') || desc.includes('bus') || desc.includes('remorque') || desc.includes('poids lourd') || desc.includes('chassis') || desc.includes('moteur');
+            const isMaison = desc.includes('tapis') || desc.includes('canape') || desc.includes('vitre') || desc.includes('carreau') || desc.includes('moquette') || desc.includes('matelas') || desc.includes('baie') || desc.includes('panneau');
+            const isEnv = desc.includes('fosse') || desc.includes('immondice') || desc.includes('desinfection') || desc.includes('deratisation') || desc.includes('desinsectisation');
 
-            // 1. Si spécifique
-            if (hasMaison && !hasAuto && !hasEnv) return 'maison';
-            if (hasEnv && !hasAuto && !hasMaison) return 'env';
-            if (hasAuto && !hasMaison && !hasEnv) return 'auto';
+            if (isMaison && !isAuto && !isEnv) return 'maison';
+            if (isAuto && !isMaison && !isEnv) return 'auto';
+            if (isEnv && !isAuto && !isMaison) return 'env';
 
-            // 2. Par priorité sur le champ axe
+            // Si mixte ou non reconnu dans le texte, analyse du champ axe sans tenir compte de la mention '3D' par défaut
+            const axe = clean(order.axe);
             if (axe.includes('maison') && !axe.includes('auto')) return 'maison';
-            if (axe.includes('3d') || axe.includes('vidange')) return 'env';
             if (axe.includes('auto')) return 'auto';
+            if (axe.includes('vidange')) return 'env';
 
-            // 3. Analyse du texte du panier si multi-axe
-            if (desc.includes('tapis') || desc.includes('canape') || desc.includes('vitre')) return 'maison';
-            if (desc.includes('fosse') || desc.includes('desinfection')) return 'env';
-
-            return 'auto';
+            return isMaison ? 'maison' : (isAuto ? 'auto' : 'auto');
         }
 
         async function loadSupabaseOrders() {
@@ -961,14 +933,13 @@
             }
         }
 
-        // VENTILATION DES CAISSES (ALIMENTATION AUTOMATIQUE DES CAISSES RESPECTIVES)
+        // VENTILATION PRÉCISE DANS CHAQUE CAISSE
         function ventilerCaissesActivites() {
             let cAuto = 0;
             let cMaison = 0;
             let cEnv = 0;
 
             state.orders.forEach(o => {
-                // S'applique aux commandes validées (Acceptée ou Terminée)
                 if (o.status === 'Acceptée' || o.status === 'Terminée') {
                     const com = Number(o.commission || 0);
                     const axe = determinerAxeCommande(o);
