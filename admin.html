@@ -338,7 +338,7 @@
                         <span class="text-[10px] text-slate-500 font-semibold">Pourcentage prélevé sur chaque mission réalisée dans ce groupe de communes.</span>
                     </div>
                     <div class="flex items-center gap-2">
-                        <input type="number" id="p-commission-rate" value="15" min="1" max="50" class="w-24 px-3 py-2 bg-white border border-mattOrange rounded-xl font-black text-navy-800 text-center font-mono">
+                        <input type="number" id="p-commission-rate" min="1" max="50" class="w-24 px-3 py-2 bg-white border border-mattOrange rounded-xl font-black text-navy-800 text-center font-mono">
                         <span class="font-black text-slate-700 text-sm">%</span>
                     </div>
                 </div>
@@ -358,14 +358,14 @@
                                 <div>
                                     <span class="text-[11px] font-black text-slate-400 uppercase tracking-wider block mb-2">Base Véhicules (CDF) :</span>
                                     <div class="grid grid-cols-2 gap-2">
-                                        <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Moto</label><input type="number" id="p-moto" value="8000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
-                                        <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Tricycle</label><input type="number" id="p-tricycle" value="12000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
-                                        <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Berline</label><input type="number" id="p-berline" value="15000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
-                                        <div><label class="text-[9px] font-bold text-slate-500 uppercase block">SUV / 4x4</label><input type="number" id="p-suv" value="25000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
-                                        <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Poids Lourds</label><input type="number" id="p-poids-lourd" value="45000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
-                                        <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Bus 207</label><input type="number" id="p-bus-207" value="20000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
-                                        <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Bus Long</label><input type="number" id="p-bus-long" value="35000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
-                                        <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Remorque</label><input type="number" id="p-remorque" value="30000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                        <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Moto</label><input type="number" id="p-moto" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                        <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Tricycle</label><input type="number" id="p-tricycle" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                        <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Berline</label><input type="number" id="p-berline" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                        <div><label class="text-[9px] font-bold text-slate-500 uppercase block">SUV / 4x4</label><input type="number" id="p-suv" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                        <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Poids Lourds</label><input type="number" id="p-poids-lourd" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                        <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Bus 207</label><input type="number" id="p-bus-207" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                        <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Bus Long</label><input type="number" id="p-bus-long" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                        <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Remorque</label><input type="number" id="p-remorque" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
                                     </div>
                                 </div>
 
@@ -375,36 +375,36 @@
                                     <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
                                         <span class="text-[10px] font-black text-navy-800 uppercase block mb-1">Berline</span>
                                         <div class="grid grid-cols-3 gap-1">
-                                            <input type="number" id="p-opt-moteur-berline" value="5000" class="p-1 border rounded text-[10px] text-center font-bold" placeholder="Moteur">
-                                            <input type="number" id="p-opt-chassis-berline" value="4000" class="p-1 border rounded text-[10px] text-center font-bold" placeholder="Châssis">
-                                            <input type="number" id="p-opt-sieges-berline" value="7000" class="p-1 border rounded text-[10px] text-center font-bold" placeholder="Sièges">
+                                            <input type="number" id="p-opt-moteur-berline" class="p-1 border rounded text-[10px] text-center font-bold" placeholder="Moteur">
+                                            <input type="number" id="p-opt-chassis-berline" class="p-1 border rounded text-[10px] text-center font-bold" placeholder="Châssis">
+                                            <input type="number" id="p-opt-sieges-berline" class="p-1 border rounded text-[10px] text-center font-bold" placeholder="Sièges">
                                         </div>
                                     </div>
 
                                     <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
                                         <span class="text-[10px] font-black text-navy-800 uppercase block mb-1">SUV / 4x4</span>
                                         <div class="grid grid-cols-3 gap-1">
-                                            <input type="number" id="p-opt-moteur-suv" value="8000" class="p-1 border rounded text-[10px] text-center font-bold">
-                                            <input type="number" id="p-opt-chassis-suv" value="6000" class="p-1 border rounded text-[10px] text-center font-bold">
-                                            <input type="number" id="p-opt-sieges-suv" value="10000" class="p-1 border rounded text-[10px] text-center font-bold">
+                                            <input type="number" id="p-opt-moteur-suv" class="p-1 border rounded text-[10px] text-center font-bold">
+                                            <input type="number" id="p-opt-chassis-suv" class="p-1 border rounded text-[10px] text-center font-bold">
+                                            <input type="number" id="p-opt-sieges-suv" class="p-1 border rounded text-[10px] text-center font-bold">
                                         </div>
                                     </div>
 
                                     <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
                                         <span class="text-[10px] font-black text-navy-800 uppercase block mb-1">Poids Lourds</span>
                                         <div class="grid grid-cols-3 gap-1">
-                                            <input type="number" id="p-opt-moteur-poids-lourd" value="15000" class="p-1 border rounded text-[10px] text-center font-bold">
-                                            <input type="number" id="p-opt-chassis-poids-lourd" value="12000" class="p-1 border rounded text-[10px] text-center font-bold">
-                                            <input type="number" id="p-opt-sieges-poids-lourd" value="15000" class="p-1 border rounded text-[10px] text-center font-bold">
+                                            <input type="number" id="p-opt-moteur-poids-lourd" class="p-1 border rounded text-[10px] text-center font-bold">
+                                            <input type="number" id="p-opt-chassis-poids-lourd" class="p-1 border rounded text-[10px] text-center font-bold">
+                                            <input type="number" id="p-opt-sieges-poids-lourd" class="p-1 border rounded text-[10px] text-center font-bold">
                                         </div>
                                     </div>
 
                                     <div class="bg-slate-50 p-2.5 rounded-xl border border-slate-200">
                                         <span class="text-[10px] font-black text-navy-800 uppercase block mb-1">Remorque</span>
                                         <div class="grid grid-cols-3 gap-1">
-                                            <input type="number" id="p-opt-moteur-remorque" value="5000" class="p-1 border rounded text-[10px] text-center font-bold">
-                                            <input type="number" id="p-opt-chassis-remorque" value="6000" class="p-1 border rounded text-[10px] text-center font-bold">
-                                            <input type="number" id="p-opt-sieges-remorque" value="5000" class="p-1 border rounded text-[10px] text-center font-bold">
+                                            <input type="number" id="p-opt-moteur-remorque" class="p-1 border rounded text-[10px] text-center font-bold">
+                                            <input type="number" id="p-opt-chassis-remorque" class="p-1 border rounded text-[10px] text-center font-bold">
+                                            <input type="number" id="p-opt-sieges-remorque" class="p-1 border rounded text-[10px] text-center font-bold">
                                         </div>
                                     </div>
                                 </div>
@@ -420,22 +420,22 @@
                             
                             <div class="space-y-4 max-h-[520px] overflow-y-auto pr-2 custom-scrollbar pb-6">
                                 <div class="grid grid-cols-2 gap-2">
-                                    <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Tapis (m²)</label><input type="number" id="p-tapis" value="2000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
-                                    <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Moquette (m²)</label><input type="number" id="p-moquette" value="2000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
-                                    <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Vitres (m²)</label><input type="number" id="p-vitres" value="1500" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
-                                    <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Carreaux (m²)</label><input type="number" id="p-carreaux" value="1000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                    <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Tapis (m²)</label><input type="number" id="p-tapis" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                    <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Moquette (m²)</label><input type="number" id="p-moquette" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                    <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Vitres (m²)</label><input type="number" id="p-vitres" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                    <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Carreaux (m²)</label><input type="number" id="p-carreaux" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
                                 </div>
-                                <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Baie Vitrée (m²)</label><input type="number" id="p-baie" value="3000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
-                                <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Panneau Solaire (pièce)</label><input type="number" id="p-panneau" value="4000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Baie Vitrée (m²)</label><input type="number" id="p-baie" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
+                                <div><label class="text-[9px] font-bold text-slate-500 uppercase block">Panneau Solaire (pièce)</label><input type="number" id="p-panneau" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold"></div>
                                 <div class="border-t pt-2 space-y-2">
                                     <span class="text-[10px] font-black text-navy-800 uppercase block">Canapés & Matelas (par place)</span>
                                     <div class="grid grid-cols-2 gap-2">
-                                        <input type="number" id="p-canape-textile" value="4500" class="p-1 border rounded text-xs font-bold" placeholder="Textile">
-                                        <input type="number" id="p-canape-lin" value="6000" class="p-1 border rounded text-xs font-bold" placeholder="Lin">
-                                        <input type="number" id="p-canape-velours" value="8000" class="p-1 border rounded text-xs font-bold" placeholder="Velours">
-                                        <input type="number" id="p-canape-cuir" value="12000" class="p-1 border rounded text-xs font-bold" placeholder="Cuir">
+                                        <input type="number" id="p-canape-textile" class="p-1 border rounded text-xs font-bold" placeholder="Textile">
+                                        <input type="number" id="p-canape-lin" class="p-1 border rounded text-xs font-bold" placeholder="Lin">
+                                        <input type="number" id="p-canape-velours" class="p-1 border rounded text-xs font-bold" placeholder="Velours">
+                                        <input type="number" id="p-canape-cuir" class="p-1 border rounded text-xs font-bold" placeholder="Cuir">
                                     </div>
-                                    <input type="number" id="p-matelas" value="5000" class="w-full p-1 border rounded text-xs font-bold" placeholder="Matelas">
+                                    <input type="number" id="p-matelas" class="w-full p-1 border rounded text-xs font-bold" placeholder="Matelas">
                                 </div>
                             </div>
                         </div>
@@ -450,17 +450,17 @@
                             <div class="space-y-4 max-h-[520px] overflow-y-auto pr-2 custom-scrollbar pb-6">
                                 <div class="space-y-2">
                                     <label class="text-[9px] font-bold text-slate-500 uppercase block">Désinfection (pièce)</label>
-                                    <input type="number" id="p-desinf" value="10000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold">
+                                    <input type="number" id="p-desinf" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold">
                                     <label class="text-[9px] font-bold text-slate-500 uppercase block">Désinsectisation (pièce)</label>
-                                    <input type="number" id="p-desinsect" value="12000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold">
+                                    <input type="number" id="p-desinsect" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold">
                                     <label class="text-[9px] font-bold text-slate-500 uppercase block">Dératisation (pièce)</label>
-                                    <input type="number" id="p-derat" value="14000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold">
+                                    <input type="number" id="p-derat" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold">
                                 </div>
                                 <div class="border-t pt-2 space-y-2">
                                     <label class="text-[9px] font-bold text-mattOrange uppercase block">Évacuation immondices (m³)</label>
-                                    <input type="number" id="p-immondices" value="15000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold">
+                                    <input type="number" id="p-immondices" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold">
                                     <label class="text-[9px] font-bold text-mattOrange uppercase block">Vidange fosse septique (m³)</label>
-                                    <input type="number" id="p-fosse" value="40000" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold">
+                                    <input type="number" id="p-fosse" class="w-full px-2 py-1.5 border rounded-lg text-xs font-bold">
                                 </div>
                             </div>
                         </div>
@@ -533,196 +533,222 @@
                 </div>
             </div>
 
-            <!-- ONGLET 7: CONFIGURATION SYSTÈME (DRILL-DOWN) -->
+            <!-- ONGLET 7: CONFIGURATION SYSTÈME SÉCURISÉ (DRILL-DOWN) -->
             <div id="admin-config" class="admin-subview hidden space-y-4">
                 
-                <div id="cfg-buttons-container" class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
-                    <button onclick="switchConfigSubTab('cfg-sub-contacts')" class="p-6 rounded-3xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-3 shadow-sm hover:border-red-500 hover:text-red-600 transition">
-                        <span class="text-4xl">📱</span>
-                        <span class="text-[10px] uppercase">Numéros & Assistance</span>
-                    </button>
-                    <button onclick="switchConfigSubTab('cfg-sub-communes')" class="p-6 rounded-3xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-3 shadow-sm hover:border-red-500 hover:text-red-600 transition">
-                        <span class="text-4xl">📍</span>
-                        <span class="text-[10px] uppercase">Ajout & Attribution</span>
-                    </button>
-                    <button onclick="switchConfigSubTab('cfg-sub-admins')" class="p-6 rounded-3xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-3 shadow-sm hover:border-red-500 hover:text-red-600 transition">
-                        <span class="text-4xl">🔑</span>
-                        <span class="text-[10px] uppercase">Gestion & Accès Admin</span>
-                    </button>
-                    <button onclick="switchConfigSubTab('cfg-sub-questions')" class="p-6 rounded-3xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-3 shadow-sm hover:border-red-500 hover:text-red-600 transition">
-                        <span class="text-4xl">❓</span>
-                        <span class="text-[10px] uppercase">Base Questions Secrètes</span>
-                    </button>
+                <!-- Ecran de verrouillage de la configuration -->
+                <div id="cfg-lock-screen" class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 text-center max-w-md mx-auto my-10">
+                    <span class="text-4xl block mb-3">⚙️🔒</span>
+                    <h3 class="text-lg font-black text-navy-800 uppercase mb-2">Zone Sécurisée</h3>
+                    <p class="text-xs text-slate-500 mb-4">Veuillez saisir le mot de passe MASTER pour accéder à la configuration système.</p>
+                    <input type="password" id="cfg-master-pass" placeholder="Mot de passe MASTER" class="w-full px-4 py-3 border rounded-xl mb-4 text-center font-bold tracking-widest text-lg focus:ring-2 focus:ring-mattOrange focus:outline-none" onkeydown="if(event.key==='Enter') unlockConfigSystem();">
+                    <button onclick="unlockConfigSystem()" class="w-full py-3.5 bg-mattOrange hover:bg-orange-600 text-white font-black rounded-xl uppercase tracking-widest shadow transition">Déverrouiller</button>
                 </div>
 
-                <!-- Sous-vue: Contacts (Sécurisés en lecture seule par défaut) -->
-                <div id="cfg-sub-contacts" class="cfg-subview hidden space-y-4">
-                    <button onclick="resetConfigView()" class="px-3 py-1.5 bg-slate-200 text-slate-700 font-bold text-[10px] rounded-lg uppercase tracking-wider hover:bg-slate-300 transition w-max">
-                        ← Retour aux icônes
-                    </button>
-                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
-                        <div class="flex justify-between items-center border-b pb-3">
-                            <h3 class="text-md font-black text-navy-800 uppercase tracking-wide">📱 Numéros Mobile Money & Assistance WhatsApp</h3>
-                            <div class="flex gap-2">
-                                <button id="btn-unlock-phones" onclick="unlockPhoneInputs()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black text-xs rounded-xl shadow uppercase tracking-wider transition">
-                                    🔓 Déverrouiller
-                                </button>
-                                <button id="btn-save-phones" onclick="saveSysContactConfig()" class="hidden px-5 py-2 bg-mattOrange hover:bg-orange-600 text-white font-black text-xs rounded-xl shadow uppercase tracking-wider transition">
-                                    💾 Sauvegarder
-                                </button>
+                <!-- Le vrai contenu, caché par défaut -->
+                <div id="cfg-unlocked-content" class="hidden space-y-4">
+                    <div id="cfg-buttons-container" class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
+                        <button onclick="switchConfigSubTab('cfg-sub-contacts')" class="p-6 rounded-3xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-3 shadow-sm hover:border-red-500 hover:text-red-600 transition">
+                            <span class="text-4xl">📱</span>
+                            <span class="text-[10px] uppercase">Numéros & Assistance</span>
+                        </button>
+                        <button onclick="switchConfigSubTab('cfg-sub-communes')" class="p-6 rounded-3xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-3 shadow-sm hover:border-red-500 hover:text-red-600 transition">
+                            <span class="text-4xl">📍</span>
+                            <span class="text-[10px] uppercase">Ajout & Attribution</span>
+                        </button>
+                        <button onclick="switchConfigSubTab('cfg-sub-admins')" class="p-6 rounded-3xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-3 shadow-sm hover:border-red-500 hover:text-red-600 transition">
+                            <span class="text-4xl">🔑</span>
+                            <span class="text-[10px] uppercase">Gestion Admin</span>
+                        </button>
+                        <button onclick="switchConfigSubTab('cfg-sub-questions')" class="p-6 rounded-3xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-3 shadow-sm hover:border-red-500 hover:text-red-600 transition">
+                            <span class="text-4xl">❓</span>
+                            <span class="text-[10px] uppercase">Base Questions Secrètes</span>
+                        </button>
+                    </div>
+
+                    <!-- Sous-vue: Contacts -->
+                    <div id="cfg-sub-contacts" class="cfg-subview hidden space-y-4">
+                        <button onclick="resetConfigView()" class="px-3 py-1.5 bg-slate-200 text-slate-700 font-bold text-[10px] rounded-lg uppercase tracking-wider hover:bg-slate-300 transition w-max">
+                            ← Retour aux icônes
+                        </button>
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
+                            <div class="flex justify-between items-center border-b pb-3">
+                                <h3 class="text-md font-black text-navy-800 uppercase tracking-wide">📱 Numéros Mobile Money & Assistance WhatsApp</h3>
+                                <div class="flex gap-2">
+                                    <button id="btn-unlock-phones" onclick="unlockPhoneInputs()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black text-xs rounded-xl shadow uppercase tracking-wider transition">
+                                        🔓 Déverrouiller
+                                    </button>
+                                    <button id="btn-save-phones" onclick="saveSysContactConfig()" class="hidden px-5 py-2 bg-mattOrange hover:bg-orange-600 text-white font-black text-xs rounded-xl shadow uppercase tracking-wider transition">
+                                        💾 Sauvegarder
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                            <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
-                                <label class="text-[10px] font-black text-slate-500 uppercase block">💬 WhatsApp Client :</label>
-                                <input type="text" id="cfg-wa-client" value="+243980000338" readonly class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-500 bg-slate-100 cursor-not-allowed">
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                                <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
+                                    <label class="text-[10px] font-black text-slate-500 uppercase block">💬 WhatsApp Client :</label>
+                                    <input type="text" id="cfg-wa-client" value="+243980000338" readonly class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-500 bg-slate-100 cursor-not-allowed">
+                                </div>
+                                <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
+                                    <label class="text-[10px] font-black text-slate-500 uppercase block">💬 WhatsApp Partenaires :</label>
+                                    <input type="text" id="cfg-wa-partner" value="+243980000338" readonly class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-500 bg-slate-100 cursor-not-allowed">
+                                </div>
+                                <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
+                                    <label class="text-[10px] font-black text-slate-500 uppercase block">📞 Téléphone Direct MATT :</label>
+                                    <input type="text" id="cfg-tel-call" value="+243980000338" readonly class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-500 bg-slate-100 cursor-not-allowed">
+                                </div>
                             </div>
-                            <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
-                                <label class="text-[10px] font-black text-slate-500 uppercase block">💬 WhatsApp Partenaires :</label>
-                                <input type="text" id="cfg-wa-partner" value="+243980000338" readonly class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-500 bg-slate-100 cursor-not-allowed">
-                            </div>
-                            <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
-                                <label class="text-[10px] font-black text-slate-500 uppercase block">📞 Téléphone Direct MATT :</label>
-                                <input type="text" id="cfg-tel-call" value="+243980000338" readonly class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-500 bg-slate-100 cursor-not-allowed">
-                            </div>
-                        </div>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 border-t pt-3">
-                            <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
-                                <label class="text-[10px] font-black text-slate-500 uppercase block">💳 Compte M-Pesa :</label>
-                                <input type="text" id="cfg-mpesa" value="+243980000338" readonly class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-500 bg-slate-100 cursor-not-allowed">
-                            </div>
-                            <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
-                                <label class="text-[10px] font-black text-slate-500 uppercase block">💳 Compte Orange Money :</label>
-                                <input type="text" id="cfg-orange" value="+243980000338" readonly class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-500 bg-slate-100 cursor-not-allowed">
-                            </div>
-                            <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
-                                <label class="text-[10px] font-black text-slate-500 uppercase block">💳 Compte Airtel Money :</label>
-                                <input type="text" id="cfg-airtel" value="+243980000338" readonly class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-500 bg-slate-100 cursor-not-allowed">
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 border-t pt-3">
+                                <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
+                                    <label class="text-[10px] font-black text-slate-500 uppercase block">💳 Compte M-Pesa :</label>
+                                    <input type="text" id="cfg-mpesa" value="+243980000338" readonly class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-500 bg-slate-100 cursor-not-allowed">
+                                </div>
+                                <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
+                                    <label class="text-[10px] font-black text-slate-500 uppercase block">💳 Compte Orange Money :</label>
+                                    <input type="text" id="cfg-orange" value="+243980000338" readonly class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-500 bg-slate-100 cursor-not-allowed">
+                                </div>
+                                <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
+                                    <label class="text-[10px] font-black text-slate-500 uppercase block">💳 Compte Airtel Money :</label>
+                                    <input type="text" id="cfg-airtel" value="+243980000338" readonly class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-500 bg-slate-100 cursor-not-allowed">
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
 
-                <!-- Sous-vue: Communes -->
-                <div id="cfg-sub-communes" class="cfg-subview hidden space-y-4">
-                    <button onclick="resetConfigView()" class="px-3 py-1.5 bg-slate-200 text-slate-700 font-bold text-[10px] rounded-lg uppercase tracking-wider hover:bg-slate-300 transition w-max">
-                        ← Retour aux icônes
-                    </button>
-                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
-                        <h3 class="text-md font-black text-navy-800 uppercase tracking-wide">📍 Ajout & Attribution des Communes par Zones</h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-white p-4 rounded-xl border border-slate-200 items-end">
-                            <div>
-                                <label class="text-[10px] font-bold text-slate-600 uppercase block mb-1">Nom de la Commune :</label>
-                                <input type="text" id="cfg-new-commune-name" placeholder="Ex: N'Sele Extension..." class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800">
+                    <!-- Sous-vue: Communes -->
+                    <div id="cfg-sub-communes" class="cfg-subview hidden space-y-4">
+                        <button onclick="resetConfigView()" class="px-3 py-1.5 bg-slate-200 text-slate-700 font-bold text-[10px] rounded-lg uppercase tracking-wider hover:bg-slate-300 transition w-max">
+                            ← Retour aux icônes
+                        </button>
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
+                            <h3 class="text-md font-black text-navy-800 uppercase tracking-wide">📍 Ajout & Attribution des Communes par Zones</h3>
+                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-white p-4 rounded-xl border border-slate-200 items-end">
+                                <div>
+                                    <label class="text-[10px] font-bold text-slate-600 uppercase block mb-1">Nom de la Commune :</label>
+                                    <input type="text" id="cfg-new-commune-name" placeholder="Ex: N'Sele Extension..." class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-bold text-slate-600 uppercase block mb-1">Zone Géographique :</label>
+                                    <select id="cfg-new-commune-zone" class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800 bg-white">
+                                        <option value="zone1">Zone 1 - Résidentielle</option>
+                                        <option value="zone2">Zone 2 - Centrale</option>
+                                        <option value="zone3">Zone 3 - Est & Populaire</option>
+                                        <option value="zone4">Zone 4 - Périurbaine</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <button onclick="addNewCommuneToZone()" class="w-full py-2.5 bg-navy-800 hover:bg-navy-900 text-white font-black text-xs rounded-lg uppercase tracking-wider transition">
+                                        ➕ Ajouter la Commune
+                                    </button>
+                                </div>
                             </div>
-                            <div>
-                                <label class="text-[10px] font-bold text-slate-600 uppercase block mb-1">Zone Géographique :</label>
-                                <select id="cfg-new-commune-zone" class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800 bg-white">
-                                    <option value="zone1">Zone 1 - Résidentielle</option>
-                                    <option value="zone2">Zone 2 - Centrale</option>
-                                    <option value="zone3">Zone 3 - Est & Populaire</option>
-                                    <option value="zone4">Zone 4 - Périurbaine</option>
-                                </select>
+                            <div class="overflow-x-auto border border-slate-200 rounded-xl bg-white shadow-inner custom-scrollbar max-h-60 overflow-y-auto">
+                                <table class="w-full text-left text-xs border-collapse">
+                                    <thead>
+                                        <tr class="bg-slate-100 text-slate-600 border-b sticky top-0 font-bold">
+                                            <th class="p-3 uppercase">Commune</th>
+                                            <th class="p-3 uppercase">Zone Associée</th>
+                                            <th class="p-3 uppercase text-right">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cfg-communes-table" class="divide-y divide-slate-100 font-medium"></tbody>
+                                </table>
                             </div>
-                            <div>
-                                <button onclick="addNewCommuneToZone()" class="w-full py-2.5 bg-navy-800 hover:bg-navy-900 text-white font-black text-xs rounded-lg uppercase tracking-wider transition">
-                                    ➕ Ajouter la Commune
-                                </button>
-                            </div>
-                        </div>
-                        <div class="overflow-x-auto border border-slate-200 rounded-xl bg-white shadow-inner custom-scrollbar max-h-60 overflow-y-auto">
-                            <table class="w-full text-left text-xs border-collapse">
-                                <thead>
-                                    <tr class="bg-slate-100 text-slate-600 border-b sticky top-0 font-bold">
-                                        <th class="p-3 uppercase">Commune</th>
-                                        <th class="p-3 uppercase">Zone Associée</th>
-                                        <th class="p-3 uppercase text-right">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="cfg-communes-table" class="divide-y divide-slate-100 font-medium"></tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Sous-vue: Admins -->
-                <div id="cfg-sub-admins" class="cfg-subview hidden space-y-4">
-                    <button onclick="resetConfigView()" class="px-3 py-1.5 bg-slate-200 text-slate-700 font-bold text-[10px] rounded-lg uppercase tracking-wider hover:bg-slate-300 transition w-max">
-                        ← Retour aux icônes
-                    </button>
-                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
-                        <h3 class="text-md font-black text-navy-800 uppercase tracking-wide">🔑 Gestion & Accès Administrateurs</h3>
-                        <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 bg-white p-4 rounded-xl border border-slate-200">
-                            <div>
-                                <label class="text-[10px] font-bold text-slate-600 uppercase block">Nom :</label>
-                                <input type="text" id="cfg-new-user-name" placeholder="Direction Générale" class="w-full mt-1 px-3 py-1.5 border rounded-lg text-xs font-bold">
-                            </div>
-                            <div>
-                                <label class="text-[10px] font-bold text-slate-600 uppercase block">Login / Tél :</label>
-                                <input type="tel" id="cfg-new-user-login" placeholder="0980000338" class="w-full mt-1 px-3 py-1.5 border rounded-lg text-xs font-bold">
-                            </div>
-                            <div>
-                                <label class="text-[10px] font-bold text-slate-600 uppercase block">Rôle :</label>
-                                <select id="cfg-new-user-role" class="w-full mt-1 px-3 py-1.5 border rounded-lg text-xs font-bold bg-white">
-                                    <option value="Superviseur">Superviseur Opérations</option>
-                                    <option value="Comptable">Comptable & Caisse</option>
-                                    <option value="Administrateur Master">Administrateur Master</option>
-                                </select>
-                            </div>
-                            <div>
-                                <label class="text-[10px] font-bold text-slate-600 uppercase block">Mot de Passe :</label>
-                                <input type="text" id="cfg-new-user-pass" placeholder="••••••••" class="w-full mt-1 px-3 py-1.5 border rounded-lg text-xs font-bold">
-                            </div>
-                            <div class="sm:col-span-4 flex justify-end">
-                                <button onclick="createNewAdminAccount()" class="px-5 py-2 bg-navy-800 hover:bg-navy-900 text-white font-black text-xs rounded-lg uppercase tracking-wider">
-                                    ➕ Créer cet accès
-                                </button>
-                            </div>
-                        </div>
-
-                        <div class="overflow-x-auto border border-slate-200 rounded-xl bg-white shadow-inner custom-scrollbar">
-                            <table class="w-full text-left text-xs border-collapse">
-                                <thead>
-                                    <tr class="bg-slate-100 text-slate-600 border-b font-bold">
-                                        <th class="p-3 uppercase">Nom</th>
-                                        <th class="p-3 uppercase">Identifiant / Login</th>
-                                        <th class="p-3 uppercase">Rôle</th>
-                                        <th class="p-3 uppercase">Mot de Passe</th>
-                                        <th class="p-3 uppercase text-right">Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="cfg-admin-users-table" class="divide-y divide-slate-100 font-medium"></tbody>
-                            </table>
                         </div>
                     </div>
-                </div>
 
-                <!-- Sous-vue: BASE QUESTIONS SECRÈTES -->
-                <div id="cfg-sub-questions" class="cfg-subview hidden space-y-4">
-                    <button onclick="resetConfigView()" class="px-3 py-1.5 bg-slate-200 text-slate-700 font-bold text-[10px] rounded-lg uppercase tracking-wider hover:bg-slate-300 transition w-max">
-                        ← Retour aux icônes
-                    </button>
-                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                        <h3 class="text-md font-black text-navy-800 uppercase tracking-wide mb-2">❓ Base de données des Questions Secrètes</h3>
-                        <p class="text-[11px] text-slate-500 font-medium mb-4">Gérez ici la liste globale des questions proposées aux partenaires lors de la configuration de leur sécurité.</p>
-                        
-                        <div class="flex gap-2 mb-4">
-                            <input type="text" id="cfg-new-secret-question" placeholder="Ex: Quel est le nom de votre premier professeur ?" class="flex-grow px-3 py-2 border border-slate-300 rounded-xl text-xs font-bold bg-slate-50 focus:outline-none">
-                            <button onclick="addSecretQuestion()" class="px-4 py-2 bg-navy-800 hover:bg-navy-900 text-white font-bold rounded-xl text-xs uppercase shadow transition">
-                                Ajouter à la liste
-                            </button>
+                    <!-- Sous-vue: Admins -->
+                    <div id="cfg-sub-admins" class="cfg-subview hidden space-y-4">
+                        <button onclick="resetConfigView()" class="px-3 py-1.5 bg-slate-200 text-slate-700 font-bold text-[10px] rounded-lg uppercase tracking-wider hover:bg-slate-300 transition w-max">
+                            ← Retour aux icônes
+                        </button>
+                        <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
+                            <div class="flex justify-between items-center border-b pb-2">
+                                <h3 class="text-md font-black text-navy-800 uppercase tracking-wide">🔑 Gestion & Accès Administrateurs</h3>
+                            </div>
+                            
+                            <div class="bg-red-50 p-4 rounded-xl border border-red-200 mb-4 flex justify-between items-center">
+                                <div>
+                                    <h4 class="text-xs font-black text-red-800 uppercase">Mot de Passe Master Global</h4>
+                                    <p class="text-[10px] text-red-600">Utilisé pour déverrouiller la Configuration Système.</p>
+                                </div>
+                                <div class="flex gap-2">
+                                    <input type="text" id="cfg-global-master-pass" value="MATT2026" class="px-3 py-1.5 border rounded-lg text-xs font-bold font-mono">
+                                    <button onclick="updateMasterPassword()" class="px-3 py-1.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-lg text-xs shadow transition">Mettre à jour</button>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 bg-white p-4 rounded-xl border border-slate-200 mt-4">
+                                <div>
+                                    <label class="text-[10px] font-bold text-slate-600 uppercase block">Nom :</label>
+                                    <input type="text" id="cfg-new-user-name" placeholder="Direction Générale" class="w-full mt-1 px-3 py-1.5 border rounded-lg text-xs font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-bold text-slate-600 uppercase block">Login / Tél :</label>
+                                    <input type="tel" id="cfg-new-user-login" placeholder="0980000338" class="w-full mt-1 px-3 py-1.5 border rounded-lg text-xs font-bold">
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-bold text-slate-600 uppercase block">Rôle :</label>
+                                    <select id="cfg-new-user-role" class="w-full mt-1 px-3 py-1.5 border rounded-lg text-xs font-bold bg-white">
+                                        <option value="Superviseur">Superviseur Opérations</option>
+                                        <option value="Comptable">Comptable & Caisse</option>
+                                        <option value="Administrateur Master">Administrateur Master</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="text-[10px] font-bold text-slate-600 uppercase block">Mot de Passe :</label>
+                                    <input type="text" id="cfg-new-user-pass" placeholder="••••••••" class="w-full mt-1 px-3 py-1.5 border rounded-lg text-xs font-bold">
+                                </div>
+                                <div class="sm:col-span-4 flex justify-end">
+                                    <button onclick="createNewAdminAccount()" class="px-5 py-2 bg-navy-800 hover:bg-navy-900 text-white font-black text-xs rounded-lg uppercase tracking-wider">
+                                        ➕ Créer cet accès
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="overflow-x-auto border border-slate-200 rounded-xl bg-white shadow-inner custom-scrollbar">
+                                <table class="w-full text-left text-xs border-collapse">
+                                    <thead>
+                                        <tr class="bg-slate-100 text-slate-600 border-b font-bold">
+                                            <th class="p-3 uppercase">Nom</th>
+                                            <th class="p-3 uppercase">Identifiant / Login</th>
+                                            <th class="p-3 uppercase">Rôle</th>
+                                            <th class="p-3 uppercase">Mot de Passe</th>
+                                            <th class="p-3 uppercase text-right">Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cfg-admin-users-table" class="divide-y divide-slate-100 font-medium"></tbody>
+                                </table>
+                            </div>
                         </div>
+                    </div>
 
-                        <div class="overflow-x-auto border border-slate-200 rounded-xl bg-slate-50 shadow-inner custom-scrollbar max-h-60 overflow-y-auto">
-                            <table class="w-full text-left text-xs border-collapse">
-                                <thead>
-                                    <tr class="bg-slate-200 text-slate-700 border-b font-bold sticky top-0">
-                                        <th class="p-3 uppercase">Question proposée</th>
-                                        <th class="p-3 text-right uppercase">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="cfg-secret-questions-table" class="divide-y divide-slate-200 font-medium bg-white"></tbody>
-                            </table>
+                    <!-- Sous-vue: BASE QUESTIONS SECRÈTES -->
+                    <div id="cfg-sub-questions" class="cfg-subview hidden space-y-4">
+                        <button onclick="resetConfigView()" class="px-3 py-1.5 bg-slate-200 text-slate-700 font-bold text-[10px] rounded-lg uppercase tracking-wider hover:bg-slate-300 transition w-max">
+                            ← Retour aux icônes
+                        </button>
+                        <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                            <h3 class="text-md font-black text-navy-800 uppercase tracking-wide mb-2">❓ Base de données des Questions Secrètes</h3>
+                            <p class="text-[11px] text-slate-500 font-medium mb-4">Gérez ici la liste globale des questions proposées aux partenaires lors de la configuration de leur sécurité.</p>
+                            
+                            <div class="flex gap-2 mb-4">
+                                <input type="text" id="cfg-new-secret-question" placeholder="Ex: Quel est le nom de votre premier professeur ?" class="flex-grow px-3 py-2 border border-slate-300 rounded-xl text-xs font-bold bg-slate-50 focus:outline-none">
+                                <button onclick="addSecretQuestion()" class="px-4 py-2 bg-navy-800 hover:bg-navy-900 text-white font-bold rounded-xl text-xs uppercase shadow transition">
+                                    Ajouter à la liste
+                                </button>
+                            </div>
+
+                            <div class="overflow-x-auto border border-slate-200 rounded-xl bg-slate-50 shadow-inner custom-scrollbar max-h-60 overflow-y-auto">
+                                <table class="w-full text-left text-xs border-collapse">
+                                    <thead>
+                                        <tr class="bg-slate-200 text-slate-700 border-b font-bold sticky top-0">
+                                            <th class="p-3 uppercase">Question proposée</th>
+                                            <th class="p-3 text-right uppercase">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cfg-secret-questions-table" class="divide-y divide-slate-200 font-medium bg-white"></tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -731,6 +757,119 @@
 
         </div>
     </main>
+
+    <!-- MODALE EXAMEN DU DOSSIER PARTENAIRE (PIÈCE D'IDENTITÉ & ADRESSE) -->
+    <div id="modal-partner-review" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
+        <div class="bg-white text-slate-900 w-full max-w-lg rounded-3xl shadow-2xl p-6 border border-slate-200 space-y-4 relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <button onclick="closePartnerReviewModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 font-bold text-xl">✕</button>
+            
+            <div class="border-b pb-3">
+                <h3 class="text-lg font-black text-navy-800 flex items-center gap-2">
+                    <span>📄</span> Gestion du Prestataire
+                </h3>
+                <span id="review-partner-status" class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase mt-1 inline-block"></span>
+            </div>
+
+            <input type="hidden" id="review-partner-id">
+
+            <div class="space-y-3 text-xs">
+                <div class="grid grid-cols-2 gap-2 bg-slate-50 p-3 rounded-2xl border">
+                    <div>
+                        <span class="text-[10px] font-bold text-slate-500 uppercase block">Raison Sociale / Nom :</span>
+                        <b class="text-slate-800 text-sm" id="review-partner-name">-</b>
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-bold text-slate-500 uppercase block">Téléphone / Contact :</span>
+                        <b class="font-mono text-slate-800 text-sm" id="review-partner-phone">-</b>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2 bg-slate-50 p-3 rounded-2xl border">
+                    <div>
+                        <span class="text-[10px] font-bold text-slate-500 uppercase block">Commune d'Intervention :</span>
+                        <b class="text-navy-800" id="review-partner-commune">-</b>
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-bold text-slate-500 uppercase block">Spécialité Déclarée :</span>
+                        <b class="text-mattOrange" id="review-partner-specialty">-</b>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 p-3 rounded-2xl border">
+                    <span class="text-[10px] font-bold text-slate-500 uppercase block mb-1">📍 Adresse Complète d'Exploitation / Siège :</span>
+                    <p class="font-bold text-slate-800" id="review-partner-address">Non renseignée</p>
+                </div>
+
+                <!-- Aperçu de la pièce d'identité -->
+                <div class="bg-slate-50 p-3 rounded-2xl border space-y-2">
+                    <span class="text-[10px] font-black text-navy-800 uppercase block">📑 Pièce d'Identité ou Justificatif Joint :</span>
+                    <div id="review-partner-doc-preview" class="w-full flex items-center justify-center border rounded-xl overflow-hidden min-h-[160px] bg-white p-2">
+                        <span class="text-slate-400">Aucun document joint</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions dynamiques basées sur le statut -->
+            <div class="flex justify-end gap-2 pt-3 border-t w-full" id="review-action-buttons"></div>
+        </div>
+    </div>
+
+    <!-- MODALE AUDIT COMMANDE -->
+    <div id="modal-order-details" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
+        <div class="bg-white text-slate-900 w-full max-w-xl rounded-3xl shadow-2xl p-6 border border-slate-200 space-y-4 relative">
+            <button onclick="closeOrderDetailsModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 font-bold text-xl">✕</button>
+            
+            <div class="border-b pb-3">
+                <h3 class="text-lg font-black text-navy-800 flex items-center gap-2">
+                    <span>📜</span> Fiche Historique - Commande #<span id="dtl-order-id"></span>
+                </h3>
+                <span id="dtl-order-badge" class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase mt-1 inline-block"></span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <div class="bg-slate-50 p-3 rounded-xl border">
+                    <span class="text-[10px] text-slate-400 uppercase font-bold block mb-1">👤 Demandeur (Client)</span>
+                    <b class="text-slate-800 text-sm block" id="dtl-client-name"></b>
+                    <span class="font-mono text-slate-600 font-bold" id="dtl-client-phone"></span>
+                </div>
+                <div class="bg-slate-50 p-3 rounded-xl border">
+                    <span class="text-[10px] text-slate-400 uppercase font-bold block mb-1">🤝 Prestataire Attribué</span>
+                    <b class="text-slate-800 text-sm block" id="dtl-partner-info">Non assigné</b>
+                </div>
+            </div>
+
+            <div class="bg-slate-50 p-3 rounded-xl border text-xs space-y-1.5">
+                <div><span class="text-slate-500 font-bold">Prestations :</span> <b id="dtl-order-desc" class="text-slate-800"></b></div>
+                <div><span class="text-slate-500 font-bold">Localisation :</span> <b id="dtl-order-location" class="text-slate-800"></b></div>
+                <div><span class="text-slate-500 font-bold">Planification :</span> <span id="dtl-order-datetime" class="font-bold text-navy-800"></span></div>
+                <div><span class="text-slate-500 font-bold">Conditions terrain :</span> <span id="dtl-order-logistics" class="font-semibold text-aqua"></span></div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
+                <div class="bg-sky-50 p-3 rounded-xl border border-sky-200">
+                    <span class="text-[10px] text-sky-800 uppercase font-bold block">Montant Brut Facturé</span>
+                    <b class="text-base font-black text-navy-800 font-mono" id="dtl-order-brut">0 CDF</b>
+                </div>
+                <div class="bg-green-50 p-3 rounded-xl border border-green-200 space-y-1">
+                    <span class="text-[10px] text-green-800 uppercase font-bold block">Commission MATT Totale (15%)</span>
+                    <b class="text-base font-black text-green-700 font-mono block" id="dtl-order-com">0 CDF</b>
+                    <div id="dtl-order-com-breakdown" class="text-[10px] font-bold text-slate-600 pt-1 border-t border-green-200"></div>
+                </div>
+            </div>
+
+            <div class="bg-amber-50/60 p-3 rounded-xl border border-amber-200 text-xs space-y-1">
+                <span class="text-[10px] font-black text-amber-800 uppercase block">⭐ Évaluation & Avis du Client</span>
+                <div id="dtl-order-rating" class="text-mattOrange font-bold text-sm">Non notée</div>
+                <p id="dtl-order-comment" class="text-slate-600 italic">Aucun avis déposé.</p>
+            </div>
+
+            <div class="flex justify-end pt-2 border-t">
+                <button onclick="closeOrderDetailsModal()" class="px-5 py-2.5 bg-navy-800 text-white rounded-xl text-xs font-bold uppercase tracking-wider">
+                    Fermer la Fiche
+                </button>
+            </div>
+        </div>
+    </div>
 
     <!-- MODALE MODIFICATION ADMIN MASTER -->
     <div id="admin-edit-user-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
@@ -773,6 +912,7 @@
         </div>
     </footer>
 
+    <!-- LOGIQUE JAVASCRIPT ET CONNECTEURS SUPABASE -->
     <script>
         const SUPABASE_URL = "https://vbriworyscymnmtzzdny.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZicml3b3J5c2N5bW5tdHp6ZG55Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzNzQwNTEsImV4cCI6MjEwMzk1MDA1MX0.VBZupVKj0srae0NT5BNZ0OeaIv9pAl2bl5L-Rd8ocJk";
@@ -784,61 +924,59 @@
             console.error("Erreur d'initialisation de Supabase :", e);
         }
 
-        const communesKinshasa = [
-            { name: "Gombe", zone: "zone1", label: "Zone 1 - Résidentielle" },
-            { name: "Ngaliema", zone: "zone1", label: "Zone 1 - Résidentielle" },
-            { name: "Limete", zone: "zone1", label: "Zone 1 - Résidentielle" },
-            { name: "Kintambo", zone: "zone1", label: "Zone 1 - Résidentielle" },
-            { name: "Bandalungwa", zone: "zone2", label: "Zone 2 - Centrale" },
-            { name: "Kasa-Vubu", zone: "zone2", label: "Zone 2 - Centrale" },
-            { name: "Kalamu", zone: "zone2", label: "Zone 2 - Centrale" },
-            { name: "Lemba", zone: "zone2", label: "Zone 2 - Centrale" },
-            { name: "Lingwala", zone: "zone2", label: "Zone 2 - Centrale" },
-            { name: "Barumbu", zone: "zone2", label: "Zone 2 - Centrale" },
-            { name: "Kinshasa", zone: "zone2", label: "Zone 2 - Centrale" },
-            { name: "N'djili", zone: "zone3", label: "Zone 3 - Populaire" },
-            { name: "Masina", zone: "zone3", label: "Zone 3 - Populaire" },
-            { name: "Matete", zone: "zone3", label: "Zone 3 - Populaire" },
-            { name: "Bumbu", zone: "zone3", label: "Zone 3 - Populaire" },
-            { name: "Makala", zone: "zone3", label: "Zone 3 - Populaire" },
-            { name: "Ngaba", zone: "zone3", label: "Zone 3 - Populaire" },
-            { name: "Ngiri-Ngiri", zone: "zone3", label: "Zone 3 - Populaire" },
-            { name: "Kimbanseke", zone: "zone3", label: "Zone 3 - Populaire" },
-            { name: "Kisenso", zone: "zone3", label: "Zone 3 - Populaire" },
-            { name: "Selembao", zone: "zone3", label: "Zone 3 - Populaire" },
-            { name: "Mont-Ngafula", zone: "zone4", label: "Zone 4 - Périurbaine" },
-            { name: "Nsele", zone: "zone4", label: "Zone 4 - Périurbaine" },
-            { name: "Maluku", zone: "zone4", label: "Zone 4 - Périurbaine" }
+        let communesList = [
+            { name: "Gombe", zone: "zone1" }, { name: "Ngaliema", zone: "zone1" },
+            { name: "Limete", zone: "zone1" }, { name: "Kintambo", zone: "zone1" },
+            { name: "Bandalungwa", zone: "zone2" }, { name: "Kasa-Vubu", zone: "zone2" },
+            { name: "Kalamu", zone: "zone2" }, { name: "Lemba", zone: "zone2" },
+            { name: "Lingwala", zone: "zone2" }, { name: "Barumbu", zone: "zone2" },
+            { name: "Kinshasa", zone: "zone2" }, { name: "N'djili", zone: "zone3" },
+            { name: "Masina", zone: "zone3" }, { name: "Matete", zone: "zone3" },
+            { name: "Bumbu", zone: "zone3" }, { name: "Makala", zone: "zone3" },
+            { name: "Ngaba", zone: "zone3" }, { name: "Ngiri-Ngiri", zone: "zone3" },
+            { name: "Kimbanseke", zone: "zone3" }, { name: "Kisenso", zone: "zone3" },
+            { name: "Selembao", zone: "zone3" }, { name: "Mont-Ngafula", zone: "zone4" },
+            { name: "Nsele", zone: "zone4" }, { name: "Maluku", zone: "zone4" }
         ];
 
         const FALLBACK_ORDERS = [
             { id: 5, commune: "Ngaliema", avenue: "Brikin N°10", reference: "Pharmacie", description: "1x Berline [Sièges+Plafond]", axe: "Auto", date: "2026-09-04", time: "15:30", client_name: "Jean Mukendi", client_phone: "0825556633", total_amount: 27000, commission: 4050, status: "Terminée", rating_service: 5, partner_id: "1" },
             { id: 4, commune: "Gombe", avenue: "Av. Haut Commandement N° 4", reference: "BCDC", description: "Nettoyage Canapés Cuir (10 pl.) + Tapis (40 m²)", axe: "Maison", date: "2026-09-04", time: "17:00", client_name: "KAM", client_phone: "0813271112", total_amount: 280000, commission: 42000, status: "Terminée", rating_service: 5, partner_id: "2" },
-            { id: 3, commune: "Bandalungwa", avenue: "Kasa-Vubu N°12", reference: "Rond-point", description: "Désinfection (3 pièces)", axe: "3D", date: "2026-09-05", time: "09:00", client_name: "Aline", client_phone: "0812345678", total_amount: 30000, commission: 4500, status: "Terminée", rating_service: 4, partner_id: "1" },
+            { id: 3, commune: "Bandalungwa", avenue: "Kasa-Vubu N°12", reference: "Rond-point", description: "Désinfection (3 pièces)", axe: "3D", date: "2026-09-05", time: "09:00", client_name: "Aline", client_phone: "0812345678", total_amount: 30000, commission: 2400, status: "Terminée", rating_service: 4, partner_id: "1" },
             { id: 2, commune: "Limete", avenue: "12ème Rue Industriel", reference: "Poids lourds", description: "1x SUV / 4x4 [Moteur+Rad. + Sièges]", axe: "Auto", date: "2026-09-05", time: "11:30", client_name: "Paul", client_phone: "0998877665", total_amount: 43000, commission: 6450, status: "Terminée", rating_service: 4, partner_id: "3" },
-            { id: 1, commune: "Kinshasa", avenue: "Av. Kabambare", reference: "Marché", description: "Vitres (10 m²)", axe: "Maison", date: "2026-09-05", time: "14:00", client_name: "Société ABC", client_phone: "0845556677", total_amount: 15000, commission: 2250, status: "Terminée", rating_service: 3, partner_id: "2" }
+            { id: 1, commune: "Kinshasa", avenue: "Av. Kabambare", reference: "Marché", description: "Vitres (10 m²)", axe: "Maison", date: "2026-09-05", time: "14:00", client_name: "Société ABC", client_phone: "0845556677", total_amount: 15000, commission: 1800, status: "Terminée", rating_service: 3, partner_id: "2" }
         ];
 
-        // Restauration de la sauvegarde locale des prix/taux si elle existe
+        let MASTER_PASS = localStorage.getItem('matt_master_pass') || 'MATT2026';
         let savedPricing = localStorage.getItem('matt_pricing_config');
-        
+        const defaultTarifsGroup = {
+            'moto': 8000, 'tricycle': 12000, 'berline': 15000, 'suv': 25000,
+            'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000,
+            'opt-moteur-berline': 5000, 'opt-chassis-berline': 4000, 'opt-sieges-berline': 7000,
+            'opt-moteur-suv': 8000, 'opt-chassis-suv': 6000, 'opt-sieges-suv': 10000,
+            'opt-moteur-poids-lourd': 15000, 'opt-chassis-poids-lourd': 12000, 'opt-sieges-poids-lourd': 15000,
+            'opt-moteur-remorque': 5000, 'opt-chassis-remorque': 6000, 'opt-sieges-remorque': 5000,
+            'tapis': 2000, 'moquette': 2000, 'vitres': 1500, 'carreaux': 1000, 'baie': 3000, 'panneau': 4000,
+            'canape-textile': 4500, 'canape-lin': 6000, 'canape-velours': 8000, 'canape-cuir': 12000, 'matelas': 5000,
+            'desinf': 10000, 'desinsect': 12000, 'derat': 14000, 'immondices': 15000, 'fosse': 40000
+        };
+
         const state = {
-            adminUsers: [{ id: "adm1", name: "Direction Générale", login: "0980000338", role: "Administrateur Master", pass: "MATT2026" }],
+            adminUsers: [{ id: "adm1", name: "Direction Générale", login: "0980000338", role: "Administrateur Master", pass: MASTER_PASS }],
             partners: [],
             orders: [],
             ordersSubView: 'active',
             currentGroupKey: 'standard',
             pricesByGroup: savedPricing ? JSON.parse(savedPricing) : {
-                'standard': { 'commission-rate': 15 },
-                'zone1': { 'commission-rate': 15, 'berline': 20000, 'suv': 30000 },
-                'zone2': { 'commission-rate': 15, 'berline': 15000, 'suv': 25000 },
-                'zone3': { 'commission-rate': 15, 'berline': 12000, 'suv': 20000 },
-                'zone4': { 'commission-rate': 15, 'fosse': 50000, 'immondices': 20000 }
+                'standard': { ...defaultTarifsGroup, 'commission-rate': 15 },
+                'zone1': { ...defaultTarifsGroup, 'commission-rate': 15, 'berline': 20000, 'suv': 30000 },
+                'zone2': { ...defaultTarifsGroup, 'commission-rate': 12, 'berline': 15000, 'suv': 25000 },
+                'zone3': { ...defaultTarifsGroup, 'commission-rate': 8, 'berline': 12000, 'suv': 20000 },
+                'zone4': { ...defaultTarifsGroup, 'commission-rate': 5, 'fosse': 50000, 'immondices': 20000 }
             },
             caisses: { centrale: 0, auto: 0, maison: 0, env: 0 }
         };
 
-        // GESTION GLOBALE DES QUESTIONS SECRÈTES
         let secretQuestionsDB = JSON.parse(localStorage.getItem('matt_secret_questions_db')) || [
             "Quel est le nom de votre ville natale ?",
             "Quel est le nom de votre premier animal de compagnie ?",
@@ -858,7 +996,7 @@
                 <tr class="border-b hover:bg-slate-50 transition">
                     <td class="p-3 font-bold text-slate-800">${q}</td>
                     <td class="p-3 text-right">
-                        <button onclick="deleteSecretQuestion(${index})" class="text-red-600 font-bold hover:underline">Supprimer</button>
+                        <button onclick="deleteSecretQuestion(${index})" class="text-red-600 font-bold hover:underline">Supprimer ✕</button>
                     </td>
                 </tr>
             `).join('');
@@ -886,6 +1024,20 @@
             localStorage.setItem('matt_secret_questions_db', JSON.stringify(secretQuestionsDB));
             renderSecretQuestionsDB();
             showToast("Question supprimée.");
+        }
+
+        function updateMasterPassword() {
+            const newPass = document.getElementById('cfg-global-master-pass').value.trim();
+            if(!newPass) return showToast("Le mot de passe ne peut pas être vide.", "error");
+            MASTER_PASS = newPass;
+            localStorage.setItem('matt_master_pass', MASTER_PASS);
+            
+            // Mise à jour de l'admin par défaut
+            const masterAdmin = state.adminUsers.find(u => u.login === "0980000338");
+            if(masterAdmin) masterAdmin.pass = MASTER_PASS;
+            
+            renderAdminUsersTable();
+            showToast("Mot de passe MASTER mis à jour avec succès !", "success");
         }
 
         function showToast(message, type = "success") {
@@ -917,7 +1069,7 @@
                 const pass = passInp.value.trim();
 
                 const matched = state.adminUsers.find(u => u.login === login && u.pass === pass);
-                if (matched || (login === "0980000338" && pass === "MATT2026") || pass === "MATT2026") {
+                if (matched || (login === "0980000338" && pass === MASTER_PASS) || pass === MASTER_PASS) {
                     
                     let roleStr = "Administrateur Master";
                     if (matched) roleStr = matched.role;
@@ -975,16 +1127,34 @@
             showToast("Session verrouillée.", "info");
         }
 
+        function unlockConfigSystem() {
+            const passInp = document.getElementById('cfg-master-pass');
+            if(!passInp) return;
+            const pass = passInp.value.trim();
+            if (pass === MASTER_PASS) {
+                document.getElementById('cfg-lock-screen').classList.add('hidden');
+                document.getElementById('cfg-unlocked-content').classList.remove('hidden');
+                passInp.value = '';
+                showToast("Zone sécurisée déverrouillée.", "success");
+            } else {
+                showToast("Mot de passe incorrect. Accès refusé.", "error");
+            }
+        }
+
         function switchAdminTab(tabId, btn) {
             if (tabId === 'admin-config') {
                 const role = localStorage.getItem('matt_admin_role');
                 if (role !== 'Administrateur Master') {
-                    const pass = prompt("🔐 Accès restreint. Saisissez le mot de passe MASTER pour ouvrir la Configuration Système :");
-                    if (pass !== "MATT2026") {
-                        showToast("Mot de passe incorrect. Accès refusé.", "error");
-                        return;
-                    }
+                    document.getElementById('cfg-lock-screen').classList.remove('hidden');
+                    document.getElementById('cfg-unlocked-content').classList.add('hidden');
+                } else {
+                    document.getElementById('cfg-lock-screen').classList.add('hidden');
+                    document.getElementById('cfg-unlocked-content').classList.remove('hidden');
                 }
+                resetConfigView();
+                
+                const gPassInput = document.getElementById('cfg-global-master-pass');
+                if(gPassInput) gPassInput.value = MASTER_PASS;
             }
 
             document.querySelectorAll('.admin-subview').forEach(s => s.classList.add('hidden'));
@@ -997,7 +1167,7 @@
             if (btn) btn.className = "admin-tab-btn px-4 py-2.5 bg-navy-800 text-white rounded-xl whitespace-nowrap active shadow-sm";
 
             if (tabId === 'admin-stats') genererTableauStatistiques();
-            if (tabId === 'admin-config') resetConfigView();
+            if (tabId === 'admin-prix') onCommuneGroupChange();
         }
 
         function switchOrdersSubView(sub) {
@@ -1028,6 +1198,40 @@
             document.querySelectorAll('.cfg-subview').forEach(el => el.classList.add('hidden'));
             const btns = document.getElementById('cfg-buttons-container');
             if (btns) btns.classList.remove('hidden');
+        }
+
+        function unlockPhoneInputs() {
+            const pass = prompt("Mot de passe MASTER requis pour modifier les numéros financiers :");
+            if (pass === MASTER_PASS) {
+                ['cfg-wa-client', 'cfg-wa-partner', 'cfg-tel-call', 'cfg-mpesa', 'cfg-orange', 'cfg-airtel'].forEach(id => {
+                    let el = document.getElementById(id);
+                    if(el) {
+                        el.removeAttribute('readonly');
+                        el.classList.remove('bg-slate-100', 'cursor-not-allowed', 'text-slate-500');
+                        el.classList.add('bg-white');
+                    }
+                });
+                document.getElementById('btn-unlock-phones').classList.add('hidden');
+                document.getElementById('btn-save-phones').classList.remove('hidden');
+                showToast("Champs déverrouillés.", "success");
+            } else {
+                showToast("Mot de passe incorrect.", "error");
+            }
+        }
+
+        function saveSysContactConfig() {
+            showToast("Coordonnées de paiement et WhatsApp sauvegardées !", "success");
+            
+            ['cfg-wa-client', 'cfg-wa-partner', 'cfg-tel-call', 'cfg-mpesa', 'cfg-orange', 'cfg-airtel'].forEach(id => {
+                let el = document.getElementById(id);
+                if(el) {
+                    el.setAttribute('readonly', 'true');
+                    el.classList.add('bg-slate-100', 'cursor-not-allowed', 'text-slate-500');
+                    el.classList.remove('bg-white');
+                }
+            });
+            document.getElementById('btn-unlock-phones').classList.remove('hidden');
+            document.getElementById('btn-save-phones').classList.add('hidden');
         }
 
         async function refreshAllAppData() {
@@ -1284,6 +1488,7 @@
                 if (!error && data) {
                     state.partners = data;
                     renderAdminPartners();
+                    renderConfigPartnersTable();
                     const sel = document.getElementById('admin-manual-recharge-partner');
                     if (sel) {
                         sel.innerHTML = state.partners.map(p => `<option value="${p.id}">${p.name} (${p.commune})</option>`).join('');
@@ -1599,7 +1804,7 @@
                 const k = input.id.replace('p-', '');
                 state.pricesByGroup[groupKey][k] = parseFloat(input.value) || 0;
             });
-            
+
             localStorage.setItem('matt_pricing_config', JSON.stringify(state.pricesByGroup));
 
             showToast(`Tarifs et Taux de Commission (${rateInput ? rateInput.value : 15}%) enregistrés pour cette zone.`, "success");
@@ -1613,7 +1818,7 @@
                 const filtreAxeInp = document.getElementById('stats-filter-axe');
                 const filtreAxe = filtreAxeInp ? filtreAxeInp.value : 'Tous';
 
-                tbody.innerHTML = communesList.map((c, i) => {
+                let htmlContent = communesList.map((c, i) => {
                     const ordersInCommune = state.orders.filter(o => {
                         if (o.commune !== c.name) return false;
                         const axe = determinerAxeCommande(o);
@@ -1629,11 +1834,7 @@
                     ordersInCommune.forEach(o => {
                         brutCommune += Number(o.total_amount || 0);
                         if (o.status === 'Acceptée' || o.status === 'Terminée') {
-                            const axe = determinerAxeCommande(o);
-                            if (filtreAxe === "Auto" && axe === 'auto') comCommune += Number(o.commission || 0);
-                            else if (filtreAxe === "Maison" && axe === 'maison') comCommune += Number(o.commission || 0);
-                            else if (filtreAxe === "3D" && axe === 'env') comCommune += Number(o.commission || 0);
-                            else if (filtreAxe === "Tous") comCommune += Number(o.commission || 0);
+                            comCommune += Number(o.commission || 0);
                         }
                     });
 
@@ -1648,6 +1849,13 @@
                         </tr>
                     `;
                 }).join('');
+
+                if(htmlContent.trim() === '') {
+                    htmlContent = `<tr><td colspan="6" class="p-6 text-center text-slate-400 font-medium">Aucune donnée d'activité disponible.</td></tr>`;
+                }
+                
+                tbody.innerHTML = htmlContent;
+
             } catch(e) {
                 console.error("Erreur de génération des statistiques", e);
             }
@@ -1706,22 +1914,6 @@
             prev.innerHTML = text.split('\n\n').map(p => `<p class="mb-2">${p.replace(/\n/g, '<br>')}</p>`).join('');
         }
 
-        function saveSysContactConfig() {
-            showToast("Coordonnées de paiement et WhatsApp sauvegardées !", "success");
-            
-            // Re-verrouiller visuellement après sauvegarde
-            ['cfg-wa-client', 'cfg-wa-partner', 'cfg-tel-call', 'cfg-mpesa', 'cfg-orange', 'cfg-airtel'].forEach(id => {
-                let el = document.getElementById(id);
-                if(el) {
-                    el.setAttribute('readonly', 'true');
-                    el.classList.add('bg-slate-100', 'cursor-not-allowed', 'text-slate-500');
-                    el.classList.remove('bg-white');
-                }
-            });
-            document.getElementById('btn-unlock-phones').classList.remove('hidden');
-            document.getElementById('btn-save-phones').classList.add('hidden');
-        }
-
         function renderCommunesTable() {
             const tbody = document.getElementById('cfg-communes-table');
             if (!tbody) return;
@@ -1730,7 +1922,7 @@
                     <td class="p-3 font-bold text-slate-800">${c.name}</td>
                     <td class="p-3"><span class="bg-sky-100 text-sky-800 font-bold px-2 py-0.5 rounded text-[11px] uppercase">${c.zone}</span></td>
                     <td class="p-3 text-right">
-                        <button onclick="deleteCommune(${index})" class="text-red-600 font-bold hover:underline">Supprimer</button>
+                        <button onclick="deleteCommune(${index})" class="text-red-600 font-bold hover:underline">Supprimer ✕</button>
                     </td>
                 </tr>
             `).join('');
