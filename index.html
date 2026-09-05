@@ -44,7 +44,6 @@
 
     <div id="toast-container" class="fixed top-4 inset-x-4 z-[9999] flex flex-col gap-2 max-w-sm mx-auto pointer-events-none"></div>
 
-    <!-- En-tête -->
     <header class="bg-navy-800/95 border-b border-aqua/30 px-4 py-3 md:px-8 flex justify-between items-center sticky top-0 z-40 backdrop-blur-md shadow-lg w-full">
         <div class="flex items-center gap-2.5 cursor-pointer" onclick="showView('view-gateway')">
             <div class="w-11 h-11 bg-white rounded-2xl shadow-md border border-aqua/30 p-1 flex items-center justify-center flex-shrink-0">
@@ -63,7 +62,6 @@
         </div>
     </header>
 
-    <!-- Conteneur Principal -->
     <main class="w-full px-2 py-3 sm:px-6 sm:py-5 flex-grow flex flex-col justify-start">
 
         <!-- 1. ACCUEIL -->
@@ -157,7 +155,7 @@
             </div>
         </div>
 
-        <!-- 3. AUTHENTIFICATION PARTENAIRE -->
+        <!-- 3. AUTHENTIFICATION & INSCRIPTION PARTENAIRE (AVEC PIÈCE D'IDENTITÉ ET ADRESSE) -->
         <div id="view-partner-auth" class="bg-white text-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl hidden animate-fade-in max-w-md mx-auto w-full my-auto">
             <div class="flex items-center justify-end border-b pb-2 mb-4">
                 <button onclick="showView('view-gateway')" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 font-bold flex items-center justify-center">✕</button>
@@ -185,31 +183,39 @@
                 <button onclick="loginPartner()" class="w-full py-3.5 bg-mattOrange active:bg-orange-600 text-white font-black text-xs rounded-xl uppercase tracking-wider shadow mt-2">Accéder à mon espace</button>
             </div>
 
-            <div id="form-partner-register" class="space-y-3.5 hidden max-h-[60vh] overflow-y-auto pr-1">
+            <!-- FORMULAIRE COMPLET D'INSCRIPTION PARTENAIRE -->
+            <div id="form-partner-register" class="space-y-3 hidden max-h-[62vh] overflow-y-auto pr-1 custom-scrollbar">
                 <div>
-                    <label class="text-[10px] font-bold text-slate-600 block uppercase">Nom / Raison Sociale</label>
-                    <input type="text" id="p-reg-name" placeholder="Raison Sociale ou Nom" class="w-full px-3.5 py-2.5 border rounded-xl text-xs font-bold">
+                    <label class="text-[10px] font-bold text-slate-600 block uppercase">Nom / Raison Sociale *</label>
+                    <input type="text" id="p-reg-name" placeholder="Ex: Lavage Pro Kin" class="w-full px-3 py-2 border rounded-xl text-xs font-bold">
                 </div>
                 <div>
-                    <label class="text-[10px] font-bold text-slate-600 block uppercase">Numéro de Téléphone</label>
-                    <input type="tel" id="p-reg-phone" placeholder="Numéro de téléphone" class="w-full px-3.5 py-2.5 border rounded-xl text-xs font-bold">
+                    <label class="text-[10px] font-bold text-slate-600 block uppercase">Numéro de Téléphone *</label>
+                    <input type="tel" id="p-reg-phone" placeholder="Ex: 0819998822" class="w-full px-3 py-2 border rounded-xl text-xs font-bold font-mono">
                 </div>
                 <div>
-                    <label class="text-[10px] font-bold text-slate-600 block uppercase">Mot de passe</label>
+                    <label class="text-[10px] font-bold text-slate-600 block uppercase">Mot de passe *</label>
                     <div class="relative">
-                        <input type="password" id="p-reg-pass" placeholder="••••••••" class="w-full px-3.5 py-2.5 pr-10 border rounded-xl text-xs font-bold">
+                        <input type="password" id="p-reg-pass" placeholder="••••••••" class="w-full px-3 py-2 pr-10 border rounded-xl text-xs font-bold">
                         <button type="button" onclick="togglePasswordVisibility('p-reg-pass', 'eye-p-reg')" class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400">
                             <span id="eye-p-reg">👁️</span>
                         </button>
                     </div>
                 </div>
                 <div>
-                    <label class="text-[10px] font-bold text-slate-600 block uppercase">Commune d'Intervention</label>
-                    <select id="p-reg-commune" class="w-full px-3.5 py-2.5 border rounded-xl text-xs text-slate-800 font-bold bg-white"></select>
+                    <label class="text-[10px] font-bold text-slate-600 block uppercase">Commune Principale *</label>
+                    <select id="p-reg-commune" class="w-full px-3 py-2 border rounded-xl text-xs text-slate-800 font-bold bg-white"></select>
                 </div>
+
+                <!-- Champ Adresse d'Exploitation ajouté -->
                 <div>
-                    <label class="text-[10px] font-bold text-slate-600 block uppercase">Spécialité</label>
-                    <select id="p-reg-specialty" class="w-full px-3.5 py-2.5 border rounded-xl text-xs text-slate-800 font-bold bg-white">
+                    <label class="text-[10px] font-bold text-slate-600 block uppercase">Adresse d'Exploitation / Siège *</label>
+                    <input type="text" id="p-reg-address" placeholder="Ex: Av. Flambeau N°45, Quartier Matonge" class="w-full px-3 py-2 border rounded-xl text-xs font-medium">
+                </div>
+
+                <div>
+                    <label class="text-[10px] font-bold text-slate-600 block uppercase">Spécialité Principale *</label>
+                    <select id="p-reg-specialty" class="w-full px-3 py-2 border rounded-xl text-xs text-slate-800 font-bold bg-white">
                         <option value="Polyvalent Auto et Maison">Polyvalent (Auto et Maison)</option>
                         <option value="Lavage auto & Engins">Lavage auto & Engins</option>
                         <option value="Maison (Canapés, Vitres, Tapis)">Maison (Canapés, Vitres, Tapis)</option>
@@ -217,7 +223,21 @@
                         <option value="Vidange fosse septique">Vidange fosse septique & Immondices</option>
                     </select>
                 </div>
-                <button onclick="registerPartner()" class="w-full py-3.5 bg-navy-800 text-white font-bold text-xs rounded-xl uppercase tracking-wide mt-2">Soumettre mon dossier</button>
+
+                <!-- Champ Pièce d'Identité / Document ajouté -->
+                <div class="bg-slate-50 p-3 rounded-2xl border border-dashed border-slate-300 space-y-1.5">
+                    <label class="text-[10px] font-black text-navy-800 block uppercase">📁 Pièce d'Identité ou Document d'Activité *</label>
+                    <span class="text-[9px] text-slate-500 block">Carte d'électeur, Passeport, RCCM ou Permis (Photo/PDF).</span>
+                    <input type="file" id="p-reg-doc" accept="image/*,application/pdf" class="w-full text-[11px] text-slate-600 file:mr-2 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-[10px] file:font-black file:bg-navy-800 file:text-white hover:file:bg-navy-900 cursor-pointer">
+                </div>
+
+                <div class="bg-amber-50 p-2.5 rounded-xl border border-amber-200 text-[10px] text-amber-800 font-medium leading-tight">
+                    ℹ️ Votre dossier sera soumis à la Direction MATT SARL pour examen avant l'activation officielle de votre compte.
+                </div>
+
+                <button onclick="registerPartner()" id="btn-submit-partner-reg" class="w-full py-3.5 bg-navy-800 text-white font-bold text-xs rounded-xl uppercase tracking-wide shadow mt-1">
+                    Soumettre mon dossier d'agrément
+                </button>
             </div>
         </div>
 
@@ -281,12 +301,10 @@
                     <span id="client-axis-fullscreen-title" class="text-[10px] sm:text-xs font-black text-navy-800 uppercase tracking-tight truncate flex-1 min-w-0"></span>
                 </div>
 
-                <!-- Automobile -->
                 <div id="axis-auto" class="client-axis-view hidden border rounded-2xl p-4 bg-white shadow-sm space-y-3">
                     <div id="vehicle-catalog" class="grid grid-cols-1 md:grid-cols-2 gap-2.5"></div>
                 </div>
 
-                <!-- Maison -->
                 <div id="axis-maison" class="client-axis-view hidden border rounded-2xl p-4 bg-white shadow-sm space-y-3">
                     <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 text-xs font-bold">
                         <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Tapis (m²)</label><input type="number" id="m2-tapis" placeholder="0" class="w-full p-2 border rounded-xl" oninput="calculerTotal()"></div>
@@ -309,7 +327,6 @@
                     </div>
                 </div>
 
-                <!-- 3D & Vidange -->
                 <div id="axis-env" class="client-axis-view hidden border rounded-2xl p-4 bg-white shadow-sm space-y-3">
                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 text-xs font-bold">
                         <div><label class="text-[10px] text-slate-500 uppercase block mb-1">Désinfection (pièces)</label><input type="number" id="qty-desinfection" placeholder="0" class="w-full p-2 border rounded-xl" oninput="calculerTotal()"></div>
@@ -328,7 +345,6 @@
                     </div>
                 </div>
 
-                <!-- Logistique -->
                 <div id="axis-logistics" class="client-axis-view hidden bg-slate-50 border rounded-2xl p-4 space-y-3 text-xs">
                     <div class="bg-white p-3 rounded-xl border border-slate-200 space-y-2">
                         <span class="text-[10px] font-black text-navy-800 uppercase block">👤 Demandeur :</span>
@@ -394,7 +410,6 @@
                     </div>
                 </div>
 
-                <!-- Mes Commandes -->
                 <div id="axis-tracking" class="client-axis-view hidden space-y-3">
                     <div class="flex justify-between items-center border-b pb-2">
                         <span class="text-xs font-black uppercase text-navy-800">Mes Commandes</span>
@@ -403,7 +418,6 @@
                     <div id="client-orders-tracking-list" class="space-y-2.5"></div>
                 </div>
 
-                <!-- Contact -->
                 <div id="axis-contact" class="client-axis-view hidden space-y-3">
                     <div class="grid grid-cols-3 gap-2 text-center">
                         <button type="button" onclick="switchContactTab('cnt-about', this)" class="contact-tab-btn p-2.5 rounded-2xl border-2 border-mattOrange bg-orange-50/70 text-mattOrange font-black text-xs flex flex-col items-center gap-1 shadow-xs">
@@ -464,7 +478,6 @@
         <!-- 5. ESPACE PARTENAIRE CONNECTÉ -->
         <div id="view-partner-app" class="w-full min-h-[calc(100vh-140px)] bg-white text-slate-800 rounded-3xl p-4 md:p-6 shadow-2xl hidden animate-fade-in flex flex-col justify-between space-y-4">
 
-            <!-- 3 LIGNES X 2 COLONNES -->
             <div id="partner-home-column" class="flex-grow flex flex-col justify-center py-2">
                 <div class="grid grid-cols-2 gap-3.5 w-full max-w-md mx-auto p-2">
                     
@@ -617,7 +630,6 @@
                             <option value="mensuel">Forfait Mois Illimité (150 000 CDF)</option>
                         </select>
 
-                        <!-- COMPTES MOBILES AVEC ALIGNEMENT RIGOUREUX -->
                         <div class="bg-white p-4 rounded-2xl border space-y-2">
                             <span class="font-black text-slate-700 block uppercase text-[10px] tracking-wider mb-1">
                                 COMPTES MOBILES OFFICIELS MATT SARL :
@@ -801,10 +813,10 @@
         ];
 
         const grilleTarifaireParZone = {
-            'zone1': { moto: 10000, tricycle: 15000, berline: 20000, suv: 30000, 'poids-lourd': 55000, 'bus-207': 25000, 'bus-long': 40000, 'remorque': 35000 },
-            'zone2': { moto: 8000, tricycle: 12000, berline: 15000, suv: 25000, 'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000 },
-            'zone3': { moto: 7000, tricycle: 10000, berline: 12000, suv: 20000, 'poids-lourd': 40000, 'bus-207': 18000, 'bus-long': 30000, 'remorque': 25000 },
-            'zone4': { moto: 8000, tricycle: 12000, berline: 15000, suv: 25000, 'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000 }
+            'zone1': { moto: 10000, tricycle: 15000, berline: 20000, suv: 30000, 'poids-lourd': 55000, 'bus-207': 25000, 'bus-long': 40000, 'remorque': 35000, commission_rate: 15 },
+            'zone2': { moto: 8000, tricycle: 12000, berline: 15000, suv: 25000, 'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000, commission_rate: 15 },
+            'zone3': { moto: 7000, tricycle: 10000, berline: 12000, suv: 20000, 'poids-lourd': 40000, 'bus-207': 18000, 'bus-long': 30000, 'remorque': 25000, commission_rate: 15 },
+            'zone4': { moto: 8000, tricycle: 12000, berline: 15000, suv: 25000, 'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000, commission_rate: 15 }
         };
 
         const typesVehicules = [
@@ -905,495 +917,116 @@
             calculerTotal();
         }
 
-        function openFullscreenClientAxis(viewId) {
-            document.getElementById('client-home-grid').classList.add('hidden');
-            document.querySelectorAll('.client-axis-view').forEach(v => v.classList.add('hidden'));
-
-            const titles = {
-                'axis-auto': '🚗 Automobile',
-                'axis-maison': '🏡 Maison & Surfaces',
-                'axis-env': '🌱 3D & Vidange',
-                'axis-logistics': '⚡ Logistique & Demandeur',
-                'axis-tracking': '📋 Mes Commandes',
-                'axis-contact': '📞 Contact & Informations'
-            };
-
-            document.getElementById('client-axis-fullscreen-title').innerText = titles[viewId] || 'Configuration';
-            document.getElementById(viewId)?.classList.remove('hidden');
-            document.getElementById('client-fullscreen-axis').classList.remove('hidden');
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function closeFullscreenClientAxis() {
-            document.getElementById('client-fullscreen-axis').classList.add('hidden');
-            document.querySelectorAll('.client-axis-view').forEach(v => v.classList.add('hidden'));
-            document.getElementById('client-home-grid').classList.remove('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function switchContactTab(tabId, btn) {
-            document.querySelectorAll('.contact-subview').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.contact-tab-btn').forEach(b => {
-                b.className = "contact-tab-btn p-2.5 rounded-2xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-1 shadow-xs hover:border-aqua";
+        // Convertir un fichier local en Base64 pour enregistrement immédiat
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
             });
-            document.getElementById(tabId)?.classList.remove('hidden');
-            if (btn) {
-                btn.className = "contact-tab-btn p-2.5 rounded-2xl border-2 border-mattOrange bg-orange-50/70 text-mattOrange font-black text-xs flex flex-col items-center gap-1 shadow-xs";
-            }
         }
 
-        function openFullscreenPartnerTab(tabId) {
-            document.getElementById('partner-home-column').classList.add('hidden');
-            document.querySelectorAll('.partner-subview').forEach(v => v.classList.add('hidden'));
+        // INSCRIPTION PARTENAIRE AVEC STATUT "En attente de validation"
+        async function registerPartner() {
+            const btn = document.getElementById('btn-submit-partner-reg');
+            const name = document.getElementById('p-reg-name').value.trim();
+            const rawPhone = document.getElementById('p-reg-phone').value.trim();
+            const phone = normalizePhoneNumber(rawPhone);
+            const password = document.getElementById('p-reg-pass').value.trim();
+            const commune = document.getElementById('p-reg-commune').value;
+            const address = document.getElementById('p-reg-address').value.trim();
+            const specialty = document.getElementById('p-reg-specialty').value;
+            const fileInput = document.getElementById('p-reg-doc');
 
-            const titles = {
-                'partner-tab-missions': '🚨 Missions Disponibles',
-                'partner-tab-ca': '📊 Chiffre d\'Affaires & Périodes',
-                'partner-tab-wallet': '💳 Portefeuille & Forfaits',
-                'partner-tab-courses': '📑 Mes Courses & Clôture',
-                'partner-tab-profil': '⚙️ Mon Profil & Sécurité',
-                'partner-tab-info-support': '📜 Infos & Support'
-            };
-
-            document.getElementById('partner-tab-fullscreen-title').innerText = titles[tabId] || 'Module Partenaire';
-            document.getElementById(tabId)?.classList.remove('hidden');
-            document.getElementById('partner-fullscreen-tab').classList.remove('hidden');
-
-            if (tabId === 'partner-tab-ca') {
-                renderPartnerCA();
-            } else if (tabId === 'partner-tab-wallet') {
-                refreshPartnerWallet();
+            if (!name || !phone || !password || !address) {
+                return showToast("Veuillez remplir tous les champs obligatoires (*).", "error");
+            }
+            if (!fileInput.files || fileInput.files.length === 0) {
+                return showToast("Veuillez joindre votre pièce d'identité ou document d'activité.", "error");
             }
 
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function closeFullscreenPartnerTab() {
-            document.getElementById('partner-fullscreen-tab').classList.add('hidden');
-            document.querySelectorAll('.partner-subview').forEach(v => v.classList.add('hidden'));
-            document.getElementById('partner-home-column').classList.remove('hidden');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function switchCaSubTab(tabId, btn) {
-            document.querySelectorAll('.ca-subview').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.ca-subtab-btn').forEach(b => {
-                b.className = "ca-subtab-btn p-2.5 rounded-2xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-1 shadow-xs hover:border-aqua";
-            });
-            document.getElementById(tabId)?.classList.remove('hidden');
-            if (btn) {
-                btn.className = "ca-subtab-btn p-2.5 rounded-2xl border-2 border-mattOrange bg-orange-50/70 text-mattOrange font-black text-xs flex flex-col items-center gap-1 shadow-xs";
-            }
-        }
-
-        function switchPartnerSupportTab(tabId, btn) {
-            document.querySelectorAll('.psup-subview').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.psup-subtab-btn').forEach(b => {
-                b.className = "psup-subtab-btn p-2.5 rounded-2xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-1 shadow-xs hover:border-aqua";
-            });
-            document.getElementById(tabId)?.classList.remove('hidden');
-            if (btn) {
-                btn.className = "psup-subtab-btn p-2.5 rounded-2xl border-2 border-mattOrange bg-orange-50/70 text-mattOrange font-black text-xs flex flex-col items-center gap-1 shadow-xs";
-            }
-        }
-
-        async function refreshPartnerWallet() {
-            if (!session.user) return;
-            const { data, error } = await db.from('partners').select('wallet, billing_mode').eq('id', session.user.id).single();
-            if (!error && data) {
-                session.user.wallet = data.wallet || 0;
-                session.user.billing_mode = data.billing_mode || 'commission';
-                document.getElementById('partner-wallet-balance').innerText = `${Number(data.wallet || 0).toLocaleString('fr-FR')} CDF`;
-                showToast("Solde portefeuille actualisé !");
-            }
-        }
-
-        function updateVehicleCount(vid, delta) {
-            clientVehiculeSelection[vid] = Math.max(0, (clientVehiculeSelection[vid] || 0) + delta);
-            document.getElementById(`qty-${vid}`).innerText = clientVehiculeSelection[vid];
-            
-            const optionsBox = document.getElementById(`options-box-${vid}`);
-            if (optionsBox) {
-                if (clientVehiculeSelection[vid] > 0) {
-                    optionsBox.classList.remove('hidden');
-                } else {
-                    optionsBox.classList.add('hidden');
-                    document.getElementById(`opt-${vid}-moteur`).checked = false;
-                    document.getElementById(`opt-${vid}-chassis`).checked = false;
-                    document.getElementById(`opt-${vid}-sieges`).checked = false;
-                }
-            }
-            calculerTotal();
-        }
-
-        function calculerTotal() {
-            let total = 0;
-            const tarifsZone = grilleTarifaireParZone[currentActiveZone] || grilleTarifaireParZone['zone1'];
-
-            let countVehicules = 0;
-            typesVehicules.forEach(v => {
-                const count = clientVehiculeSelection[v.id] || 0;
-                if (count > 0) {
-                    total += count * (tarifsZone[v.id] || 15000);
-                    countVehicules += count;
-
-                    if (v.hasOptions) {
-                        const pOpt = vehicleOptionsPrices[v.id];
-                        if (document.getElementById(`opt-${v.id}-moteur`)?.checked) total += count * pOpt.moteur;
-                        if (document.getElementById(`opt-${v.id}-chassis`)?.checked) total += count * pOpt.chassis;
-                        if (document.getElementById(`opt-${v.id}-sieges`)?.checked) total += count * pOpt.sieges;
-                    }
-                }
-            });
-            document.getElementById('badge-count-auto').innerText = countVehicules;
-
-            let countMaison = 0;
-            const mTapis = parseFloat(document.getElementById('m2-tapis')?.value) || 0;
-            const mMoq = parseFloat(document.getElementById('m2-moquette')?.value) || 0;
-            const mVit = parseFloat(document.getElementById('m2-vitres')?.value) || 0;
-            const mBaie = parseFloat(document.getElementById('m2-baies')?.value) || 0;
-            const mCarr = parseFloat(document.getElementById('m2-carreaux')?.value) || 0;
-            const qPan = parseFloat(document.getElementById('qty-panneaux')?.value) || 0;
-            const qCanText = parseFloat(document.getElementById('qty-canape-textile')?.value) || 0;
-            const qCanLin = parseFloat(document.getElementById('qty-canape-lin')?.value) || 0;
-            const qCanVel = parseFloat(document.getElementById('qty-canape-velours')?.value) || 0;
-            const qCanCuir = parseFloat(document.getElementById('qty-canape-cuir')?.value) || 0;
-            const qMat = parseFloat(document.getElementById('qty-matelas')?.value) || 0;
-
-            total += mTapis * 2000 + mMoq * 2000 + mVit * 1500 + mBaie * 3000 + mCarr * 1000 + qPan * 4000;
-            total += qCanText * 4500 + qCanLin * 6000 + qCanVel * 8000 + qCanCuir * 12000 + qMat * 5000;
-
-            countMaison = (mTapis > 0 ? 1 : 0) + (mMoq > 0 ? 1 : 0) + (mVit > 0 ? 1 : 0) + (mBaie > 0 ? 1 : 0) + (mCarr > 0 ? 1 : 0) + (qPan > 0 ? 1 : 0) + (qCanText > 0 ? 1 : 0) + (qCanLin > 0 ? 1 : 0) + (qCanVel > 0 ? 1 : 0) + (qCanCuir > 0 ? 1 : 0) + (qMat > 0 ? 1 : 0);
-            document.getElementById('badge-count-maison').innerText = countMaison;
-
-            let countEnv = 0;
-            const qDesinf = parseFloat(document.getElementById('qty-desinfection')?.value) || 0;
-            const qDesins = parseFloat(document.getElementById('qty-desinsectisation')?.value) || 0;
-            const qDerat = parseFloat(document.getElementById('qty-deratisation')?.value) || 0;
-            const vImm = parseFloat(document.getElementById('vol-immondices')?.value) || 0;
-            const vFos = parseFloat(document.getElementById('vol-fosse')?.value) || 0;
-
-            total += qDesinf * 10000 + qDesins * 12000 + qDerat * 14000 + vImm * 15000;
-            total += vFos * (currentActiveZone === 'zone4' ? 50000 : 40000);
-
-            countEnv = (qDesinf > 0 ? 1 : 0) + (qDesins > 0 ? 1 : 0) + (qDerat > 0 ? 1 : 0) + (vImm > 0 ? 1 : 0) + (vFos > 0 ? 1 : 0);
-            document.getElementById('badge-count-env').innerText = countEnv;
-
-            document.getElementById('prix-total-affichage').innerText = total.toLocaleString('fr-FR');
-
-            const badgesContainer = document.getElementById('cart-summary-badges');
-            if (badgesContainer) {
-                let badges = [];
-                if (countVehicules > 0) badges.push(`<span class="bg-slate-800 px-2 py-0.5 rounded-md border border-slate-700">🚗 ${countVehicules} véhicule(s)</span>`);
-                if (countMaison > 0) badges.push(`<span class="bg-slate-800 px-2 py-0.5 rounded-md border border-slate-700">🏡 ${countMaison} maison</span>`);
-                if (countEnv > 0) badges.push(`<span class="bg-slate-800 px-2 py-0.5 rounded-md border border-slate-700">🌱 ${countEnv} 3D/Fosse</span>`);
-                badgesContainer.innerHTML = badges.join('');
+            let document_url = null;
+            try {
+                if (btn) { btn.disabled = true; btn.innerText = "Traitement en cours..."; }
+                document_url = await fileToBase64(fileInput.files[0]);
+            } catch (e) {
+                if (btn) { btn.disabled = false; btn.innerText = "Soumettre mon dossier d'agrément"; }
+                return showToast("Erreur lors de la lecture du document joint.", "error");
             }
 
-            return total;
-        }
-
-        function reinitialiserFormulaireCommande() {
-            typesVehicules.forEach(v => {
-                clientVehiculeSelection[v.id] = 0;
-                const qtyEl = document.getElementById(`qty-${v.id}`);
-                if (qtyEl) qtyEl.innerText = "0";
-
-                const optBox = document.getElementById(`options-box-${v.id}`);
-                if (optBox) optBox.classList.add('hidden');
-
-                if (document.getElementById(`opt-${v.id}-moteur`)) document.getElementById(`opt-${v.id}-moteur`).checked = false;
-                if (document.getElementById(`opt-${v.id}-chassis`)) document.getElementById(`opt-${v.id}-chassis`).checked = false;
-                if (document.getElementById(`opt-${v.id}-sieges`)) document.getElementById(`opt-${v.id}-sieges`).checked = false;
-            });
-
-            ['m2-tapis', 'm2-moquette', 'm2-vitres', 'm2-baies', 'm2-carreaux', 'qty-panneaux',
-             'qty-canape-textile', 'qty-canape-lin', 'qty-canape-velours', 'qty-canape-cuir', 'qty-matelas'
-            ].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.value = '';
-            });
-
-            ['qty-desinfection', 'qty-desinsectisation', 'qty-deratisation', 'vol-immondices', 'vol-fosse'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.value = '';
-            });
-
-            ['client-quartier-input', 'client-avenue-input', 'client-ref-input', 'client-date-input', 'client-time-input'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.value = '';
-            });
-
-            calculerTotal();
-        }
-
-        async function passerCommande() {
-            const btnValider = document.getElementById('btn-valider-commande');
-            const client_name = document.getElementById('client-name-input').value.trim();
-            const raw_phone = document.getElementById('client-phone-input').value.trim();
-            const client_phone = normalizePhoneNumber(raw_phone);
-            const commune = document.getElementById('client-commune').value;
-            const quartier = document.getElementById('client-quartier-input').value.trim();
-            const avenue = document.getElementById('client-avenue-input').value.trim();
-            const reference = document.getElementById('client-ref-input').value.trim();
-            const date = document.getElementById('client-date-input').value;
-            const time = document.getElementById('client-time-input').value;
-            const elec = document.getElementById('client-elec').value;
-            const water = document.getElementById('client-water').value;
-            const total_amount = calculerTotal();
-
-            if (!client_name || !client_phone || !avenue || !date || !time) {
-                openFullscreenClientAxis('axis-logistics');
-                return showToast("Veuillez renseigner vos coordonnées et votre adresse dans la case 'Logistique'.", "error");
-            }
-            if (total_amount <= 0) return showToast("Votre panier est vide.", "error");
-
-            let details = [];
-            let axeParts = [];
-
-            let hasAuto = false;
-            typesVehicules.forEach(v => {
-                const count = clientVehiculeSelection[v.id] || 0;
-                if (count > 0) {
-                    hasAuto = true;
-                    let vDesc = `${count}x ${v.label}`;
-                    let vOpts = [];
-                    if (v.hasOptions) {
-                        if (document.getElementById(`opt-${v.id}-moteur`)?.checked) vOpts.push("Moteur+Rad.");
-                        if (document.getElementById(`opt-${v.id}-chassis`)?.checked) vOpts.push("Châssis");
-                        if (document.getElementById(`opt-${v.id}-sieges`)?.checked) vOpts.push("Sièges+Plafond");
-                    }
-                    if (vOpts.length > 0) vDesc += ` [${vOpts.join(' + ')}]`;
-                    details.push(vDesc);
-                }
-            });
-            if (hasAuto) axeParts.push('Automobile');
-
-            let hasMaison = false;
-            const mTapis = parseFloat(document.getElementById('m2-tapis')?.value) || 0;
-            if (mTapis > 0) { details.push(`Tapis (${mTapis} m²)`); hasMaison = true; }
-            const qCanText = parseFloat(document.getElementById('qty-canape-textile')?.value) || 0;
-            if (qCanText > 0) { details.push(`Canapé Textile (${qCanText} pl.)`); hasMaison = true; }
-            const qCanCuir = parseFloat(document.getElementById('qty-canape-cuir')?.value) || 0;
-            if (qCanCuir > 0) { details.push(`Canapé Cuir (${qCanCuir} pl.)`); hasMaison = true; }
-            const mVitres = parseFloat(document.getElementById('m2-vitres')?.value) || 0;
-            if (mVitres > 0) { details.push(`Vitres (${mVitres} m²)`); hasMaison = true; }
-            if (hasMaison) axeParts.push('Maison');
-
-            let hasEnv = false;
-            const fosse = parseFloat(document.getElementById('vol-fosse')?.value) || 0;
-            if (fosse > 0) { details.push(`Vidange fosse (${fosse} m³)`); hasEnv = true; }
-            const immondices = parseFloat(document.getElementById('vol-immondices')?.value) || 0;
-            if (immondices > 0) { details.push(`Immondices (${immondices} m³)`); hasEnv = true; }
-            const desinf = parseFloat(document.getElementById('qty-desinfection')?.value) || 0;
-            if (desinf > 0) { details.push(`3D Désinfection (${desinf} pces)`); hasEnv = true; }
-            if (hasEnv) axeParts.push('Environnement 3D & Vidange');
-
-            const commission = Math.floor(total_amount * 0.15);
-
-            if (btnValider) btnValider.disabled = true;
-
-            const { error } = await db.from('orders').insert([{
-                axe: axeParts.join(' / ') || 'Multi-Axes',
-                client_name,
-                client_phone,
-                description: details.join(' • ') || 'Prestation d\'assainissement sur mesure',
+            const { error } = await db.from('partners').insert([{
+                name,
+                phone,
+                password,
                 commune,
-                quartier: quartier || 'N/A',
-                avenue,
-                reference,
-                logistics: `Élec: ${elec} | Eau: ${water}`,
-                date,
-                time,
-                total_amount,
-                commission,
-                status: 'En attente'
+                address,
+                specialty,
+                document_url,
+                wallet: 0,
+                status: 'En attente de validation'
             }]);
 
-            if (btnValider) btnValider.disabled = false;
+            if (btn) { btn.disabled = false; btn.innerText = "Soumettre mon dossier d'agrément"; }
 
             if (error) return showToast(error.message, "error");
 
-            reinitialiserFormulaireCommande();
-            showToast("Commande validée et transmise à la Direction !", "success");
-            openFullscreenClientAxis('axis-tracking');
-            detectClientOrders();
+            // Réinitialisation des champs
+            document.getElementById('p-reg-name').value = '';
+            document.getElementById('p-reg-phone').value = '';
+            document.getElementById('p-reg-pass').value = '';
+            document.getElementById('p-reg-address').value = '';
+            fileInput.value = '';
+
+            switchAuthTab('partner', 'login');
+            showToast("Dossier soumis avec succès ! Votre compte est en attente d'examen et validation par la Direction MATT.", "success");
         }
 
-        async function detectClientOrders() {
-            const raw = document.getElementById('client-phone-input').value.trim();
+        // CONNEXION PARTENAIRE : VÉRIFICATION DU STATUT
+        async function loginPartner() {
+            const raw = document.getElementById('auth-partner-login-phone').value.trim();
             const phone = normalizePhoneNumber(raw);
-            if (!phone) return;
+            const password = document.getElementById('auth-partner-login-pass').value.trim();
+            
+            const { data, error } = await db.from('partners')
+                .select('*')
+                .or(`phone.eq.${phone},phone.ilike.%${phone.slice(-8)}%`)
+                .eq('password', password)
+                .single();
 
-            const { data } = await db.from('orders').select('*').or(`client_phone.eq.${phone},client_phone.ilike.%${phone.slice(-8)}%`).order('id', { ascending: false });
-            const list = document.getElementById('client-orders-tracking-list');
-            list.innerHTML = '';
+            if (error || !data) return showToast("Identifiants incorrects.", "error");
 
-            if (!data || data.length === 0) {
-                list.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Aucune commande enregistrée.</p>`;
-                return;
+            // Vérification de la validation par l'admin
+            if (data.status === 'En attente de validation') {
+                return showToast("Votre dossier est toujours en attente d'examen par la Direction MATT SARL.", "error");
+            }
+            if (data.status === 'Suspendu') {
+                return showToast("Votre compte prestataire est actuellement suspendu. Contactez la Direction.", "error");
             }
 
-            data.forEach(o => {
-                let badgeColor = o.status === 'En attente' ? 'bg-orange-100 text-orange-700' : (o.status === 'Annulée' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700');
-                list.innerHTML += `
-                    <div class="p-3.5 border rounded-2xl bg-slate-50 space-y-2 text-xs shadow-sm">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <b class="text-navy-800">#${o.id} - ${o.commune}</b>
-                                <span class="text-[10px] text-slate-500 block">${o.date} (${o.time})</span>
-                            </div>
-                            <div class="text-right">
-                                <span class="px-2 py-0.5 rounded text-[9px] font-bold uppercase ${badgeColor}">${o.status}</span>
-                                <div class="font-mono font-black text-navy-800 mt-0.5">${Number(o.total_amount).toLocaleString('fr-FR')} CDF</div>
-                            </div>
-                        </div>
-                        <p class="text-slate-600 text-[11px]"><b>Détails :</b> ${o.description}</p>
-                        <p class="text-[10px] text-slate-500"><b>Lieu :</b> ${o.quartier ? o.quartier + ' - ' : ''}${o.avenue}</p>
-                        <p class="text-[10px] text-slate-500"><b>Logistique :</b> ${o.logistics || 'SNEL / REGIDESO'}</p>
-                        ${o.rating_service ? `<div class="text-[10px] text-mattOrange font-bold">Note attribuée : ${'⭐'.repeat(o.rating_service)}</div>` : ''}
-                        <div class="flex justify-end gap-1.5 pt-1">
-                            ${o.status === 'En attente' ? `<button onclick="cancelOrder(${o.id})" class="px-2.5 py-1 bg-orange-100 text-orange-800 rounded-lg text-[10px] font-bold">Annuler</button>` : ''}
-                            <button onclick="openRatingModal(${o.id})" class="px-2.5 py-1 bg-sky-100 text-sky-800 rounded-lg text-[10px] font-bold">⭐ Noter</button>
-                            <button onclick="deleteOrderClient(${o.id})" class="px-2.5 py-1 bg-red-100 text-red-700 rounded-lg text-[10px] font-bold">🗑️</button>
-                        </div>
-                    </div>
-                `;
-            });
+            session = { role: 'partner', user: data };
+            showToast(`Connecté : ${data.name}`);
+            openPartnerApp();
         }
 
-        async function cancelOrder(orderId) {
-            await db.from('orders').update({ status: 'Annulée' }).eq('id', orderId);
-            showToast("Commande annulée.");
-            detectClientOrders();
-        }
+        function openPartnerApp() {
+            showView('view-partner-app');
+            document.getElementById('partner-dashboard-name').innerText = session.user.name;
+            document.getElementById('partner-wallet-balance').innerText = `${Number(session.user.wallet || 0).toLocaleString('fr-FR')} CDF`;
 
-        async function deleteOrderClient(orderId) {
-            await db.from('orders').delete().eq('id', orderId);
-            showToast("Commande supprimée.");
-            detectClientOrders();
-        }
+            document.getElementById('partner-edit-name').value = session.user.name;
+            document.getElementById('partner-edit-phone').value = session.user.phone;
+            document.getElementById('partner-edit-commune').value = session.user.commune;
 
-        function openRatingModal(orderId) {
-            currentRatingOrderId = orderId;
-            document.getElementById('rating-order-id').innerText = orderId;
-            setRating('service', 5);
-            document.getElementById('modal-rating').classList.remove('hidden');
-        }
-
-        function closeRatingModal() {
-            document.getElementById('modal-rating').classList.add('hidden');
-        }
-
-        function setRating(type, val) {
-            selectedRatingValue = val;
-            document.querySelectorAll('#stars-service-container span').forEach((s, idx) => {
-                s.className = idx < val ? 'text-mattOrange' : 'text-slate-300';
-            });
-        }
-
-        async function submitOrderRating() {
-            const comment = document.getElementById('rating-comment').value.trim();
-            await db.from('orders').update({ rating_service: selectedRatingValue, comment }).eq('id', currentRatingOrderId);
-            showToast("Votre cotation est enregistrée !");
-            closeRatingModal();
-            detectClientOrders();
-        }
-
-        // ==========================================
-        // FILTRAGE DES MISSIONS SELON LE PROFIL DU PARTENAIRE
-        // ==========================================
-        async function loadPartnerMissions() {
-            const btn = document.getElementById('btn-refresh-missions');
-            const icon = document.getElementById('refresh-icon');
-            if (icon) icon.classList.add('animate-spin');
-            if (btn) btn.disabled = true;
-
-            const { data, error } = await db.from('orders').select('*').eq('status', 'En attente').order('id', { ascending: false });
-            const container = document.getElementById('partner-missions-container');
-            container.innerHTML = '';
-
-            if (icon) icon.classList.remove('animate-spin');
-            if (btn) btn.disabled = false;
-
-            if (error) {
-                showToast("Erreur : " + error.message, "error");
-                return;
-            }
-
-            if (!data || data.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-12 col-span-full font-medium">Aucune mission disponible dans votre secteur.</p>`;
-                return;
-            }
-
-            const pSpec = (session.user?.specialty || '').toLowerCase();
-
-            const missionsFiltrees = data.filter(o => {
-                const desc = (o.description || '').toLowerCase();
-                const axe = (o.axe || '').toLowerCase();
-
-                const hasAuto = axe.includes('auto') || desc.includes('berline') || desc.includes('suv') || desc.includes('moto') || desc.includes('bus') || desc.includes('remorque') || desc.includes('poids lourd');
-                const hasMaison = axe.includes('maison') || desc.includes('tapis') || desc.includes('canapé') || desc.includes('vitre') || desc.includes('carreaux') || desc.includes('moquette') || desc.includes('matelas') || desc.includes('panneau');
-                const has3D = axe.includes('3d') || desc.includes('désinfection') || desc.includes('dératisation') || desc.includes('désinsectisation');
-                const hasVidange = desc.includes('fosse') || desc.includes('immondices') || desc.includes('vidange');
-
-                if (pSpec.includes('polyvalent')) {
-                    return hasAuto || hasMaison;
-                }
-                if (pSpec.includes('3d') || pSpec.includes('traitement') || pSpec.includes('assainissement')) {
-                    return has3D;
-                }
-                if (pSpec.includes('vidange') || pSpec.includes('immondices')) {
-                    return hasVidange;
-                }
-                if (pSpec.includes('auto') || pSpec.includes('lavage')) {
-                    return hasAuto;
-                }
-                if (pSpec.includes('maison')) {
-                    return hasMaison;
-                }
-
-                return false;
-            });
-
-            if (missionsFiltrees.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-12 col-span-full font-medium">Aucune mission disponible pour votre spécialité (${session.user?.specialty || 'Général'}).</p>`;
-                return;
-            }
-
-            missionsFiltrees.forEach(o => {
-                container.innerHTML += `
-                    <div class="p-4 border border-slate-200 hover:border-aqua rounded-2xl bg-white space-y-3 text-xs shadow-sm transition">
-                        <div class="flex justify-between items-start">
-                            <div>
-                                <b class="text-navy-800 uppercase text-sm font-black">${o.commune}</b>
-                                <span class="text-[10px] text-slate-500 block font-medium">${o.date} à ${o.time}</span>
-                            </div>
-                            <div class="text-right font-mono">
-                                <span class="font-black text-navy-800 text-base">${Number(o.total_amount).toLocaleString('fr-FR')} CDF</span>
-                                <span class="block text-[10px] text-mattOrange font-bold">Commission : ${Number(o.commission).toLocaleString('fr-FR')} CDF</span>
-                            </div>
-                        </div>
-                        <div class="bg-slate-50 p-3 rounded-xl border text-[11px] text-slate-700 space-y-1">
-                            <div><b>Prestations :</b> ${o.description}</div>
-                            <div><b>Quartier :</b> ${o.quartier || 'N/A'}</div>
-                            <div><b>Logistique :</b> <span class="text-aqua font-black">${o.logistics || 'SNEL / REGIDESO'}</span></div>
-                            <div><b>Repère :</b> ${o.reference || 'Aucun'}</div>
-                        </div>
-                        <button onclick="accepterMission(${o.id}, ${o.commission})" class="w-full py-2.5 bg-mattOrange active:bg-orange-600 text-white rounded-xl font-black uppercase text-xs shadow transition">
-                            Accepter la course (${Number(o.commission).toLocaleString('fr-FR')} CDF)
-                        </button>
-                    </div>
-                `;
-            });
+            loadPartnerMissions();
+            loadPartnerAcceptedCourses();
+            fetchPublishedCgu();
         }
 
         // CHARGEMENT STRICT DES COURSES ASSIGNÉES AU PARTENAIRE CONNECTÉ
         async function loadPartnerAcceptedCourses() {
             if (!session.user) return;
             
-            // Filtre strict : UNIQUEMENT les courses affectées à ce partenaire (partner_id = user.id)
             const { data } = await db.from('orders')
                 .select('*')
                 .eq('partner_id', session.user.id)
@@ -1665,56 +1298,6 @@
             fetchPublishedCgu();
         }
 
-        async function registerPartner() {
-            const name = document.getElementById('p-reg-name').value.trim();
-            const raw = document.getElementById('p-reg-phone').value.trim();
-            const phone = normalizePhoneNumber(raw);
-            const password = document.getElementById('p-reg-pass').value.trim();
-            const commune = document.getElementById('p-reg-commune').value;
-            const specialty = document.getElementById('p-reg-specialty').value;
-            if (!name || !phone || !password) return showToast("Tous les champs sont requis.", "error");
-
-            const { data, error } = await db.from('partners').insert([{ name, phone, password, commune, specialty, wallet: 0 }]).select();
-            if (error) return showToast(error.message, "error");
-
-            session = { role: 'partner', user: data[0] };
-            showToast("Dossier partenaire créé !");
-            openPartnerApp();
-        }
-
-        async function loginPartner() {
-            const raw = document.getElementById('auth-partner-login-phone').value.trim();
-            const phone = normalizePhoneNumber(raw);
-            const password = document.getElementById('auth-partner-login-pass').value.trim();
-            
-            const { data, error } = await db.from('partners')
-                .select('*')
-                .or(`phone.eq.${phone},phone.ilike.%${phone.slice(-8)}%`)
-                .eq('password', password)
-                .single();
-
-            if (error || !data) return showToast("Accès partenaire refusé.", "error");
-
-            session = { role: 'partner', user: data };
-            showToast(`Connecté : ${data.name}`);
-            openPartnerApp();
-        }
-
-        function openPartnerApp() {
-            showView('view-partner-app');
-            document.getElementById('partner-dashboard-name').innerText = session.user.name;
-            document.getElementById('partner-dashboard-meta').innerText = `${session.user.specialty} - ${session.user.commune}`;
-            document.getElementById('partner-wallet-balance').innerText = `${Number(session.user.wallet || 0).toLocaleString('fr-FR')} CDF`;
-
-            document.getElementById('partner-edit-name').value = session.user.name;
-            document.getElementById('partner-edit-phone').value = session.user.phone;
-            document.getElementById('partner-edit-commune').value = session.user.commune;
-
-            loadPartnerMissions();
-            loadPartnerAcceptedCourses();
-            fetchPublishedCgu();
-        }
-
         function logoutCurrentSession() {
             session = { role: null, user: null };
             showView('view-gateway');
@@ -1732,7 +1315,6 @@
                 if (selectPartnerEdit) selectPartnerEdit.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
             });
 
-            // Catalogue Véhicules
             const vCat = document.getElementById('vehicle-catalog');
             typesVehicules.forEach(v => {
                 clientVehiculeSelection[v.id] = 0;
