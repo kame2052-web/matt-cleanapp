@@ -158,7 +158,7 @@
                 </div>
             </div>
 
-            <!-- ONGLET 2: GESTION PARTENAIRES -->
+            <!-- ONGLET 2: GESTION PARTENAIRES (AVEC VALIDATION DES DOSSIERS) -->
             <div id="admin-partenaires" class="admin-subview hidden space-y-4">
                 <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3">
                     <div>
@@ -191,7 +191,7 @@
                 </div>
             </div>
 
-            <!-- ONGLET 3: CAISSES -->
+            <!-- ONGLET 3: CAISSE CENTRALE & CAISSES PAR AXES -->
             <div id="admin-recharges" class="admin-subview hidden space-y-6">
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -311,7 +311,7 @@
 
             </div>
 
-            <!-- ONGLET 4: CONFIGURATION DES PRIX -->
+            <!-- ONGLET 4: CONFIGURATION DES PRIX & TAUX DE COMMISSION PAR ZONE -->
             <div id="admin-prix" class="admin-subview hidden space-y-6">
                 <div class="flex flex-col lg:flex-row justify-between lg:items-center gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-200">
                     <div>
@@ -332,6 +332,7 @@
                     </div>
                 </div>
 
+                <!-- Réglage Spécifique du Taux de Commission pour la Zone Sélectionnée -->
                 <div class="bg-orange-50/70 border-2 border-orange-200 p-4 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     <div>
                         <span class="text-xs font-black text-navy-800 uppercase block">📊 Taux de Commission MATT pour cette Zone :</span>
@@ -468,7 +469,7 @@
                 </div>
             </div>
 
-            <!-- ONGLET 5: CGU -->
+            <!-- ONGLET 5: ÉDITEUR DES CGU -->
             <div id="admin-cgu" class="admin-subview hidden space-y-6">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b pb-3">
                     <div>
@@ -492,7 +493,7 @@
                 </div>
             </div>
 
-            <!-- ONGLET 6: STATS -->
+            <!-- ONGLET 6: STATISTIQUES D'ACTIVITÉ -->
             <div id="admin-stats" class="admin-subview hidden space-y-4">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b pb-3">
                     <div>
@@ -555,6 +556,7 @@
                     </button>
                 </div>
 
+                <!-- Sous-vue: Contacts -->
                 <div id="cfg-sub-contacts" class="cfg-subview hidden space-y-4">
                     <button onclick="resetConfigView()" class="px-3 py-1.5 bg-slate-200 text-slate-700 font-bold text-[10px] rounded-lg uppercase tracking-wider hover:bg-slate-300 transition w-max">
                         ← Retour aux icônes
@@ -597,6 +599,7 @@
                     </div>
                 </div>
 
+                <!-- Sous-vue: Communes -->
                 <div id="cfg-sub-communes" class="cfg-subview hidden space-y-4">
                     <button onclick="resetConfigView()" class="px-3 py-1.5 bg-slate-200 text-slate-700 font-bold text-[10px] rounded-lg uppercase tracking-wider hover:bg-slate-300 transition w-max">
                         ← Retour aux icônes
@@ -638,6 +641,7 @@
                     </div>
                 </div>
 
+                <!-- Sous-vue: Admins -->
                 <div id="cfg-sub-admins" class="cfg-subview hidden space-y-4">
                     <button onclick="resetConfigView()" class="px-3 py-1.5 bg-slate-200 text-slate-700 font-bold text-[10px] rounded-lg uppercase tracking-wider hover:bg-slate-300 transition w-max">
                         ← Retour aux icônes
@@ -689,6 +693,7 @@
                     </div>
                 </div>
 
+                <!-- Sous-vue: Partenaires Access -->
                 <div id="cfg-sub-partners" class="cfg-subview hidden space-y-4">
                     <button onclick="resetConfigView()" class="px-3 py-1.5 bg-slate-200 text-slate-700 font-bold text-[10px] rounded-lg uppercase tracking-wider hover:bg-slate-300 transition w-max">
                         ← Retour aux icônes
@@ -719,7 +724,7 @@
         </div>
     </main>
 
-    <!-- MODALE EXAMEN DU DOSSIER PARTENAIRE -->
+    <!-- MODALE EXAMEN DU DOSSIER PARTENAIRE (PIÈCE D'IDENTITÉ & ADRESSE) -->
     <div id="modal-partner-review" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
         <div class="bg-white text-slate-900 w-full max-w-lg rounded-3xl shadow-2xl p-6 border border-slate-200 space-y-4 relative max-h-[90vh] overflow-y-auto custom-scrollbar">
             <button onclick="closePartnerReviewModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 font-bold text-xl">✕</button>
@@ -873,11 +878,17 @@
         </div>
     </footer>
 
-    <!-- LOGIQUE JAVASCRIPT ET CONNECTEURS SUPABASE -->
+    <!-- LOGIQUE JAVASCRIPT -->
     <script>
         const SUPABASE_URL = "https://vbriworyscymnmtzzdny.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZicml3b3J5c2N5bW5tdHp6ZG55Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzNzQwNTEsImV4cCI6MjEwMzk1MDA1MX0.VBZupVKj0srae0NT5BNZ0OeaIv9pAl2bl5L-Rd8ocJk";
-        const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        
+        let db;
+        try {
+            db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        } catch(e) {
+            console.error("Erreur d'initialisation de Supabase :", e);
+        }
 
         const communesKinshasa = [
             { name: "Gombe", zone: "zone1", label: "Zone 1 - Résidentielle" },
@@ -906,48 +917,34 @@
             { name: "Maluku", zone: "zone4", label: "Zone 4 - Périurbaine" }
         ];
 
-        const grilleTarifaireParZone = {
-            'zone1': { moto: 10000, tricycle: 15000, berline: 20000, suv: 30000, 'poids-lourd': 55000, 'bus-207': 25000, 'bus-long': 40000, 'remorque': 35000, commission_rate: 15 },
-            'zone2': { moto: 8000, tricycle: 12000, berline: 15000, suv: 25000, 'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000, commission_rate: 15 },
-            'zone3': { moto: 7000, tricycle: 10000, berline: 12000, suv: 20000, 'poids-lourd': 40000, 'bus-207': 18000, 'bus-long': 30000, 'remorque': 25000, commission_rate: 15 },
-            'zone4': { moto: 8000, tricycle: 12000, berline: 15000, suv: 25000, 'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000, commission_rate: 15 }
+        const defaultTarifsGroup = {
+            'commission-rate': 15,
+            'moto': 8000, 'tricycle': 12000, 'berline': 15000, 'suv': 25000,
+            'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000,
+            'opt-moteur-berline': 5000, 'opt-chassis-berline': 4000, 'opt-sieges-berline': 7000,
+            'opt-moteur-suv': 8000, 'opt-chassis-suv': 6000, 'opt-sieges-suv': 10000,
+            'opt-moteur-poids-lourd': 15000, 'opt-chassis-poids-lourd': 12000, 'opt-sieges-poids-lourd': 15000,
+            'opt-moteur-remorque': 5000, 'opt-chassis-remorque': 6000, 'opt-sieges-remorque': 5000,
+            'tapis': 2000, 'moquette': 2000, 'vitres': 1500, 'carreaux': 1000, 'baie': 3000, 'panneau': 4000,
+            'canape-textile': 4500, 'canape-lin': 6000, 'canape-velours': 8000, 'canape-cuir': 12000, 'matelas': 5000,
+            'desinf': 10000, 'desinsect': 12000, 'derat': 14000, 'immondices': 15000, 'fosse': 40000
         };
 
-        const typesVehicules = [
-            { id: 'moto', label: 'Moto', hasOptions: false },
-            { id: 'tricycle', label: 'Tricycle', hasOptions: false },
-            { id: 'berline', label: 'Berline', hasOptions: true },
-            { id: 'suv', label: 'SUV / 4x4', hasOptions: true },
-            { id: 'poids-lourd', label: 'Poids lourds', hasOptions: true },
-            { id: 'bus-207', label: 'Minibus (207)', hasOptions: true },
-            { id: 'bus-long', label: 'Bus Long', hasOptions: true },
-            { id: 'remorque', label: 'Remorque', hasOptions: true }
-        ];
-
-        const vehicleOptionsPrices = {
-            'berline': { moteur: 5000, chassis: 4000, sieges: 7000 },
-            'suv': { moteur: 8000, chassis: 6000, sieges: 10000 },
-            'poids-lourd': { moteur: 15000, chassis: 12000, sieges: 15000 },
-            'bus-207': { moteur: 6000, chassis: 5000, sieges: 9000 },
-            'bus-long': { moteur: 10000, chassis: 8000, sieges: 12000 },
-            'remorque': { moteur: 5000, chassis: 6000, sieges: 5000 }
+        const state = {
+            adminUsers: [{ id: "adm1", name: "Direction Générale", login: "0980000338", role: "Administrateur Master", pass: "MATT2026" }],
+            partners: [],
+            orders: [],
+            ordersSubView: 'active',
+            currentGroupKey: 'standard',
+            pricesByGroup: {
+                'standard': { ...defaultTarifsGroup },
+                'zone1': { ...defaultTarifsGroup, 'commission-rate': 15, 'berline': 20000, 'suv': 30000 },
+                'zone2': { ...defaultTarifsGroup, 'commission-rate': 15, 'berline': 15000, 'suv': 25000 },
+                'zone3': { ...defaultTarifsGroup, 'commission-rate': 15, 'berline': 12000, 'suv': 20000 },
+                'zone4': { ...defaultTarifsGroup, 'commission-rate': 15, 'fosse': 50000, 'immondices': 20000 }
+            },
+            caisses: { centrale: 0, auto: 0, maison: 0, env: 0 }
         };
-
-        let currentActiveZone = "zone1";
-        let session = { role: null, user: null };
-        let clientVehiculeSelection = {};
-        let currentRatingOrderId = null;
-        let selectedRatingValue = 5;
-        let partnerAllOrders = [];
-
-        function normalizePhoneNumber(phone) {
-            if (!phone) return "";
-            let p = String(phone).replace(/[\s\-\.\(\)]/g, "");
-            if (p.startsWith("+243")) p = "0" + p.slice(4);
-            else if (p.startsWith("00243")) p = "0" + p.slice(5);
-            else if (p.startsWith("243")) p = "0" + p.slice(3);
-            return p;
-        }
 
         function showToast(message, type = "success") {
             const container = document.getElementById('toast-container');
@@ -957,7 +954,7 @@
             toast.className = `${bg} text-white px-4 py-2.5 rounded-2xl shadow-2xl flex items-center justify-between gap-3 text-xs font-bold pointer-events-auto transition-all`;
             toast.innerHTML = `<span>${message}</span><button onclick="this.parentElement.remove()" class="text-white font-black">✕</button>`;
             container.appendChild(toast);
-            setTimeout(() => toast.remove(), 3500);
+            setTimeout(() => toast.remove(), 4000);
         }
 
         function toggleAuthPasswordVisibility() {
@@ -968,21 +965,27 @@
             else { pass.type = 'password'; icon.innerText = '👁️'; }
         }
 
+        // DEVEROUILLAGE SECURISÉ DU PANNEAU ADMIN
         function verifyAdminAuth() {
-            const loginInp = document.getElementById('admin-login-input');
-            const passInp = document.getElementById('admin-pass-input');
-            if (!loginInp || !passInp) return;
+            try {
+                const loginInp = document.getElementById('admin-login-input');
+                const passInp = document.getElementById('admin-pass-input');
+                if (!loginInp || !passInp) return;
 
-            const login = loginInp.value.trim();
-            const pass = passInp.value.trim();
+                const login = loginInp.value.trim();
+                const pass = passInp.value.trim();
 
-            const matched = state.adminUsers.find(u => u.login === login && u.pass === pass);
-            if (matched || (login === "0980000338" && pass === "MATT2026") || pass === "MATT2026") {
-                localStorage.setItem('matt_admin_auth', 'true');
-                ouvrirConsoleAdmin();
-                showToast("Accès validé. Bienvenue à la Direction.", "success");
-            } else {
-                showToast("Identifiant ou mot de passe incorrect.", "error");
+                const matched = state.adminUsers.find(u => u.login === login && u.pass === pass);
+                if (matched || (login === "0980000338" && pass === "MATT2026") || pass === "MATT2026") {
+                    localStorage.setItem('matt_admin_auth', 'true');
+                    ouvrirConsoleAdmin();
+                    showToast("Accès validé. Bienvenue à la Direction.", "success");
+                } else {
+                    showToast("Identifiant ou mot de passe incorrect.", "error");
+                }
+            } catch (e) {
+                console.error("Erreur authentification:", e);
+                showToast("Une erreur inattendue s'est produite.", "error");
             }
         }
 
@@ -1091,12 +1094,16 @@
             const icon = document.getElementById('global-refresh-icon');
             if (icon) icon.classList.add('animate-spin');
 
-            await Promise.all([
-                loadSupabaseOrders(),
-                loadSupabasePartners(),
-                loadSupabaseRecharges(),
-                loadPublishedCgu()
-            ]);
+            try {
+                await Promise.all([
+                    loadSupabaseOrders(),
+                    loadSupabasePartners(),
+                    loadSupabaseRecharges(),
+                    loadPublishedCgu()
+                ]);
+            } catch (e) {
+                console.error("Refresh Error:", e);
+            }
 
             if (icon) setTimeout(() => icon.classList.remove('animate-spin'), 600);
             showToast("Données et caisses synchronisées avec Supabase !", "success");
@@ -1122,6 +1129,7 @@
             return isMaison ? 'maison' : (isAuto ? 'auto' : 'auto');
         }
 
+        // GESTION DES NOTES ET MENTIONS
         function getRatingLabel(val) {
             if (!val) return "";
             if (val === 5) return "Impeccable";
@@ -1131,22 +1139,27 @@
         }
 
         async function loadSupabaseOrders() {
-            const { data, error } = await db.from('orders').select('*').order('id', { ascending: false });
-            if (!error && data) {
-                state.orders = data;
-                
-                const activeCount = state.orders.filter(o => o.status === 'En attente' || o.status === 'Acceptée').length;
-                const historyCount = state.orders.filter(o => o.status === 'Terminée' || o.status === 'Annulée').length;
-                
-                const activeEl = document.getElementById('count-active-orders');
-                const historyEl = document.getElementById('count-history-orders');
-                
-                if (activeEl) activeEl.innerText = activeCount;
-                if (historyEl) historyEl.innerText = historyCount;
+            try {
+                if(!db) return;
+                const { data, error } = await db.from('orders').select('*').order('id', { ascending: false });
+                if (!error && data) {
+                    state.orders = data;
+                    
+                    const activeCount = state.orders.filter(o => o.status === 'En attente' || o.status === 'Acceptée').length;
+                    const historyCount = state.orders.filter(o => o.status === 'Terminée' || o.status === 'Annulée').length;
+                    
+                    const activeEl = document.getElementById('count-active-orders');
+                    const historyEl = document.getElementById('count-history-orders');
+                    
+                    if (activeEl) activeEl.innerText = activeCount;
+                    if (historyEl) historyEl.innerText = historyCount;
 
-                renderAdminOrders();
-                ventilerCaissesActivites();
-                genererTableauStatistiques();
+                    renderAdminOrders();
+                    ventilerCaissesActivites();
+                    genererTableauStatistiques();
+                }
+            } catch(e) {
+                console.warn(e);
             }
         }
 
@@ -1321,16 +1334,24 @@
             if (modal) modal.classList.add('hidden');
         }
 
+        // ==========================================
+        // GESTION DES PARTENAIRES & EXAMEN DU DOSSIER
+        // ==========================================
         async function loadSupabasePartners() {
-            const { data, error } = await db.from('partners').select('*').order('created_at', { ascending: false });
-            if (!error && data) {
-                state.partners = data;
-                renderAdminPartners();
-                renderConfigPartnersTable();
-                const sel = document.getElementById('admin-manual-recharge-partner');
-                if (sel) {
-                    sel.innerHTML = state.partners.map(p => `<option value="${p.id}">${p.name} (${p.commune})</option>`).join('');
+            try {
+                if(!db) return;
+                const { data, error } = await db.from('partners').select('*').order('created_at', { ascending: false });
+                if (!error && data) {
+                    state.partners = data;
+                    renderAdminPartners();
+                    renderConfigPartnersTable();
+                    const sel = document.getElementById('admin-manual-recharge-partner');
+                    if (sel) {
+                        sel.innerHTML = state.partners.map(p => `<option value="${p.id}">${p.name} (${p.commune})</option>`).join('');
+                    }
                 }
+            } catch(e) {
+                console.warn(e);
             }
         }
 
@@ -1376,6 +1397,7 @@
             });
         }
 
+        // Modale d'examen et gestion du dossier
         function openPartnerReviewModal(partnerId) {
             const p = state.partners.find(x => String(x.id) === String(partnerId));
             if (!p) return;
@@ -1459,25 +1481,33 @@
             const partnerId = document.getElementById('review-partner-id')?.value;
             if (!partnerId) return;
 
-            const { error } = await db.from('partners').update({ status: newStatus }).eq('id', partnerId);
-            if (error) return showToast(error.message, "error");
+            try {
+                const { error } = await db.from('partners').update({ status: newStatus }).eq('id', partnerId);
+                if (error) return showToast(error.message, "error");
 
-            const p = state.partners.find(x => String(x.id) === String(partnerId));
-            if (p) p.status = newStatus;
+                const p = state.partners.find(x => String(x.id) === String(partnerId));
+                if (p) p.status = newStatus;
 
-            renderAdminPartners();
-            closePartnerReviewModal();
-            showToast(`Statut du partenaire mis à jour : ${newStatus} !`, "success");
+                renderAdminPartners();
+                closePartnerReviewModal();
+                showToast(`Statut du partenaire mis à jour : ${newStatus} !`, "success");
+            } catch(e) {
+                console.error(e);
+            }
         }
 
         async function deletePartnerRecord(partnerId) {
             if(confirm("Confirmez-vous la suppression de ce partenaire ? (Cette action est irréversible)")) {
-                const { error } = await db.from('partners').delete().eq('id', partnerId);
-                if (error) return showToast(error.message, "error");
+                try {
+                    const { error } = await db.from('partners').delete().eq('id', partnerId);
+                    if (error) return showToast(error.message, "error");
 
-                showToast("Dossier partenaire supprimé avec succès.", "info");
-                closePartnerReviewModal();
-                loadSupabasePartners();
+                    showToast("Dossier partenaire supprimé avec succès.", "info");
+                    closePartnerReviewModal();
+                    loadSupabasePartners();
+                } catch(e) {
+                    console.error(e);
+                }
             }
         }
 
@@ -1517,41 +1547,46 @@
         }
 
         async function loadSupabaseRecharges() {
-            const { data } = await db.from('recharges').select('*').eq('status', 'En attente').order('id', { ascending: false });
-            const tbody = document.getElementById('admin-recharges-table');
-            if (!tbody) return;
-            tbody.innerHTML = '';
+            try {
+                if(!db) return;
+                const { data } = await db.from('recharges').select('*').eq('status', 'En attente').order('id', { ascending: false });
+                const tbody = document.getElementById('admin-recharges-table');
+                if (!tbody) return;
+                tbody.innerHTML = '';
 
-            (data || []).forEach(r => {
-                tbody.innerHTML += `
-                    <tr class="border-b hover:bg-slate-50">
-                        <td class="p-3 font-bold">${r.partner_name}</td>
-                        <td class="p-3 uppercase font-bold text-slate-600">${r.mode}</td>
-                        <td class="p-3 font-mono font-bold text-navy-800">${Number(r.amount).toLocaleString('fr-FR')} CDF</td>
-                        <td class="p-3 font-mono text-slate-500">${r.ref}</td>
-                        <td class="p-3 text-right">
-                            <button onclick="validerRechargeDirect(${r.id}, '${r.partner_id}', ${r.amount})" class="px-3 py-1 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg text-xs">
-                                Valider ✅
-                            </button>
-                        </td>
-                    </tr>
-                `;
-            });
+                (data || []).forEach(r => {
+                    tbody.innerHTML += `
+                        <tr class="border-b hover:bg-slate-50">
+                            <td class="p-3 font-bold">${r.partner_name}</td>
+                            <td class="p-3 uppercase font-bold text-slate-600">${r.mode}</td>
+                            <td class="p-3 font-mono font-bold text-navy-800">${Number(r.amount).toLocaleString('fr-FR')} CDF</td>
+                            <td class="p-3 font-mono text-slate-500">${r.ref}</td>
+                            <td class="p-3 text-right">
+                                <button onclick="validerRechargeDirect(${r.id}, '${r.partner_id}', ${r.amount})" class="px-3 py-1 bg-green-600 hover:bg-green-700 text-white font-bold rounded-lg text-xs">
+                                    Valider ✅
+                                </button>
+                            </td>
+                        </tr>
+                    `;
+                });
 
-            if (!data || data.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-400 font-medium">Aucune déclaration Mobile Money en attente.</td></tr>`;
-            }
+                if (!data || data.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-400 font-medium">Aucune déclaration Mobile Money en attente.</td></tr>`;
+                }
+            } catch(e) { console.warn(e); }
         }
 
         async function validerRechargeDirect(rechargeId, partnerId, amount) {
-            const { data: p } = await db.from('partners').select('wallet').eq('id', partnerId).single();
-            if (p) {
-                await db.from('partners').update({ wallet: (p.wallet || 0) + amount }).eq('id', partnerId);
-                await db.from('recharges').update({ status: 'Validé' }).eq('id', rechargeId);
-                showToast("Recharge validée et créditée avec succès !");
-                loadSupabaseRecharges();
-                loadSupabasePartners();
-            }
+            try {
+                const { data: p } = await db.from('partners').select('wallet').eq('id', partnerId).single();
+                if (p) {
+                    await db.from('partners').update({ wallet: (p.wallet || 0) + amount }).eq('id', partnerId);
+                    await db.from('recharges').update({ status: 'Validé' }).eq('id', rechargeId);
+                    showToast("Recharge validée et créditée avec succès !");
+                    loadSupabaseRecharges();
+                    loadSupabasePartners();
+                }
+            } catch(e) { console.warn(e); }
         }
 
         function adjustManualAmountByMode() {
@@ -1576,18 +1611,20 @@
             const p = state.partners.find(x => String(x.id) === String(pId));
             if (!p) return;
 
-            let updatePayload = { billing_mode: mode };
-            if (mode === 'commission') updatePayload.wallet = (p.wallet || 0) + amount;
-            else {
-                const d = new Date();
-                if (mode === 'journalier') d.setHours(23, 59, 59);
-                else d.setDate(d.getDate() + 30);
-                updatePayload.expires_at = d.toISOString();
-            }
+            try {
+                let updatePayload = { billing_mode: mode };
+                if (mode === 'commission') updatePayload.wallet = (p.wallet || 0) + amount;
+                else {
+                    const d = new Date();
+                    if (mode === 'journalier') d.setHours(23, 59, 59);
+                    else d.setDate(d.getDate() + 30);
+                    updatePayload.expires_at = d.toISOString();
+                }
 
-            await db.from('partners').update(updatePayload).eq('id', pId);
-            showToast("Opération appliquée au compte partenaire.");
-            loadSupabasePartners();
+                await db.from('partners').update(updatePayload).eq('id', pId);
+                showToast("Opération appliquée au compte partenaire.");
+                loadSupabasePartners();
+            } catch(e) { console.warn(e); }
         }
 
         function scrollPriceSection(elementId, offset) {
@@ -1692,23 +1729,28 @@
             const text = textA.value.trim();
             if (!text) return showToast("Le contenu ne peut pas être vide.", "error");
 
-            const { error } = await db.from('system_settings').upsert({
-                key: 'cgu_content',
-                value: text,
-                updated_at: new Date().toISOString()
-            });
+            try {
+                const { error } = await db.from('system_settings').upsert({
+                    key: 'cgu_content',
+                    value: text,
+                    updated_at: new Date().toISOString()
+                });
 
-            if (error) showToast(error.message, "error");
-            else showToast("Nouvelles CGU publiées en direct !", "success");
+                if (error) showToast(error.message, "error");
+                else showToast("Nouvelles CGU publiées en direct !", "success");
+            } catch(e) { console.error(e); }
         }
 
         async function loadPublishedCgu() {
-            const { data } = await db.from('system_settings').select('value').eq('key', 'cgu_content').single();
-            if (data && data.value) {
-                const ta = document.getElementById('admin-cgu-textarea');
-                if(ta) ta.value = data.value;
-                updateCguLivePreview();
-            }
+            try {
+                if(!db) return;
+                const { data } = await db.from('system_settings').select('value').eq('key', 'cgu_content').single();
+                if (data && data.value) {
+                    const ta = document.getElementById('admin-cgu-textarea');
+                    if(ta) ta.value = data.value;
+                    updateCguLivePreview();
+                }
+            } catch(e) { console.warn("CGU Error:", e); }
         }
 
         function updateCguLivePreview() {
