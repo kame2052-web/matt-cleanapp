@@ -44,7 +44,7 @@
 </head>
 <body class="bg-navy-900 text-slate-100 min-h-screen watermark-bg font-sans flex flex-col justify-between select-none">
 
-    <!-- Notifications Toast -->
+    <!-- Toast Notifications -->
     <div id="toast-container" class="fixed top-4 inset-x-4 z-[9999] flex flex-col gap-2 max-w-sm mx-auto pointer-events-none"></div>
 
     <!-- En-tête -->
@@ -784,7 +784,7 @@
         </div>
     </div>
 
-    <!-- LOGIQUE JAVASCRIPT ET CONNECTEURS SUPABASE -->
+    <!-- LOGIQUE DE CHARGEMENT STRICT PAR PARTENAIRE -->
     <script>
         const SUPABASE_URL = "https://vbriworyscymnmtzzdny.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZicml3b3J5c2N5bW5tdHp6ZG55Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzNzQwNTEsImV4cCI6MjEwMzk1MDA1MX0.VBZupVKj0srae0NT5BNZ0OeaIv9pAl2bl5L-Rd8ocJk";
@@ -818,10 +818,10 @@
         ];
 
         const grilleTarifaireParZone = {
-            'zone1': { moto: 10000, tricycle: 15000, berline: 20000, suv: 30000, 'poids-lourd': 55000, 'bus-207': 25000, 'bus-long': 40000, 'remorque': 35000 },
-            'zone2': { moto: 8000, tricycle: 12000, berline: 15000, suv: 25000, 'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000 },
-            'zone3': { moto: 7000, tricycle: 10000, berline: 12000, suv: 20000, 'poids-lourd': 40000, 'bus-207': 18000, 'bus-long': 30000, 'remorque': 25000 },
-            'zone4': { moto: 8000, tricycle: 12000, berline: 15000, suv: 25000, 'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000 }
+            'zone1': { moto: 10000, tricycle: 15000, berline: 20000, suv: 30000, 'poids-lourd': 55000, 'bus-207': 25000, 'bus-long': 40000, 'remorque': 35000, commission_rate: 15 },
+            'zone2': { moto: 8000, tricycle: 12000, berline: 15000, suv: 25000, 'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000, commission_rate: 15 },
+            'zone3': { moto: 7000, tricycle: 10000, berline: 12000, suv: 20000, 'poids-lourd': 40000, 'bus-207': 18000, 'bus-long': 30000, 'remorque': 25000, commission_rate: 15 },
+            'zone4': { moto: 8000, tricycle: 12000, berline: 15000, suv: 25000, 'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000, commission_rate: 15 }
         };
 
         const typesVehicules = [
@@ -1192,9 +1192,6 @@
             }
         }
 
-        // ==========================================
-        // VÉHICULES ET CALCUL DU PANIER
-        // ==========================================
         function updateVehicleCount(vid, delta) {
             clientVehiculeSelection[vid] = Math.max(0, (clientVehiculeSelection[vid] || 0) + delta);
             const qtyEl = document.getElementById(`qty-${vid}`);
@@ -1596,268 +1593,30 @@
             showToast("Vous avez été déconnecté.", "info");
         }
 
-        const REAL_ESTABLISHED_ORDERS = [
-            {
-                id: 1,
-                commune: "Ngaliema",
-                avenue: "Brikin N°10, Quartier Lubudi",
-                reference: "Pharmacie Principale",
-                description: "1x Berline [Sièges+Plafond]",
-                logistics: "SNEL disponible sur place | REGIDESO fonctionnelle sur place",
-                date: "2026-09-04",
-                time: "15:30",
-                client_name: "Jean Mukendi",
-                client_phone: "0825556633",
-                total_amount: 27000,
-                commission: 4050,
-                status: "Terminée",
-                rating_service: 5,
-                comment: "Service rapide et très propre !"
-            },
-            {
-                id: 2,
-                commune: "Gombe",
-                avenue: "Av. Haut Commandement N° 4",
-                reference: "En face de la BCDC",
-                description: "Nettoyage Canapés Cuir (10 pl.) + Tapis (40 m²)",
-                logistics: "SNEL disponible sur place | Eau disponible",
-                date: "2026-09-04",
-                time: "17:00",
-                client_name: "KAM",
-                client_phone: "0813271112",
-                total_amount: 280000,
-                commission: 42000,
-                status: "Terminée",
-                rating_service: 5,
-                comment: "Excellent travail sur les fauteuils."
-            }
-        ];
-
+        // CHARGEMENT RIGOUREUX DES COURSES PROPRES AU PARTENAIRE CONNECTÉ
         async function loadPartnerAcceptedCourses() {
-            if (!session.user) return;
+            if (!session.user || !session.user.id) return;
             
             let ordersLoaded = [];
 
             try {
-                const { data } = await db.from('orders').select('*');
-                if (data && data.length > 0) {
-                    const userPhone = normalizePhoneNumber(session.user.phone);
-                    const userLastEight = userPhone.slice(-8);
+                // Filtre SQL strict : Uniquement les commandes affectées à CE partenaire
+                const { data, error } = await db.from('orders')
+                    .select('*')
+                    .eq('partner_id', session.user.id)
+                    .order('id', { ascending: false });
 
-                    ordersLoaded = data.filter(o => {
-                        if (String(o.partner_id) === String(session.user.id)) return true;
-                        if (o.partner_phone && normalizePhoneNumber(o.partner_phone).includes(userLastEight)) return true;
-                        return false;
-                    });
+                if (!error && data) {
+                    ordersLoaded = data;
                 }
             } catch (e) {
-                console.warn("Supabase fetch fallback:", e);
+                console.warn("Erreur chargement courses partenaire:", e);
             }
 
-            if (ordersLoaded.length === 0) {
-                ordersLoaded = [...REAL_ESTABLISHED_ORDERS];
-            } else {
-                REAL_ESTABLISHED_ORDERS.forEach(ro => {
-                    if (!ordersLoaded.some(o => Number(o.id) === Number(ro.id))) {
-                        ordersLoaded.push(ro);
-                    }
-                });
-            }
-
-            ordersLoaded.sort((a, b) => b.id - a.id);
             partnerAllOrders = ordersLoaded;
 
             renderAcceptedCoursesList();
             renderPartnerCA();
-        }
-
-        function renderAcceptedCoursesList() {
-            const container = document.getElementById('partner-accepted-courses-list');
-            if (!container) return;
-            container.innerHTML = '';
-
-            const visibleOrders = partnerAllOrders.filter(o => !o.partner_cleared);
-
-            if (visibleOrders.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-8 col-span-full">Aucune mission dans votre liste.</p>`;
-                return;
-            }
-
-            visibleOrders.forEach(o => {
-                container.innerHTML += `
-                    <div class="p-4 border rounded-2xl bg-white shadow-sm space-y-2 text-xs">
-                        <div class="flex justify-between font-bold">
-                            <span>#${o.id} - ${o.commune}</span>
-                            <span class="text-navy-800 font-mono">${Number(o.total_amount).toLocaleString('fr-FR')} CDF</span>
-                        </div>
-                        <div class="text-[11px] text-slate-600">
-                            <b>Client :</b> ${o.client_name} • <a href="tel:${o.client_phone}" class="text-aqua font-bold font-mono underline">${o.client_phone}</a><br>
-                            <b>Adresse :</b> ${o.quartier ? o.quartier + ' - ' : ''}${o.avenue} (Repère : ${o.reference || 'N/A'})<br>
-                            <b>Conditions :</b> ${o.logistics || 'SNEL / REGIDESO'}
-                        </div>
-                        ${o.status === 'Acceptée' ? `
-                            <button onclick="cloturerMission(${o.id})" class="w-full py-2.5 bg-green-600 active:bg-green-700 text-white rounded-xl font-bold text-xs mt-1">
-                                ✅ Clôturer cette mission (Terminée)
-                            </button>
-                        ` : `
-                            <div class="flex justify-between items-center pt-1 border-t">
-                                <span class="text-green-600 font-bold text-xs">Mission clôturée ✔</span>
-                                <button onclick="deleteSinglePartnerCourse(${o.id})" class="text-slate-400 hover:text-red-500 font-bold text-[10px] px-2 py-0.5 rounded bg-slate-50 border">
-                                    Retirer ✕
-                                </button>
-                            </div>
-                        `}
-                    </div>
-                `;
-            });
-        }
-
-        function clearCompletedCourses() {
-            let count = 0;
-            partnerAllOrders.forEach(o => {
-                if (o.status === 'Terminée') {
-                    o.partner_cleared = true;
-                    count++;
-                }
-            });
-
-            renderAcceptedCoursesList();
-            showToast(count > 0 ? `${count} course(s) clôturée(s) retirée(s) de l'affichage.` : "Aucune course clôturée à vider.", "info");
-        }
-
-        function deleteSinglePartnerCourse(orderId) {
-            const o = partnerAllOrders.find(x => x.id === orderId);
-            if (o) o.partner_cleared = true;
-            renderAcceptedCoursesList();
-            showToast("Course retirée de votre affichage.");
-        }
-
-        function renderPartnerCA(filteredOrders = null) {
-            const orders = filteredOrders || partnerAllOrders.filter(o => o.status === 'Terminée');
-            let totalBrut = 0;
-            let totalCom = 0;
-
-            orders.forEach(o => {
-                totalBrut += Number(o.total_amount || 0);
-                totalCom += Number(o.commission || 0);
-            });
-
-            const net = totalBrut - totalCom;
-
-            const elCount = document.getElementById('ca-stat-count');
-            if (elCount) elCount.innerText = orders.length;
-
-            const elBrut = document.getElementById('ca-stat-brut');
-            if (elBrut) elBrut.innerText = `${totalBrut.toLocaleString('fr-FR')} CDF`;
-
-            const elCom = document.getElementById('ca-stat-com');
-            if (elCom) elCom.innerText = `${totalCom.toLocaleString('fr-FR')} CDF`;
-
-            const elNet = document.getElementById('ca-stat-net');
-            if (elNet) elNet.innerText = `${net.toLocaleString('fr-FR')} CDF`;
-
-            const tbody = document.getElementById('ca-table-body');
-            if (!tbody) return;
-
-            if (orders.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="7" class="p-8 text-center text-slate-400 font-medium">
-                            Aucune course enregistrée pour cette période.
-                        </td>
-                    </tr>
-                `;
-                return;
-            }
-
-            tbody.innerHTML = orders.map(o => {
-                const com = Number(o.commission || 0);
-                const brut = Number(o.total_amount || 0);
-                const gain = brut - com;
-
-                return `
-                    <tr class="hover:bg-slate-50 border-b">
-                        <td class="p-3 font-mono font-bold">#${o.id}</td>
-                        <td class="p-3">${o.date || '-'}</td>
-                        <td class="p-3 font-bold">${o.description || '-'}</td>
-                        <td class="p-3">${o.commune}</td>
-                        <td class="p-3 font-mono font-bold text-sky-600">${brut.toLocaleString('fr-FR')} CDF</td>
-                        <td class="p-3 font-mono font-bold text-red-500">-${com.toLocaleString('fr-FR')} CDF</td>
-                        <td class="p-3 font-mono font-bold text-green-600">${gain.toLocaleString('fr-FR')} CDF</td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        function filtrerChiffreAffaires() {
-            const start = document.getElementById('ca-date-start')?.value || '';
-            const end = document.getElementById('ca-date-end')?.value || '';
-
-            if (!start && !end) return renderPartnerCA();
-
-            const filtered = partnerAllOrders.filter(o => {
-                if (o.status !== 'Terminée') return false;
-                if (!o.date) return false;
-                if (start && o.date < start) return false;
-                if (end && o.date > end) return false;
-                return true;
-            });
-
-            const lbl = document.getElementById('ca-period-label');
-            if (lbl) lbl.innerText = `Du ${start || 'Début'} au ${end || 'Fin'}`;
-            renderPartnerCA(filtered);
-            showToast("Chiffre d'affaires recalculé.");
-        }
-
-        function resetFiltreCA() {
-            if (document.getElementById('ca-date-start')) document.getElementById('ca-date-start').value = '';
-            if (document.getElementById('ca-date-end')) document.getElementById('ca-date-end').value = '';
-            const lbl = document.getElementById('ca-period-label');
-            if (lbl) lbl.innerText = "Toutes dates";
-            renderPartnerCA();
-        }
-
-        async function accepterMission(orderId, commission) {
-            const mode = session.user.billing_mode || 'commission';
-            if (mode === 'commission' && session.user.wallet < commission) {
-                return showToast("Solde insuffisant pour couvrir la commission.", "error");
-            }
-
-            const newWallet = mode === 'commission' ? session.user.wallet - commission : session.user.wallet;
-            await db.from('partners').update({ wallet: newWallet }).eq('id', session.user.id);
-            await db.from('orders').update({ status: 'Acceptée', partner_id: session.user.id }).eq('id', orderId);
-
-            session.user.wallet = newWallet;
-            const wb = document.getElementById('partner-wallet-balance');
-            if (wb) wb.innerText = `${newWallet.toLocaleString('fr-FR')} CDF`;
-
-            showToast("Mission acceptée ! Coordonnées débloquées.");
-            loadPartnerMissions();
-            loadPartnerAcceptedCourses();
-        }
-
-        async function cloturerMission(orderId) {
-            await db.from('orders').update({ status: 'Terminée' }).eq('id', orderId);
-            showToast("Course terminée avec succès !");
-            loadPartnerAcceptedCourses();
-        }
-
-        async function sendRechargeDeclaration() {
-            const mode = document.getElementById('p-billing-mode-select')?.value || 'commission';
-            const amount = parseFloat(document.getElementById('p-recharge-amount')?.value);
-            const ref = document.getElementById('p-recharge-ref')?.value.trim() || '';
-            if (!amount || !ref) return showToast("Montant et référence requis.", "error");
-
-            await db.from('recharges').insert([{ partner_id: session.user.id, partner_name: session.user.name, mode, amount, ref, status: 'En attente' }]);
-            showToast("Déclaration transmise à la Direction !");
-            if (document.getElementById('p-recharge-amount')) document.getElementById('p-recharge-amount').value = '';
-            if (document.getElementById('p-recharge-ref')) document.getElementById('p-recharge-ref').value = '';
-        }
-
-        function adjustPartnerRechargeMode() {
-            const mode = document.getElementById('p-billing-mode-select')?.value;
-            const input = document.getElementById('p-recharge-amount');
-            if (input) input.value = mode === 'journalier' ? 15000 : (mode === 'mensuel' ? 150000 : '');
         }
 
         window.addEventListener('DOMContentLoaded', () => {
