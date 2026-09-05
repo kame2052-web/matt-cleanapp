@@ -469,7 +469,7 @@
                 </div>
             </div>
 
-            <!-- ÉDITEUR DES CGU -->
+            <!-- ONGLET 5: ÉDITEUR DES CGU -->
             <div id="admin-cgu" class="admin-subview hidden space-y-6">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b pb-3">
                     <div>
@@ -493,7 +493,7 @@
                 </div>
             </div>
 
-            <!-- STATISTIQUES D'ACTIVITÉ -->
+            <!-- ONGLET 6: STATISTIQUES D'ACTIVITÉ -->
             <div id="admin-stats" class="admin-subview hidden space-y-4">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b pb-3">
                     <div>
@@ -534,127 +534,188 @@
                 </div>
             </div>
 
-            <!-- CONFIGURATION SYSTÈME -->
-            <div id="admin-config" class="admin-subview hidden space-y-8">
-                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
-                    <div class="flex justify-between items-center border-b pb-3">
-                        <h3 class="text-md font-black text-navy-800 uppercase tracking-wide">📱 Numéros Mobile Money & Assistance WhatsApp</h3>
-                        <button onclick="saveSysContactConfig()" class="px-5 py-2 bg-mattOrange hover:bg-orange-600 text-white font-black text-xs rounded-xl shadow uppercase tracking-wider">
-                            💾 Sauvegarder les Numéros
-                        </button>
-                    </div>
+            <!-- ONGLET 7: CONFIGURATION SYSTÈME (DRILL-DOWN) -->
+            <div id="admin-config" class="admin-subview hidden space-y-4">
+                
+                <div id="cfg-buttons-container" class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
+                    <button onclick="switchConfigSubTab('cfg-sub-contacts')" class="p-6 rounded-3xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-3 shadow-sm hover:border-mattOrange hover:text-mattOrange transition">
+                        <span class="text-4xl">📱</span>
+                        <span class="text-[10px] uppercase">Numéros & Assistance</span>
+                    </button>
+                    <button onclick="switchConfigSubTab('cfg-sub-communes')" class="p-6 rounded-3xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-3 shadow-sm hover:border-mattOrange hover:text-mattOrange transition">
+                        <span class="text-4xl">📍</span>
+                        <span class="text-[10px] uppercase">Ajout & Attribution</span>
+                    </button>
+                    <button onclick="switchConfigSubTab('cfg-sub-admins')" class="p-6 rounded-3xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-3 shadow-sm hover:border-mattOrange hover:text-mattOrange transition">
+                        <span class="text-4xl">🔑</span>
+                        <span class="text-[10px] uppercase">Gestion & Accès Admin</span>
+                    </button>
+                    <button onclick="switchConfigSubTab('cfg-sub-partners')" class="p-6 rounded-3xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-3 shadow-sm hover:border-mattOrange hover:text-mattOrange transition">
+                        <span class="text-4xl">🤝</span>
+                        <span class="text-[10px] uppercase">Gestion Accès Partenaires</span>
+                    </button>
+                </div>
 
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                        <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
-                            <label class="text-[10px] font-black text-slate-500 uppercase block">💬 WhatsApp Client :</label>
-                            <input type="text" id="cfg-wa-client" value="+243980000338" class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800">
+                <!-- Sous-vue: Contacts -->
+                <div id="cfg-sub-contacts" class="cfg-subview hidden space-y-4">
+                    <button onclick="resetConfigView()" class="px-3 py-1.5 bg-slate-200 text-slate-700 font-bold text-[10px] rounded-lg uppercase tracking-wider hover:bg-slate-300 transition w-max">
+                        ← Retour aux icônes
+                    </button>
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
+                        <div class="flex justify-between items-center border-b pb-3">
+                            <h3 class="text-md font-black text-navy-800 uppercase tracking-wide">📱 Numéros Mobile Money & Assistance WhatsApp</h3>
+                            <button onclick="saveSysContactConfig()" class="px-5 py-2 bg-mattOrange hover:bg-orange-600 text-white font-black text-xs rounded-xl shadow uppercase tracking-wider">
+                                💾 Sauvegarder les Numéros
+                            </button>
                         </div>
-                        <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
-                            <label class="text-[10px] font-black text-slate-500 uppercase block">💬 WhatsApp Partenaires :</label>
-                            <input type="text" id="cfg-wa-partner" value="+243980000338" class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
+                                <label class="text-[10px] font-black text-slate-500 uppercase block">💬 WhatsApp Client :</label>
+                                <input type="text" id="cfg-wa-client" value="+243980000338" class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800">
+                            </div>
+                            <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
+                                <label class="text-[10px] font-black text-slate-500 uppercase block">💬 WhatsApp Partenaires :</label>
+                                <input type="text" id="cfg-wa-partner" value="+243980000338" class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800">
+                            </div>
+                            <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
+                                <label class="text-[10px] font-black text-slate-500 uppercase block">📞 Téléphone Direct MATT :</label>
+                                <input type="text" id="cfg-tel-call" value="+243980000338" class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800">
+                            </div>
                         </div>
-                        <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
-                            <label class="text-[10px] font-black text-slate-500 uppercase block">📞 Téléphone Direct MATT :</label>
-                            <input type="text" id="cfg-tel-call" value="+243980000338" class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800">
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 border-t pt-3">
-                        <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
-                            <label class="text-[10px] font-black text-slate-500 uppercase block">💳 Compte M-Pesa :</label>
-                            <input type="text" id="cfg-mpesa" value="+243980000338" class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800">
-                        </div>
-                        <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
-                            <label class="text-[10px] font-black text-slate-500 uppercase block">💳 Compte Orange Money :</label>
-                            <input type="text" id="cfg-orange" value="+243980000338" class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800">
-                        </div>
-                        <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
-                            <label class="text-[10px] font-black text-slate-500 uppercase block">💳 Compte Airtel Money :</label>
-                            <input type="text" id="cfg-airtel" value="+243980000338" class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800">
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 border-t pt-3">
+                            <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
+                                <label class="text-[10px] font-black text-slate-500 uppercase block">💳 Compte M-Pesa :</label>
+                                <input type="text" id="cfg-mpesa" value="+243980000338" class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800">
+                            </div>
+                            <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
+                                <label class="text-[10px] font-black text-slate-500 uppercase block">💳 Compte Orange Money :</label>
+                                <input type="text" id="cfg-orange" value="+243980000338" class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800">
+                            </div>
+                            <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
+                                <label class="text-[10px] font-black text-slate-500 uppercase block">💳 Compte Airtel Money :</label>
+                                <input type="text" id="cfg-airtel" value="+243980000338" class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800">
+                            </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
-                    <h3 class="text-md font-black text-navy-800 uppercase tracking-wide">📍 Ajout & Attribution des Communes par Zones</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-white p-4 rounded-xl border border-slate-200 items-end">
-                        <div>
-                            <label class="text-[10px] font-bold text-slate-600 uppercase block mb-1">Nom de la Commune :</label>
-                            <input type="text" id="cfg-new-commune-name" placeholder="Ex: N'Sele Extension..." class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800">
+                <!-- Sous-vue: Communes -->
+                <div id="cfg-sub-communes" class="cfg-subview hidden space-y-4">
+                    <button onclick="resetConfigView()" class="px-3 py-1.5 bg-slate-200 text-slate-700 font-bold text-[10px] rounded-lg uppercase tracking-wider hover:bg-slate-300 transition w-max">
+                        ← Retour aux icônes
+                    </button>
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
+                        <h3 class="text-md font-black text-navy-800 uppercase tracking-wide">📍 Ajout & Attribution des Communes par Zones</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 bg-white p-4 rounded-xl border border-slate-200 items-end">
+                            <div>
+                                <label class="text-[10px] font-bold text-slate-600 uppercase block mb-1">Nom de la Commune :</label>
+                                <input type="text" id="cfg-new-commune-name" placeholder="Ex: N'Sele Extension..." class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800">
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-bold text-slate-600 uppercase block mb-1">Zone Géographique :</label>
+                                <select id="cfg-new-commune-zone" class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800 bg-white">
+                                    <option value="zone1">Zone 1 - Résidentielle</option>
+                                    <option value="zone2">Zone 2 - Centrale</option>
+                                    <option value="zone3">Zone 3 - Est & Populaire</option>
+                                    <option value="zone4">Zone 4 - Périurbaine</option>
+                                </select>
+                            </div>
+                            <div>
+                                <button onclick="addNewCommuneToZone()" class="w-full py-2.5 bg-navy-800 hover:bg-navy-900 text-white font-black text-xs rounded-lg uppercase tracking-wider transition">
+                                    ➕ Ajouter la Commune
+                                </button>
+                            </div>
                         </div>
-                        <div>
-                            <label class="text-[10px] font-bold text-slate-600 uppercase block mb-1">Zone Géographique :</label>
-                            <select id="cfg-new-commune-zone" class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-800 bg-white">
-                                <option value="zone1">Zone 1 - Résidentielle</option>
-                                <option value="zone2">Zone 2 - Centrale</option>
-                                <option value="zone3">Zone 3 - Est & Populaire</option>
-                                <option value="zone4">Zone 4 - Périurbaine</option>
-                            </select>
+                        <div class="overflow-x-auto border border-slate-200 rounded-xl bg-white shadow-inner custom-scrollbar max-h-60 overflow-y-auto">
+                            <table class="w-full text-left text-xs border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-100 text-slate-600 border-b sticky top-0 font-bold">
+                                        <th class="p-3 uppercase">Commune</th>
+                                        <th class="p-3 uppercase">Zone Associée</th>
+                                        <th class="p-3 uppercase text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cfg-communes-table" class="divide-y divide-slate-100 font-medium"></tbody>
+                            </table>
                         </div>
-                        <div>
-                            <button onclick="addNewCommuneToZone()" class="w-full py-2.5 bg-navy-800 hover:bg-navy-900 text-white font-black text-xs rounded-lg uppercase tracking-wider transition">
-                                ➕ Ajouter la Commune
-                            </button>
-                        </div>
-                    </div>
-
-                    <div class="overflow-x-auto border border-slate-200 rounded-xl bg-white shadow-inner custom-scrollbar max-h-60 overflow-y-auto">
-                        <table class="w-full text-left text-xs border-collapse">
-                            <thead>
-                                <tr class="bg-slate-100 text-slate-600 border-b sticky top-0 font-bold">
-                                    <th class="p-3 uppercase">Commune</th>
-                                    <th class="p-3 uppercase">Zone Associée</th>
-                                    <th class="p-3 uppercase text-right">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="cfg-communes-table" class="divide-y divide-slate-100 font-medium"></tbody>
-                        </table>
                     </div>
                 </div>
 
-                <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
-                    <h3 class="text-md font-black text-navy-800 uppercase tracking-wide">🔑 Gestion & Accès Administrateurs</h3>
-                    <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 bg-white p-4 rounded-xl border border-slate-200">
-                        <div>
-                            <label class="text-[10px] font-bold text-slate-600 uppercase block">Nom :</label>
-                            <input type="text" id="cfg-new-user-name" placeholder="Direction Générale" class="w-full mt-1 px-3 py-1.5 border rounded-lg text-xs font-bold">
+                <!-- Sous-vue: Admins -->
+                <div id="cfg-sub-admins" class="cfg-subview hidden space-y-4">
+                    <button onclick="resetConfigView()" class="px-3 py-1.5 bg-slate-200 text-slate-700 font-bold text-[10px] rounded-lg uppercase tracking-wider hover:bg-slate-300 transition w-max">
+                        ← Retour aux icônes
+                    </button>
+                    <div class="bg-slate-50 p-6 rounded-2xl border border-slate-200 space-y-4">
+                        <h3 class="text-md font-black text-navy-800 uppercase tracking-wide">🔑 Gestion & Accès Administrateurs</h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-4 gap-3 bg-white p-4 rounded-xl border border-slate-200">
+                            <div>
+                                <label class="text-[10px] font-bold text-slate-600 uppercase block">Nom :</label>
+                                <input type="text" id="cfg-new-user-name" placeholder="Direction Générale" class="w-full mt-1 px-3 py-1.5 border rounded-lg text-xs font-bold">
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-bold text-slate-600 uppercase block">Login / Tél :</label>
+                                <input type="tel" id="cfg-new-user-login" placeholder="0980000338" class="w-full mt-1 px-3 py-1.5 border rounded-lg text-xs font-bold">
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-bold text-slate-600 uppercase block">Rôle :</label>
+                                <select id="cfg-new-user-role" class="w-full mt-1 px-3 py-1.5 border rounded-lg text-xs font-bold bg-white">
+                                    <option value="Superviseur">Superviseur Opérations</option>
+                                    <option value="Comptable">Comptable & Caisse</option>
+                                    <option value="Administrateur Master">Administrateur Master</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-bold text-slate-600 uppercase block">Mot de Passe :</label>
+                                <input type="text" id="cfg-new-user-pass" placeholder="••••••••" class="w-full mt-1 px-3 py-1.5 border rounded-lg text-xs font-bold">
+                            </div>
+                            <div class="sm:col-span-4 flex justify-end">
+                                <button onclick="createNewAdminAccount()" class="px-5 py-2 bg-navy-800 hover:bg-navy-900 text-white font-black text-xs rounded-lg uppercase tracking-wider">
+                                    ➕ Créer cet accès
+                                </button>
+                            </div>
                         </div>
-                        <div>
-                            <label class="text-[10px] font-bold text-slate-600 uppercase block">Login / Tél :</label>
-                            <input type="tel" id="cfg-new-user-login" placeholder="0980000338" class="w-full mt-1 px-3 py-1.5 border rounded-lg text-xs font-bold">
-                        </div>
-                        <div>
-                            <label class="text-[10px] font-bold text-slate-600 uppercase block">Rôle :</label>
-                            <select id="cfg-new-user-role" class="w-full mt-1 px-3 py-1.5 border rounded-lg text-xs font-bold bg-white">
-                                <option value="Superviseur">Superviseur Opérations</option>
-                                <option value="Comptable">Comptable & Caisse</option>
-                                <option value="Administrateur Master">Administrateur Master</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label class="text-[10px] font-bold text-slate-600 uppercase block">Mot de Passe :</label>
-                            <input type="text" id="cfg-new-user-pass" placeholder="••••••••" class="w-full mt-1 px-3 py-1.5 border rounded-lg text-xs font-bold">
-                        </div>
-                        <div class="sm:col-span-4 flex justify-end">
-                            <button onclick="createNewAdminAccount()" class="px-5 py-2 bg-navy-800 hover:bg-navy-900 text-white font-black text-xs rounded-lg uppercase tracking-wider">
-                                ➕ Créer cet accès
-                            </button>
+
+                        <div class="overflow-x-auto border border-slate-200 rounded-xl bg-white shadow-inner custom-scrollbar">
+                            <table class="w-full text-left text-xs border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-100 text-slate-600 border-b font-bold">
+                                        <th class="p-3 uppercase">Nom</th>
+                                        <th class="p-3 uppercase">Identifiant / Login</th>
+                                        <th class="p-3 uppercase">Rôle</th>
+                                        <th class="p-3 uppercase">Mot de Passe</th>
+                                        <th class="p-3 uppercase text-right">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cfg-admin-users-table" class="divide-y divide-slate-100 font-medium"></tbody>
+                            </table>
                         </div>
                     </div>
+                </div>
 
-                    <div class="overflow-x-auto border border-slate-200 rounded-xl bg-white shadow-inner custom-scrollbar">
-                        <table class="w-full text-left text-xs border-collapse">
-                            <thead>
-                                <tr class="bg-slate-100 text-slate-600 border-b font-bold">
-                                    <th class="p-3 uppercase">Nom</th>
-                                    <th class="p-3 uppercase">Identifiant / Login</th>
-                                    <th class="p-3 uppercase">Rôle</th>
-                                    <th class="p-3 uppercase">Mot de Passe</th>
-                                    <th class="p-3 uppercase text-right">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="cfg-admin-users-table" class="divide-y divide-slate-100 font-medium"></tbody>
-                        </table>
+                <!-- Sous-vue: Partenaires Access -->
+                <div id="cfg-sub-partners" class="cfg-subview hidden space-y-4">
+                    <button onclick="resetConfigView()" class="px-3 py-1.5 bg-slate-200 text-slate-700 font-bold text-[10px] rounded-lg uppercase tracking-wider hover:bg-slate-300 transition w-max">
+                        ← Retour aux icônes
+                    </button>
+                    <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
+                        <h3 class="text-md font-black text-navy-800 uppercase tracking-wide mb-4">🤝 Gestion & Accès Partenaires (Sécurité)</h3>
+                        <p class="text-xs text-slate-500 font-medium mb-4">Consultez ici les identifiants, mots de passe et questions secrètes enregistrés par vos partenaires.</p>
+                        
+                        <div class="overflow-x-auto border border-slate-200 rounded-xl bg-slate-50 shadow-inner custom-scrollbar">
+                            <table class="w-full text-left text-xs border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-200 text-slate-700 border-b font-bold">
+                                        <th class="p-3 uppercase">Partenaire</th>
+                                        <th class="p-3 uppercase">Identifiant (Tél)</th>
+                                        <th class="p-3 uppercase">Mot de passe</th>
+                                        <th class="p-3 uppercase">Question Secrète</th>
+                                        <th class="p-3 uppercase">Réponse</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cfg-partner-users-table" class="divide-y divide-slate-200 font-medium bg-white"></tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 
@@ -663,14 +724,14 @@
         </div>
     </main>
 
-    <!-- MODALE EXAMEN DU DOSSIER PARTENAIRE (PIÈCE D'IDENTITÉ & ADRESSE) -->
+    <!-- MODALE EXAMEN DU DOSSIER PARTENAIRE -->
     <div id="modal-partner-review" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
         <div class="bg-white text-slate-900 w-full max-w-lg rounded-3xl shadow-2xl p-6 border border-slate-200 space-y-4 relative max-h-[90vh] overflow-y-auto custom-scrollbar">
             <button onclick="closePartnerReviewModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 font-bold text-xl">✕</button>
             
             <div class="border-b pb-3">
                 <h3 class="text-lg font-black text-navy-800 flex items-center gap-2">
-                    <span>📄</span> Examen Dossier Prestataire
+                    <span>📄</span> Gestion du Prestataire
                 </h3>
                 <span id="review-partner-status" class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase mt-1 inline-block"></span>
             </div>
@@ -714,14 +775,8 @@
                 </div>
             </div>
 
-            <div class="flex justify-end gap-2 pt-3 border-t">
-                <button onclick="changePartnerValidationStatus('Suspendu')" class="px-4 py-2 bg-red-100 hover:bg-red-200 text-red-700 font-bold rounded-xl text-xs">
-                    Refuser / Suspendre
-                </button>
-                <button onclick="changePartnerValidationStatus('Actif')" class="px-5 py-2 bg-green-600 hover:bg-green-700 text-white font-black rounded-xl text-xs uppercase tracking-wider shadow">
-                    ✅ Valider & Activer le Prestataire
-                </button>
-            </div>
+            <!-- Actions dynamiques basées sur le statut -->
+            <div class="flex justify-end gap-2 pt-3 border-t w-full" id="review-action-buttons"></div>
         </div>
     </div>
 
@@ -823,65 +878,91 @@
         </div>
     </footer>
 
-    <!-- LOGIQUE JAVASCRIPT -->
+    <!-- LOGIQUE JAVASCRIPT ET CONNECTEURS SUPABASE -->
     <script>
         const SUPABASE_URL = "https://vbriworyscymnmtzzdny.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZicml3b3J5c2N5bW5tdHp6ZG55Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzNzQwNTEsImV4cCI6MjEwMzk1MDA1MX0.VBZupVKj0srae0NT5BNZ0OeaIv9pAl2bl5L-Rd8ocJk";
         const db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-        let communesList = [
-            { name: "Gombe", zone: "zone1" }, { name: "Ngaliema", zone: "zone1" },
-            { name: "Limete", zone: "zone1" }, { name: "Kintambo", zone: "zone1" },
-            { name: "Bandalungwa", zone: "zone2" }, { name: "Kasa-Vubu", zone: "zone2" },
-            { name: "Kalamu", zone: "zone2" }, { name: "Lemba", zone: "zone2" },
-            { name: "Lingwala", zone: "zone2" }, { name: "Barumbu", zone: "zone2" },
-            { name: "Kinshasa", zone: "zone2" }, { name: "N'djili", zone: "zone3" },
-            { name: "Masina", zone: "zone3" }, { name: "Matete", zone: "zone3" },
-            { name: "Bumbu", zone: "zone3" }, { name: "Makala", zone: "zone3" },
-            { name: "Ngaba", zone: "zone3" }, { name: "Ngiri-Ngiri", zone: "zone3" },
-            { name: "Kimbanseke", zone: "zone3" }, { name: "Kisenso", zone: "zone3" },
-            { name: "Selembao", zone: "zone3" }, { name: "Mont-Ngafula", zone: "zone4" },
-            { name: "Nsele", zone: "zone4" }, { name: "Maluku", zone: "zone4" }
+        const communesKinshasa = [
+            { name: "Gombe", zone: "zone1", label: "Zone 1 - Résidentielle" },
+            { name: "Ngaliema", zone: "zone1", label: "Zone 1 - Résidentielle" },
+            { name: "Limete", zone: "zone1", label: "Zone 1 - Résidentielle" },
+            { name: "Kintambo", zone: "zone1", label: "Zone 1 - Résidentielle" },
+            { name: "Bandalungwa", zone: "zone2", label: "Zone 2 - Centrale" },
+            { name: "Kasa-Vubu", zone: "zone2", label: "Zone 2 - Centrale" },
+            { name: "Kalamu", zone: "zone2", label: "Zone 2 - Centrale" },
+            { name: "Lemba", zone: "zone2", label: "Zone 2 - Centrale" },
+            { name: "Lingwala", zone: "zone2", label: "Zone 2 - Centrale" },
+            { name: "Barumbu", zone: "zone2", label: "Zone 2 - Centrale" },
+            { name: "Kinshasa", zone: "zone2", label: "Zone 2 - Centrale" },
+            { name: "N'djili", zone: "zone3", label: "Zone 3 - Populaire" },
+            { name: "Masina", zone: "zone3", label: "Zone 3 - Populaire" },
+            { name: "Matete", zone: "zone3", label: "Zone 3 - Populaire" },
+            { name: "Bumbu", zone: "zone3", label: "Zone 3 - Populaire" },
+            { name: "Makala", zone: "zone3", label: "Zone 3 - Populaire" },
+            { name: "Ngaba", zone: "zone3", label: "Zone 3 - Populaire" },
+            { name: "Ngiri-Ngiri", zone: "zone3", label: "Zone 3 - Populaire" },
+            { name: "Kimbanseke", zone: "zone3", label: "Zone 3 - Populaire" },
+            { name: "Kisenso", zone: "zone3", label: "Zone 3 - Populaire" },
+            { name: "Selembao", zone: "zone3", label: "Zone 3 - Populaire" },
+            { name: "Mont-Ngafula", zone: "zone4", label: "Zone 4 - Périurbaine" },
+            { name: "Nsele", zone: "zone4", label: "Zone 4 - Périurbaine" },
+            { name: "Maluku", zone: "zone4", label: "Zone 4 - Périurbaine" }
         ];
 
-        const defaultTarifsGroup = {
-            'commission-rate': 15,
-            'moto': 8000, 'tricycle': 12000, 'berline': 15000, 'suv': 25000,
-            'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000,
-            'opt-moteur-berline': 5000, 'opt-chassis-berline': 4000, 'opt-sieges-berline': 7000,
-            'opt-moteur-suv': 8000, 'opt-chassis-suv': 6000, 'opt-sieges-suv': 10000,
-            'opt-moteur-poids-lourd': 15000, 'opt-chassis-poids-lourd': 12000, 'opt-sieges-poids-lourd': 15000,
-            'opt-moteur-remorque': 5000, 'opt-chassis-remorque': 6000, 'opt-sieges-remorque': 5000,
-            'tapis': 2000, 'moquette': 2000, 'vitres': 1500, 'carreaux': 1000, 'baie': 3000, 'panneau': 4000,
-            'canape-textile': 4500, 'canape-lin': 6000, 'canape-velours': 8000, 'canape-cuir': 12000, 'matelas': 5000,
-            'desinf': 10000, 'desinsect': 12000, 'derat': 14000, 'immondices': 15000, 'fosse': 40000
+        const grilleTarifaireParZone = {
+            'zone1': { moto: 10000, tricycle: 15000, berline: 20000, suv: 30000, 'poids-lourd': 55000, 'bus-207': 25000, 'bus-long': 40000, 'remorque': 35000, commission_rate: 15 },
+            'zone2': { moto: 8000, tricycle: 12000, berline: 15000, suv: 25000, 'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000, commission_rate: 15 },
+            'zone3': { moto: 7000, tricycle: 10000, berline: 12000, suv: 20000, 'poids-lourd': 40000, 'bus-207': 18000, 'bus-long': 30000, 'remorque': 25000, commission_rate: 15 },
+            'zone4': { moto: 8000, tricycle: 12000, berline: 15000, suv: 25000, 'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000, commission_rate: 15 }
         };
 
-        const state = {
-            adminUsers: [{ id: "adm1", name: "Direction Générale", login: "0980000338", role: "Administrateur Master", pass: "MATT2026" }],
-            partners: [],
-            orders: [],
-            ordersSubView: 'active',
-            currentGroupKey: 'standard',
-            pricesByGroup: {
-                'standard': { ...defaultTarifsGroup },
-                'zone1': { ...defaultTarifsGroup, 'commission-rate': 15, 'berline': 20000, 'suv': 30000 },
-                'zone2': { ...defaultTarifsGroup, 'commission-rate': 15, 'berline': 15000, 'suv': 25000 },
-                'zone3': { ...defaultTarifsGroup, 'commission-rate': 15, 'berline': 12000, 'suv': 20000 },
-                'zone4': { ...defaultTarifsGroup, 'commission-rate': 15, 'fosse': 50000, 'immondices': 20000 }
-            },
-            caisses: { centrale: 0, auto: 0, maison: 0, env: 0 }
+        const typesVehicules = [
+            { id: 'moto', label: 'Moto', hasOptions: false },
+            { id: 'tricycle', label: 'Tricycle', hasOptions: false },
+            { id: 'berline', label: 'Berline', hasOptions: true },
+            { id: 'suv', label: 'SUV / 4x4', hasOptions: true },
+            { id: 'poids-lourd', label: 'Poids lourds', hasOptions: true },
+            { id: 'bus-207', label: 'Minibus (207)', hasOptions: true },
+            { id: 'bus-long', label: 'Bus Long', hasOptions: true },
+            { id: 'remorque', label: 'Remorque', hasOptions: true }
+        ];
+
+        const vehicleOptionsPrices = {
+            'berline': { moteur: 5000, chassis: 4000, sieges: 7000 },
+            'suv': { moteur: 8000, chassis: 6000, sieges: 10000 },
+            'poids-lourd': { moteur: 15000, chassis: 12000, sieges: 15000 },
+            'bus-207': { moteur: 6000, chassis: 5000, sieges: 9000 },
+            'bus-long': { moteur: 10000, chassis: 8000, sieges: 12000 },
+            'remorque': { moteur: 5000, chassis: 6000, sieges: 5000 }
         };
+
+        let currentActiveZone = "zone1";
+        let session = { role: null, user: null };
+        let clientVehiculeSelection = {};
+        let currentRatingOrderId = null;
+        let selectedRatingValue = 5;
+        let partnerAllOrders = [];
+
+        function normalizePhoneNumber(phone) {
+            if (!phone) return "";
+            let p = String(phone).replace(/[\s\-\.\(\)]/g, "");
+            if (p.startsWith("+243")) p = "0" + p.slice(4);
+            else if (p.startsWith("00243")) p = "0" + p.slice(5);
+            else if (p.startsWith("243")) p = "0" + p.slice(3);
+            return p;
+        }
 
         function showToast(message, type = "success") {
             const container = document.getElementById('toast-container');
             if (!container) return;
             const toast = document.createElement('div');
-            let bg = type === "error" ? "bg-red-600" : "bg-green-600";
+            let bg = type === "error" ? "bg-red-600" : (type === "info" ? "bg-sky-600" : "bg-green-600");
             toast.className = `${bg} text-white px-4 py-2.5 rounded-2xl shadow-2xl flex items-center justify-between gap-3 text-xs font-bold pointer-events-auto transition-all`;
             toast.innerHTML = `<span>${message}</span><button onclick="this.parentElement.remove()" class="text-white font-black">✕</button>`;
             container.appendChild(toast);
-            setTimeout(() => toast.remove(), 4000);
+            setTimeout(() => toast.remove(), 3500);
         }
 
         function toggleAuthPasswordVisibility() {
@@ -952,6 +1033,39 @@
             renderAdminOrders();
         }
 
+        function switchConfigSubTab(tabId) {
+            document.getElementById('cfg-buttons-container').classList.add('hidden');
+            document.querySelectorAll('.cfg-subview').forEach(el => el.classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden');
+            
+            if(tabId === 'cfg-sub-partners') renderConfigPartnersTable();
+        }
+
+        function resetConfigView() {
+            document.querySelectorAll('.cfg-subview').forEach(el => el.classList.add('hidden'));
+            document.getElementById('cfg-buttons-container').classList.remove('hidden');
+        }
+
+        function renderConfigPartnersTable() {
+            const tbody = document.getElementById('cfg-partner-users-table');
+            if(!tbody) return;
+            
+            if(state.partners.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="p-6 text-center text-slate-400 font-medium">Aucun partenaire enregistré.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = state.partners.map(p => `
+                <tr class="border-b hover:bg-slate-50 transition">
+                    <td class="p-3 font-bold text-slate-800">${p.name}</td>
+                    <td class="p-3 font-mono font-bold text-slate-700">${p.phone}</td>
+                    <td class="p-3 font-mono font-bold text-mattOrange">${p.password || '-'}</td>
+                    <td class="p-3 text-slate-500 italic max-w-[200px] truncate" title="${p.secret_question || ''}">${p.secret_question || 'Non définie'}</td>
+                    <td class="p-3 font-bold text-navy-800">${p.secret_answer || '-'}</td>
+                </tr>
+            `).join('');
+        }
+
         async function refreshAllAppData() {
             const icon = document.getElementById('global-refresh-icon');
             if (icon) icon.classList.add('animate-spin');
@@ -985,6 +1099,14 @@
             if (axe.includes('vidange')) return 'env';
 
             return isMaison ? 'maison' : (isAuto ? 'auto' : 'auto');
+        }
+
+        function getRatingLabel(val) {
+            if (!val) return "";
+            if (val === 5) return "Impeccable";
+            if (val === 4) return "TB";
+            if (val === 3) return "Bien";
+            return "À revoir";
         }
 
         async function loadSupabaseOrders() {
@@ -1081,6 +1203,10 @@
                     'env': '<span class="px-2 py-0.5 bg-emerald-100 text-emerald-800 rounded font-bold">🌱 3D & Vidange</span>'
                 };
 
+                let ratingHtml = o.rating_service 
+                    ? `<div class="text-[10px] text-mattOrange font-bold mt-1">Note : ${'⭐'.repeat(o.rating_service)} (${getRatingLabel(o.rating_service)})</div>` 
+                    : '';
+
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50 border-b">
                         <td class="p-3 font-mono font-bold">#${o.id}</td>
@@ -1091,7 +1217,10 @@
                         <td class="p-3 font-bold">${o.commune} <span class="text-[10px] text-slate-400 font-normal">(${o.avenue || ''})</span></td>
                         <td class="p-3 font-mono font-bold">${Number(o.total_amount || 0).toLocaleString('fr-FR')} CDF</td>
                         <td class="p-3 font-mono font-black text-mattOrange">${Number(o.commission || 0).toLocaleString('fr-FR')} CDF</td>
-                        <td class="p-3"><span class="px-2.5 py-1 rounded-md text-[10px] font-bold ${badgeClass}">${o.status}</span></td>
+                        <td class="p-3">
+                            <span class="px-2.5 py-1 rounded-md text-[10px] font-bold ${badgeClass}">${o.status}</span>
+                            ${ratingHtml}
+                        </td>
                         <td class="p-3 text-right">
                             <button onclick="openOrderDetailsModal(${o.id})" class="px-3 py-1.5 bg-sky-50 hover:bg-sky-100 text-sky-800 font-bold rounded-xl border border-sky-200 transition text-[11px]">
                                 👁️ Détails
@@ -1130,13 +1259,13 @@
                 o.status === 'Terminée' ? 'bg-green-100 text-green-800' : (o.status === 'Annulée' ? 'bg-red-100 text-red-800' : 'bg-sky-100 text-sky-800')
             }`;
 
-            const partner = state.partners.find(p => p.id === o.partner_id);
+            const partner = state.partners.find(p => String(p.id) === String(o.partner_id));
             document.getElementById('dtl-partner-info').innerText = partner ? `${partner.name} (${partner.phone})` : (o.partner_id ? `Partenaire #${o.partner_id}` : 'Non assigné');
 
             const ratingBox = document.getElementById('dtl-order-rating');
             const commentBox = document.getElementById('dtl-order-comment');
             if (o.rating_service) {
-                ratingBox.innerText = `${'⭐'.repeat(o.rating_service)} (${o.rating_service}/5)`;
+                ratingBox.innerText = `${'⭐'.repeat(o.rating_service)} - ${getRatingLabel(o.rating_service)}`;
                 commentBox.innerText = o.comment ? `« ${o.comment} »` : 'Aucun avis rédigé.';
             } else {
                 ratingBox.innerText = 'Prestation non notée';
@@ -1150,14 +1279,12 @@
             document.getElementById('modal-order-details').classList.add('hidden');
         }
 
-        // ==========================================
-        // GESTION DES PARTENAIRES & EXAMEN DU DOSSIER
-        // ==========================================
         async function loadSupabasePartners() {
             const { data, error } = await db.from('partners').select('*').order('created_at', { ascending: false });
             if (!error && data) {
                 state.partners = data;
                 renderAdminPartners();
+                renderConfigPartnersTable();
                 const sel = document.getElementById('admin-manual-recharge-partner');
                 if (sel) {
                     sel.innerHTML = state.partners.map(p => `<option value="${p.id}">${p.name} (${p.commune})</option>`).join('');
@@ -1194,8 +1321,8 @@
                         <td class="p-3 font-mono font-bold">${Number(p.wallet || 0).toLocaleString('fr-FR')} CDF</td>
                         <td class="p-3">${statusBadge}</td>
                         <td class="p-3 text-right space-x-1 whitespace-nowrap">
-                            <button onclick="openPartnerReviewModal('${p.id}')" class="px-2.5 py-1 bg-sky-100 hover:bg-sky-200 text-sky-800 rounded-lg font-bold text-[10px]">
-                                👁️ Examiner Dossier
+                            <button onclick="openPartnerReviewModal('${p.id}')" class="px-3 py-1.5 bg-sky-50 hover:bg-sky-100 text-sky-800 rounded-lg font-bold text-[11px] border border-sky-200">
+                                👁️ Gérer
                             </button>
                         </td>
                     </tr>
@@ -1203,7 +1330,6 @@
             });
         }
 
-        // Modale d'examen et validation du dossier
         function openPartnerReviewModal(partnerId) {
             const p = state.partners.find(x => String(x.id) === String(partnerId));
             if (!p) return;
@@ -1221,7 +1347,6 @@
                 p.status === 'Actif' ? 'bg-green-100 text-green-800' : (p.status === 'Suspendu' ? 'bg-red-100 text-red-800' : 'bg-amber-100 text-amber-800')
             }`;
 
-            // Affichage du document joint
             const previewBox = document.getElementById('review-partner-doc-preview');
             if (p.document_url) {
                 if (p.document_url.startsWith('data:image')) {
@@ -1239,6 +1364,23 @@
                 }
             } else {
                 previewBox.innerHTML = `<span class="text-slate-400 italic">Aucun document n'a été téléversé pour ce dossier.</span>`;
+            }
+
+            const actionBox = document.getElementById('review-action-buttons');
+            if (p.status === 'En attente de validation') {
+                actionBox.innerHTML = `
+                    <button onclick="deletePartnerRecord('${p.id}')" class="px-4 py-2.5 bg-red-100 hover:bg-red-200 text-red-700 font-bold rounded-xl text-xs uppercase tracking-wider">Rejeter</button>
+                    <button onclick="changePartnerValidationStatus('Actif')" class="px-5 py-2.5 bg-green-600 hover:bg-green-700 text-white font-black rounded-xl text-xs uppercase tracking-wider shadow">Valider & Activer</button>
+                `;
+            } else {
+                let toggleBtn = p.status === 'Actif' 
+                    ? `<button onclick="changePartnerValidationStatus('Suspendu')" class="px-5 py-2.5 bg-amber-100 hover:bg-amber-200 text-amber-800 font-bold rounded-xl text-xs uppercase tracking-wider">Suspendre</button>`
+                    : `<button onclick="changePartnerValidationStatus('Actif')" class="px-5 py-2.5 bg-green-600 hover:bg-green-700 text-white font-black rounded-xl text-xs uppercase tracking-wider shadow">Activer</button>`;
+                
+                actionBox.innerHTML = `
+                    <button onclick="deletePartnerRecord('${p.id}')" class="px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-xs uppercase tracking-wider shadow">Supprimer</button>
+                    ${toggleBtn}
+                `;
             }
 
             document.getElementById('modal-partner-review').classList.remove('hidden');
@@ -1261,6 +1403,17 @@
             renderAdminPartners();
             closePartnerReviewModal();
             showToast(`Statut du partenaire mis à jour : ${newStatus} !`, "success");
+        }
+
+        async function deletePartnerRecord(partnerId) {
+            if(confirm("Confirmez-vous la suppression de ce partenaire ? (Cette action est irréversible)")) {
+                const { error } = await db.from('partners').delete().eq('id', partnerId);
+                if (error) return showToast(error.message, "error");
+
+                showToast("Dossier partenaire supprimé avec succès.", "info");
+                closePartnerReviewModal();
+                loadSupabasePartners();
+            }
         }
 
         function payoutCommissions() {
@@ -1354,17 +1507,14 @@
             document.getElementById(elementId)?.scrollBy({ top: offset, behavior: 'smooth' });
         }
 
-        // MODIFICATION DYNAMIQUE DU TAUX DE COMMISSION ET DES PRIX PAR GROUPE
         function onCommuneGroupChange() {
             const groupKey = document.getElementById('admin-commune-group-select').value;
             state.currentGroupKey = groupKey;
             const prices = state.pricesByGroup[groupKey] || state.pricesByGroup['standard'];
 
-            // Chargement du taux de commission
             const rateInput = document.getElementById('p-commission-rate');
             if (rateInput) rateInput.value = prices['commission-rate'] || 15;
 
-            // Chargement de chaque tarif
             for (let k in prices) {
                 const input = document.getElementById(`p-${k}`);
                 if (input) input.value = prices[k];
@@ -1375,7 +1525,6 @@
             const groupKey = state.currentGroupKey;
             if (!state.pricesByGroup[groupKey]) state.pricesByGroup[groupKey] = {};
 
-            // Enregistrement du taux de commission
             const rateInput = document.getElementById('p-commission-rate');
             if (rateInput) {
                 state.pricesByGroup[groupKey]['commission-rate'] = parseFloat(rateInput.value) || 15;
