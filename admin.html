@@ -158,7 +158,7 @@
                 </div>
             </div>
 
-            <!-- ONGLET 2: GESTION PARTENAIRES -->
+            <!-- ONGLET 2: GESTION PARTENAIRES (AVEC VALIDATION DES DOSSIERS) -->
             <div id="admin-partenaires" class="admin-subview hidden space-y-4">
                 <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3">
                     <div>
@@ -930,6 +930,7 @@
         </div>
     </footer>
 
+    <!-- LOGIQUE JAVASCRIPT ET CONNECTEURS SUPABASE -->
     <script>
         const SUPABASE_URL = "https://vbriworyscymnmtzzdny.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZicml3b3J5c2N5bW5tdHp6ZG55Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzNzQwNTEsImV4cCI6MjEwMzk1MDA1MX0.VBZupVKj0srae0NT5BNZ0OeaIv9pAl2bl5L-Rd8ocJk";
@@ -960,13 +961,12 @@
             { id: 5, commune: "Ngaliema", avenue: "Brikin N°10", reference: "Pharmacie", description: "1x Berline [Sièges+Plafond]", axe: "Auto", date: "2026-09-04", time: "15:30", client_name: "Jean Mukendi", client_phone: "0825556633", total_amount: 27000, commission: 4050, status: "Terminée", rating_service: 5, partner_id: "1" },
             { id: 4, commune: "Gombe", avenue: "Av. Haut Commandement N° 4", reference: "BCDC", description: "Nettoyage Canapés Cuir (10 pl.) + Tapis (40 m²)", axe: "Maison", date: "2026-09-04", time: "17:00", client_name: "KAM", client_phone: "0813271112", total_amount: 280000, commission: 42000, status: "Terminée", rating_service: 5, partner_id: "2" },
             { id: 3, commune: "Bandalungwa", avenue: "Kasa-Vubu N°12", reference: "Rond-point", description: "Désinfection (3 pièces)", axe: "3D", date: "2026-09-05", time: "09:00", client_name: "Aline", client_phone: "0812345678", total_amount: 30000, commission: 2400, status: "Terminée", rating_service: 4, partner_id: "1" },
-            { id: 2, commune: "Limete", avenue: "12ème Rue Industriel", reference: "Poids lourds", description: "1x SUV / 4x4 [Moteur+Rad. + Sièges]", axe: "Auto", date: "2026-09-05", time: "11:30", client_name: "Paul", client_phone: "0998877665", total_amount: 43000, commission: 6450, status: "Terminée", rating_service: 4, partner_id: "3" },
+            { id: 2, commune: "Limete", avenue: "12ème Rue Industriel", reference: "Poids lourds", description: "1x SUV / 4x4 [Moteur+Rad. + Sièges]", axe: "Auto", date: "2026-09-05", time: "11:30", client_name: "Paul", client_phone: "0998877665", total_amount: 43000, commission: 5160, status: "Terminée", rating_service: 4, partner_id: "3" },
             { id: 1, commune: "Kinshasa", avenue: "Av. Kabambare", reference: "Marché", description: "Vitres (10 m²)", axe: "Maison", date: "2026-09-05", time: "14:00", client_name: "Société ABC", client_phone: "0845556677", total_amount: 15000, commission: 1800, status: "Terminée", rating_service: 3, partner_id: "2" }
         ];
 
         let MASTER_PASS = localStorage.getItem('matt_master_pass') || 'MATT2026';
         let savedPricing = localStorage.getItem('matt_pricing_config');
-        
         const defaultTarifsGroup = {
             'moto': 8000, 'tricycle': 12000, 'berline': 15000, 'suv': 25000,
             'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000,
@@ -1161,21 +1161,6 @@
         }
 
         function switchAdminTab(tabId, btn) {
-            if (tabId === 'admin-config') {
-                const role = localStorage.getItem('matt_admin_role');
-                if (role !== 'Administrateur Master') {
-                    document.getElementById('cfg-lock-screen').classList.remove('hidden');
-                    document.getElementById('cfg-unlocked-content').classList.add('hidden');
-                } else {
-                    document.getElementById('cfg-lock-screen').classList.add('hidden');
-                    document.getElementById('cfg-unlocked-content').classList.remove('hidden');
-                }
-                resetConfigView();
-                
-                const gPassInput = document.getElementById('cfg-global-master-pass');
-                if(gPassInput) gPassInput.value = MASTER_PASS;
-            }
-
             document.querySelectorAll('.admin-subview').forEach(s => s.classList.add('hidden'));
             document.querySelectorAll('.admin-tab-btn').forEach(b => {
                 b.className = "admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap";
@@ -1193,6 +1178,15 @@
 
             if (tabId === 'admin-stats') genererTableauStatistiques();
             if (tabId === 'admin-prix') onCommuneGroupChange();
+            
+            if (tabId === 'admin-config') {
+                document.getElementById('cfg-lock-screen').classList.remove('hidden');
+                document.getElementById('cfg-unlocked-content').classList.add('hidden');
+                resetConfigView();
+                
+                const passInp = document.getElementById('cfg-master-pass');
+                if(passInp) passInp.value = '';
+            }
         }
 
         function switchOrdersSubView(sub) {
@@ -1521,7 +1515,6 @@
             }
 
             renderAdminPartners();
-            renderConfigPartnersTable();
             const sel = document.getElementById('admin-manual-recharge-partner');
             if (sel) {
                 sel.innerHTML = state.partners.map(p => `<option value="${p.id}">${p.name} (${p.commune})</option>`).join('');
@@ -1659,7 +1652,6 @@
             const partnerId = document.getElementById('review-partner-id')?.value;
             if (!partnerId) return;
 
-            // Update UI optimistically
             const p = state.partners.find(x => String(x.id) === String(partnerId));
             if (p) p.status = newStatus;
 
@@ -1667,7 +1659,6 @@
             closePartnerReviewModal();
             showToast(`Statut du partenaire mis à jour : ${newStatus} !`, "success");
 
-            // DB Update Attempt
             try {
                 if (db) {
                     await db.from('partners').update({ status: newStatus }).eq('id', partnerId);
@@ -1680,7 +1671,6 @@
         async function deletePartnerRecord(partnerId) {
             if(confirm("Confirmez-vous la suppression de ce partenaire ? (Cette action est irréversible)")) {
                 
-                // Update UI optimistically
                 state.partners = state.partners.filter(x => String(x.id) !== String(partnerId));
                 renderAdminPartners();
                 closePartnerReviewModal();
