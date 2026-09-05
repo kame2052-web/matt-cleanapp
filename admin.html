@@ -158,7 +158,7 @@
                 </div>
             </div>
 
-            <!-- ONGLET 2: GESTION PARTENAIRES (AVEC VALIDATION DES DOSSIERS) -->
+            <!-- ONGLET 2: GESTION PARTENAIRES -->
             <div id="admin-partenaires" class="admin-subview hidden space-y-4">
                 <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3">
                     <div>
@@ -191,7 +191,7 @@
                 </div>
             </div>
 
-            <!-- ONGLET 3: CAISSE CENTRALE & CAISSES PAR AXES -->
+            <!-- ONGLET 3: CAISSES -->
             <div id="admin-recharges" class="admin-subview hidden space-y-6">
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -311,7 +311,7 @@
 
             </div>
 
-            <!-- ONGLET 4: CONFIGURATION DES PRIX & TAUX DE COMMISSION PAR ZONE -->
+            <!-- ONGLET 4: CONFIGURATION DES PRIX -->
             <div id="admin-prix" class="admin-subview hidden space-y-6">
                 <div class="flex flex-col lg:flex-row justify-between lg:items-center gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-200">
                     <div>
@@ -332,7 +332,6 @@
                     </div>
                 </div>
 
-                <!-- Réglage Spécifique du Taux de Commission pour la Zone Sélectionnée -->
                 <div class="bg-orange-50/70 border-2 border-orange-200 p-4 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     <div>
                         <span class="text-xs font-black text-navy-800 uppercase block">📊 Taux de Commission MATT pour cette Zone :</span>
@@ -469,7 +468,7 @@
                 </div>
             </div>
 
-            <!-- ONGLET 5: ÉDITEUR DES CGU -->
+            <!-- ONGLET 5: CGU -->
             <div id="admin-cgu" class="admin-subview hidden space-y-6">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b pb-3">
                     <div>
@@ -493,7 +492,7 @@
                 </div>
             </div>
 
-            <!-- ONGLET 6: STATISTIQUES D'ACTIVITÉ -->
+            <!-- ONGLET 6: STATS -->
             <div id="admin-stats" class="admin-subview hidden space-y-4">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b pb-3">
                     <div>
@@ -556,7 +555,6 @@
                     </button>
                 </div>
 
-                <!-- Sous-vue: Contacts -->
                 <div id="cfg-sub-contacts" class="cfg-subview hidden space-y-4">
                     <button onclick="resetConfigView()" class="px-3 py-1.5 bg-slate-200 text-slate-700 font-bold text-[10px] rounded-lg uppercase tracking-wider hover:bg-slate-300 transition w-max">
                         ← Retour aux icônes
@@ -599,7 +597,6 @@
                     </div>
                 </div>
 
-                <!-- Sous-vue: Communes -->
                 <div id="cfg-sub-communes" class="cfg-subview hidden space-y-4">
                     <button onclick="resetConfigView()" class="px-3 py-1.5 bg-slate-200 text-slate-700 font-bold text-[10px] rounded-lg uppercase tracking-wider hover:bg-slate-300 transition w-max">
                         ← Retour aux icônes
@@ -641,7 +638,6 @@
                     </div>
                 </div>
 
-                <!-- Sous-vue: Admins -->
                 <div id="cfg-sub-admins" class="cfg-subview hidden space-y-4">
                     <button onclick="resetConfigView()" class="px-3 py-1.5 bg-slate-200 text-slate-700 font-bold text-[10px] rounded-lg uppercase tracking-wider hover:bg-slate-300 transition w-max">
                         ← Retour aux icônes
@@ -693,7 +689,6 @@
                     </div>
                 </div>
 
-                <!-- Sous-vue: Partenaires Access -->
                 <div id="cfg-sub-partners" class="cfg-subview hidden space-y-4">
                     <button onclick="resetConfigView()" class="px-3 py-1.5 bg-slate-200 text-slate-700 font-bold text-[10px] rounded-lg uppercase tracking-wider hover:bg-slate-300 transition w-max">
                         ← Retour aux icônes
@@ -968,13 +963,18 @@
         function toggleAuthPasswordVisibility() {
             const pass = document.getElementById('admin-pass-input');
             const icon = document.getElementById('eye-icon');
+            if (!pass || !icon) return;
             if (pass.type === 'password') { pass.type = 'text'; icon.innerText = '🙈'; }
             else { pass.type = 'password'; icon.innerText = '👁️'; }
         }
 
         function verifyAdminAuth() {
-            const login = document.getElementById('admin-login-input').value.trim();
-            const pass = document.getElementById('admin-pass-input').value.trim();
+            const loginInp = document.getElementById('admin-login-input');
+            const passInp = document.getElementById('admin-pass-input');
+            if (!loginInp || !passInp) return;
+
+            const login = loginInp.value.trim();
+            const pass = passInp.value.trim();
 
             const matched = state.adminUsers.find(u => u.login === login && u.pass === pass);
             if (matched || (login === "0980000338" && pass === "MATT2026") || pass === "MATT2026") {
@@ -987,10 +987,16 @@
         }
 
         function ouvrirConsoleAdmin() {
-            document.getElementById('admin-auth-screen').classList.add('hidden');
-            document.getElementById('admin-dashboard-screen').classList.remove('hidden');
-            document.getElementById('btn-lock-session').classList.remove('hidden');
-            document.getElementById('btn-global-refresh').classList.remove('hidden');
+            const authScreen = document.getElementById('admin-auth-screen');
+            const dashScreen = document.getElementById('admin-dashboard-screen');
+            const btnLock = document.getElementById('btn-lock-session');
+            const btnRefresh = document.getElementById('btn-global-refresh');
+
+            if (authScreen) authScreen.classList.add('hidden');
+            if (dashScreen) dashScreen.classList.remove('hidden');
+            if (btnLock) btnLock.classList.remove('hidden');
+            if (btnRefresh) btnRefresh.classList.remove('hidden');
+
             refreshAllAppData();
             renderCommunesTable();
             renderAdminUsersTable();
@@ -998,12 +1004,21 @@
 
         function lockAdminSession() {
             localStorage.removeItem('matt_admin_auth');
-            document.getElementById('admin-dashboard-screen').classList.add('hidden');
-            document.getElementById('admin-auth-screen').classList.remove('hidden');
-            document.getElementById('btn-lock-session').classList.add('hidden');
-            document.getElementById('btn-global-refresh').classList.add('hidden');
-            document.getElementById('admin-login-input').value = '';
-            document.getElementById('admin-pass-input').value = '';
+            const authScreen = document.getElementById('admin-auth-screen');
+            const dashScreen = document.getElementById('admin-dashboard-screen');
+            const btnLock = document.getElementById('btn-lock-session');
+            const btnRefresh = document.getElementById('btn-global-refresh');
+
+            if (dashScreen) dashScreen.classList.add('hidden');
+            if (authScreen) authScreen.classList.remove('hidden');
+            if (btnLock) btnLock.classList.add('hidden');
+            if (btnRefresh) btnRefresh.classList.add('hidden');
+
+            const loginInp = document.getElementById('admin-login-input');
+            const passInp = document.getElementById('admin-pass-input');
+            if (loginInp) loginInp.value = '';
+            if (passInp) passInp.value = '';
+
             showToast("Session verrouillée.", "info");
         }
 
@@ -1012,7 +1027,9 @@
             document.querySelectorAll('.admin-tab-btn').forEach(b => {
                 b.className = "admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap";
             });
-            document.getElementById(tabId).classList.remove('hidden');
+            const target = document.getElementById(tabId);
+            if (target) target.classList.remove('hidden');
+            
             if (btn) btn.className = "admin-tab-btn px-4 py-2.5 bg-navy-800 text-white rounded-xl whitespace-nowrap active shadow-sm";
 
             if (tabId === 'admin-stats') genererTableauStatistiques();
@@ -1024,26 +1041,30 @@
             const btnHistory = document.getElementById('btn-sub-history-orders');
 
             if (sub === 'active') {
-                btnActive.className = "px-4 py-2 rounded-xl font-black bg-navy-800 text-white shadow-xs";
-                btnHistory.className = "px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 hover:bg-slate-200";
+                if (btnActive) btnActive.className = "px-4 py-2 rounded-xl font-black bg-navy-800 text-white shadow-xs";
+                if (btnHistory) btnHistory.className = "px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 hover:bg-slate-200";
             } else {
-                btnHistory.className = "px-4 py-2 rounded-xl font-black bg-navy-800 text-white shadow-xs";
-                btnActive.className = "px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 hover:bg-slate-200";
+                if (btnHistory) btnHistory.className = "px-4 py-2 rounded-xl font-black bg-navy-800 text-white shadow-xs";
+                if (btnActive) btnActive.className = "px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 hover:bg-slate-200";
             }
             renderAdminOrders();
         }
 
         function switchConfigSubTab(tabId) {
-            document.getElementById('cfg-buttons-container').classList.add('hidden');
+            const btns = document.getElementById('cfg-buttons-container');
+            if (btns) btns.classList.add('hidden');
+            
             document.querySelectorAll('.cfg-subview').forEach(el => el.classList.add('hidden'));
-            document.getElementById(tabId).classList.remove('hidden');
+            const target = document.getElementById(tabId);
+            if (target) target.classList.remove('hidden');
             
             if(tabId === 'cfg-sub-partners') renderConfigPartnersTable();
         }
 
         function resetConfigView() {
             document.querySelectorAll('.cfg-subview').forEach(el => el.classList.add('hidden'));
-            document.getElementById('cfg-buttons-container').classList.remove('hidden');
+            const btns = document.getElementById('cfg-buttons-container');
+            if (btns) btns.classList.remove('hidden');
         }
 
         function renderConfigPartnersTable() {
@@ -1116,8 +1137,12 @@
                 
                 const activeCount = state.orders.filter(o => o.status === 'En attente' || o.status === 'Acceptée').length;
                 const historyCount = state.orders.filter(o => o.status === 'Terminée' || o.status === 'Annulée').length;
-                document.getElementById('count-active-orders').innerText = activeCount;
-                document.getElementById('count-history-orders').innerText = historyCount;
+                
+                const activeEl = document.getElementById('count-active-orders');
+                const historyEl = document.getElementById('count-history-orders');
+                
+                if (activeEl) activeEl.innerText = activeCount;
+                if (historyEl) historyEl.innerText = historyCount;
 
                 renderAdminOrders();
                 ventilerCaissesActivites();
@@ -1152,10 +1177,15 @@
             state.caisses.maison = cMaison;
             state.caisses.env = cEnv;
 
-            if (document.getElementById('admin-caisse-centrale')) document.getElementById('admin-caisse-centrale').innerText = `${totalCentral.toLocaleString('fr-FR')} CDF`;
-            if (document.getElementById('admin-caisse-auto')) document.getElementById('admin-caisse-auto').innerText = `${cAuto.toLocaleString('fr-FR')} CDF`;
-            if (document.getElementById('admin-caisse-maison')) document.getElementById('admin-caisse-maison').innerText = `${cMaison.toLocaleString('fr-FR')} CDF`;
-            if (document.getElementById('admin-caisse-env')) document.getElementById('admin-caisse-env').innerText = `${cEnv.toLocaleString('fr-FR')} CDF`;
+            const elCentrale = document.getElementById('admin-caisse-centrale');
+            const elAuto = document.getElementById('admin-caisse-auto');
+            const elMaison = document.getElementById('admin-caisse-maison');
+            const elEnv = document.getElementById('admin-caisse-env');
+
+            if (elCentrale) elCentrale.innerText = `${totalCentral.toLocaleString('fr-FR')} CDF`;
+            if (elAuto) elAuto.innerText = `${cAuto.toLocaleString('fr-FR')} CDF`;
+            if (elMaison) elMaison.innerText = `${cMaison.toLocaleString('fr-FR')} CDF`;
+            if (elEnv) elEnv.innerText = `${cEnv.toLocaleString('fr-FR')} CDF`;
         }
 
         function renderAdminOrders() {
@@ -1163,9 +1193,14 @@
             if (!tbody) return;
             tbody.innerHTML = '';
 
-            const search = (document.getElementById('admin-search-order')?.value || '').toLowerCase();
-            const filterStatus = document.getElementById('admin-filter-order-status')?.value || 'Tous';
-            const filterAxe = document.getElementById('admin-filter-order-axe')?.value || 'Tous';
+            const searchInp = document.getElementById('admin-search-order');
+            const search = (searchInp?.value || '').toLowerCase();
+            
+            const filterStatInp = document.getElementById('admin-filter-order-status');
+            const filterStatus = filterStatInp?.value || 'Tous';
+            
+            const filterAxeInp = document.getElementById('admin-filter-order-axe');
+            const filterAxe = filterAxeInp?.value || 'Tous';
 
             const filteredOrders = state.orders.filter(o => {
                 if (filterStatus === 'Tous') {
@@ -1254,29 +1289,36 @@
             document.getElementById('dtl-order-com-breakdown').innerHTML = `Affectée à la <b>${axeNoms[axeKey]}</b>`;
 
             const badge = document.getElementById('dtl-order-badge');
-            badge.innerText = o.status;
-            badge.className = `px-2.5 py-0.5 rounded text-[10px] font-bold uppercase mt-1 inline-block ${
-                o.status === 'Terminée' ? 'bg-green-100 text-green-800' : (o.status === 'Annulée' ? 'bg-red-100 text-red-800' : 'bg-sky-100 text-sky-800')
-            }`;
+            if (badge) {
+                badge.innerText = o.status;
+                badge.className = `px-2.5 py-0.5 rounded text-[10px] font-bold uppercase mt-1 inline-block ${
+                    o.status === 'Terminée' ? 'bg-green-100 text-green-800' : (o.status === 'Annulée' ? 'bg-red-100 text-red-800' : 'bg-sky-100 text-sky-800')
+                }`;
+            }
 
             const partner = state.partners.find(p => String(p.id) === String(o.partner_id));
-            document.getElementById('dtl-partner-info').innerText = partner ? `${partner.name} (${partner.phone})` : (o.partner_id ? `Partenaire #${o.partner_id}` : 'Non assigné');
+            const pInfo = document.getElementById('dtl-partner-info');
+            if (pInfo) {
+                pInfo.innerText = partner ? `${partner.name} (${partner.phone})` : (o.partner_id ? `Partenaire #${o.partner_id}` : 'Non assigné');
+            }
 
             const ratingBox = document.getElementById('dtl-order-rating');
             const commentBox = document.getElementById('dtl-order-comment');
             if (o.rating_service) {
-                ratingBox.innerText = `${'⭐'.repeat(o.rating_service)} - ${getRatingLabel(o.rating_service)}`;
-                commentBox.innerText = o.comment ? `« ${o.comment} »` : 'Aucun avis rédigé.';
+                if(ratingBox) ratingBox.innerText = `${'⭐'.repeat(o.rating_service)} - ${getRatingLabel(o.rating_service)}`;
+                if(commentBox) commentBox.innerText = o.comment ? `« ${o.comment} »` : 'Aucun avis rédigé.';
             } else {
-                ratingBox.innerText = 'Prestation non notée';
-                commentBox.innerText = 'Le client n\'a pas encore évalué cette intervention.';
+                if(ratingBox) ratingBox.innerText = 'Prestation non notée';
+                if(commentBox) commentBox.innerText = 'Le client n\'a pas encore évalué cette intervention.';
             }
 
-            document.getElementById('modal-order-details').classList.remove('hidden');
+            const modal = document.getElementById('modal-order-details');
+            if (modal) modal.classList.remove('hidden');
         }
 
         function closeOrderDetailsModal() {
-            document.getElementById('modal-order-details').classList.add('hidden');
+            const modal = document.getElementById('modal-order-details');
+            if (modal) modal.classList.add('hidden');
         }
 
         async function loadSupabasePartners() {
@@ -1296,8 +1338,12 @@
             const tbody = document.getElementById('admin-partners-table');
             if (!tbody) return;
             tbody.innerHTML = '';
-            const search = (document.getElementById('admin-search-partner')?.value || '').toLowerCase();
-            const filterCommune = document.getElementById('admin-filter-commune')?.value || 'Toutes';
+            
+            const searchInp = document.getElementById('admin-search-partner');
+            const search = (searchInp?.value || '').toLowerCase();
+            
+            const filterComInp = document.getElementById('admin-filter-commune');
+            const filterCommune = filterComInp?.value || 'Toutes';
 
             state.partners.forEach(p => {
                 if (filterCommune !== 'Toutes' && p.commune !== filterCommune) return;
@@ -1334,64 +1380,83 @@
             const p = state.partners.find(x => String(x.id) === String(partnerId));
             if (!p) return;
 
-            document.getElementById('review-partner-id').value = p.id;
-            document.getElementById('review-partner-name').innerText = p.name;
-            document.getElementById('review-partner-phone').innerText = p.phone;
-            document.getElementById('review-partner-commune').innerText = p.commune;
-            document.getElementById('review-partner-specialty').innerText = p.specialty;
-            document.getElementById('review-partner-address').innerText = p.address || 'Aucune adresse physique renseignée';
+            const idInp = document.getElementById('review-partner-id');
+            if (idInp) idInp.value = p.id;
+            
+            const nameEl = document.getElementById('review-partner-name');
+            if (nameEl) nameEl.innerText = p.name;
+            
+            const phoneEl = document.getElementById('review-partner-phone');
+            if (phoneEl) phoneEl.innerText = p.phone;
+            
+            const comEl = document.getElementById('review-partner-commune');
+            if (comEl) comEl.innerText = p.commune;
+            
+            const specEl = document.getElementById('review-partner-specialty');
+            if (specEl) specEl.innerText = p.specialty;
+            
+            const addrEl = document.getElementById('review-partner-address');
+            if (addrEl) addrEl.innerText = p.address || 'Aucune adresse physique renseignée';
 
             const statusBadge = document.getElementById('review-partner-status');
-            statusBadge.innerText = p.status || 'En attente';
-            statusBadge.className = `px-2.5 py-0.5 rounded text-[10px] font-bold uppercase mt-1 inline-block ${
-                p.status === 'Actif' ? 'bg-green-100 text-green-800' : (p.status === 'Suspendu' ? 'bg-red-100 text-red-800' : 'bg-amber-100 text-amber-800')
-            }`;
+            if (statusBadge) {
+                statusBadge.innerText = p.status || 'En attente';
+                statusBadge.className = `px-2.5 py-0.5 rounded text-[10px] font-bold uppercase mt-1 inline-block ${
+                    p.status === 'Actif' ? 'bg-green-100 text-green-800' : (p.status === 'Suspendu' ? 'bg-red-100 text-red-800' : 'bg-amber-100 text-amber-800')
+                }`;
+            }
 
             const previewBox = document.getElementById('review-partner-doc-preview');
-            if (p.document_url) {
-                if (p.document_url.startsWith('data:image')) {
-                    previewBox.innerHTML = `<img src="${p.document_url}" alt="Pièce d'identité" class="max-h-64 object-contain rounded-lg border shadow-sm">`;
-                } else if (p.document_url.startsWith('data:application/pdf')) {
-                    previewBox.innerHTML = `
-                        <div class="text-center space-y-2 py-4">
-                            <span class="text-3xl">📄</span>
-                            <b class="block text-slate-800 text-xs">Document PDF Joint</b>
-                            <a href="${p.document_url}" download="piece_identite_${p.name}.pdf" class="px-4 py-1.5 bg-navy-800 text-white rounded-xl text-xs font-bold inline-block">Télécharger le PDF</a>
-                        </div>
-                    `;
+            if (previewBox) {
+                if (p.document_url) {
+                    if (p.document_url.startsWith('data:image')) {
+                        previewBox.innerHTML = `<img src="${p.document_url}" alt="Pièce d'identité" class="max-h-64 object-contain rounded-lg border shadow-sm">`;
+                    } else if (p.document_url.startsWith('data:application/pdf')) {
+                        previewBox.innerHTML = `
+                            <div class="text-center space-y-2 py-4">
+                                <span class="text-3xl">📄</span>
+                                <b class="block text-slate-800 text-xs">Document PDF Joint</b>
+                                <a href="${p.document_url}" download="piece_identite_${p.name}.pdf" class="px-4 py-1.5 bg-navy-800 text-white rounded-xl text-xs font-bold inline-block">Télécharger le PDF</a>
+                            </div>
+                        `;
+                    } else {
+                        previewBox.innerHTML = `<a href="${p.document_url}" target="_blank" class="text-aqua underline font-bold">Consulter la pièce jointe externe ↗</a>`;
+                    }
                 } else {
-                    previewBox.innerHTML = `<a href="${p.document_url}" target="_blank" class="text-aqua underline font-bold">Consulter la pièce jointe externe ↗</a>`;
+                    previewBox.innerHTML = `<span class="text-slate-400 italic">Aucun document n'a été téléversé pour ce dossier.</span>`;
                 }
-            } else {
-                previewBox.innerHTML = `<span class="text-slate-400 italic">Aucun document n'a été téléversé pour ce dossier.</span>`;
             }
 
             const actionBox = document.getElementById('review-action-buttons');
-            if (p.status === 'En attente de validation') {
-                actionBox.innerHTML = `
-                    <button onclick="deletePartnerRecord('${p.id}')" class="px-4 py-2.5 bg-red-100 hover:bg-red-200 text-red-700 font-bold rounded-xl text-xs uppercase tracking-wider">Rejeter</button>
-                    <button onclick="changePartnerValidationStatus('Actif')" class="px-5 py-2.5 bg-green-600 hover:bg-green-700 text-white font-black rounded-xl text-xs uppercase tracking-wider shadow">Valider & Activer</button>
-                `;
-            } else {
-                let toggleBtn = p.status === 'Actif' 
-                    ? `<button onclick="changePartnerValidationStatus('Suspendu')" class="px-5 py-2.5 bg-amber-100 hover:bg-amber-200 text-amber-800 font-bold rounded-xl text-xs uppercase tracking-wider">Suspendre</button>`
-                    : `<button onclick="changePartnerValidationStatus('Actif')" class="px-5 py-2.5 bg-green-600 hover:bg-green-700 text-white font-black rounded-xl text-xs uppercase tracking-wider shadow">Activer</button>`;
-                
-                actionBox.innerHTML = `
-                    <button onclick="deletePartnerRecord('${p.id}')" class="px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-xs uppercase tracking-wider shadow">Supprimer</button>
-                    ${toggleBtn}
-                `;
+            if (actionBox) {
+                if (p.status === 'En attente de validation') {
+                    actionBox.innerHTML = `
+                        <button onclick="deletePartnerRecord('${p.id}')" class="px-4 py-2.5 bg-red-100 hover:bg-red-200 text-red-700 font-bold rounded-xl text-xs uppercase tracking-wider">Rejeter</button>
+                        <button onclick="changePartnerValidationStatus('Actif')" class="px-5 py-2.5 bg-green-600 hover:bg-green-700 text-white font-black rounded-xl text-xs uppercase tracking-wider shadow">Valider & Activer</button>
+                    `;
+                } else {
+                    let toggleBtn = p.status === 'Actif' 
+                        ? `<button onclick="changePartnerValidationStatus('Suspendu')" class="px-5 py-2.5 bg-amber-100 hover:bg-amber-200 text-amber-800 font-bold rounded-xl text-xs uppercase tracking-wider">Suspendre</button>`
+                        : `<button onclick="changePartnerValidationStatus('Actif')" class="px-5 py-2.5 bg-green-600 hover:bg-green-700 text-white font-black rounded-xl text-xs uppercase tracking-wider shadow">Activer</button>`;
+                    
+                    actionBox.innerHTML = `
+                        <button onclick="deletePartnerRecord('${p.id}')" class="px-4 py-2.5 bg-red-600 hover:bg-red-700 text-white font-bold rounded-xl text-xs uppercase tracking-wider shadow">Supprimer</button>
+                        ${toggleBtn}
+                    `;
+                }
             }
 
-            document.getElementById('modal-partner-review').classList.remove('hidden');
+            const modal = document.getElementById('modal-partner-review');
+            if (modal) modal.classList.remove('hidden');
         }
 
         function closePartnerReviewModal() {
-            document.getElementById('modal-partner-review').classList.add('hidden');
+            const modal = document.getElementById('modal-partner-review');
+            if (modal) modal.classList.add('hidden');
         }
 
         async function changePartnerValidationStatus(newStatus) {
-            const partnerId = document.getElementById('review-partner-id').value;
+            const partnerId = document.getElementById('review-partner-id')?.value;
             if (!partnerId) return;
 
             const { error } = await db.from('partners').update({ status: newStatus }).eq('id', partnerId);
@@ -1417,9 +1482,15 @@
         }
 
         function payoutCommissions() {
-            const source = document.getElementById('admin-payout-caisse-source').value;
-            const amount = parseFloat(document.getElementById('admin-payout-amount').value) || 0;
-            const reseau = document.getElementById('admin-payout-network').value;
+            const sourceInp = document.getElementById('admin-payout-caisse-source');
+            const amountInp = document.getElementById('admin-payout-amount');
+            const netInp = document.getElementById('admin-payout-network');
+            
+            if(!sourceInp || !amountInp || !netInp) return;
+            
+            const source = sourceInp.value;
+            const amount = parseFloat(amountInp.value) || 0;
+            const reseau = netInp.value;
             const soldeDispo = state.caisses[source] || 0;
 
             if (amount <= 0 || amount > soldeDispo) {
@@ -1429,12 +1500,19 @@
             state.caisses[source] -= amount;
             if (source !== 'centrale') state.caisses.centrale -= amount;
 
-            document.getElementById('admin-caisse-centrale').innerText = `${state.caisses.centrale.toLocaleString('fr-FR')} CDF`;
-            document.getElementById('admin-caisse-auto').innerText = `${state.caisses.auto.toLocaleString('fr-FR')} CDF`;
-            document.getElementById('admin-caisse-maison').innerText = `${state.caisses.maison.toLocaleString('fr-FR')} CDF`;
-            document.getElementById('admin-caisse-env').innerText = `${state.caisses.env.toLocaleString('fr-FR')} CDF`;
+            const elCentrale = document.getElementById('admin-caisse-centrale');
+            if(elCentrale) elCentrale.innerText = `${state.caisses.centrale.toLocaleString('fr-FR')} CDF`;
+            
+            const elAuto = document.getElementById('admin-caisse-auto');
+            if(elAuto) elAuto.innerText = `${state.caisses.auto.toLocaleString('fr-FR')} CDF`;
+            
+            const elMaison = document.getElementById('admin-caisse-maison');
+            if(elMaison) elMaison.innerText = `${state.caisses.maison.toLocaleString('fr-FR')} CDF`;
+            
+            const elEnv = document.getElementById('admin-caisse-env');
+            if(elEnv) elEnv.innerText = `${state.caisses.env.toLocaleString('fr-FR')} CDF`;
 
-            document.getElementById('admin-payout-amount').value = '';
+            amountInp.value = '';
             showToast(`Retrait de ${amount.toLocaleString('fr-FR')} CDF validé vers ${reseau} !`, "success");
         }
 
@@ -1477,16 +1555,25 @@
         }
 
         function adjustManualAmountByMode() {
-            const mode = document.getElementById('admin-manual-recharge-mode').value;
-            const input = document.getElementById('admin-manual-recharge-amount');
-            input.value = mode === 'journalier' ? 15000 : (mode === 'mensuel' ? 150000 : '');
+            const modeInp = document.getElementById('admin-manual-recharge-mode');
+            const amountInp = document.getElementById('admin-manual-recharge-amount');
+            if(!modeInp || !amountInp) return;
+            
+            const mode = modeInp.value;
+            amountInp.value = mode === 'journalier' ? 15000 : (mode === 'mensuel' ? 150000 : '');
         }
 
         async function executeManualRecharge() {
-            const pId = document.getElementById('admin-manual-recharge-partner').value;
-            const mode = document.getElementById('admin-manual-recharge-mode').value;
-            const amount = parseFloat(document.getElementById('admin-manual-recharge-amount').value) || 0;
-            const p = state.partners.find(x => x.id === pId);
+            const pIdInp = document.getElementById('admin-manual-recharge-partner');
+            const modeInp = document.getElementById('admin-manual-recharge-mode');
+            const amountInp = document.getElementById('admin-manual-recharge-amount');
+            
+            if(!pIdInp || !modeInp || !amountInp) return;
+
+            const pId = pIdInp.value;
+            const mode = modeInp.value;
+            const amount = parseFloat(amountInp.value) || 0;
+            const p = state.partners.find(x => String(x.id) === String(pId));
             if (!p) return;
 
             let updatePayload = { billing_mode: mode };
@@ -1504,11 +1591,14 @@
         }
 
         function scrollPriceSection(elementId, offset) {
-            document.getElementById(elementId)?.scrollBy({ top: offset, behavior: 'smooth' });
+            const el = document.getElementById(elementId);
+            if (el) el.scrollBy({ top: offset, behavior: 'smooth' });
         }
 
         function onCommuneGroupChange() {
-            const groupKey = document.getElementById('admin-commune-group-select').value;
+            const selectEl = document.getElementById('admin-commune-group-select');
+            if(!selectEl) return;
+            const groupKey = selectEl.value;
             state.currentGroupKey = groupKey;
             const prices = state.pricesByGroup[groupKey] || state.pricesByGroup['standard'];
 
@@ -1541,7 +1631,9 @@
         function genererTableauStatistiques() {
             const tbody = document.getElementById('stats-table-body');
             if (!tbody) return;
-            const filtreAxe = document.getElementById('stats-filter-axe').value;
+            
+            const filtreAxeInp = document.getElementById('stats-filter-axe');
+            const filtreAxe = filtreAxeInp ? filtreAxeInp.value : 'Tous';
 
             tbody.innerHTML = communesList.map((c, i) => {
                 const ordersInCommune = state.orders.filter(o => {
@@ -1595,7 +1687,9 @@
         }
 
         async function saveCguContent() {
-            const text = document.getElementById('admin-cgu-textarea').value.trim();
+            const textA = document.getElementById('admin-cgu-textarea');
+            if(!textA) return;
+            const text = textA.value.trim();
             if (!text) return showToast("Le contenu ne peut pas être vide.", "error");
 
             const { error } = await db.from('system_settings').upsert({
@@ -1611,14 +1705,19 @@
         async function loadPublishedCgu() {
             const { data } = await db.from('system_settings').select('value').eq('key', 'cgu_content').single();
             if (data && data.value) {
-                document.getElementById('admin-cgu-textarea').value = data.value;
+                const ta = document.getElementById('admin-cgu-textarea');
+                if(ta) ta.value = data.value;
                 updateCguLivePreview();
             }
         }
 
         function updateCguLivePreview() {
-            const text = document.getElementById('admin-cgu-textarea').value;
-            document.getElementById('admin-cgu-preview').innerHTML = text.split('\n\n').map(p => `<p class="mb-2">${p.replace(/\n/g, '<br>')}</p>`).join('');
+            const ta = document.getElementById('admin-cgu-textarea');
+            const prev = document.getElementById('admin-cgu-preview');
+            if(!ta || !prev) return;
+            
+            const text = ta.value;
+            prev.innerHTML = text.split('\n\n').map(p => `<p class="mb-2">${p.replace(/\n/g, '<br>')}</p>`).join('');
         }
 
         function saveSysContactConfig() {
@@ -1640,8 +1739,12 @@
         }
 
         function addNewCommuneToZone() {
-            const name = document.getElementById('cfg-new-commune-name').value.trim();
-            const zone = document.getElementById('cfg-new-commune-zone').value;
+            const nameInp = document.getElementById('cfg-new-commune-name');
+            const zoneInp = document.getElementById('cfg-new-commune-zone');
+            if(!nameInp || !zoneInp) return;
+            
+            const name = nameInp.value.trim();
+            const zone = zoneInp.value;
             if (!name) return showToast("Nom de commune requis.", "error");
 
             if (communesList.some(c => c.name.toLowerCase() === name.toLowerCase())) {
@@ -1649,7 +1752,7 @@
             }
 
             communesList.push({ name, zone });
-            document.getElementById('cfg-new-commune-name').value = '';
+            nameInp.value = '';
             renderCommunesTable();
             genererTableauStatistiques();
             showToast(`Commune ${name} ajoutée !`);
@@ -1679,16 +1782,22 @@
         }
 
         function createNewAdminAccount() {
-            const name = document.getElementById('cfg-new-user-name').value.trim();
-            const login = document.getElementById('cfg-new-user-login').value.trim();
-            const role = document.getElementById('cfg-new-user-role').value;
-            const pass = document.getElementById('cfg-new-user-pass').value.trim();
+            const nameInp = document.getElementById('cfg-new-user-name');
+            const loginInp = document.getElementById('cfg-new-user-login');
+            const roleInp = document.getElementById('cfg-new-user-role');
+            const passInp = document.getElementById('cfg-new-user-pass');
+            if(!nameInp || !loginInp || !roleInp || !passInp) return;
+            
+            const name = nameInp.value.trim();
+            const login = loginInp.value.trim();
+            const role = roleInp.value;
+            const pass = passInp.value.trim();
             if (!name || !login || !pass) return showToast("Remplissez tous les champs.", "error");
 
             state.adminUsers.push({ id: `adm_${Date.now()}`, name, login, role, pass });
-            document.getElementById('cfg-new-user-name').value = '';
-            document.getElementById('cfg-new-user-login').value = '';
-            document.getElementById('cfg-new-user-pass').value = '';
+            nameInp.value = '';
+            loginInp.value = '';
+            passInp.value = '';
             renderAdminUsersTable();
             showToast("Nouvel accès administrateur créé.");
         }
@@ -1696,26 +1805,49 @@
         function openEditUserModal(id) {
             const user = state.adminUsers.find(u => u.id === id);
             if (!user) return;
-            document.getElementById('edit-user-id').value = user.id;
-            document.getElementById('edit-user-name').value = user.name;
-            document.getElementById('edit-user-login').value = user.login;
-            document.getElementById('edit-user-role').value = user.role;
-            document.getElementById('edit-user-pass').value = user.pass;
-            document.getElementById('admin-edit-user-modal').classList.remove('hidden');
+            const idInp = document.getElementById('edit-user-id');
+            if(idInp) idInp.value = user.id;
+            
+            const nameInp = document.getElementById('edit-user-name');
+            if(nameInp) nameInp.value = user.name;
+            
+            const logInp = document.getElementById('edit-user-login');
+            if(logInp) logInp.value = user.login;
+            
+            const roleInp = document.getElementById('edit-user-role');
+            if(roleInp) roleInp.value = user.role;
+            
+            const passInp = document.getElementById('edit-user-pass');
+            if(passInp) passInp.value = user.pass;
+            
+            const modal = document.getElementById('admin-edit-user-modal');
+            if(modal) modal.classList.remove('hidden');
         }
 
         function closeEditUserModal() {
-            document.getElementById('admin-edit-user-modal').classList.add('hidden');
+            const modal = document.getElementById('admin-edit-user-modal');
+            if(modal) modal.classList.add('hidden');
         }
 
         function saveEditedAdminUser() {
-            const id = document.getElementById('edit-user-id').value;
+            const idInp = document.getElementById('edit-user-id');
+            if(!idInp) return;
+            
+            const id = idInp.value;
             const user = state.adminUsers.find(u => u.id === id);
             if (user) {
-                user.name = document.getElementById('edit-user-name').value.trim();
-                user.login = document.getElementById('edit-user-login').value.trim();
-                user.role = document.getElementById('edit-user-role').value;
-                user.pass = document.getElementById('edit-user-pass').value.trim();
+                const nameInp = document.getElementById('edit-user-name');
+                if(nameInp) user.name = nameInp.value.trim();
+                
+                const logInp = document.getElementById('edit-user-login');
+                if(logInp) user.login = logInp.value.trim();
+                
+                const roleInp = document.getElementById('edit-user-role');
+                if(roleInp) user.role = roleInp.value;
+                
+                const passInp = document.getElementById('edit-user-pass');
+                if(passInp) user.pass = passInp.value.trim();
+                
                 renderAdminUsersTable();
                 closeEditUserModal();
                 showToast("Accès administrateur modifié.");
