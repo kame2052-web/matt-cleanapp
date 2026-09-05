@@ -158,7 +158,7 @@
                 </div>
             </div>
 
-            <!-- ONGLET 2: GESTION PARTENAIRES (AVEC VALIDATION DES DOSSIERS) -->
+            <!-- ONGLET 2: GESTION PARTENAIRES -->
             <div id="admin-partenaires" class="admin-subview hidden space-y-4">
                 <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3">
                     <div>
@@ -758,119 +758,6 @@
         </div>
     </main>
 
-    <!-- MODALE EXAMEN DU DOSSIER PARTENAIRE (PIÈCE D'IDENTITÉ & ADRESSE) -->
-    <div id="modal-partner-review" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
-        <div class="bg-white text-slate-900 w-full max-w-lg rounded-3xl shadow-2xl p-6 border border-slate-200 space-y-4 relative max-h-[90vh] overflow-y-auto custom-scrollbar">
-            <button onclick="closePartnerReviewModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 font-bold text-xl">✕</button>
-            
-            <div class="border-b pb-3">
-                <h3 class="text-lg font-black text-navy-800 flex items-center gap-2">
-                    <span>📄</span> Gestion du Prestataire
-                </h3>
-                <span id="review-partner-status" class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase mt-1 inline-block"></span>
-            </div>
-
-            <input type="hidden" id="review-partner-id">
-
-            <div class="space-y-3 text-xs">
-                <div class="grid grid-cols-2 gap-2 bg-slate-50 p-3 rounded-2xl border">
-                    <div>
-                        <span class="text-[10px] font-bold text-slate-500 uppercase block">Raison Sociale / Nom :</span>
-                        <b class="text-slate-800 text-sm" id="review-partner-name">-</b>
-                    </div>
-                    <div>
-                        <span class="text-[10px] font-bold text-slate-500 uppercase block">Téléphone / Contact :</span>
-                        <b class="font-mono text-slate-800 text-sm" id="review-partner-phone">-</b>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-2 bg-slate-50 p-3 rounded-2xl border">
-                    <div>
-                        <span class="text-[10px] font-bold text-slate-500 uppercase block">Commune d'Intervention :</span>
-                        <b class="text-navy-800" id="review-partner-commune">-</b>
-                    </div>
-                    <div>
-                        <span class="text-[10px] font-bold text-slate-500 uppercase block">Spécialité Déclarée :</span>
-                        <b class="text-mattOrange" id="review-partner-specialty">-</b>
-                    </div>
-                </div>
-
-                <div class="bg-slate-50 p-3 rounded-2xl border">
-                    <span class="text-[10px] font-bold text-slate-500 uppercase block mb-1">📍 Adresse Complète d'Exploitation / Siège :</span>
-                    <p class="font-bold text-slate-800" id="review-partner-address">Non renseignée</p>
-                </div>
-
-                <!-- Aperçu de la pièce d'identité -->
-                <div class="bg-slate-50 p-3 rounded-2xl border space-y-2">
-                    <span class="text-[10px] font-black text-navy-800 uppercase block">📑 Pièce d'Identité ou Justificatif Joint :</span>
-                    <div id="review-partner-doc-preview" class="w-full flex items-center justify-center border rounded-xl overflow-hidden min-h-[160px] bg-white p-2">
-                        <span class="text-slate-400">Aucun document joint</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Actions dynamiques basées sur le statut -->
-            <div class="flex justify-end gap-2 pt-3 border-t w-full" id="review-action-buttons"></div>
-        </div>
-    </div>
-
-    <!-- MODALE AUDIT COMMANDE -->
-    <div id="modal-order-details" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
-        <div class="bg-white text-slate-900 w-full max-w-xl rounded-3xl shadow-2xl p-6 border border-slate-200 space-y-4 relative">
-            <button onclick="closeOrderDetailsModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 font-bold text-xl">✕</button>
-            
-            <div class="border-b pb-3">
-                <h3 class="text-lg font-black text-navy-800 flex items-center gap-2">
-                    <span>📜</span> Fiche Historique - Commande #<span id="dtl-order-id"></span>
-                </h3>
-                <span id="dtl-order-badge" class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase mt-1 inline-block"></span>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                <div class="bg-slate-50 p-3 rounded-xl border">
-                    <span class="text-[10px] text-slate-400 uppercase font-bold block mb-1">👤 Demandeur (Client)</span>
-                    <b class="text-slate-800 text-sm block" id="dtl-client-name"></b>
-                    <span class="font-mono text-slate-600 font-bold" id="dtl-client-phone"></span>
-                </div>
-                <div class="bg-slate-50 p-3 rounded-xl border">
-                    <span class="text-[10px] text-slate-400 uppercase font-bold block mb-1">🤝 Prestataire Attribué</span>
-                    <b class="text-slate-800 text-sm block" id="dtl-partner-info">Non assigné</b>
-                </div>
-            </div>
-
-            <div class="bg-slate-50 p-3 rounded-xl border text-xs space-y-1.5">
-                <div><span class="text-slate-500 font-bold">Prestations :</span> <b id="dtl-order-desc" class="text-slate-800"></b></div>
-                <div><span class="text-slate-500 font-bold">Localisation :</span> <b id="dtl-order-location" class="text-slate-800"></b></div>
-                <div><span class="text-slate-500 font-bold">Planification :</span> <span id="dtl-order-datetime" class="font-bold text-navy-800"></span></div>
-                <div><span class="text-slate-500 font-bold">Conditions terrain :</span> <span id="dtl-order-logistics" class="font-semibold text-aqua"></span></div>
-            </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-                <div class="bg-sky-50 p-3 rounded-xl border border-sky-200">
-                    <span class="text-[10px] text-sky-800 uppercase font-bold block">Montant Brut Facturé</span>
-                    <b class="text-base font-black text-navy-800 font-mono" id="dtl-order-brut">0 CDF</b>
-                </div>
-                <div class="bg-green-50 p-3 rounded-xl border border-green-200 space-y-1">
-                    <span class="text-[10px] text-green-800 uppercase font-bold block">Commission MATT Totale (15%)</span>
-                    <b class="text-base font-black text-green-700 font-mono block" id="dtl-order-com">0 CDF</b>
-                    <div id="dtl-order-com-breakdown" class="text-[10px] font-bold text-slate-600 pt-1 border-t border-green-200"></div>
-                </div>
-            </div>
-
-            <div class="bg-amber-50/60 p-3 rounded-xl border border-amber-200 text-xs space-y-1">
-                <span class="text-[10px] font-black text-amber-800 uppercase block">⭐ Évaluation & Avis du Client</span>
-                <div id="dtl-order-rating" class="text-mattOrange font-bold text-sm">Non notée</div>
-                <p id="dtl-order-comment" class="text-slate-600 italic">Aucun avis déposé.</p>
-            </div>
-
-            <div class="flex justify-end pt-2 border-t">
-                <button onclick="closeOrderDetailsModal()" class="px-5 py-2.5 bg-navy-800 text-white rounded-xl text-xs font-bold uppercase tracking-wider">
-                    Fermer la Fiche
-                </button>
-            </div>
-        </div>
-    </div>
-
     <!-- MODALE MODIFICATION ADMIN MASTER -->
     <div id="admin-edit-user-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
         <div class="bg-white text-slate-900 w-full max-w-md rounded-2xl shadow-2xl p-6 border border-slate-200 flex flex-col gap-4 relative">
@@ -912,7 +799,6 @@
         </div>
     </footer>
 
-    <!-- LOGIQUE JAVASCRIPT ET CONNECTEURS SUPABASE -->
     <script>
         const SUPABASE_URL = "https://vbriworyscymnmtzzdny.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZicml3b3J5c2N5bW5tdHp6ZG55Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzNzQwNTEsImV4cCI6MjEwMzk1MDA1MX0.VBZupVKj0srae0NT5BNZ0OeaIv9pAl2bl5L-Rd8ocJk";
@@ -1032,7 +918,6 @@
             MASTER_PASS = newPass;
             localStorage.setItem('matt_master_pass', MASTER_PASS);
             
-            // Mise à jour de l'admin par défaut
             const masterAdmin = state.adminUsers.find(u => u.login === "0980000338");
             if(masterAdmin) masterAdmin.pass = MASTER_PASS;
             
@@ -1142,21 +1027,6 @@
         }
 
         function switchAdminTab(tabId, btn) {
-            if (tabId === 'admin-config') {
-                const role = localStorage.getItem('matt_admin_role');
-                if (role !== 'Administrateur Master') {
-                    document.getElementById('cfg-lock-screen').classList.remove('hidden');
-                    document.getElementById('cfg-unlocked-content').classList.add('hidden');
-                } else {
-                    document.getElementById('cfg-lock-screen').classList.add('hidden');
-                    document.getElementById('cfg-unlocked-content').classList.remove('hidden');
-                }
-                resetConfigView();
-                
-                const gPassInput = document.getElementById('cfg-global-master-pass');
-                if(gPassInput) gPassInput.value = MASTER_PASS;
-            }
-
             document.querySelectorAll('.admin-subview').forEach(s => s.classList.add('hidden'));
             document.querySelectorAll('.admin-tab-btn').forEach(b => {
                 b.className = "admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap";
@@ -1167,6 +1037,14 @@
             if (btn) btn.className = "admin-tab-btn px-4 py-2.5 bg-navy-800 text-white rounded-xl whitespace-nowrap active shadow-sm";
 
             if (tabId === 'admin-stats') genererTableauStatistiques();
+            
+            if (tabId === 'admin-config') {
+                document.getElementById('cfg-lock-screen').classList.remove('hidden');
+                document.getElementById('cfg-unlocked-content').classList.add('hidden');
+                const gPassInput = document.getElementById('cfg-master-pass');
+                if(gPassInput) gPassInput.value = '';
+                resetConfigView();
+            }
             if (tabId === 'admin-prix') onCommuneGroupChange();
         }
 
@@ -1488,7 +1366,6 @@
                 if (!error && data) {
                     state.partners = data;
                     renderAdminPartners();
-                    renderConfigPartnersTable();
                     const sel = document.getElementById('admin-manual-recharge-partner');
                     if (sel) {
                         sel.innerHTML = state.partners.map(p => `<option value="${p.id}">${p.name} (${p.commune})</option>`).join('');
@@ -1818,9 +1695,15 @@
                 const filtreAxeInp = document.getElementById('stats-filter-axe');
                 const filtreAxe = filtreAxeInp ? filtreAxeInp.value : 'Tous';
 
+                // Fonction de nettoyage robuste pour comparer les communes (ignorer accents, majuscules et espaces)
+                const cleanStr = str => (str||'').normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
+
                 let htmlContent = communesList.map((c, i) => {
+                    const communeClean = cleanStr(c.name);
+                    
                     const ordersInCommune = state.orders.filter(o => {
-                        if (o.commune !== c.name) return false;
+                        if (cleanStr(o.commune) !== communeClean) return false;
+                        
                         const axe = determinerAxeCommande(o);
                         if (filtreAxe === "Auto" && axe !== 'auto') return false;
                         if (filtreAxe === "Maison" && axe !== 'maison') return false;
@@ -1832,11 +1715,14 @@
                     let comCommune = 0;
 
                     ordersInCommune.forEach(o => {
-                        brutCommune += Number(o.total_amount || 0);
                         if (o.status === 'Acceptée' || o.status === 'Terminée') {
+                            brutCommune += Number(o.total_amount || 0);
                             comCommune += Number(o.commission || 0);
                         }
                     });
+
+                    // Ne pas afficher la commune si elle n'a aucune donnée d'activité
+                    if (ordersInCommune.length === 0) return '';
 
                     return `
                         <tr class="hover:bg-slate-50 border-b">
@@ -1851,7 +1737,7 @@
                 }).join('');
 
                 if(htmlContent.trim() === '') {
-                    htmlContent = `<tr><td colspan="6" class="p-6 text-center text-slate-400 font-medium">Aucune donnée d'activité disponible.</td></tr>`;
+                    htmlContent = `<tr><td colspan="6" class="p-6 text-center text-slate-400 font-medium">Aucune donnée d'activité trouvée pour ce filtre.</td></tr>`;
                 }
                 
                 tbody.innerHTML = htmlContent;
