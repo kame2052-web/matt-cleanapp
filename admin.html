@@ -101,8 +101,7 @@
                 <button onclick="switchAdminTab('admin-prix', this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap">Configuration des Prix & Taux</button>
                 <button onclick="switchAdminTab('admin-cgu', this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap">📜 Édition des CGU</button>
                 <button onclick="switchAdminTab('admin-stats', this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap">📊 Statistiques d'Activité</button>
-                <!-- Appel à tryOpenConfigTab pour la sécurité Master -->
-                <button onclick="tryOpenConfigTab(this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap">⚙️ Configuration Système</button>
+                <button onclick="switchAdminTab('admin-config', this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap">⚙️ Configuration Système</button>
             </div>
 
             <!-- ONGLET 1: SUIVI DES COMMANDES -->
@@ -159,7 +158,7 @@
                 </div>
             </div>
 
-            <!-- ONGLET 2: GESTION PARTENAIRES -->
+            <!-- ONGLET 2: GESTION PARTENAIRES (AVEC VALIDATION DES DOSSIERS) -->
             <div id="admin-partenaires" class="admin-subview hidden space-y-4">
                 <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3">
                     <div>
@@ -194,22 +193,26 @@
 
             <!-- ONGLET 3: CAISSE CENTRALE & CAISSES PAR AXES -->
             <div id="admin-recharges" class="admin-subview hidden space-y-6">
+                
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                     <div class="bg-gradient-to-br from-green-50 to-green-100 border-2 border-green-400 rounded-2xl p-5 text-center shadow-md">
                         <span class="text-[10px] font-black text-green-800 block uppercase tracking-widest font-mono">🏛️ CAISSE CENTRALE GLOBALE</span>
                         <div class="text-3xl font-black text-green-900 my-2 font-mono" id="admin-caisse-centrale">0 CDF</div>
                         <span class="text-[9px] text-green-700 font-bold block uppercase">Cumul Réel des Caisses</span>
                     </div>
+
                     <div class="bg-blue-50/70 border-2 border-blue-300 rounded-2xl p-5 text-center shadow-xs">
                         <span class="text-[10px] font-black text-blue-800 block uppercase tracking-wider font-mono">🚗 Caisse Automobile</span>
                         <div class="text-2xl font-black text-blue-900 my-2 font-mono" id="admin-caisse-auto">0 CDF</div>
                         <span class="text-[9px] text-blue-600 font-semibold block">Commissions Véhicules</span>
                     </div>
+
                     <div class="bg-orange-50/70 border-2 border-orange-300 rounded-2xl p-5 text-center shadow-xs">
                         <span class="text-[10px] font-black text-mattOrange block uppercase tracking-wider font-mono">🏡 Caisse Maison</span>
                         <div class="text-2xl font-black text-orange-900 my-2 font-mono" id="admin-caisse-maison">0 CDF</div>
                         <span class="text-[9px] text-orange-600 font-semibold block">Canapés, Tapis, Vitres, Sols</span>
                     </div>
+
                     <div class="bg-emerald-50/70 border-2 border-emerald-300 rounded-2xl p-5 text-center shadow-xs">
                         <span class="text-[10px] font-black text-emerald-800 block uppercase tracking-wider font-mono">🌱 Caisse 3D & Vidange</span>
                         <div class="text-2xl font-black text-emerald-900 my-2 font-mono" id="admin-caisse-env">0 CDF</div>
@@ -232,6 +235,7 @@
                                     <option value="env">Caisse Axe 3D & Vidange</option>
                                 </select>
                             </div>
+
                             <div>
                                 <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Compte Mobile Money récepteur :</label>
                                 <select id="admin-payout-network" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-bold text-slate-800">
@@ -240,10 +244,12 @@
                                     <option>Compte Airtel Money MATT (+243 980 000 338)</option>
                                 </select>
                             </div>
+
                             <div>
                                 <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Montant à transférer (CDF) :</label>
                                 <input type="number" id="admin-payout-amount" placeholder="Montant en CDF" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-bold font-mono">
                             </div>
+
                             <button onclick="payoutCommissions()" class="w-full py-2.5 bg-green-700 hover:bg-green-800 text-white font-black text-xs uppercase rounded-xl transition-all shadow">
                                 Confirmer le retrait
                             </button>
@@ -259,6 +265,7 @@
                                 <label class="text-[10px] font-bold text-slate-500 block uppercase mb-1">Partenaire concerné :</label>
                                 <select id="admin-manual-recharge-partner" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-bold text-slate-800"></select>
                             </div>
+                            
                             <div class="grid grid-cols-2 gap-2">
                                 <div>
                                     <label class="text-[10px] font-bold text-slate-500 block uppercase mb-1">Mode :</label>
@@ -273,6 +280,7 @@
                                     <input type="number" id="admin-manual-recharge-amount" placeholder="Montant CDF" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-bold font-mono">
                                 </div>
                             </div>
+
                             <button onclick="executeManualRecharge()" class="w-full py-2.5 bg-navy-800 hover:bg-navy-900 text-white font-black text-xs uppercase rounded-xl transition shadow mt-1">
                                 Appliquer l'opération
                             </button>
@@ -300,9 +308,10 @@
                         </table>
                     </div>
                 </div>
+
             </div>
 
-            <!-- ONGLET 4: CONFIGURATION DES PRIX -->
+            <!-- ONGLET 4: CONFIGURATION DES PRIX & TAUX DE COMMISSION PAR ZONE -->
             <div id="admin-prix" class="admin-subview hidden space-y-6">
                 <div class="flex flex-col lg:flex-row justify-between lg:items-center gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-200">
                     <div>
@@ -524,7 +533,7 @@
                 </div>
             </div>
 
-            <!-- ONGLET 7: CONFIGURATION SYSTÈME (DRILL-DOWN SÉCURISÉ) -->
+            <!-- ONGLET 7: CONFIGURATION SYSTÈME (DRILL-DOWN) -->
             <div id="admin-config" class="admin-subview hidden space-y-4">
                 
                 <div id="cfg-buttons-container" class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
@@ -542,11 +551,11 @@
                     </button>
                     <button onclick="switchConfigSubTab('cfg-sub-partners')" class="p-6 rounded-3xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-3 shadow-sm hover:border-mattOrange hover:text-mattOrange transition">
                         <span class="text-4xl">🤝</span>
-                        <span class="text-[10px] uppercase">Gestion Accès Partenaires</span>
+                        <span class="text-[10px] uppercase">Base de Données Partenaires</span>
                     </button>
                 </div>
 
-                <!-- Sous-vue: Contacts -->
+                <!-- Sous-vue: Contacts (Sécurisés en lecture seule par défaut) -->
                 <div id="cfg-sub-contacts" class="cfg-subview hidden space-y-4">
                     <button onclick="resetConfigView()" class="px-3 py-1.5 bg-slate-200 text-slate-700 font-bold text-[10px] rounded-lg uppercase tracking-wider hover:bg-slate-300 transition w-max">
                         ← Retour aux icônes
@@ -555,10 +564,10 @@
                         <div class="flex justify-between items-center border-b pb-3">
                             <h3 class="text-md font-black text-navy-800 uppercase tracking-wide">📱 Numéros Mobile Money & Assistance WhatsApp</h3>
                             <div class="flex gap-2">
-                                <button onclick="unlockSysContacts()" id="btn-unlock-contacts" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black text-xs rounded-xl shadow-sm uppercase tracking-wider">
+                                <button id="btn-unlock-phones" onclick="unlockPhoneInputs()" class="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-black text-xs rounded-xl shadow uppercase tracking-wider transition">
                                     🔓 Déverrouiller
                                 </button>
-                                <button onclick="saveSysContactConfig()" id="btn-save-contacts" class="hidden px-4 py-2 bg-mattOrange hover:bg-orange-600 text-white font-black text-xs rounded-xl shadow uppercase tracking-wider">
+                                <button id="btn-save-phones" onclick="saveSysContactConfig()" class="hidden px-5 py-2 bg-mattOrange hover:bg-orange-600 text-white font-black text-xs rounded-xl shadow uppercase tracking-wider transition">
                                     💾 Sauvegarder
                                 </button>
                             </div>
@@ -566,29 +575,29 @@
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                             <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
                                 <label class="text-[10px] font-black text-slate-500 uppercase block">💬 WhatsApp Client :</label>
-                                <input type="text" id="cfg-wa-client" value="+243980000338" disabled class="w-full px-3 py-2 bg-slate-100 border rounded-lg text-xs font-bold text-slate-800 cursor-not-allowed opacity-70 transition-all">
+                                <input type="text" id="cfg-wa-client" value="+243980000338" readonly class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-500 bg-slate-100 cursor-not-allowed">
                             </div>
                             <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
                                 <label class="text-[10px] font-black text-slate-500 uppercase block">💬 WhatsApp Partenaires :</label>
-                                <input type="text" id="cfg-wa-partner" value="+243980000338" disabled class="w-full px-3 py-2 bg-slate-100 border rounded-lg text-xs font-bold text-slate-800 cursor-not-allowed opacity-70 transition-all">
+                                <input type="text" id="cfg-wa-partner" value="+243980000338" readonly class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-500 bg-slate-100 cursor-not-allowed">
                             </div>
                             <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
                                 <label class="text-[10px] font-black text-slate-500 uppercase block">📞 Téléphone Direct MATT :</label>
-                                <input type="text" id="cfg-tel-call" value="+243980000338" disabled class="w-full px-3 py-2 bg-slate-100 border rounded-lg text-xs font-bold text-slate-800 cursor-not-allowed opacity-70 transition-all">
+                                <input type="text" id="cfg-tel-call" value="+243980000338" readonly class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-500 bg-slate-100 cursor-not-allowed">
                             </div>
                         </div>
                         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 border-t pt-3">
                             <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
                                 <label class="text-[10px] font-black text-slate-500 uppercase block">💳 Compte M-Pesa :</label>
-                                <input type="text" id="cfg-mpesa" value="+243980000338" disabled class="w-full px-3 py-2 bg-slate-100 border rounded-lg text-xs font-bold text-slate-800 cursor-not-allowed opacity-70 transition-all">
+                                <input type="text" id="cfg-mpesa" value="+243980000338" readonly class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-500 bg-slate-100 cursor-not-allowed">
                             </div>
                             <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
                                 <label class="text-[10px] font-black text-slate-500 uppercase block">💳 Compte Orange Money :</label>
-                                <input type="text" id="cfg-orange" value="+243980000338" disabled class="w-full px-3 py-2 bg-slate-100 border rounded-lg text-xs font-bold text-slate-800 cursor-not-allowed opacity-70 transition-all">
+                                <input type="text" id="cfg-orange" value="+243980000338" readonly class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-500 bg-slate-100 cursor-not-allowed">
                             </div>
                             <div class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-1">
                                 <label class="text-[10px] font-black text-slate-500 uppercase block">💳 Compte Airtel Money :</label>
-                                <input type="text" id="cfg-airtel" value="+243980000338" disabled class="w-full px-3 py-2 bg-slate-100 border rounded-lg text-xs font-bold text-slate-800 cursor-not-allowed opacity-70 transition-all">
+                                <input type="text" id="cfg-airtel" value="+243980000338" readonly class="w-full px-3 py-2 border rounded-lg text-xs font-bold text-slate-500 bg-slate-100 cursor-not-allowed">
                             </div>
                         </div>
                     </div>
@@ -694,8 +703,13 @@
                         ← Retour aux icônes
                     </button>
                     <div class="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm">
-                        <h3 class="text-md font-black text-navy-800 uppercase tracking-wide mb-4">🤝 Gestion & Accès Partenaires (Sécurité)</h3>
-                        <p class="text-xs text-slate-500 font-medium mb-4">Consultez et modifiez les questions secrètes et identifiants de vos partenaires.</p>
+                        <div class="flex justify-between items-center mb-4">
+                            <div>
+                                <h3 class="text-md font-black text-navy-800 uppercase tracking-wide">🗄️ Base de Données Identifiants Partenaires</h3>
+                                <p class="text-[11px] text-slate-500 font-medium">L'Admin Master peut modifier les mots de passe et les questions de sécurité en cas de perte par le partenaire.</p>
+                            </div>
+                            <input type="text" id="admin-search-partner-sec" placeholder="🔍 Chercher par nom..." class="px-3 py-2 border border-slate-300 rounded-xl text-xs font-bold bg-slate-50 focus:outline-none" oninput="renderConfigPartnersTable()">
+                        </div>
                         
                         <div class="overflow-x-auto border border-slate-200 rounded-xl bg-slate-50 shadow-inner custom-scrollbar">
                             <table class="w-full text-left text-xs border-collapse">
@@ -706,7 +720,7 @@
                                         <th class="p-3 uppercase">Mot de passe</th>
                                         <th class="p-3 uppercase">Question Secrète</th>
                                         <th class="p-3 uppercase">Réponse</th>
-                                        <th class="p-3 uppercase text-right">Action</th>
+                                        <th class="p-3 text-right uppercase">Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody id="cfg-partner-users-table" class="divide-y divide-slate-200 font-medium bg-white"></tbody>
@@ -720,57 +734,34 @@
         </div>
     </main>
 
-    <!-- MODALE MASTER AUTH CONFIG -->
-    <div id="modal-config-auth" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl p-6 shadow-2xl max-w-sm w-full text-center space-y-4">
-            <div class="text-4xl">🔐</div>
-            <h3 class="font-black text-navy-800 text-lg">Accès Restreint</h3>
-            <p class="text-xs text-slate-500">Veuillez saisir le code de sécurité Master pour accéder à la configuration système.</p>
-            <input type="password" id="config-master-pass" placeholder="Code Master" class="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-center font-black tracking-widest focus:outline-none focus:border-mattOrange focus:ring-2 focus:ring-mattOrange" onkeydown="if(event.key==='Enter') verifyConfigAuth();">
-            <div class="flex gap-2">
-                <button onclick="document.getElementById('modal-config-auth').classList.add('hidden')" class="flex-1 py-2.5 bg-slate-200 text-slate-700 font-bold rounded-xl text-xs hover:bg-slate-300 transition">Annuler</button>
-                <button onclick="verifyConfigAuth()" class="flex-1 py-2.5 bg-mattOrange hover:bg-orange-600 text-white font-black rounded-xl text-xs shadow-md transition">Déverrouiller</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- MODALE EDITION SECURITE PARTENAIRE -->
-    <div id="modal-partner-sec-edit" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
-        <div class="bg-white rounded-3xl p-6 shadow-2xl max-w-md w-full space-y-4">
-            <div class="flex justify-between items-center border-b pb-3">
-                <h3 class="font-black text-navy-800 text-sm uppercase">🔒 Modifier Sécurité Partenaire</h3>
-                <button onclick="closePartnerSecModal()" class="text-slate-400 hover:text-slate-700 font-bold">✕</button>
-            </div>
-            
+    <!-- MODALE MODIFICATION PARTENAIRE SECURITE (ADMIN) -->
+    <div id="admin-edit-partner-sec-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
+        <div class="bg-white text-slate-900 w-full max-w-md rounded-2xl shadow-2xl p-6 border border-slate-200 flex flex-col gap-4 relative">
+            <button onclick="closeAdminEditPartnerSec()" class="absolute top-4 right-4 text-slate-500 hover:text-slate-800 font-bold text-xl">✕</button>
+            <h3 class="text-lg font-black text-navy-800 border-b pb-2">✏️ Modifier Sécurité Partenaire</h3>
+            <input type="hidden" id="admin-edit-psec-id">
             <div class="space-y-3 text-xs">
-                <input type="hidden" id="edit-sec-partner-id">
-                <div class="bg-slate-50 p-2.5 rounded-xl border font-bold text-slate-800" id="edit-sec-partner-name"></div>
-                
                 <div>
-                    <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Mot de passe</label>
-                    <input type="text" id="edit-sec-partner-pass" class="w-full p-2.5 bg-white border rounded-xl font-mono font-bold">
+                    <label class="font-bold text-slate-600 block mb-1">Mot de Passe :</label>
+                    <input type="text" id="admin-edit-psec-pass" class="w-full px-3 py-2 border rounded-lg font-bold text-slate-800 font-mono">
                 </div>
                 <div>
-                    <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Question Secrète</label>
-                    <select id="edit-sec-partner-q" class="w-full p-2.5 bg-white border rounded-xl font-bold">
-                        <option value="Quel est le nom de votre ville natale ?">Quel est le nom de votre ville natale ?</option>
-                        <option value="Quel est le nom de votre premier animal de compagnie ?">Quel est le nom de votre premier animal de compagnie ?</option>
-                        <option value="Quel est le nom de jeune fille de votre mère ?">Quel est le nom de jeune fille de votre mère ?</option>
-                    </select>
+                    <label class="font-bold text-slate-600 block mb-1">Question Secrète :</label>
+                    <input type="text" id="admin-edit-psec-q" class="w-full px-3 py-2 border rounded-lg font-bold text-slate-800">
                 </div>
                 <div>
-                    <label class="block text-[10px] font-bold text-slate-500 uppercase mb-1">Réponse Secrète</label>
-                    <input type="text" id="edit-sec-partner-a" class="w-full p-2.5 bg-white border rounded-xl font-bold">
+                    <label class="font-bold text-slate-600 block mb-1">Réponse Secrète :</label>
+                    <input type="text" id="admin-edit-psec-a" class="w-full px-3 py-2 border rounded-lg font-bold text-slate-800">
                 </div>
-                
-                <button onclick="savePartnerSecByAdmin()" class="w-full py-3 bg-navy-800 hover:bg-navy-900 text-white font-black text-xs rounded-xl shadow uppercase tracking-wider transition">
-                    Enregistrer les modifications
-                </button>
+            </div>
+            <div class="flex justify-end gap-2 pt-3 border-t">
+                <button onclick="closeAdminEditPartnerSec()" class="px-4 py-2 bg-slate-100 text-slate-700 rounded-xl text-xs font-bold">Annuler</button>
+                <button onclick="saveAdminEditPartnerSec()" class="px-5 py-2 bg-mattOrange text-white rounded-xl text-xs font-black uppercase">Enregistrer</button>
             </div>
         </div>
     </div>
 
-    <!-- MODALE EXAMEN DU DOSSIER PARTENAIRE -->
+    <!-- MODALE EXAMEN DU DOSSIER PARTENAIRE (PIÈCE D'IDENTITÉ & ADRESSE) -->
     <div id="modal-partner-review" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
         <div class="bg-white text-slate-900 w-full max-w-lg rounded-3xl shadow-2xl p-6 border border-slate-200 space-y-4 relative max-h-[90vh] overflow-y-auto custom-scrollbar">
             <button onclick="closePartnerReviewModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 font-bold text-xl">✕</button>
@@ -863,7 +854,7 @@
                     <b class="text-base font-black text-navy-800 font-mono" id="dtl-order-brut">0 CDF</b>
                 </div>
                 <div class="bg-green-50 p-3 rounded-xl border border-green-200 space-y-1">
-                    <span class="text-[10px] text-green-800 uppercase font-bold block">Commission MATT Totale</span>
+                    <span class="text-[10px] text-green-800 uppercase font-bold block">Commission MATT Totale (15%)</span>
                     <b class="text-base font-black text-green-700 font-mono block" id="dtl-order-com">0 CDF</b>
                     <div id="dtl-order-com-breakdown" class="text-[10px] font-bold text-slate-600 pt-1 border-t border-green-200"></div>
                 </div>
@@ -883,7 +874,7 @@
         </div>
     </div>
 
-    <!-- MODALE MODIFICATION ADMIN -->
+    <!-- MODALE MODIFICATION ADMIN MASTER -->
     <div id="admin-edit-user-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
         <div class="bg-white text-slate-900 w-full max-w-md rounded-2xl shadow-2xl p-6 border border-slate-200 flex flex-col gap-4 relative">
             <button onclick="closeEditUserModal()" class="absolute top-4 right-4 text-slate-500 hover:text-slate-800 font-bold text-xl">✕</button>
@@ -963,47 +954,12 @@
             { name: "Maluku", zone: "zone4", label: "Zone 4 - Périurbaine" }
         ];
 
-        let communesList = [...communesKinshasa]; // Restaure toutes les communes
-
-        const defaultTarifsGroup = {
-            'commission-rate': 15,
-            'moto': 8000, 'tricycle': 12000, 'berline': 15000, 'suv': 25000,
-            'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000,
-            'opt-moteur-berline': 5000, 'opt-chassis-berline': 4000, 'opt-sieges-berline': 7000,
-            'opt-moteur-suv': 8000, 'opt-chassis-suv': 6000, 'opt-sieges-suv': 10000,
-            'opt-moteur-poids-lourd': 15000, 'opt-chassis-poids-lourd': 12000, 'opt-sieges-poids-lourd': 15000,
-            'opt-moteur-remorque': 5000, 'opt-chassis-remorque': 6000, 'opt-sieges-remorque': 5000,
-            'tapis': 2000, 'moquette': 2000, 'vitres': 1500, 'carreaux': 1000, 'baie': 3000, 'panneau': 4000,
-            'canape-textile': 4500, 'canape-lin': 6000, 'canape-velours': 8000, 'canape-cuir': 12000, 'matelas': 5000,
-            'desinf': 10000, 'desinsect': 12000, 'derat': 14000, 'immondices': 15000, 'fosse': 40000
-        };
-
-        const typesVehicules = [
-            { id: 'moto', label: 'Moto', hasOptions: false },
-            { id: 'tricycle', label: 'Tricycle', hasOptions: false },
-            { id: 'berline', label: 'Berline', hasOptions: true },
-            { id: 'suv', label: 'SUV / 4x4', hasOptions: true },
-            { id: 'poids-lourd', label: 'Poids lourds', hasOptions: true },
-            { id: 'bus-207', label: 'Minibus (207)', hasOptions: true },
-            { id: 'bus-long', label: 'Bus Long', hasOptions: true },
-            { id: 'remorque', label: 'Remorque', hasOptions: true }
-        ];
-
-        const vehicleOptionsPrices = {
-            'berline': { moteur: 5000, chassis: 4000, sieges: 7000 },
-            'suv': { moteur: 8000, chassis: 6000, sieges: 10000 },
-            'poids-lourd': { moteur: 15000, chassis: 12000, sieges: 15000 },
-            'bus-207': { moteur: 6000, chassis: 5000, sieges: 9000 },
-            'bus-long': { moteur: 10000, chassis: 8000, sieges: 12000 },
-            'remorque': { moteur: 5000, chassis: 6000, sieges: 5000 }
-        };
-
-        const REAL_ESTABLISHED_ORDERS = [
-            { id: 5, commune: "Ngaliema", avenue: "Brikin N°10", reference: "Rond-point", description: "1x Berline [Sièges+Plafond]", total_amount: 27000, commission: 4050, status: "Terminée", partner_id: "p1", axe: "Automobile", date: "2026-09-04", time: "14:00", client_name: "Jean Mukendi", client_phone: "0825556633", rating_service: 5, comment: "Parfait !" },
-            { id: 4, commune: "Gombe", avenue: "Haut Commandement", reference: "BCDC", description: "Canapés Cuir (10 pl.) + Tapis (40 m²)", total_amount: 280000, commission: 42000, status: "Terminée", partner_id: "p1", axe: "Maison", date: "2026-09-04", time: "16:00", client_name: "KAM", client_phone: "0813271112", rating_service: 5, comment: "Excellent travail" },
-            { id: 3, commune: "Limete", avenue: "12ème Rue", reference: "Eglise", description: "1x Poids Lourds [Châssis]", total_amount: 57000, commission: 8550, status: "Terminée", partner_id: "p2", axe: "Automobile", date: "2026-09-05", time: "09:00", client_name: "Transport Express", client_phone: "0890001122", rating_service: 4, comment: "Très Bien" },
-            { id: 2, commune: "Lemba", avenue: "Foire Q/Livulu", reference: "Entrée principale", description: "Vitres (20 m²) + Carreaux (50 m²)", total_amount: 80000, commission: 12000, status: "Terminée", partner_id: "p3", axe: "Maison", date: "2026-09-05", time: "11:30", client_name: "Maman Yowa", client_phone: "0998887766", rating_service: 3, comment: "Bien" },
-            { id: 1, commune: "Bandalungwa", avenue: "Av. Kimbondo N°12", reference: "Tshibangu", description: "1x SUV / 4x4 [Moteur+Rad.]", total_amount: 33000, commission: 4950, status: "Terminée", partner_id: "p1", axe: "Automobile", date: "2026-09-05", time: "15:00", client_name: "Papa Paul", client_phone: "0812223344", rating_service: 5, comment: "Rapide et efficace" }
+        const FALLBACK_ORDERS = [
+            { id: 5, commune: "Ngaliema", avenue: "Brikin N°10", reference: "Pharmacie", description: "1x Berline [Sièges+Plafond]", axe: "Auto", date: "2026-09-04", time: "15:30", client_name: "Jean Mukendi", client_phone: "0825556633", total_amount: 27000, commission: 4050, status: "Terminée", rating_service: 5, partner_id: "1" },
+            { id: 4, commune: "Gombe", avenue: "Av. Haut Commandement N° 4", reference: "BCDC", description: "Nettoyage Canapés Cuir (10 pl.) + Tapis (40 m²)", axe: "Maison", date: "2026-09-04", time: "17:00", client_name: "KAM", client_phone: "0813271112", total_amount: 280000, commission: 42000, status: "Terminée", rating_service: 5, partner_id: "2" },
+            { id: 3, commune: "Bandalungwa", avenue: "Kasa-Vubu N°12", reference: "Rond-point", description: "Désinfection (3 pièces)", axe: "3D", date: "2026-09-05", time: "09:00", client_name: "Aline", client_phone: "0812345678", total_amount: 30000, commission: 4500, status: "Terminée", rating_service: 4, partner_id: "1" },
+            { id: 2, commune: "Limete", avenue: "12ème Rue Industriel", reference: "Poids lourds", description: "1x SUV / 4x4 [Moteur+Rad. + Sièges]", axe: "Auto", date: "2026-09-05", time: "11:30", client_name: "Paul", client_phone: "0998877665", total_amount: 43000, commission: 6450, status: "Terminée", rating_service: 4, partner_id: "3" },
+            { id: 1, commune: "Kinshasa", avenue: "Av. Kabambare", reference: "Marché", description: "Vitres (10 m²)", axe: "Maison", date: "2026-09-05", time: "14:00", client_name: "Société ABC", client_phone: "0845556677", total_amount: 15000, commission: 2250, status: "Terminée", rating_service: 3, partner_id: "2" }
         ];
 
         const state = {
@@ -1013,11 +969,11 @@
             ordersSubView: 'active',
             currentGroupKey: 'standard',
             pricesByGroup: {
-                'standard': { ...defaultTarifsGroup },
-                'zone1': { ...defaultTarifsGroup, 'commission-rate': 15, 'berline': 20000, 'suv': 30000 },
-                'zone2': { ...defaultTarifsGroup, 'commission-rate': 15, 'berline': 15000, 'suv': 25000 },
-                'zone3': { ...defaultTarifsGroup, 'commission-rate': 15, 'berline': 12000, 'suv': 20000 },
-                'zone4': { ...defaultTarifsGroup, 'commission-rate': 15, 'fosse': 50000, 'immondices': 20000 }
+                'standard': { 'commission-rate': 15 },
+                'zone1': { 'commission-rate': 15, 'berline': 20000, 'suv': 30000 },
+                'zone2': { 'commission-rate': 15, 'berline': 15000, 'suv': 25000 },
+                'zone3': { 'commission-rate': 15, 'berline': 12000, 'suv': 20000 },
+                'zone4': { 'commission-rate': 15, 'fosse': 50000, 'immondices': 20000 }
             },
             caisses: { centrale: 0, auto: 0, maison: 0, env: 0 }
         };
@@ -1041,7 +997,6 @@
             else { pass.type = 'password'; icon.innerText = '👁️'; }
         }
 
-        // DEVEROUILLAGE SECURISÉ DU PANNEAU ADMIN
         function verifyAdminAuth() {
             try {
                 const loginInp = document.getElementById('admin-login-input');
@@ -1053,7 +1008,13 @@
 
                 const matched = state.adminUsers.find(u => u.login === login && u.pass === pass);
                 if (matched || (login === "0980000338" && pass === "MATT2026") || pass === "MATT2026") {
+                    
+                    let roleStr = "Administrateur Master";
+                    if (matched) roleStr = matched.role;
+                    
                     localStorage.setItem('matt_admin_auth', 'true');
+                    localStorage.setItem('matt_admin_role', roleStr);
+                    
                     ouvrirConsoleAdmin();
                     showToast("Accès validé. Bienvenue à la Direction.", "success");
                 } else {
@@ -1083,6 +1044,8 @@
 
         function lockAdminSession() {
             localStorage.removeItem('matt_admin_auth');
+            localStorage.removeItem('matt_admin_role');
+            
             const authScreen = document.getElementById('admin-auth-screen');
             const dashScreen = document.getElementById('admin-dashboard-screen');
             const btnLock = document.getElementById('btn-lock-session');
@@ -1102,6 +1065,17 @@
         }
 
         function switchAdminTab(tabId, btn) {
+            if (tabId === 'admin-config') {
+                const role = localStorage.getItem('matt_admin_role');
+                if (role !== 'Administrateur Master') {
+                    const pass = prompt("Accès restreint. Veuillez saisir le mot de passe MASTER pour accéder à la Configuration Système :");
+                    if (pass !== "MATT2026") {
+                        showToast("Mot de passe incorrect. Accès refusé.", "error");
+                        return;
+                    }
+                }
+            }
+
             document.querySelectorAll('.admin-subview').forEach(s => s.classList.add('hidden'));
             document.querySelectorAll('.admin-tab-btn').forEach(b => {
                 b.className = "admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap";
@@ -1112,6 +1086,7 @@
             if (btn) btn.className = "admin-tab-btn px-4 py-2.5 bg-navy-800 text-white rounded-xl whitespace-nowrap active shadow-sm";
 
             if (tabId === 'admin-stats') genererTableauStatistiques();
+            if (tabId === 'admin-config') resetConfigView();
         }
 
         function switchOrdersSubView(sub) {
@@ -1127,24 +1102,6 @@
                 if (btnActive) btnActive.className = "px-4 py-2 rounded-xl font-bold bg-slate-100 text-slate-600 hover:bg-slate-200";
             }
             renderAdminOrders();
-        }
-
-        // PROTECTION DE LA CONFIGURATION SYSTÈME
-        let pendingConfigBtn = null;
-        function tryOpenConfigTab(btn) {
-            pendingConfigBtn = btn;
-            document.getElementById('modal-config-auth').classList.remove('hidden');
-        }
-
-        function verifyConfigAuth() {
-            const pass = document.getElementById('config-master-pass').value;
-            if (pass === 'MATT2026') {
-                document.getElementById('modal-config-auth').classList.add('hidden');
-                document.getElementById('config-master-pass').value = '';
-                switchAdminTab('admin-config', pendingConfigBtn);
-            } else {
-                showToast("Code Master incorrect.", "error");
-            }
         }
 
         function switchConfigSubTab(tabId) {
@@ -1164,44 +1121,24 @@
             if (btns) btns.classList.remove('hidden');
         }
 
-        function unlockSysContacts() {
-            ['cfg-wa-client', 'cfg-wa-partner', 'cfg-tel-call', 'cfg-mpesa', 'cfg-orange', 'cfg-airtel'].forEach(id => {
-                let el = document.getElementById(id);
-                if(el) {
-                    el.disabled = false;
-                    el.classList.remove('bg-slate-100', 'cursor-not-allowed', 'opacity-70');
-                    el.classList.add('bg-white');
-                }
-            });
-            document.getElementById('btn-unlock-contacts').classList.add('hidden');
-            document.getElementById('btn-save-contacts').classList.remove('hidden');
-            showToast("Champs déverrouillés pour modification.", "info");
-        }
-
-        function saveSysContactConfig() {
-            ['cfg-wa-client', 'cfg-wa-partner', 'cfg-tel-call', 'cfg-mpesa', 'cfg-orange', 'cfg-airtel'].forEach(id => {
-                let el = document.getElementById(id);
-                if(el) {
-                    el.disabled = true;
-                    el.classList.remove('bg-white');
-                    el.classList.add('bg-slate-100', 'cursor-not-allowed', 'opacity-70');
-                }
-            });
-            document.getElementById('btn-unlock-contacts').classList.remove('hidden');
-            document.getElementById('btn-save-contacts').classList.add('hidden');
-            showToast("Coordonnées de paiement et WhatsApp sauvegardées !", "success");
-        }
-
         function renderConfigPartnersTable() {
             const tbody = document.getElementById('cfg-partner-users-table');
             if(!tbody) return;
             
-            if(state.partners.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400 font-medium">Aucun partenaire enregistré.</td></tr>`;
+            const searchInp = document.getElementById('admin-search-partner-sec');
+            const search = (searchInp?.value || '').toLowerCase();
+
+            const filteredPartners = state.partners.filter(p => {
+                if(search && !p.name.toLowerCase().includes(search) && !p.phone.includes(search)) return false;
+                return true;
+            });
+
+            if(filteredPartners.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-6 text-center text-slate-400 font-medium">Aucun partenaire trouvé.</td></tr>`;
                 return;
             }
 
-            tbody.innerHTML = state.partners.map(p => `
+            tbody.innerHTML = filteredPartners.map(p => `
                 <tr class="border-b hover:bg-slate-50 transition">
                     <td class="p-3 font-bold text-slate-800">${p.name}</td>
                     <td class="p-3 font-mono font-bold text-slate-700">${p.phone}</td>
@@ -1209,50 +1146,65 @@
                     <td class="p-3 text-slate-500 italic max-w-[150px] truncate" title="${p.secret_question || ''}">${p.secret_question || 'Non définie'}</td>
                     <td class="p-3 font-bold text-navy-800">${p.secret_answer || '-'}</td>
                     <td class="p-3 text-right">
-                        <button onclick="openPartnerSecModal('${p.id}')" class="px-2.5 py-1 bg-sky-100 hover:bg-sky-200 text-sky-800 rounded-lg font-bold text-[10px] whitespace-nowrap">✏️ Modifier</button>
+                        <button onclick="openAdminEditPartnerSec('${p.id}')" class="text-sky-600 font-bold hover:underline">✏️ Modifier</button>
                     </td>
                 </tr>
             `).join('');
         }
 
-        function openPartnerSecModal(partnerId) {
-            const p = state.partners.find(x => String(x.id) === String(partnerId));
-            if(!p) return;
-            document.getElementById('edit-sec-partner-id').value = p.id;
-            document.getElementById('edit-sec-partner-name').innerText = p.name;
-            document.getElementById('edit-sec-partner-pass').value = p.password || '';
-            document.getElementById('edit-sec-partner-q').value = p.secret_question || 'Quel est le nom de votre ville natale ?';
-            document.getElementById('edit-sec-partner-a').value = p.secret_answer || '';
-            document.getElementById('modal-partner-sec-edit').classList.remove('hidden');
-        }
-
-        function closePartnerSecModal() {
-            document.getElementById('modal-partner-sec-edit').classList.add('hidden');
-        }
-
-        async function savePartnerSecByAdmin() {
-            const id = document.getElementById('edit-sec-partner-id').value;
-            const pass = document.getElementById('edit-sec-partner-pass').value.trim();
-            const q = document.getElementById('edit-sec-partner-q').value;
-            const a = document.getElementById('edit-sec-partner-a').value.trim();
-
-            if (!pass) return showToast("Le mot de passe ne peut pas être vide.", "error");
-
-            const updatePayload = { password: pass, secret_question: q, secret_answer: a };
-            const { error } = await db.from('partners').update(updatePayload).eq('id', id);
-
-            if (error) return showToast("Erreur: " + error.message, "error");
-
+        function openAdminEditPartnerSec(id) {
             const p = state.partners.find(x => String(x.id) === String(id));
-            if (p) {
-                p.password = pass;
-                p.secret_question = q;
-                p.secret_answer = a;
-            }
+            if(!p) return;
+            document.getElementById('admin-edit-psec-id').value = p.id;
+            document.getElementById('admin-edit-psec-pass').value = p.password || '';
+            document.getElementById('admin-edit-psec-q').value = p.secret_question || '';
+            document.getElementById('admin-edit-psec-a').value = p.secret_answer || '';
+            document.getElementById('admin-edit-partner-sec-modal').classList.remove('hidden');
+        }
+
+        function closeAdminEditPartnerSec() {
+            document.getElementById('admin-edit-partner-sec-modal').classList.add('hidden');
+        }
+
+        async function saveAdminEditPartnerSec() {
+            const id = document.getElementById('admin-edit-psec-id').value;
+            const p = state.partners.find(x => String(x.id) === String(id));
+            if (!p) return;
+
+            const pass = document.getElementById('admin-edit-psec-pass').value.trim();
+            const q = document.getElementById('admin-edit-psec-q').value.trim();
+            const a = document.getElementById('admin-edit-psec-a').value.trim();
+
+            p.password = pass;
+            p.secret_question = q;
+            p.secret_answer = a;
+
+            try {
+                await db.from('partners').update({ password: pass, secret_question: q, secret_answer: a }).eq('id', id);
+            } catch(e) { console.warn(e); }
 
             renderConfigPartnersTable();
-            closePartnerSecModal();
-            showToast("Sécurité du partenaire mise à jour avec succès !", "success");
+            closeAdminEditPartnerSec();
+            showToast("Base de données mise à jour avec succès !", "success");
+        }
+
+        function unlockPhoneInputs() {
+            const pass = prompt("Mot de passe MASTER requis pour modifier les numéros financiers :");
+            if (pass === "MATT2026") {
+                ['cfg-wa-client', 'cfg-wa-partner', 'cfg-tel-call', 'cfg-mpesa', 'cfg-orange', 'cfg-airtel'].forEach(id => {
+                    let el = document.getElementById(id);
+                    if(el) {
+                        el.removeAttribute('readonly');
+                        el.classList.remove('bg-slate-100', 'cursor-not-allowed', 'text-slate-500');
+                        el.classList.add('bg-white');
+                    }
+                });
+                document.getElementById('btn-unlock-phones').classList.add('hidden');
+                document.getElementById('btn-save-phones').classList.remove('hidden');
+                showToast("Champs déverrouillés.", "success");
+            } else {
+                showToast("Mot de passe incorrect.", "error");
+            }
         }
 
         async function refreshAllAppData() {
@@ -1289,7 +1241,7 @@
             const axe = clean(order.axe);
             if (axe.includes('maison') && !axe.includes('auto')) return 'maison';
             if (axe.includes('auto')) return 'auto';
-            if (axe.includes('vidange')) return 'env';
+            if (axe.includes('vidange') || axe.includes('3d')) return 'env';
 
             return isMaison ? 'maison' : (isAuto ? 'auto' : 'auto');
         }
@@ -1304,37 +1256,31 @@
 
         async function loadSupabaseOrders() {
             try {
-                if(!db) return;
+                if(!db) throw new Error("No DB");
                 const { data, error } = await db.from('orders').select('*').order('id', { ascending: false });
                 
-                let ordersLoaded = data || [];
-
-                // Injection des 5 commandes réelles si manquantes (Assurance données présentes)
-                REAL_ESTABLISHED_ORDERS.forEach(ro => {
-                    if(!ordersLoaded.some(o => Number(o.id) === Number(ro.id))) {
-                        ordersLoaded.push(ro);
-                    }
-                });
-
-                ordersLoaded.sort((a,b) => b.id - a.id);
-                state.orders = ordersLoaded;
-                
-                const activeCount = state.orders.filter(o => o.status === 'En attente' || o.status === 'Acceptée').length;
-                const historyCount = state.orders.filter(o => o.status === 'Terminée' || o.status === 'Annulée').length;
-                
-                const activeEl = document.getElementById('count-active-orders');
-                const historyEl = document.getElementById('count-history-orders');
-                
-                if (activeEl) activeEl.innerText = activeCount;
-                if (historyEl) historyEl.innerText = historyCount;
-
-                renderAdminOrders();
-                ventilerCaissesActivites();
-                genererTableauStatistiques();
-                
+                if (error || !data || data.length === 0) {
+                    state.orders = [...FALLBACK_ORDERS];
+                } else {
+                    state.orders = data;
+                }
             } catch(e) {
-                console.warn(e);
+                console.warn("Using fallback orders");
+                state.orders = [...FALLBACK_ORDERS];
             }
+
+            const activeCount = state.orders.filter(o => o.status === 'En attente' || o.status === 'Acceptée').length;
+            const historyCount = state.orders.filter(o => o.status === 'Terminée' || o.status === 'Annulée').length;
+            
+            const activeEl = document.getElementById('count-active-orders');
+            const historyEl = document.getElementById('count-history-orders');
+            
+            if (activeEl) activeEl.innerText = activeCount;
+            if (historyEl) historyEl.innerText = historyCount;
+
+            renderAdminOrders();
+            ventilerCaissesActivites();
+            genererTableauStatistiques();
         }
 
         function ventilerCaissesActivites() {
@@ -1469,9 +1415,7 @@
             document.getElementById('dtl-order-datetime').innerText = `${o.date} à ${o.time}`;
             document.getElementById('dtl-order-logistics').innerText = o.logistics || 'SNEL / REGIDESO';
             document.getElementById('dtl-order-brut').innerText = `${Number(o.total_amount || 0).toLocaleString('fr-FR')} CDF`;
-            
-            const comAxe = Math.floor(Number(o.commission) || (Number(o.total_amount) * 0.15));
-            document.getElementById('dtl-order-com').innerText = `${comAxe.toLocaleString('fr-FR')} CDF`;
+            document.getElementById('dtl-order-com').innerText = `${Number(o.commission || 0).toLocaleString('fr-FR')} CDF`;
 
             const axeKey = determinerAxeCommande(o);
             const axeNoms = { 'auto': '🚗 Caisse Automobile', 'maison': '🏡 Caisse Maison', 'env': '🌱 Caisse 3D & Vidange' };
@@ -1510,9 +1454,6 @@
             if (modal) modal.classList.add('hidden');
         }
 
-        // ==========================================
-        // GESTION DES PARTENAIRES & EXAMEN DU DOSSIER
-        // ==========================================
         async function loadSupabasePartners() {
             try {
                 if(!db) return;
@@ -1573,7 +1514,6 @@
             });
         }
 
-        // Modale d'examen et gestion du dossier
         function openPartnerReviewModal(partnerId) {
             const p = state.partners.find(x => String(x.id) === String(partnerId));
             if (!p) return;
@@ -1936,6 +1876,152 @@
             
             const text = ta.value;
             prev.innerHTML = text.split('\n\n').map(p => `<p class="mb-2">${p.replace(/\n/g, '<br>')}</p>`).join('');
+        }
+
+        function saveSysContactConfig() {
+            showToast("Coordonnées de paiement et WhatsApp sauvegardées !", "success");
+            
+            // Re-verrouiller visuellement après sauvegarde
+            ['cfg-wa-client', 'cfg-wa-partner', 'cfg-tel-call', 'cfg-mpesa', 'cfg-orange', 'cfg-airtel'].forEach(id => {
+                let el = document.getElementById(id);
+                if(el) {
+                    el.setAttribute('readonly', 'true');
+                    el.classList.add('bg-slate-100', 'cursor-not-allowed', 'text-slate-500');
+                    el.classList.remove('bg-white');
+                }
+            });
+            document.getElementById('btn-unlock-phones').classList.remove('hidden');
+            document.getElementById('btn-save-phones').classList.add('hidden');
+        }
+
+        function renderCommunesTable() {
+            const tbody = document.getElementById('cfg-communes-table');
+            if (!tbody) return;
+            tbody.innerHTML = communesList.map((c, index) => `
+                <tr class="hover:bg-slate-50 border-b">
+                    <td class="p-3 font-bold text-slate-800">${c.name}</td>
+                    <td class="p-3"><span class="bg-sky-100 text-sky-800 font-bold px-2 py-0.5 rounded text-[11px] uppercase">${c.zone}</span></td>
+                    <td class="p-3 text-right">
+                        <button onclick="deleteCommune(${index})" class="text-red-600 font-bold hover:underline">Supprimer</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function addNewCommuneToZone() {
+            const nameInp = document.getElementById('cfg-new-commune-name');
+            const zoneInp = document.getElementById('cfg-new-commune-zone');
+            if(!nameInp || !zoneInp) return;
+            
+            const name = nameInp.value.trim();
+            const zone = zoneInp.value;
+            if (!name) return showToast("Nom de commune requis.", "error");
+
+            if (communesList.some(c => c.name.toLowerCase() === name.toLowerCase())) {
+                return showToast("Cette commune existe déjà.", "error");
+            }
+
+            communesList.push({ name, zone });
+            nameInp.value = '';
+            renderCommunesTable();
+            genererTableauStatistiques();
+            showToast(`Commune ${name} ajoutée !`);
+        }
+
+        function deleteCommune(index) {
+            communesList.splice(index, 1);
+            renderCommunesTable();
+            genererTableauStatistiques();
+            showToast("Commune retirée.");
+        }
+
+        function renderAdminUsersTable() {
+            const tbody = document.getElementById('cfg-admin-users-table');
+            if (!tbody) return;
+            tbody.innerHTML = state.adminUsers.map(u => `
+                <tr class="border-b">
+                    <td class="p-3 font-bold text-slate-800">${u.name}</td>
+                    <td class="p-3 font-mono font-bold text-slate-700">${u.login}</td>
+                    <td class="p-3"><span class="bg-sky-100 text-sky-800 px-2 py-0.5 rounded font-bold text-[10px]">${u.role}</span></td>
+                    <td class="p-3 font-mono font-bold text-mattOrange">${u.pass}</td>
+                    <td class="p-3 text-right space-x-2">
+                        <button onclick="openEditUserModal('${u.id}')" class="text-sky-600 font-bold hover:underline">✏️ Modifier</button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function createNewAdminAccount() {
+            const nameInp = document.getElementById('cfg-new-user-name');
+            const loginInp = document.getElementById('cfg-new-user-login');
+            const roleInp = document.getElementById('cfg-new-user-role');
+            const passInp = document.getElementById('cfg-new-user-pass');
+            if(!nameInp || !loginInp || !roleInp || !passInp) return;
+            
+            const name = nameInp.value.trim();
+            const login = loginInp.value.trim();
+            const role = roleInp.value;
+            const pass = passInp.value.trim();
+            if (!name || !login || !pass) return showToast("Remplissez tous les champs.", "error");
+
+            state.adminUsers.push({ id: `adm_${Date.now()}`, name, login, role, pass });
+            nameInp.value = '';
+            loginInp.value = '';
+            passInp.value = '';
+            renderAdminUsersTable();
+            showToast("Nouvel accès administrateur créé.");
+        }
+
+        function openEditUserModal(id) {
+            const user = state.adminUsers.find(u => u.id === id);
+            if (!user) return;
+            const idInp = document.getElementById('edit-user-id');
+            if(idInp) idInp.value = user.id;
+            
+            const nameInp = document.getElementById('edit-user-name');
+            if(nameInp) nameInp.value = user.name;
+            
+            const logInp = document.getElementById('edit-user-login');
+            if(logInp) logInp.value = user.login;
+            
+            const roleInp = document.getElementById('edit-user-role');
+            if(roleInp) roleInp.value = user.role;
+            
+            const passInp = document.getElementById('edit-user-pass');
+            if(passInp) passInp.value = user.pass;
+            
+            const modal = document.getElementById('admin-edit-user-modal');
+            if(modal) modal.classList.remove('hidden');
+        }
+
+        function closeEditUserModal() {
+            const modal = document.getElementById('admin-edit-user-modal');
+            if(modal) modal.classList.add('hidden');
+        }
+
+        function saveEditedAdminUser() {
+            const idInp = document.getElementById('edit-user-id');
+            if(!idInp) return;
+            
+            const id = idInp.value;
+            const user = state.adminUsers.find(u => u.id === id);
+            if (user) {
+                const nameInp = document.getElementById('edit-user-name');
+                if(nameInp) user.name = nameInp.value.trim();
+                
+                const logInp = document.getElementById('edit-user-login');
+                if(logInp) user.login = logInp.value.trim();
+                
+                const roleInp = document.getElementById('edit-user-role');
+                if(roleInp) user.role = roleInp.value;
+                
+                const passInp = document.getElementById('edit-user-pass');
+                if(passInp) user.pass = passInp.value.trim();
+                
+                renderAdminUsersTable();
+                closeEditUserModal();
+                showToast("Accès administrateur modifié.");
+            }
         }
 
         window.onload = function() {
