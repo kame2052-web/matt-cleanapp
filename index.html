@@ -659,19 +659,43 @@
                 </div>
 
                 <div id="partner-tab-profil" class="partner-subview hidden space-y-4 max-w-xl mx-auto">
-                    <span class="text-xs font-black uppercase text-navy-800 block">Modification Sécurisée des Identifiants</span>
-                    <div class="bg-slate-50 p-5 rounded-3xl border space-y-3 text-xs">
+                    <div class="grid grid-cols-2 gap-2 text-center">
+                        <button type="button" onclick="switchProfileSubTab('prof-sub-info', this)" class="prof-subtab-btn p-2.5 rounded-2xl border-2 border-mattOrange bg-orange-50/70 text-mattOrange font-black text-xs flex flex-col items-center gap-1 shadow-xs">
+                            <span class="text-2xl">👤</span>
+                            <span class="text-[10px] uppercase">Mon Profil</span>
+                        </button>
+                        <button type="button" onclick="switchProfileSubTab('prof-sub-sec', this)" class="prof-subtab-btn p-2.5 rounded-2xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-1 shadow-xs hover:border-aqua">
+                            <span class="text-2xl">🔒</span>
+                            <span class="text-[10px] uppercase">Sécurité</span>
+                        </button>
+                    </div>
+
+                    <div id="prof-sub-info" class="prof-subview space-y-4 bg-slate-50 p-5 rounded-3xl border text-xs">
                         <div>
-                            <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Raison Sociale / Nom</label>
+                            <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Nom / Raison Sociale</label>
                             <input type="text" id="partner-edit-name" class="w-full p-3 bg-white border rounded-xl font-bold">
                         </div>
                         <div>
-                            <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Téléphone (Login)</label>
-                            <input type="tel" id="partner-edit-phone" class="w-full p-3 bg-white border rounded-xl font-bold font-mono">
+                            <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Adresse d'exploitation</label>
+                            <input type="text" id="partner-edit-address" class="w-full p-3 bg-white border rounded-xl font-bold">
                         </div>
                         <div>
-                            <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Commune</label>
-                            <select id="partner-edit-commune" class="w-full p-3 bg-white border rounded-xl font-bold"></select>
+                            <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Axe d'activité (Spécialité)</label>
+                            <input type="text" id="partner-edit-specialty" class="w-full p-3 bg-slate-100 border rounded-xl font-bold text-slate-500 cursor-not-allowed" readonly>
+                        </div>
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Date d'inscription</label>
+                            <input type="text" id="partner-edit-date" class="w-full p-3 bg-slate-100 border rounded-xl font-bold text-slate-500 cursor-not-allowed" readonly>
+                        </div>
+                        <button onclick="savePartnerInfoUpdate()" class="w-full py-3.5 bg-navy-800 hover:bg-navy-900 text-white font-black rounded-xl uppercase text-xs transition mt-2">
+                            Mettre à jour mon profil
+                        </button>
+                    </div>
+
+                    <div id="prof-sub-sec" class="prof-subview hidden space-y-4 bg-slate-50 p-5 rounded-3xl border text-xs">
+                        <div>
+                            <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Identifiant (Téléphone)</label>
+                            <input type="tel" id="partner-edit-phone" class="w-full p-3 bg-white border rounded-xl font-bold font-mono">
                         </div>
                         
                         <div class="relative pt-2">
@@ -690,8 +714,24 @@
                             </button>
                         </div>
 
-                        <button onclick="savePartnerProfileUpdate()" class="w-full py-3.5 bg-navy-800 hover:bg-navy-900 text-white font-black rounded-xl uppercase text-xs transition mt-2">
-                            Mettre à jour mes accès
+                        <div class="border-t pt-3 mt-2 space-y-3">
+                            <span class="text-[10px] font-black text-navy-800 uppercase block">Récupération de compte</span>
+                            <div>
+                                <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Question Secrète</label>
+                                <select id="partner-edit-secret-q" class="w-full p-3 bg-white border rounded-xl font-bold">
+                                    <option value="Quel est le nom de votre ville natale ?">Quel est le nom de votre ville natale ?</option>
+                                    <option value="Quel est le nom de votre premier animal de compagnie ?">Quel est le nom de votre premier animal de compagnie ?</option>
+                                    <option value="Quel est le nom de jeune fille de votre mère ?">Quel est le nom de jeune fille de votre mère ?</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Réponse Secrète</label>
+                                <input type="text" id="partner-edit-secret-a" placeholder="Votre réponse" class="w-full p-3 bg-white border rounded-xl font-bold">
+                            </div>
+                        </div>
+
+                        <button onclick="savePartnerSecurityUpdate()" class="w-full py-3.5 bg-red-600 hover:bg-red-700 text-white font-black rounded-xl uppercase text-xs transition mt-2 shadow">
+                            Mettre à jour la sécurité
                         </button>
                     </div>
                 </div>
@@ -1035,6 +1075,22 @@
 
         function openPartnerApp() {
             showView('view-partner-app');
+            
+            // Remplissage des champs de Profil & Sécurité
+            document.getElementById('partner-edit-name').value = session.user.name || '';
+            document.getElementById('partner-edit-address').value = session.user.address || '';
+            document.getElementById('partner-edit-specialty').value = session.user.specialty || '';
+            
+            let regDate = "Date non disponible";
+            if (session.user.created_at) {
+                regDate = new Date(session.user.created_at).toLocaleDateString('fr-FR', { day: '2-digit', month: 'long', year: 'numeric' });
+            }
+            document.getElementById('partner-edit-date').value = regDate;
+
+            document.getElementById('partner-edit-phone').value = session.user.phone || '';
+            if (session.user.secret_question) document.getElementById('partner-edit-secret-q').value = session.user.secret_question;
+            document.getElementById('partner-edit-secret-a').value = session.user.secret_answer || '';
+
             loadPartnerMissions();
             loadPartnerAcceptedCourses();
             fetchPublishedCgu();
@@ -1158,6 +1214,19 @@
 
             if (btn) {
                 btn.className = "psup-subtab-btn p-2.5 rounded-2xl border-2 border-mattOrange bg-orange-50/70 text-mattOrange font-black text-xs flex flex-col items-center gap-1 shadow-xs";
+            }
+        }
+
+        function switchProfileSubTab(tabId, btn) {
+            document.querySelectorAll('.prof-subview').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.prof-subtab-btn').forEach(b => {
+                b.className = "prof-subtab-btn p-2.5 rounded-2xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-1 shadow-xs hover:border-aqua";
+            });
+            const target = document.getElementById(tabId);
+            if (target) target.classList.remove('hidden');
+
+            if (btn) {
+                btn.className = "prof-subtab-btn p-2.5 rounded-2xl border-2 border-mattOrange bg-orange-50/70 text-mattOrange font-black text-xs flex flex-col items-center gap-1 shadow-xs";
             }
         }
 
@@ -1809,15 +1878,142 @@
             if (input) input.value = mode === 'journalier' ? 15000 : (mode === 'mensuel' ? 150000 : '');
         }
 
+        // ==========================================
+        // PROFIL & SÉCURITÉ : MISE A JOUR SEPAREE
+        // ==========================================
+        async function savePartnerInfoUpdate() {
+            if (!session.user) return;
+            const newName = document.getElementById('partner-edit-name')?.value.trim() || '';
+            const newAddress = document.getElementById('partner-edit-address')?.value.trim() || '';
+
+            if (!newName) return showToast("Le nom est requis.", "error");
+
+            const updatePayload = { name: newName, address: newAddress };
+            const { error } = await db.from('partners').update(updatePayload).eq('id', session.user.id);
+            
+            if (error) return showToast("Erreur: " + error.message, "error");
+
+            session.user.name = newName;
+            session.user.address = newAddress;
+            localStorage.setItem('matt_partner_session', JSON.stringify(session.user));
+            
+            const dashName = document.getElementById('partner-dashboard-name');
+            if (dashName) dashName.innerText = newName;
+            
+            showToast("Profil mis à jour avec succès !");
+        }
+
+        async function savePartnerSecurityUpdate() {
+            if (!session.user) return;
+            const rawPhone = document.getElementById('partner-edit-phone')?.value.trim() || '';
+            const newPhone = normalizePhoneNumber(rawPhone);
+            const oldPass = document.getElementById('partner-edit-old-pass')?.value.trim() || '';
+            const newPass = document.getElementById('partner-edit-new-pass')?.value.trim() || '';
+            const secretQ = document.getElementById('partner-edit-secret-q')?.value || '';
+            const secretA = document.getElementById('partner-edit-secret-a')?.value.trim() || '';
+
+            if (!newPhone) return showToast("Le téléphone est requis.", "error");
+            if (!oldPass) return showToast("L'ancien mot de passe est requis pour valider les modifications de sécurité.", "error");
+
+            const { data: checkUser } = await db.from('partners').select('*').eq('id', session.user.id).eq('password', oldPass).single();
+            if (!checkUser) return showToast("Ancien mot de passe erroné.", "error");
+
+            let updatePayload = { phone: newPhone, secret_question: secretQ, secret_answer: secretA };
+            if (newPass) updatePayload.password = newPass;
+
+            const { error } = await db.from('partners').update(updatePayload).eq('id', session.user.id);
+            
+            if (error) return showToast("Erreur: " + error.message, "error");
+
+            session.user.phone = newPhone;
+            session.user.secret_question = secretQ;
+            session.user.secret_answer = secretA;
+            if (newPass) session.user.password = newPass;
+
+            localStorage.setItem('matt_partner_session', JSON.stringify(session.user));
+            
+            // Vider les champs de mots de passe par sécurité
+            document.getElementById('partner-edit-old-pass').value = '';
+            document.getElementById('partner-edit-new-pass').value = '';
+
+            showToast("Sécurité mise à jour avec succès !");
+        }
+
+        async function fetchPublishedCgu() {
+            const { data } = await db.from('system_settings').select('value').eq('key', 'cgu_content').single();
+            const text = data && data.value ? data.value.split('\n\n').map(p => {
+                const lines = p.split('\n');
+                return `<div class="space-y-0.5"><h4 class="font-black text-navy-800 uppercase">${lines[0]}</h4><p>${lines.slice(1).join('<br>') || ''}</p></div>`;
+            }).join('') : `<p class="text-slate-500">CGU en cours d'actualisation par la Direction.</p>`;
+
+            const cClient = document.getElementById('cgu-display-client');
+            const cPartner = document.getElementById('cgu-display-partner');
+            if (cClient) cClient.innerHTML = text;
+            if (cPartner) cPartner.innerHTML = text;
+        }
+
+        async function registerClient() {
+            const name = document.getElementById('auth-client-reg-name')?.value.trim() || '';
+            const rawPhone = document.getElementById('auth-client-reg-phone')?.value.trim() || '';
+            const phone = normalizePhoneNumber(rawPhone);
+            const password = document.getElementById('auth-client-reg-pass')?.value.trim() || '';
+            if (!name || !phone || !password) return showToast("Remplissez tous les champs.", "error");
+
+            const { data, error } = await db.from('clients').insert([{ name, phone, password }]).select();
+            if (error) return showToast(error.message, "error");
+
+            session = { role: 'client', user: data[0] };
+            localStorage.setItem('matt_client_session', JSON.stringify(data[0]));
+            showToast("Compte client créé avec succès !");
+            openClientApp();
+        }
+
+        async function loginClient() {
+            const raw = document.getElementById('auth-client-login-phone')?.value.trim() || '';
+            const phone = normalizePhoneNumber(raw);
+            const password = document.getElementById('auth-client-login-pass')?.value.trim() || '';
+            
+            const { data, error } = await db.from('clients')
+                .select('*')
+                .or(`phone.eq.${phone},phone.ilike.%${phone.slice(-8)}%`)
+                .eq('password', password)
+                .single();
+
+            if (error || !data) return showToast("Identifiants incorrects.", "error");
+
+            session = { role: 'client', user: data };
+            localStorage.setItem('matt_client_session', JSON.stringify(data));
+            showToast(`Bienvenue ${data.name}`);
+            openClientApp();
+        }
+
+        function openClientApp() {
+            showView('view-client-app');
+            const nameInp = document.getElementById('client-name-input');
+            if (nameInp && session.user) nameInp.value = session.user.name;
+
+            const phoneInp = document.getElementById('client-phone-input');
+            if (phoneInp && session.user) phoneInp.value = session.user.phone;
+
+            detectClientOrders();
+            onClientCommuneChange();
+            fetchPublishedCgu();
+        }
+
+        // DECONNEXION FIABILISEE : Purge memoire + Rechargement page (Reset Total UI)
+        function logoutCurrentSession() {
+            localStorage.removeItem('matt_client_session');
+            localStorage.removeItem('matt_partner_session');
+            window.location.reload();
+        }
+
         window.addEventListener('DOMContentLoaded', () => {
             const selectClient = document.getElementById('client-commune');
             const selectPartnerReg = document.getElementById('p-reg-commune');
-            const selectPartnerEdit = document.getElementById('partner-edit-commune');
 
             communesKinshasa.forEach(c => {
                 if (selectClient) selectClient.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
                 if (selectPartnerReg) selectPartnerReg.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
-                if (selectPartnerEdit) selectPartnerEdit.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
             });
 
             const vCat = document.getElementById('vehicle-catalog');
