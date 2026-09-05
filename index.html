@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>MATT Clean'App</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Supabase JS Client -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         tailwind.config = {
@@ -42,8 +44,10 @@
 </head>
 <body class="bg-navy-900 text-slate-100 min-h-screen watermark-bg font-sans flex flex-col justify-between select-none">
 
+    <!-- Toast Notifications -->
     <div id="toast-container" class="fixed top-4 inset-x-4 z-[9999] flex flex-col gap-2 max-w-sm mx-auto pointer-events-none"></div>
 
+    <!-- En-tête -->
     <header class="bg-navy-800/95 border-b border-aqua/30 px-4 py-3 md:px-8 flex justify-between items-center sticky top-0 z-40 backdrop-blur-md shadow-lg w-full">
         <div class="flex items-center gap-2.5 cursor-pointer" onclick="showView('view-gateway')">
             <div class="w-11 h-11 bg-white rounded-2xl shadow-md border border-aqua/30 p-1 flex items-center justify-center flex-shrink-0">
@@ -62,6 +66,7 @@
         </div>
     </header>
 
+    <!-- Conteneur Principal -->
     <main class="w-full px-2 py-3 sm:px-6 sm:py-5 flex-grow flex flex-col justify-start">
 
         <!-- 1. ACCUEIL -->
@@ -155,7 +160,7 @@
             </div>
         </div>
 
-        <!-- 3. AUTHENTIFICATION & INSCRIPTION PARTENAIRE (AVEC PIÈCE D'IDENTITÉ ET ADRESSE) -->
+        <!-- 3. AUTHENTIFICATION PARTENAIRE -->
         <div id="view-partner-auth" class="bg-white text-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl hidden animate-fade-in max-w-md mx-auto w-full my-auto">
             <div class="flex items-center justify-end border-b pb-2 mb-4">
                 <button onclick="showView('view-gateway')" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 font-bold flex items-center justify-center">✕</button>
@@ -183,7 +188,6 @@
                 <button onclick="loginPartner()" class="w-full py-3.5 bg-mattOrange active:bg-orange-600 text-white font-black text-xs rounded-xl uppercase tracking-wider shadow mt-2">Accéder à mon espace</button>
             </div>
 
-            <!-- FORMULAIRE COMPLET D'INSCRIPTION PARTENAIRE -->
             <div id="form-partner-register" class="space-y-3 hidden max-h-[62vh] overflow-y-auto pr-1 custom-scrollbar">
                 <div>
                     <label class="text-[10px] font-bold text-slate-600 block uppercase">Nom / Raison Sociale *</label>
@@ -206,13 +210,10 @@
                     <label class="text-[10px] font-bold text-slate-600 block uppercase">Commune Principale *</label>
                     <select id="p-reg-commune" class="w-full px-3 py-2 border rounded-xl text-xs text-slate-800 font-bold bg-white"></select>
                 </div>
-
-                <!-- Champ Adresse d'Exploitation ajouté -->
                 <div>
                     <label class="text-[10px] font-bold text-slate-600 block uppercase">Adresse d'Exploitation / Siège *</label>
-                    <input type="text" id="p-reg-address" placeholder="Ex: Av. Flambeau N°45, Quartier Matonge" class="w-full px-3 py-2 border rounded-xl text-xs font-medium">
+                    <input type="text" id="p-reg-address" placeholder="Ex: Av. Flambeau N°45, Q/ Matonge" class="w-full px-3 py-2 border rounded-xl text-xs font-medium">
                 </div>
-
                 <div>
                     <label class="text-[10px] font-bold text-slate-600 block uppercase">Spécialité Principale *</label>
                     <select id="p-reg-specialty" class="w-full px-3 py-2 border rounded-xl text-xs text-slate-800 font-bold bg-white">
@@ -223,18 +224,14 @@
                         <option value="Vidange fosse septique">Vidange fosse septique & Immondices</option>
                     </select>
                 </div>
-
-                <!-- Champ Pièce d'Identité / Document ajouté -->
                 <div class="bg-slate-50 p-3 rounded-2xl border border-dashed border-slate-300 space-y-1.5">
-                    <label class="text-[10px] font-black text-navy-800 block uppercase">📁 Pièce d'Identité ou Document d'Activité *</label>
-                    <span class="text-[9px] text-slate-500 block">Carte d'électeur, Passeport, RCCM ou Permis (Photo/PDF).</span>
+                    <label class="text-[10px] font-black text-navy-800 block uppercase">📁 Pièce d'Identité ou Justificatif *</label>
+                    <span class="text-[9px] text-slate-500 block">Carte d'électeur, Passeport ou Permis (Photo/PDF).</span>
                     <input type="file" id="p-reg-doc" accept="image/*,application/pdf" class="w-full text-[11px] text-slate-600 file:mr-2 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-[10px] file:font-black file:bg-navy-800 file:text-white hover:file:bg-navy-900 cursor-pointer">
                 </div>
-
                 <div class="bg-amber-50 p-2.5 rounded-xl border border-amber-200 text-[10px] text-amber-800 font-medium leading-tight">
-                    ℹ️ Votre dossier sera soumis à la Direction MATT SARL pour examen avant l'activation officielle de votre compte.
+                    ℹ️ Votre dossier sera soumis à la Direction MATT pour examen avant activation officielle.
                 </div>
-
                 <button onclick="registerPartner()" id="btn-submit-partner-reg" class="w-full py-3.5 bg-navy-800 text-white font-bold text-xs rounded-xl uppercase tracking-wide shadow mt-1">
                     Soumettre mon dossier d'agrément
                 </button>
@@ -269,12 +266,12 @@
                         <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Logistique</span>
                     </button>
 
-                    <button type="button" onclick="openFullscreenClientAxis('axis-tracking')" class="relative p-3 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
+                    <button type="button" onclick="openFullscreenClientAxis('axis-tracking')" class="relative p-3 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm aspect-square">
                         <span class="text-3xl sm:text-4xl">📋</span>
                         <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Mes Commandes</span>
                     </button>
 
-                    <button type="button" onclick="openFullscreenClientAxis('axis-contact')" class="relative p-3 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
+                    <button type="button" onclick="openFullscreenClientAxis('axis-contact')" class="relative p-3 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm aspect-square">
                         <span class="text-3xl sm:text-4xl">📞</span>
                         <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Contact</span>
                     </button>
@@ -478,6 +475,7 @@
         <!-- 5. ESPACE PARTENAIRE CONNECTÉ -->
         <div id="view-partner-app" class="w-full min-h-[calc(100vh-140px)] bg-white text-slate-800 rounded-3xl p-4 md:p-6 shadow-2xl hidden animate-fade-in flex flex-col justify-between space-y-4">
 
+            <!-- 3 LIGNES X 2 COLONNES -->
             <div id="partner-home-column" class="flex-grow flex flex-col justify-center py-2">
                 <div class="grid grid-cols-2 gap-3.5 w-full max-w-md mx-auto p-2">
                     
@@ -813,10 +811,10 @@
         ];
 
         const grilleTarifaireParZone = {
-            'zone1': { moto: 10000, tricycle: 15000, berline: 20000, suv: 30000, 'poids-lourd': 55000, 'bus-207': 25000, 'bus-long': 40000, 'remorque': 35000, commission_rate: 15 },
-            'zone2': { moto: 8000, tricycle: 12000, berline: 15000, suv: 25000, 'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000, commission_rate: 15 },
-            'zone3': { moto: 7000, tricycle: 10000, berline: 12000, suv: 20000, 'poids-lourd': 40000, 'bus-207': 18000, 'bus-long': 30000, 'remorque': 25000, commission_rate: 15 },
-            'zone4': { moto: 8000, tricycle: 12000, berline: 15000, suv: 25000, 'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000, commission_rate: 15 }
+            'zone1': { moto: 10000, tricycle: 15000, berline: 20000, suv: 30000, 'poids-lourd': 55000, 'bus-207': 25000, 'bus-long': 40000, 'remorque': 35000 },
+            'zone2': { moto: 8000, tricycle: 12000, berline: 15000, suv: 25000, 'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000 },
+            'zone3': { moto: 7000, tricycle: 10000, berline: 12000, suv: 20000, 'poids-lourd': 40000, 'bus-207': 18000, 'bus-long': 30000, 'remorque': 25000 },
+            'zone4': { moto: 8000, tricycle: 12000, berline: 15000, suv: 25000, 'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000 }
         };
 
         const typesVehicules = [
@@ -917,113 +915,539 @@
             calculerTotal();
         }
 
-        // Convertir un fichier local en Base64 pour enregistrement immédiat
-        function fileToBase64(file) {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = error => reject(error);
-            });
+        function openFullscreenClientAxis(viewId) {
+            const grid = document.getElementById('client-home-grid');
+            if (grid) grid.classList.add('hidden');
+            document.querySelectorAll('.client-axis-view').forEach(v => v.classList.add('hidden'));
+
+            const titles = {
+                'axis-auto': '🚗 Automobile',
+                'axis-maison': '🏡 Maison & Surfaces',
+                'axis-env': '🌱 3D & Vidange',
+                'axis-logistics': '⚡ Logistique & Demandeur',
+                'axis-tracking': '📋 Mes Commandes',
+                'axis-contact': '📞 Contact & Informations'
+            };
+
+            const titleEl = document.getElementById('client-axis-fullscreen-title');
+            if (titleEl) titleEl.innerText = titles[viewId] || 'Configuration';
+            
+            const target = document.getElementById(viewId);
+            if (target) target.classList.remove('hidden');
+
+            const fsAxis = document.getElementById('client-fullscreen-axis');
+            if (fsAxis) fsAxis.classList.remove('hidden');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // INSCRIPTION PARTENAIRE AVEC STATUT "En attente de validation"
-        async function registerPartner() {
-            const btn = document.getElementById('btn-submit-partner-reg');
-            const name = document.getElementById('p-reg-name').value.trim();
-            const rawPhone = document.getElementById('p-reg-phone').value.trim();
-            const phone = normalizePhoneNumber(rawPhone);
-            const password = document.getElementById('p-reg-pass').value.trim();
-            const commune = document.getElementById('p-reg-commune').value;
-            const address = document.getElementById('p-reg-address').value.trim();
-            const specialty = document.getElementById('p-reg-specialty').value;
-            const fileInput = document.getElementById('p-reg-doc');
+        function closeFullscreenClientAxis() {
+            const fsAxis = document.getElementById('client-fullscreen-axis');
+            if (fsAxis) fsAxis.classList.add('hidden');
 
-            if (!name || !phone || !password || !address) {
-                return showToast("Veuillez remplir tous les champs obligatoires (*).", "error");
+            document.querySelectorAll('.client-axis-view').forEach(v => v.classList.add('hidden'));
+
+            const grid = document.getElementById('client-home-grid');
+            if (grid) grid.classList.remove('hidden');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function switchContactTab(tabId, btn) {
+            document.querySelectorAll('.contact-subview').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.contact-tab-btn').forEach(b => {
+                b.className = "contact-tab-btn p-2.5 rounded-2xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-1 shadow-xs hover:border-aqua";
+            });
+            const target = document.getElementById(tabId);
+            if (target) target.classList.remove('hidden');
+
+            if (btn) {
+                btn.className = "contact-tab-btn p-2.5 rounded-2xl border-2 border-mattOrange bg-orange-50/70 text-mattOrange font-black text-xs flex flex-col items-center gap-1 shadow-xs";
             }
-            if (!fileInput.files || fileInput.files.length === 0) {
-                return showToast("Veuillez joindre votre pièce d'identité ou document d'activité.", "error");
+        }
+
+        // NAVIGATION PLEIN ÉCRAN PARTENAIRE AVEC VÉRIFICATIONS DE SÉCURITÉ
+        function openFullscreenPartnerTab(tabId) {
+            const homeCol = document.getElementById('partner-home-column');
+            if (homeCol) homeCol.classList.add('hidden');
+
+            document.querySelectorAll('.partner-subview').forEach(v => v.classList.add('hidden'));
+
+            const titles = {
+                'partner-tab-missions': '🚨 Missions Disponibles',
+                'partner-tab-ca': '📊 Chiffre d\'Affaires & Périodes',
+                'partner-tab-wallet': '💳 Portefeuille & Forfaits',
+                'partner-tab-courses': '📑 Mes Courses & Clôture',
+                'partner-tab-profil': '⚙️ Mon Profil & Sécurité',
+                'partner-tab-info-support': '📜 Infos & Support'
+            };
+
+            const titleEl = document.getElementById('partner-tab-fullscreen-title');
+            if (titleEl) titleEl.innerText = titles[tabId] || 'Module Partenaire';
+            
+            const target = document.getElementById(tabId);
+            if (target) target.classList.remove('hidden');
+
+            const fsTab = document.getElementById('partner-fullscreen-tab');
+            if (fsTab) fsTab.classList.remove('hidden');
+
+            if (tabId === 'partner-tab-ca') {
+                renderPartnerCA();
+            } else if (tabId === 'partner-tab-wallet') {
+                refreshPartnerWallet();
+            } else if (tabId === 'partner-tab-missions') {
+                loadPartnerMissions();
+            } else if (tabId === 'partner-tab-courses') {
+                loadPartnerAcceptedCourses();
             }
 
-            let document_url = null;
-            try {
-                if (btn) { btn.disabled = true; btn.innerText = "Traitement en cours..."; }
-                document_url = await fileToBase64(fileInput.files[0]);
-            } catch (e) {
-                if (btn) { btn.disabled = false; btn.innerText = "Soumettre mon dossier d'agrément"; }
-                return showToast("Erreur lors de la lecture du document joint.", "error");
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function closeFullscreenPartnerTab() {
+            const fsTab = document.getElementById('partner-fullscreen-tab');
+            if (fsTab) fsTab.classList.add('hidden');
+
+            document.querySelectorAll('.partner-subview').forEach(v => v.classList.add('hidden'));
+
+            const homeCol = document.getElementById('partner-home-column');
+            if (homeCol) homeCol.classList.remove('hidden');
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function switchCaSubTab(tabId, btn) {
+            document.querySelectorAll('.ca-subview').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.ca-subtab-btn').forEach(b => {
+                b.className = "ca-subtab-btn p-2.5 rounded-2xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-1 shadow-xs hover:border-aqua";
+            });
+            const target = document.getElementById(tabId);
+            if (target) target.classList.remove('hidden');
+
+            if (btn) {
+                btn.className = "ca-subtab-btn p-2.5 rounded-2xl border-2 border-mattOrange bg-orange-50/70 text-mattOrange font-black text-xs flex flex-col items-center gap-1 shadow-xs";
+            }
+        }
+
+        function switchPartnerSupportTab(tabId, btn) {
+            document.querySelectorAll('.psup-subview').forEach(el => el.classList.add('hidden'));
+            document.querySelectorAll('.psup-subtab-btn').forEach(b => {
+                b.className = "psup-subtab-btn p-2.5 rounded-2xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-1 shadow-xs hover:border-aqua";
+            });
+            const target = document.getElementById(tabId);
+            if (target) target.classList.remove('hidden');
+
+            if (btn) {
+                btn.className = "psup-subtab-btn p-2.5 rounded-2xl border-2 border-mattOrange bg-orange-50/70 text-mattOrange font-black text-xs flex flex-col items-center gap-1 shadow-xs";
+            }
+        }
+
+        async function refreshPartnerWallet() {
+            if (!session.user) return;
+            const { data, error } = await db.from('partners').select('wallet, billing_mode').eq('id', session.user.id).single();
+            if (!error && data) {
+                session.user.wallet = data.wallet || 0;
+                session.user.billing_mode = data.billing_mode || 'commission';
+                const el = document.getElementById('partner-wallet-balance');
+                if (el) el.innerText = `${Number(data.wallet || 0).toLocaleString('fr-FR')} CDF`;
+                showToast("Solde portefeuille actualisé !");
+            }
+        }
+
+        // ==========================================
+        // VÉHICULES ET CALCUL DU PANIER
+        // ==========================================
+        function updateVehicleCount(vid, delta) {
+            clientVehiculeSelection[vid] = Math.max(0, (clientVehiculeSelection[vid] || 0) + delta);
+            const qtyEl = document.getElementById(`qty-${vid}`);
+            if (qtyEl) qtyEl.innerText = clientVehiculeSelection[vid];
+            
+            const optionsBox = document.getElementById(`options-box-${vid}`);
+            if (optionsBox) {
+                if (clientVehiculeSelection[vid] > 0) {
+                    optionsBox.classList.remove('hidden');
+                } else {
+                    optionsBox.classList.add('hidden');
+                    if (document.getElementById(`opt-${vid}-moteur`)) document.getElementById(`opt-${vid}-moteur`).checked = false;
+                    if (document.getElementById(`opt-${vid}-chassis`)) document.getElementById(`opt-${vid}-chassis`).checked = false;
+                    if (document.getElementById(`opt-${vid}-sieges`)) document.getElementById(`opt-${vid}-sieges`).checked = false;
+                }
+            }
+            calculerTotal();
+        }
+
+        function calculerTotal() {
+            let total = 0;
+            const tarifsZone = grilleTarifaireParZone[currentActiveZone] || grilleTarifaireParZone['zone1'];
+
+            let countVehicules = 0;
+            typesVehicules.forEach(v => {
+                const count = clientVehiculeSelection[v.id] || 0;
+                if (count > 0) {
+                    total += count * (tarifsZone[v.id] || 15000);
+                    countVehicules += count;
+
+                    if (v.hasOptions) {
+                        const pOpt = vehicleOptionsPrices[v.id];
+                        if (document.getElementById(`opt-${v.id}-moteur`)?.checked) total += count * pOpt.moteur;
+                        if (document.getElementById(`opt-${v.id}-chassis`)?.checked) total += count * pOpt.chassis;
+                        if (document.getElementById(`opt-${v.id}-sieges`)?.checked) total += count * pOpt.sieges;
+                    }
+                }
+            });
+            const badgeAuto = document.getElementById('badge-count-auto');
+            if (badgeAuto) badgeAuto.innerText = countVehicules;
+
+            let countMaison = 0;
+            const mTapis = parseFloat(document.getElementById('m2-tapis')?.value) || 0;
+            const mMoq = parseFloat(document.getElementById('m2-moquette')?.value) || 0;
+            const mVit = parseFloat(document.getElementById('m2-vitres')?.value) || 0;
+            const mBaie = parseFloat(document.getElementById('m2-baies')?.value) || 0;
+            const mCarr = parseFloat(document.getElementById('m2-carreaux')?.value) || 0;
+            const qPan = parseFloat(document.getElementById('qty-panneaux')?.value) || 0;
+            const qCanText = parseFloat(document.getElementById('qty-canape-textile')?.value) || 0;
+            const qCanLin = parseFloat(document.getElementById('qty-canape-lin')?.value) || 0;
+            const qCanVel = parseFloat(document.getElementById('qty-canape-velours')?.value) || 0;
+            const qCanCuir = parseFloat(document.getElementById('qty-canape-cuir')?.value) || 0;
+            const qMat = parseFloat(document.getElementById('qty-matelas')?.value) || 0;
+
+            total += mTapis * 2000 + mMoq * 2000 + mVit * 1500 + mBaie * 3000 + mCarr * 1000 + qPan * 4000;
+            total += qCanText * 4500 + qCanLin * 6000 + qCanVel * 8000 + qCanCuir * 12000 + qMat * 5000;
+
+            countMaison = (mTapis > 0 ? 1 : 0) + (mMoq > 0 ? 1 : 0) + (mVit > 0 ? 1 : 0) + (mBaie > 0 ? 1 : 0) + (mCarr > 0 ? 1 : 0) + (qPan > 0 ? 1 : 0) + (qCanText > 0 ? 1 : 0) + (qCanLin > 0 ? 1 : 0) + (qCanVel > 0 ? 1 : 0) + (qCanCuir > 0 ? 1 : 0) + (qMat > 0 ? 1 : 0);
+            const badgeMaison = document.getElementById('badge-count-maison');
+            if (badgeMaison) badgeMaison.innerText = countMaison;
+
+            let countEnv = 0;
+            const qDesinf = parseFloat(document.getElementById('qty-desinfection')?.value) || 0;
+            const qDesins = parseFloat(document.getElementById('qty-desinsectisation')?.value) || 0;
+            const qDerat = parseFloat(document.getElementById('qty-deratisation')?.value) || 0;
+            const vImm = parseFloat(document.getElementById('vol-immondices')?.value) || 0;
+            const vFos = parseFloat(document.getElementById('vol-fosse')?.value) || 0;
+
+            total += qDesinf * 10000 + qDesins * 12000 + qDerat * 14000 + vImm * 15000;
+            total += vFos * (currentActiveZone === 'zone4' ? 50000 : 40000);
+
+            countEnv = (qDesinf > 0 ? 1 : 0) + (qDesins > 0 ? 1 : 0) + (qDerat > 0 ? 1 : 0) + (vImm > 0 ? 1 : 0) + (vFos > 0 ? 1 : 0);
+            const badgeEnv = document.getElementById('badge-count-env');
+            if (badgeEnv) badgeEnv.innerText = countEnv;
+
+            const totalAffichage = document.getElementById('prix-total-affichage');
+            if (totalAffichage) totalAffichage.innerText = total.toLocaleString('fr-FR');
+
+            const badgesContainer = document.getElementById('cart-summary-badges');
+            if (badgesContainer) {
+                let badges = [];
+                if (countVehicules > 0) badges.push(`<span class="bg-slate-800 px-2 py-0.5 rounded-md border border-slate-700">🚗 ${countVehicules} véhicule(s)</span>`);
+                if (countMaison > 0) badges.push(`<span class="bg-slate-800 px-2 py-0.5 rounded-md border border-slate-700">🏡 ${countMaison} maison</span>`);
+                if (countEnv > 0) badges.push(`<span class="bg-slate-800 px-2 py-0.5 rounded-md border border-slate-700">🌱 ${countEnv} 3D/Fosse</span>`);
+                badgesContainer.innerHTML = badges.join('');
             }
 
-            const { error } = await db.from('partners').insert([{
-                name,
-                phone,
-                password,
+            return total;
+        }
+
+        function reinitialiserFormulaireCommande() {
+            typesVehicules.forEach(v => {
+                clientVehiculeSelection[v.id] = 0;
+                const qtyEl = document.getElementById(`qty-${v.id}`);
+                if (qtyEl) qtyEl.innerText = "0";
+
+                const optBox = document.getElementById(`options-box-${v.id}`);
+                if (optBox) optBox.classList.add('hidden');
+
+                if (document.getElementById(`opt-${v.id}-moteur`)) document.getElementById(`opt-${v.id}-moteur`).checked = false;
+                if (document.getElementById(`opt-${v.id}-chassis`)) document.getElementById(`opt-${v.id}-chassis`).checked = false;
+                if (document.getElementById(`opt-${v.id}-sieges`)) document.getElementById(`opt-${v.id}-sieges`).checked = false;
+            });
+
+            ['m2-tapis', 'm2-moquette', 'm2-vitres', 'm2-baies', 'm2-carreaux', 'qty-panneaux',
+             'qty-canape-textile', 'qty-canape-lin', 'qty-canape-velours', 'qty-canape-cuir', 'qty-matelas'
+            ].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+
+            ['qty-desinfection', 'qty-desinsectisation', 'qty-deratisation', 'vol-immondices', 'vol-fosse'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+
+            ['client-quartier-input', 'client-avenue-input', 'client-ref-input', 'client-date-input', 'client-time-input'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.value = '';
+            });
+
+            calculerTotal();
+        }
+
+        async function passerCommande() {
+            const btnValider = document.getElementById('btn-valider-commande');
+            const client_name = document.getElementById('client-name-input')?.value.trim() || '';
+            const raw_phone = document.getElementById('client-phone-input')?.value.trim() || '';
+            const client_phone = normalizePhoneNumber(raw_phone);
+            const commune = document.getElementById('client-commune')?.value || '';
+            const quartier = document.getElementById('client-quartier-input')?.value.trim() || '';
+            const avenue = document.getElementById('client-avenue-input')?.value.trim() || '';
+            const reference = document.getElementById('client-ref-input')?.value.trim() || '';
+            const date = document.getElementById('client-date-input')?.value || '';
+            const time = document.getElementById('client-time-input')?.value || '';
+            const elec = document.getElementById('client-elec')?.value || '';
+            const water = document.getElementById('client-water')?.value || '';
+            const total_amount = calculerTotal();
+
+            if (!client_name || !client_phone || !avenue || !date || !time) {
+                openFullscreenClientAxis('axis-logistics');
+                return showToast("Veuillez renseigner vos coordonnées et votre adresse dans la case 'Logistique'.", "error");
+            }
+            if (total_amount <= 0) return showToast("Votre panier est vide.", "error");
+
+            let details = [];
+            let axeParts = [];
+
+            let hasAuto = false;
+            typesVehicules.forEach(v => {
+                const count = clientVehiculeSelection[v.id] || 0;
+                if (count > 0) {
+                    hasAuto = true;
+                    let vDesc = `${count}x ${v.label}`;
+                    let vOpts = [];
+                    if (v.hasOptions) {
+                        if (document.getElementById(`opt-${v.id}-moteur`)?.checked) vOpts.push("Moteur+Rad.");
+                        if (document.getElementById(`opt-${v.id}-chassis`)?.checked) vOpts.push("Châssis");
+                        if (document.getElementById(`opt-${v.id}-sieges`)?.checked) vOpts.push("Sièges+Plafond");
+                    }
+                    if (vOpts.length > 0) vDesc += ` [${vOpts.join(' + ')}]`;
+                    details.push(vDesc);
+                }
+            });
+            if (hasAuto) axeParts.push('Automobile');
+
+            let hasMaison = false;
+            const mTapis = parseFloat(document.getElementById('m2-tapis')?.value) || 0;
+            if (mTapis > 0) { details.push(`Tapis (${mTapis} m²)`); hasMaison = true; }
+            const qCanText = parseFloat(document.getElementById('qty-canape-textile')?.value) || 0;
+            if (qCanText > 0) { details.push(`Canapé Textile (${qCanText} pl.)`); hasMaison = true; }
+            const qCanCuir = parseFloat(document.getElementById('qty-canape-cuir')?.value) || 0;
+            if (qCanCuir > 0) { details.push(`Canapé Cuir (${qCanCuir} pl.)`); hasMaison = true; }
+            const mVitres = parseFloat(document.getElementById('m2-vitres')?.value) || 0;
+            if (mVitres > 0) { details.push(`Vitres (${mVitres} m²)`); hasMaison = true; }
+            if (hasMaison) axeParts.push('Maison');
+
+            let hasEnv = false;
+            const fosse = parseFloat(document.getElementById('vol-fosse')?.value) || 0;
+            if (fosse > 0) { details.push(`Vidange fosse (${fosse} m³)`); hasEnv = true; }
+            const immondices = parseFloat(document.getElementById('vol-immondices')?.value) || 0;
+            if (immondices > 0) { details.push(`Immondices (${immondices} m³)`); hasEnv = true; }
+            const desinf = parseFloat(document.getElementById('qty-desinfection')?.value) || 0;
+            if (desinf > 0) { details.push(`3D Désinfection (${desinf} pces)`); hasEnv = true; }
+            if (hasEnv) axeParts.push('Environnement 3D & Vidange');
+
+            const commission = Math.floor(total_amount * 0.15);
+
+            if (btnValider) btnValider.disabled = true;
+
+            const { error } = await db.from('orders').insert([{
+                axe: axeParts.join(' / ') || 'Multi-Axes',
+                client_name,
+                client_phone,
+                description: details.join(' • ') || 'Prestation d\'assainissement sur mesure',
                 commune,
-                address,
-                specialty,
-                document_url,
-                wallet: 0,
-                status: 'En attente de validation'
+                quartier: quartier || 'N/A',
+                avenue,
+                reference,
+                logistics: `Élec: ${elec} | Eau: ${water}`,
+                date,
+                time,
+                total_amount,
+                commission,
+                status: 'En attente'
             }]);
 
-            if (btn) { btn.disabled = false; btn.innerText = "Soumettre mon dossier d'agrément"; }
+            if (btnValider) btnValider.disabled = false;
 
             if (error) return showToast(error.message, "error");
 
-            // Réinitialisation des champs
-            document.getElementById('p-reg-name').value = '';
-            document.getElementById('p-reg-phone').value = '';
-            document.getElementById('p-reg-pass').value = '';
-            document.getElementById('p-reg-address').value = '';
-            fileInput.value = '';
-
-            switchAuthTab('partner', 'login');
-            showToast("Dossier soumis avec succès ! Votre compte est en attente d'examen et validation par la Direction MATT.", "success");
+            reinitialiserFormulaireCommande();
+            showToast("Commande validée et transmise à la Direction !", "success");
+            openFullscreenClientAxis('axis-tracking');
+            detectClientOrders();
         }
 
-        // CONNEXION PARTENAIRE : VÉRIFICATION DU STATUT
-        async function loginPartner() {
-            const raw = document.getElementById('auth-partner-login-phone').value.trim();
+        async function detectClientOrders() {
+            const raw = document.getElementById('client-phone-input')?.value.trim() || '';
             const phone = normalizePhoneNumber(raw);
-            const password = document.getElementById('auth-partner-login-pass').value.trim();
-            
-            const { data, error } = await db.from('partners')
-                .select('*')
-                .or(`phone.eq.${phone},phone.ilike.%${phone.slice(-8)}%`)
-                .eq('password', password)
-                .single();
+            if (!phone) return;
 
-            if (error || !data) return showToast("Identifiants incorrects.", "error");
+            const { data } = await db.from('orders').select('*').or(`client_phone.eq.${phone},client_phone.ilike.%${phone.slice(-8)}%`).order('id', { ascending: false });
+            const list = document.getElementById('client-orders-tracking-list');
+            if (!list) return;
+            list.innerHTML = '';
 
-            // Vérification de la validation par l'admin
-            if (data.status === 'En attente de validation') {
-                return showToast("Votre dossier est toujours en attente d'examen par la Direction MATT SARL.", "error");
-            }
-            if (data.status === 'Suspendu') {
-                return showToast("Votre compte prestataire est actuellement suspendu. Contactez la Direction.", "error");
+            if (!data || data.length === 0) {
+                list.innerHTML = `<p class="text-xs text-slate-400 text-center py-4">Aucune commande enregistrée.</p>`;
+                return;
             }
 
-            session = { role: 'partner', user: data };
-            showToast(`Connecté : ${data.name}`);
-            openPartnerApp();
+            data.forEach(o => {
+                let badgeColor = o.status === 'En attente' ? 'bg-orange-100 text-orange-700' : (o.status === 'Annulée' ? 'bg-red-100 text-red-700' : 'bg-green-100 text-green-700');
+                list.innerHTML += `
+                    <div class="p-3.5 border rounded-2xl bg-slate-50 space-y-2 text-xs shadow-sm">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <b class="text-navy-800">#${o.id} - ${o.commune}</b>
+                                <span class="text-[10px] text-slate-500 block">${o.date} (${o.time})</span>
+                            </div>
+                            <div class="text-right">
+                                <span class="px-2 py-0.5 rounded text-[9px] font-bold uppercase ${badgeColor}">${o.status}</span>
+                                <div class="font-mono font-black text-navy-800 mt-0.5">${Number(o.total_amount).toLocaleString('fr-FR')} CDF</div>
+                            </div>
+                        </div>
+                        <p class="text-slate-600 text-[11px]"><b>Détails :</b> ${o.description}</p>
+                        <p class="text-[10px] text-slate-500"><b>Lieu :</b> ${o.quartier ? o.quartier + ' - ' : ''}${o.avenue}</p>
+                        <p class="text-[10px] text-slate-500"><b>Logistique :</b> ${o.logistics || 'SNEL / REGIDESO'}</p>
+                        ${o.rating_service ? `<div class="text-[10px] text-mattOrange font-bold">Note attribuée : ${'⭐'.repeat(o.rating_service)}</div>` : ''}
+                        <div class="flex justify-end gap-1.5 pt-1">
+                            ${o.status === 'En attente' ? `<button onclick="cancelOrder(${o.id})" class="px-2.5 py-1 bg-orange-100 text-orange-800 rounded-lg text-[10px] font-bold">Annuler</button>` : ''}
+                            <button onclick="openRatingModal(${o.id})" class="px-2.5 py-1 bg-sky-100 text-sky-800 rounded-lg text-[10px] font-bold">⭐ Noter</button>
+                            <button onclick="deleteOrderClient(${o.id})" class="px-2.5 py-1 bg-red-100 text-red-700 rounded-lg text-[10px] font-bold">🗑️</button>
+                        </div>
+                    </div>
+                `;
+            });
         }
 
-        function openPartnerApp() {
-            showView('view-partner-app');
-            document.getElementById('partner-dashboard-name').innerText = session.user.name;
-            document.getElementById('partner-wallet-balance').innerText = `${Number(session.user.wallet || 0).toLocaleString('fr-FR')} CDF`;
-
-            document.getElementById('partner-edit-name').value = session.user.name;
-            document.getElementById('partner-edit-phone').value = session.user.phone;
-            document.getElementById('partner-edit-commune').value = session.user.commune;
-
-            loadPartnerMissions();
-            loadPartnerAcceptedCourses();
-            fetchPublishedCgu();
+        async function cancelOrder(orderId) {
+            await db.from('orders').update({ status: 'Annulée' }).eq('id', orderId);
+            showToast("Commande annulée.");
+            detectClientOrders();
         }
 
-        // CHARGEMENT STRICT DES COURSES ASSIGNÉES AU PARTENAIRE CONNECTÉ
+        async function deleteOrderClient(orderId) {
+            await db.from('orders').delete().eq('id', orderId);
+            showToast("Commande supprimée.");
+            detectClientOrders();
+        }
+
+        function openRatingModal(orderId) {
+            currentRatingOrderId = orderId;
+            const idEl = document.getElementById('rating-order-id');
+            if (idEl) idEl.innerText = orderId;
+            setRating('service', 5);
+            const modal = document.getElementById('modal-rating');
+            if (modal) modal.classList.remove('hidden');
+        }
+
+        function closeRatingModal() {
+            const modal = document.getElementById('modal-rating');
+            if (modal) modal.classList.add('hidden');
+        }
+
+        function setRating(type, val) {
+            selectedRatingValue = val;
+            document.querySelectorAll('#stars-service-container span').forEach((s, idx) => {
+                s.className = idx < val ? 'text-mattOrange' : 'text-slate-300';
+            });
+        }
+
+        async function submitOrderRating() {
+            const comment = document.getElementById('rating-comment')?.value.trim() || '';
+            await db.from('orders').update({ rating_service: selectedRatingValue, comment }).eq('id', currentRatingOrderId);
+            showToast("Votre cotation est enregistrée !");
+            closeRatingModal();
+            detectClientOrders();
+        }
+
+        // ==========================================
+        // FILTRAGE DES MISSIONS SELON LE PROFIL DU PARTENAIRE
+        // ==========================================
+        async function loadPartnerMissions() {
+            const btn = document.getElementById('btn-refresh-missions');
+            const icon = document.getElementById('refresh-icon');
+            if (icon) icon.classList.add('animate-spin');
+            if (btn) btn.disabled = true;
+
+            const { data, error } = await db.from('orders').select('*').eq('status', 'En attente').order('id', { ascending: false });
+            const container = document.getElementById('partner-missions-container');
+            if (container) container.innerHTML = '';
+
+            if (icon) icon.classList.remove('animate-spin');
+            if (btn) btn.disabled = false;
+
+            if (error) {
+                showToast("Erreur : " + error.message, "error");
+                return;
+            }
+
+            if (!data || data.length === 0) {
+                if (container) container.innerHTML = `<p class="text-xs text-slate-400 text-center py-12 col-span-full font-medium">Aucune mission disponible dans votre secteur.</p>`;
+                return;
+            }
+
+            const pSpec = (session.user?.specialty || '').toLowerCase();
+
+            const missionsFiltrees = data.filter(o => {
+                const desc = (o.description || '').toLowerCase();
+                const axe = (o.axe || '').toLowerCase();
+
+                const hasAuto = axe.includes('auto') || desc.includes('berline') || desc.includes('suv') || desc.includes('moto') || desc.includes('bus') || desc.includes('remorque') || desc.includes('poids lourd');
+                const hasMaison = axe.includes('maison') || desc.includes('tapis') || desc.includes('canapé') || desc.includes('vitre') || desc.includes('carreaux') || desc.includes('moquette') || desc.includes('matelas') || desc.includes('panneau');
+                const has3D = axe.includes('3d') || desc.includes('désinfection') || desc.includes('dératisation') || desc.includes('désinsectisation');
+                const hasVidange = desc.includes('fosse') || desc.includes('immondices') || desc.includes('vidange');
+
+                if (pSpec.includes('polyvalent')) {
+                    return hasAuto || hasMaison;
+                }
+                if (pSpec.includes('3d') || pSpec.includes('traitement') || pSpec.includes('assainissement')) {
+                    return has3D;
+                }
+                if (pSpec.includes('vidange') || pSpec.includes('immondices')) {
+                    return hasVidange;
+                }
+                if (pSpec.includes('auto') || pSpec.includes('lavage')) {
+                    return hasAuto;
+                }
+                if (pSpec.includes('maison')) {
+                    return hasMaison;
+                }
+
+                return false;
+            });
+
+            if (missionsFiltrees.length === 0) {
+                if (container) container.innerHTML = `<p class="text-xs text-slate-400 text-center py-12 col-span-full font-medium">Aucune mission disponible pour votre spécialité (${session.user?.specialty || 'Général'}).</p>`;
+                return;
+            }
+
+            missionsFiltrees.forEach(o => {
+                if (container) {
+                    container.innerHTML += `
+                        <div class="p-4 border border-slate-200 hover:border-aqua rounded-2xl bg-white space-y-3 text-xs shadow-sm transition">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <b class="text-navy-800 uppercase text-sm font-black">${o.commune}</b>
+                                    <span class="text-[10px] text-slate-500 block font-medium">${o.date} à ${o.time}</span>
+                                </div>
+                                <div class="text-right font-mono">
+                                    <span class="font-black text-navy-800 text-base">${Number(o.total_amount).toLocaleString('fr-FR')} CDF</span>
+                                    <span class="block text-[10px] text-mattOrange font-bold">Commission : ${Number(o.commission).toLocaleString('fr-FR')} CDF</span>
+                                </div>
+                            </div>
+                            <div class="bg-slate-50 p-3 rounded-xl border text-[11px] text-slate-700 space-y-1">
+                                <div><b>Prestations :</b> ${o.description}</div>
+                                <div><b>Quartier :</b> ${o.quartier || 'N/A'}</div>
+                                <div><b>Logistique :</b> <span class="text-aqua font-black">${o.logistics || 'SNEL / REGIDESO'}</span></div>
+                                <div><b>Repère :</b> ${o.reference || 'Aucun'}</div>
+                            </div>
+                            <button onclick="accepterMission(${o.id}, ${o.commission})" class="w-full py-2.5 bg-mattOrange active:bg-orange-600 text-white rounded-xl font-black uppercase text-xs shadow transition">
+                                Accepter la course (${Number(o.commission).toLocaleString('fr-FR')} CDF)
+                            </button>
+                        </div>
+                    `;
+                }
+            });
+        }
+
         async function loadPartnerAcceptedCourses() {
             if (!session.user) return;
             
@@ -1110,10 +1534,17 @@
 
             const net = totalBrut - totalCom;
 
-            document.getElementById('ca-stat-count').innerText = orders.length;
-            document.getElementById('ca-stat-brut').innerText = `${totalBrut.toLocaleString('fr-FR')} CDF`;
-            document.getElementById('ca-stat-com').innerText = `${totalCom.toLocaleString('fr-FR')} CDF`;
-            document.getElementById('ca-stat-net').innerText = `${net.toLocaleString('fr-FR')} CDF`;
+            const elCount = document.getElementById('ca-stat-count');
+            if (elCount) elCount.innerText = orders.length;
+
+            const elBrut = document.getElementById('ca-stat-brut');
+            if (elBrut) elBrut.innerText = `${totalBrut.toLocaleString('fr-FR')} CDF`;
+
+            const elCom = document.getElementById('ca-stat-com');
+            if (elCom) elCom.innerText = `${totalCom.toLocaleString('fr-FR')} CDF`;
+
+            const elNet = document.getElementById('ca-stat-net');
+            if (elNet) elNet.innerText = `${net.toLocaleString('fr-FR')} CDF`;
 
             const tbody = document.getElementById('ca-table-body');
             if (!tbody) return;
@@ -1149,8 +1580,8 @@
         }
 
         function filtrerChiffreAffaires() {
-            const start = document.getElementById('ca-date-start').value;
-            const end = document.getElementById('ca-date-end').value;
+            const start = document.getElementById('ca-date-start')?.value || '';
+            const end = document.getElementById('ca-date-end')?.value || '';
 
             if (!start && !end) return renderPartnerCA();
 
@@ -1162,15 +1593,17 @@
                 return true;
             });
 
-            document.getElementById('ca-period-label').innerText = `Du ${start || 'Début'} au ${end || 'Fin'}`;
+            const lbl = document.getElementById('ca-period-label');
+            if (lbl) lbl.innerText = `Du ${start || 'Début'} au ${end || 'Fin'}`;
             renderPartnerCA(filtered);
             showToast("Chiffre d'affaires recalculé.");
         }
 
         function resetFiltreCA() {
-            document.getElementById('ca-date-start').value = '';
-            document.getElementById('ca-date-end').value = '';
-            document.getElementById('ca-period-label').innerText = "Toutes dates";
+            if (document.getElementById('ca-date-start')) document.getElementById('ca-date-start').value = '';
+            if (document.getElementById('ca-date-end')) document.getElementById('ca-date-end').value = '';
+            const lbl = document.getElementById('ca-period-label');
+            if (lbl) lbl.innerText = "Toutes dates";
             renderPartnerCA();
         }
 
@@ -1185,7 +1618,9 @@
             await db.from('orders').update({ status: 'Acceptée', partner_id: session.user.id }).eq('id', orderId);
 
             session.user.wallet = newWallet;
-            document.getElementById('partner-wallet-balance').innerText = `${newWallet.toLocaleString('fr-FR')} CDF`;
+            const wb = document.getElementById('partner-wallet-balance');
+            if (wb) wb.innerText = `${newWallet.toLocaleString('fr-FR')} CDF`;
+
             showToast("Mission acceptée ! Coordonnées débloquées.");
             loadPartnerMissions();
             loadPartnerAcceptedCourses();
@@ -1198,31 +1633,31 @@
         }
 
         async function sendRechargeDeclaration() {
-            const mode = document.getElementById('p-billing-mode-select').value;
-            const amount = parseFloat(document.getElementById('p-recharge-amount').value);
-            const ref = document.getElementById('p-recharge-ref').value.trim();
+            const mode = document.getElementById('p-billing-mode-select')?.value || 'commission';
+            const amount = parseFloat(document.getElementById('p-recharge-amount')?.value);
+            const ref = document.getElementById('p-recharge-ref')?.value.trim() || '';
             if (!amount || !ref) return showToast("Montant et référence requis.", "error");
 
             await db.from('recharges').insert([{ partner_id: session.user.id, partner_name: session.user.name, mode, amount, ref, status: 'En attente' }]);
             showToast("Déclaration transmise à la Direction !");
-            document.getElementById('p-recharge-amount').value = '';
-            document.getElementById('p-recharge-ref').value = '';
+            if (document.getElementById('p-recharge-amount')) document.getElementById('p-recharge-amount').value = '';
+            if (document.getElementById('p-recharge-ref')) document.getElementById('p-recharge-ref').value = '';
         }
 
         function adjustPartnerRechargeMode() {
-            const mode = document.getElementById('p-billing-mode-select').value;
+            const mode = document.getElementById('p-billing-mode-select')?.value;
             const input = document.getElementById('p-recharge-amount');
-            input.value = mode === 'journalier' ? 15000 : (mode === 'mensuel' ? 150000 : '');
+            if (input) input.value = mode === 'journalier' ? 15000 : (mode === 'mensuel' ? 150000 : '');
         }
 
         async function savePartnerProfileUpdate() {
             if (!session.user) return;
-            const newName = document.getElementById('partner-edit-name').value.trim();
-            const rawPhone = document.getElementById('partner-edit-phone').value.trim();
+            const newName = document.getElementById('partner-edit-name')?.value.trim() || '';
+            const rawPhone = document.getElementById('partner-edit-phone')?.value.trim() || '';
             const newPhone = normalizePhoneNumber(rawPhone);
-            const newCommune = document.getElementById('partner-edit-commune').value;
-            const oldPass = document.getElementById('partner-edit-old-pass').value.trim();
-            const newPass = document.getElementById('partner-edit-new-pass').value.trim();
+            const newCommune = document.getElementById('partner-edit-commune')?.value || '';
+            const oldPass = document.getElementById('partner-edit-old-pass')?.value.trim() || '';
+            const newPass = document.getElementById('partner-edit-new-pass')?.value.trim() || '';
 
             if (!newName || !newPhone) return showToast("Nom et téléphone requis.", "error");
             if (!oldPass) return showToast("Ancien mot de passe requis pour valider.", "error");
@@ -1239,7 +1674,7 @@
             session.user.commune = newCommune;
             if (newPass) session.user.password = newPass;
 
-            document.getElementById('partner-dashboard-name').innerText = newName;
+            localStorage.setItem('matt_partner_session', JSON.stringify(session.user));
             showToast("Identifiants mis à jour !");
         }
 
@@ -1257,24 +1692,25 @@
         }
 
         async function registerClient() {
-            const name = document.getElementById('auth-client-reg-name').value.trim();
-            const rawPhone = document.getElementById('auth-client-reg-phone').value.trim();
+            const name = document.getElementById('auth-client-reg-name')?.value.trim() || '';
+            const rawPhone = document.getElementById('auth-client-reg-phone')?.value.trim() || '';
             const phone = normalizePhoneNumber(rawPhone);
-            const password = document.getElementById('auth-client-reg-pass').value.trim();
+            const password = document.getElementById('auth-client-reg-pass')?.value.trim() || '';
             if (!name || !phone || !password) return showToast("Remplissez tous les champs.", "error");
 
             const { data, error } = await db.from('clients').insert([{ name, phone, password }]).select();
             if (error) return showToast(error.message, "error");
 
             session = { role: 'client', user: data[0] };
+            localStorage.setItem('matt_client_session', JSON.stringify(data[0]));
             showToast("Compte client créé avec succès !");
             openClientApp();
         }
 
         async function loginClient() {
-            const raw = document.getElementById('auth-client-login-phone').value.trim();
+            const raw = document.getElementById('auth-client-login-phone')?.value.trim() || '';
             const phone = normalizePhoneNumber(raw);
-            const password = document.getElementById('auth-client-login-pass').value.trim();
+            const password = document.getElementById('auth-client-login-pass')?.value.trim() || '';
             
             const { data, error } = await db.from('clients')
                 .select('*')
@@ -1285,14 +1721,19 @@
             if (error || !data) return showToast("Identifiants incorrects.", "error");
 
             session = { role: 'client', user: data };
+            localStorage.setItem('matt_client_session', JSON.stringify(data));
             showToast(`Bienvenue ${data.name}`);
             openClientApp();
         }
 
         function openClientApp() {
             showView('view-client-app');
-            document.getElementById('client-name-input').value = session.user.name;
-            document.getElementById('client-phone-input').value = session.user.phone;
+            const nameInp = document.getElementById('client-name-input');
+            if (nameInp && session.user) nameInp.value = session.user.name;
+
+            const phoneInp = document.getElementById('client-phone-input');
+            if (phoneInp && session.user) phoneInp.value = session.user.phone;
+
             detectClientOrders();
             onClientCommuneChange();
             fetchPublishedCgu();
@@ -1300,6 +1741,8 @@
 
         function logoutCurrentSession() {
             session = { role: null, user: null };
+            localStorage.removeItem('matt_client_session');
+            localStorage.removeItem('matt_partner_session');
             showView('view-gateway');
             showToast("Vous avez été déconnecté.", "info");
         }
@@ -1310,56 +1753,74 @@
             const selectPartnerEdit = document.getElementById('partner-edit-commune');
 
             communesKinshasa.forEach(c => {
-                selectClient.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
-                selectPartnerReg.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
+                if (selectClient) selectClient.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
+                if (selectPartnerReg) selectPartnerReg.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
                 if (selectPartnerEdit) selectPartnerEdit.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
             });
 
             const vCat = document.getElementById('vehicle-catalog');
-            typesVehicules.forEach(v => {
-                clientVehiculeSelection[v.id] = 0;
-                const pOpt = vehicleOptionsPrices[v.id];
+            if (vCat) {
+                typesVehicules.forEach(v => {
+                    clientVehiculeSelection[v.id] = 0;
+                    const pOpt = vehicleOptionsPrices[v.id];
 
-                let optionsHtml = '';
-                if (v.hasOptions && pOpt) {
-                    optionsHtml = `
-                        <div id="options-box-${v.id}" class="hidden mt-2 p-2 bg-slate-50 rounded-xl border border-slate-200 text-[10px] space-y-1 transition-all">
-                            <span class="font-black text-navy-800 uppercase block">Options :</span>
-                            <div class="grid grid-cols-1 sm:grid-cols-3 gap-1">
-                                <label class="flex items-center gap-1 p-1 bg-white rounded border cursor-pointer">
-                                    <input type="checkbox" id="opt-${v.id}-moteur" class="rounded text-mattOrange" onchange="calculerTotal()">
-                                    <span>Moteur (+${pOpt.moteur.toLocaleString('fr-FR')})</span>
-                                </label>
-                                <label class="flex items-center gap-1 p-1 bg-white rounded border cursor-pointer">
-                                    <input type="checkbox" id="opt-${v.id}-chassis" class="rounded text-mattOrange" onchange="calculerTotal()">
-                                    <span>Châssis (+${pOpt.chassis.toLocaleString('fr-FR')})</span>
-                                </label>
-                                <label class="flex items-center gap-1 p-1 bg-white rounded border cursor-pointer">
-                                    <input type="checkbox" id="opt-${v.id}-sieges" class="rounded text-mattOrange" onchange="calculerTotal()">
-                                    <span>Sièges (+${pOpt.sieges.toLocaleString('fr-FR')})</span>
-                                </label>
+                    let optionsHtml = '';
+                    if (v.hasOptions && pOpt) {
+                        optionsHtml = `
+                            <div id="options-box-${v.id}" class="hidden mt-2 p-2 bg-slate-50 rounded-xl border border-slate-200 text-[10px] space-y-1 transition-all">
+                                <span class="font-black text-navy-800 uppercase block">Options :</span>
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-1">
+                                    <label class="flex items-center gap-1 p-1 bg-white rounded border cursor-pointer">
+                                        <input type="checkbox" id="opt-${v.id}-moteur" class="rounded text-mattOrange" onchange="calculerTotal()">
+                                        <span>Moteur (+${pOpt.moteur.toLocaleString('fr-FR')})</span>
+                                    </label>
+                                    <label class="flex items-center gap-1 p-1 bg-white rounded border cursor-pointer">
+                                        <input type="checkbox" id="opt-${v.id}-chassis" class="rounded text-mattOrange" onchange="calculerTotal()">
+                                        <span>Châssis (+${pOpt.chassis.toLocaleString('fr-FR')})</span>
+                                    </label>
+                                    <label class="flex items-center gap-1 p-1 bg-white rounded border cursor-pointer">
+                                        <input type="checkbox" id="opt-${v.id}-sieges" class="rounded text-mattOrange" onchange="calculerTotal()">
+                                        <span>Sièges (+${pOpt.sieges.toLocaleString('fr-FR')})</span>
+                                    </label>
+                                </div>
                             </div>
+                        `;
+                    }
+
+                    vCat.innerHTML += `
+                        <div class="border rounded-xl p-2.5 bg-white shadow-xs">
+                            <div class="flex justify-between items-center text-xs">
+                                <span class="font-bold text-slate-800">${v.label}</span>
+                                <div class="flex gap-2 items-center">
+                                    <button class="w-7 h-7 bg-slate-200 active:bg-slate-300 rounded-lg font-bold flex items-center justify-center text-sm" onclick="updateVehicleCount('${v.id}', -1)">-</button>
+                                    <span id="qty-${v.id}" class="w-4 text-center font-black text-navy-800 text-xs">0</span>
+                                    <button class="w-7 h-7 bg-slate-200 active:bg-slate-300 rounded-lg font-bold flex items-center justify-center text-sm" onclick="updateVehicleCount('${v.id}', 1)">+</button>
+                                </div>
+                            </div>
+                            ${optionsHtml}
                         </div>
                     `;
-                }
-
-                vCat.innerHTML += `
-                    <div class="border rounded-xl p-2.5 bg-white shadow-xs">
-                        <div class="flex justify-between items-center text-xs">
-                            <span class="font-bold text-slate-800">${v.label}</span>
-                            <div class="flex gap-2 items-center">
-                                <button class="w-7 h-7 bg-slate-200 active:bg-slate-300 rounded-lg font-bold flex items-center justify-center text-sm" onclick="updateVehicleCount('${v.id}', -1)">-</button>
-                                <span id="qty-${v.id}" class="w-4 text-center font-black text-navy-800 text-xs">0</span>
-                                <button class="w-7 h-7 bg-slate-200 active:bg-slate-300 rounded-lg font-bold flex items-center justify-center text-sm" onclick="updateVehicleCount('${v.id}', 1)">+</button>
-                            </div>
-                        </div>
-                        ${optionsHtml}
-                    </div>
-                `;
-            });
+                });
+            }
 
             onClientCommuneChange();
             fetchPublishedCgu();
+
+            // RECONNEXION AUTOMATIQUE SI SESSION EXISTANTE
+            const savedPartner = localStorage.getItem('matt_partner_session');
+            const savedClient = localStorage.getItem('matt_client_session');
+
+            if (savedPartner) {
+                try {
+                    session = { role: 'partner', user: JSON.parse(savedPartner) };
+                    openPartnerApp();
+                } catch(e) {}
+            } else if (savedClient) {
+                try {
+                    session = { role: 'client', user: JSON.parse(savedClient) };
+                    openClientApp();
+                } catch(e) {}
+            }
         };
     </script>
 </body>
