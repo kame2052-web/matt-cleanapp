@@ -681,10 +681,10 @@
                     <div id="partner-accepted-courses-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
                 </div>
 
-                <!-- Profil & Sécurité (Divisé en 2 Sous-onglets) -->
+                <!-- Profil & Sécurité (Divisé en 2 Sous-onglets CACHÉS PAR DÉFAUT) -->
                 <div id="partner-tab-profil" class="partner-subview hidden space-y-4 max-w-xl mx-auto">
                     <div class="grid grid-cols-2 gap-2 text-center">
-                        <button type="button" onclick="switchProfileSubTab('prof-sub-info', this)" class="prof-subtab-btn p-2.5 rounded-2xl border-2 border-mattOrange bg-orange-50/70 text-mattOrange font-black text-xs flex flex-col items-center gap-1 shadow-xs">
+                        <button type="button" onclick="switchProfileSubTab('prof-sub-info', this)" class="prof-subtab-btn p-2.5 rounded-2xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-1 shadow-xs hover:border-aqua">
                             <span class="text-2xl">👤</span>
                             <span class="text-[10px] uppercase">Mon Profil</span>
                         </button>
@@ -695,7 +695,7 @@
                     </div>
 
                     <!-- Sous-onglet : Mon Profil -->
-                    <div id="prof-sub-info" class="prof-subview space-y-4 bg-slate-50 p-5 rounded-3xl border text-xs">
+                    <div id="prof-sub-info" class="prof-subview hidden space-y-4 bg-slate-50 p-5 rounded-3xl border text-xs">
                         <div>
                             <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Nom / Raison Sociale</label>
                             <input type="text" id="partner-edit-name" class="w-full p-3 bg-white border rounded-xl font-bold">
@@ -1120,6 +1120,7 @@
             if (document.getElementById('partner-edit-secret-q') && session.user.secret_question) document.getElementById('partner-edit-secret-q').value = session.user.secret_question;
             if (document.getElementById('partner-edit-secret-a')) document.getElementById('partner-edit-secret-a').value = session.user.secret_answer || '';
 
+            // Cache les deux sous-onglets par defaut
             document.querySelectorAll('.prof-subview').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('.prof-subtab-btn').forEach(b => {
                 b.className = "prof-subtab-btn p-2.5 rounded-2xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-1 shadow-xs hover:border-aqua";
@@ -1209,6 +1210,13 @@
             else if (tabId === 'partner-tab-wallet') refreshPartnerWallet();
             else if (tabId === 'partner-tab-missions') loadPartnerMissions();
             else if (tabId === 'partner-tab-courses') loadPartnerAcceptedCourses();
+            else if (tabId === 'partner-tab-profil') {
+                // Re-masquer les sous-onglets lors de la réouverture de l'onglet Profil complet
+                document.querySelectorAll('.prof-subview').forEach(el => el.classList.add('hidden'));
+                document.querySelectorAll('.prof-subtab-btn').forEach(b => {
+                    b.className = "prof-subtab-btn p-2.5 rounded-2xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-1 shadow-xs hover:border-aqua";
+                });
+            }
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -1989,7 +1997,7 @@
 
         async function loginClient() {
             const raw = document.getElementById('auth-client-login-phone')?.value.trim() || '';
-            const phone = normalizePhoneNumber(raw);
+            const phone = normalizePhoneNumber(rawPhone);
             const password = document.getElementById('auth-client-login-pass')?.value.trim() || '';
             
             const { data, error } = await db.from('clients')
@@ -2017,13 +2025,6 @@
             detectClientOrders();
             onClientCommuneChange();
             fetchPublishedCgu();
-        }
-
-        // DECONNEXION FIABILISEE : Purge memoire + Rechargement page (Reset Total UI)
-        function logoutCurrentSession() {
-            localStorage.removeItem('matt_client_session');
-            localStorage.removeItem('matt_partner_session');
-            window.location.reload();
         }
 
         window.addEventListener('DOMContentLoaded', () => {
