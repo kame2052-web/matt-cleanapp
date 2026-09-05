@@ -56,6 +56,9 @@
         </div>
 
         <div class="flex items-center gap-2">
+            <button onclick="refreshApplicationData()" id="btn-app-refresh" class="hidden px-3.5 py-1.5 rounded-xl bg-sky-600/80 hover:bg-sky-600 text-white text-xs font-bold transition shadow flex items-center gap-1.5">
+                <span id="global-refresh-icon" class="inline-block transition-transform">🔄</span> Actualiser
+            </button>
             <button onclick="logoutCurrentSession()" id="btn-header-logout" class="hidden px-3.5 py-1.5 rounded-xl bg-red-600/80 hover:bg-red-600 text-white text-xs font-bold transition shadow flex items-center gap-1.5">
                 🚪 Déconnexion
             </button>
@@ -200,6 +203,17 @@
                         </button>
                     </div>
                 </div>
+                
+                <!-- Added secret question fields -->
+                <div>
+                    <label class="text-[10px] font-bold text-slate-600 block uppercase">Question Secrète *</label>
+                    <select id="p-reg-secret-q" class="w-full px-3 py-2 border rounded-xl text-xs text-slate-800 font-bold bg-white"></select>
+                </div>
+                <div>
+                    <label class="text-[10px] font-bold text-slate-600 block uppercase">Réponse Secrète *</label>
+                    <input type="text" id="p-reg-secret-a" placeholder="Votre réponse" class="w-full px-3 py-2 border rounded-xl text-xs font-bold">
+                </div>
+                
                 <div>
                     <label class="text-[10px] font-bold text-slate-600 block uppercase">Commune Principale *</label>
                     <select id="p-reg-commune" class="w-full px-3 py-2 border rounded-xl text-xs text-slate-800 font-bold bg-white"></select>
@@ -739,11 +753,7 @@
                             <span class="text-[10px] font-black text-navy-800 uppercase block">Récupération de compte</span>
                             <div>
                                 <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Question Secrète</label>
-                                <select id="partner-edit-secret-q" class="w-full p-3 bg-white border rounded-xl font-bold">
-                                    <option value="Quel est le nom de votre ville natale ?">Quel est le nom de votre ville natale ?</option>
-                                    <option value="Quel est le nom de votre premier animal de compagnie ?">Quel est le nom de votre premier animal de compagnie ?</option>
-                                    <option value="Quel est le nom de jeune fille de votre mère ?">Quel est le nom de jeune fille de votre mère ?</option>
-                                </select>
+                                <select id="partner-edit-secret-q" class="w-full p-3 bg-white border rounded-xl font-bold"></select>
                             </div>
                             <div>
                                 <label class="text-[10px] font-bold text-slate-500 uppercase block mb-1">Réponse Secrète</label>
@@ -893,6 +903,21 @@
         let selectedRatingValue = 5;
         let partnerAllOrders = [];
 
+        let secretQuestionsDB = JSON.parse(localStorage.getItem('matt_secret_questions_db')) || [
+            "Quel est le nom de votre ville natale ?",
+            "Quel est le nom de votre premier animal de compagnie ?",
+            "Quel est le nom de jeune fille de votre mère ?"
+        ];
+
+        function populateSecretQuestions() {
+            const sels = [document.getElementById('p-reg-secret-q'), document.getElementById('partner-edit-secret-q')];
+            sels.forEach(sel => {
+                if (sel) {
+                    sel.innerHTML = secretQuestionsDB.map(q => `<option value="${q}">${q}</option>`).join('');
+                }
+            });
+        }
+
         function normalizePhoneNumber(phone) {
             if (!phone) return "";
             let p = String(phone).replace(/[\s\-\.\(\)]/g, "");
@@ -941,7 +966,6 @@
             
             if (btnLogout) btnLogout.classList.toggle('hidden', !isLoggedIn);
             if (btnRefresh) {
-                // Seulement côté partenaire
                 if (viewId === 'view-partner-app') btnRefresh.classList.remove('hidden');
                 else btnRefresh.classList.add('hidden');
             }
@@ -1005,12 +1029,14 @@
             const rawPhone = document.getElementById('p-reg-phone')?.value.trim() || '';
             const phone = normalizePhoneNumber(rawPhone);
             const password = document.getElementById('p-reg-pass')?.value.trim() || '';
+            const secQ = document.getElementById('p-reg-secret-q')?.value || '';
+            const secA = document.getElementById('p-reg-secret-a')?.value.trim() || '';
             const commune = document.getElementById('p-reg-commune')?.value || 'Gombe';
             const address = document.getElementById('p-reg-address')?.value.trim() || '';
             const specialty = document.getElementById('p-reg-specialty')?.value || 'Polyvalent Auto et Maison';
             const fileInput = document.getElementById('p-reg-doc');
 
-            if (!name || !phone || !password || !address) {
+            if (!name || !phone || !password || !address || !secQ || !secA) {
                 return showToast("Veuillez remplir tous les champs obligatoires (*).", "error");
             }
             if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
@@ -1030,6 +1056,8 @@
                 name,
                 phone,
                 password,
+                secret_question: secQ,
+                secret_answer: secA,
                 commune,
                 address,
                 specialty,
@@ -1045,6 +1073,7 @@
             document.getElementById('p-reg-name').value = '';
             document.getElementById('p-reg-phone').value = '';
             document.getElementById('p-reg-pass').value = '';
+            document.getElementById('p-reg-secret-a').value = '';
             document.getElementById('p-reg-address').value = '';
             fileInput.value = '';
 
@@ -1121,7 +1150,6 @@
             if (document.getElementById('partner-edit-secret-q') && session.user.secret_question) document.getElementById('partner-edit-secret-q').value = session.user.secret_question;
             if (document.getElementById('partner-edit-secret-a')) document.getElementById('partner-edit-secret-a').value = session.user.secret_answer || '';
 
-            // Remise à zéro des vues
             resetCaView();
             resetPsupView();
             resetProfileView();
@@ -1169,7 +1197,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // NAVIGATION DRILL-DOWN (CACHEMENT DES BOUTONS)
         function switchContactTab(tabId) {
             const cntBtns = document.getElementById('cnt-buttons-container');
             if(cntBtns) cntBtns.classList.add('hidden');
@@ -1258,7 +1285,6 @@
             const fsTab = document.getElementById('partner-fullscreen-tab');
             if (fsTab) fsTab.classList.remove('hidden');
 
-            // Réinitialisation de l'affichage des sous-onglets
             if (tabId === 'partner-tab-ca') {
                 resetCaView();
                 renderPartnerCA();
@@ -1323,9 +1349,6 @@
             }
         }
 
-        // ==========================================
-        // VÉHICULES ET CALCUL DU PANIER
-        // ==========================================
         function updateVehicleCount(vid, delta) {
             clientVehiculeSelection[vid] = Math.max(0, (clientVehiculeSelection[vid] || 0) + delta);
             const qtyEl = document.getElementById(`qty-${vid}`);
@@ -1943,9 +1966,6 @@
             session.user.address = newAddress;
             localStorage.setItem('matt_partner_session', JSON.stringify(session.user));
             
-            const dashName = document.getElementById('partner-dashboard-name');
-            if (dashName) dashName.innerText = newName;
-            
             showToast("Profil mis à jour avec succès !");
             resetProfileView();
         }
@@ -2050,6 +2070,7 @@
         }
 
         function logoutCurrentSession() {
+            session = { role: null, user: null };
             localStorage.removeItem('matt_client_session');
             localStorage.removeItem('matt_partner_session');
             window.location.reload();
@@ -2063,6 +2084,8 @@
                 if (selectClient) selectClient.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
                 if (selectPartnerReg) selectPartnerReg.insertAdjacentHTML('beforeend', `<option value="${c.name}">${c.name}</option>`);
             });
+
+            populateSecretQuestions();
 
             const vCat = document.getElementById('vehicle-catalog');
             if (vCat) {
