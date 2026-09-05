@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>MATT Clean'App</title>
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Supabase JS Client -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script>
         tailwind.config = {
@@ -44,10 +42,8 @@
 </head>
 <body class="bg-navy-900 text-slate-100 min-h-screen watermark-bg font-sans flex flex-col justify-between select-none">
 
-    <!-- Toast Notifications -->
     <div id="toast-container" class="fixed top-4 inset-x-4 z-[9999] flex flex-col gap-2 max-w-sm mx-auto pointer-events-none"></div>
 
-    <!-- En-tête -->
     <header class="bg-navy-800/95 border-b border-aqua/30 px-4 py-3 md:px-8 flex justify-between items-center sticky top-0 z-40 backdrop-blur-md shadow-lg w-full">
         <div class="flex items-center gap-2.5 cursor-pointer" onclick="showView('view-gateway')">
             <div class="w-11 h-11 bg-white rounded-2xl shadow-md border border-aqua/30 p-1 flex items-center justify-center flex-shrink-0">
@@ -66,10 +62,9 @@
         </div>
     </header>
 
-    <!-- Conteneur Principal -->
     <main class="w-full px-2 py-3 sm:px-6 sm:py-5 flex-grow flex flex-col justify-start">
 
-        <!-- 1. ACCUEIL -->
+        <!-- ACCUEIL -->
         <div id="view-gateway" class="w-full max-w-4xl mx-auto space-y-8 animate-fade-in my-auto py-8">
             <div class="text-center space-y-4">
                 <div class="inline-block w-28 h-28 md:w-32 md:h-32 bg-white rounded-3xl p-2 shadow-2xl border-2 border-aqua/40">
@@ -110,7 +105,7 @@
             </div>
         </div>
 
-        <!-- 2. AUTHENTIFICATION CLIENT -->
+        <!-- AUTHENTIFICATION CLIENT -->
         <div id="view-client-auth" class="bg-white text-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl hidden animate-fade-in max-w-md mx-auto w-full my-auto">
             <div class="flex items-center justify-end border-b pb-2 mb-4">
                 <button onclick="showView('view-gateway')" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 font-bold flex items-center justify-center">✕</button>
@@ -160,7 +155,7 @@
             </div>
         </div>
 
-        <!-- 3. AUTHENTIFICATION PARTENAIRE -->
+        <!-- AUTHENTIFICATION PARTENAIRE -->
         <div id="view-partner-auth" class="bg-white text-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl hidden animate-fade-in max-w-md mx-auto w-full my-auto">
             <div class="flex items-center justify-end border-b pb-2 mb-4">
                 <button onclick="showView('view-gateway')" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 font-bold flex items-center justify-center">✕</button>
@@ -174,7 +169,7 @@
             <div id="form-partner-login" class="space-y-3.5">
                 <div>
                     <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Numéro de Téléphone</label>
-                    <input type="tel" id="auth-partner-login-phone" placeholder="Numéro de téléphone" class="w-full px-3.5 py-3 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-mattOrange focus:outline-none">
+                    <input type="tel" id="auth-partner-login-phone" placeholder="0819998822" class="w-full px-3.5 py-3 bg-slate-50 border rounded-xl text-xs font-bold text-slate-800 focus:ring-2 focus:ring-mattOrange focus:outline-none">
                 </div>
                 <div>
                     <label class="block text-[10px] font-black text-slate-600 uppercase mb-1">Mot de passe</label>
@@ -185,7 +180,9 @@
                         </button>
                     </div>
                 </div>
-                <button onclick="loginPartner()" class="w-full py-3.5 bg-mattOrange active:bg-orange-600 text-white font-black text-xs rounded-xl uppercase tracking-wider shadow mt-2">Accéder à mon espace</button>
+                <button id="btn-login-partner-submit" onclick="loginPartner()" class="w-full py-3.5 bg-mattOrange active:bg-orange-600 text-white font-black text-xs rounded-xl uppercase tracking-wider shadow mt-2">
+                    Accéder à mon espace
+                </button>
             </div>
 
             <div id="form-partner-register" class="space-y-3 hidden max-h-[62vh] overflow-y-auto pr-1 custom-scrollbar">
@@ -238,9 +235,8 @@
             </div>
         </div>
 
-        <!-- 4. ESPACE CLIENT CONNECTÉ -->
+        <!-- ESPACE CLIENT -->
         <div id="view-client-app" class="w-full min-h-[calc(100vh-140px)] bg-white text-slate-800 rounded-3xl p-4 md:p-6 shadow-2xl hidden animate-fade-in flex flex-col justify-between space-y-4">
-            
             <div id="client-home-grid" class="space-y-5 flex-grow flex flex-col justify-between">
                 <div class="grid grid-cols-2 sm:grid-cols-3 gap-3.5 w-full max-w-xl mx-auto p-2">
                     <button type="button" onclick="openFullscreenClientAxis('axis-auto')" class="relative p-3 rounded-3xl border-2 border-slate-200 bg-white hover:border-aqua transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm aspect-square">
@@ -266,12 +262,12 @@
                         <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Logistique</span>
                     </button>
 
-                    <button type="button" onclick="openFullscreenClientAxis('axis-tracking')" class="relative p-3 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm aspect-square">
+                    <button type="button" onclick="openFullscreenClientAxis('axis-tracking')" class="relative p-3 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
                         <span class="text-3xl sm:text-4xl">📋</span>
                         <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Mes Commandes</span>
                     </button>
 
-                    <button type="button" onclick="openFullscreenClientAxis('axis-contact')" class="relative p-3 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm aspect-square">
+                    <button type="button" onclick="openFullscreenClientAxis('axis-contact')" class="relative p-3 rounded-3xl border-2 border-slate-200 bg-white hover:border-mattOrange transition active:scale-95 flex flex-col items-center justify-center gap-1.5 shadow-sm group aspect-square">
                         <span class="text-3xl sm:text-4xl">📞</span>
                         <span class="text-[11px] font-black text-navy-800 uppercase block leading-tight">Contact</span>
                     </button>
@@ -846,7 +842,7 @@
 
         function normalizePhoneNumber(phone) {
             if (!phone) return "";
-            let p = phone.replace(/[\s\-\.\(\)]/g, "");
+            let p = String(phone).replace(/[\s\-\.\(\)]/g, "");
             if (p.startsWith("+243")) p = "0" + p.slice(4);
             else if (p.startsWith("00243")) p = "0" + p.slice(5);
             else if (p.startsWith("243")) p = "0" + p.slice(3);
@@ -902,17 +898,157 @@
         }
 
         function switchAuthTab(role, tab) {
-            document.getElementById(`form-${role}-login`).classList.toggle('hidden', tab !== 'login');
-            document.getElementById(`form-${role}-register`).classList.toggle('hidden', tab === 'login');
+            const fLogin = document.getElementById(`form-${role}-login`);
+            const fReg = document.getElementById(`form-${role}-register`);
+            if (fLogin) fLogin.classList.toggle('hidden', tab !== 'login');
+            if (fReg) fReg.classList.toggle('hidden', tab === 'login');
+
+            const tLogin = document.getElementById(`tab-${role}-login`);
+            const tReg = document.getElementById(`tab-${role}-register`);
+            const colorClass = role === 'partner' ? 'border-mattOrange text-mattOrange' : 'border-aqua text-aqua';
+
+            if (tab === 'login') {
+                if (tLogin) tLogin.className = `flex-1 py-2 font-black border-b-2 ${colorClass}`;
+                if (tReg) tReg.className = 'flex-1 py-2 font-bold border-b-2 border-transparent text-slate-400';
+            } else {
+                if (tReg) tReg.className = `flex-1 py-2 font-black border-b-2 ${colorClass}`;
+                if (tLogin) tLogin.className = 'flex-1 py-2 font-bold border-b-2 border-transparent text-slate-400';
+            }
         }
 
         function onClientCommuneChange() {
-            const selectedName = document.getElementById('client-commune').value;
+            const selectEl = document.getElementById('client-commune');
+            if (!selectEl) return;
+            const selectedName = selectEl.value;
             const com = communesKinshasa.find(c => c.name === selectedName);
             if (com) {
                 currentActiveZone = com.zone;
             }
             calculerTotal();
+        }
+
+        function fileToBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.readAsDataURL(file);
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+            });
+        }
+
+        async function registerPartner() {
+            const btn = document.getElementById('btn-submit-partner-reg');
+            const name = document.getElementById('p-reg-name')?.value.trim() || '';
+            const rawPhone = document.getElementById('p-reg-phone')?.value.trim() || '';
+            const phone = normalizePhoneNumber(rawPhone);
+            const password = document.getElementById('p-reg-pass')?.value.trim() || '';
+            const commune = document.getElementById('p-reg-commune')?.value || 'Gombe';
+            const address = document.getElementById('p-reg-address')?.value.trim() || '';
+            const specialty = document.getElementById('p-reg-specialty')?.value || 'Polyvalent Auto et Maison';
+            const fileInput = document.getElementById('p-reg-doc');
+
+            if (!name || !phone || !password || !address) {
+                return showToast("Veuillez remplir tous les champs obligatoires (*).", "error");
+            }
+            if (!fileInput || !fileInput.files || fileInput.files.length === 0) {
+                return showToast("Veuillez joindre votre pièce d'identité ou justificatif d'activité.", "error");
+            }
+
+            let document_url = null;
+            try {
+                if (btn) { btn.disabled = true; btn.innerText = "Traitement en cours..."; }
+                document_url = await fileToBase64(fileInput.files[0]);
+            } catch (e) {
+                if (btn) { btn.disabled = false; btn.innerText = "Soumettre mon dossier d'agrément"; }
+                return showToast("Erreur lors de la lecture du document joint.", "error");
+            }
+
+            const { error } = await db.from('partners').insert([{
+                name,
+                phone,
+                password,
+                commune,
+                address,
+                specialty,
+                document_url,
+                wallet: 0,
+                status: 'En attente de validation'
+            }]);
+
+            if (btn) { btn.disabled = false; btn.innerText = "Soumettre mon dossier d'agrément"; }
+
+            if (error) return showToast("Erreur d'inscription : " + error.message, "error");
+
+            document.getElementById('p-reg-name').value = '';
+            document.getElementById('p-reg-phone').value = '';
+            document.getElementById('p-reg-pass').value = '';
+            document.getElementById('p-reg-address').value = '';
+            fileInput.value = '';
+
+            switchAuthTab('partner', 'login');
+            showToast("Dossier soumis avec succès ! Votre compte est en attente d'examen et validation par la Direction MATT.", "success");
+        }
+
+        // CONNEXION PARTENAIRE SÉCURISÉE AVEC COMPATIBILITÉ MULTI-FORMAT
+        async function loginPartner() {
+            const btn = document.getElementById('btn-login-partner-submit');
+            const raw = document.getElementById('auth-partner-login-phone')?.value.trim() || '';
+            const password = document.getElementById('auth-partner-login-pass')?.value.trim() || '';
+
+            if (!raw || !password) {
+                return showToast("Veuillez saisir votre numéro et mot de passe.", "error");
+            }
+
+            const phoneNorm = normalizePhoneNumber(raw);
+            const lastEight = phoneNorm.slice(-8);
+
+            try {
+                if (btn) { btn.disabled = true; btn.innerText = "Connexion..."; }
+
+                // Recherche robuste sans plantage .single()
+                const { data, error } = await db.from('partners')
+                    .select('*')
+                    .eq('password', password);
+
+                if (btn) { btn.disabled = false; btn.innerText = "Accéder à mon espace"; }
+
+                if (error) {
+                    return showToast("Erreur de connexion : " + error.message, "error");
+                }
+
+                // Correspondance souple sur le numéro de téléphone
+                const partner = (data || []).find(p => {
+                    const pNorm = normalizePhoneNumber(p.phone);
+                    return pNorm === phoneNorm || (lastEight.length >= 7 && pNorm.includes(lastEight));
+                });
+
+                if (!partner) {
+                    return showToast("Identifiants incorrects ou compte introuvable.", "error");
+                }
+
+                if (partner.status === 'En attente de validation') {
+                    return showToast("Votre dossier est toujours en attente d'examen par la Direction MATT SARL.", "error");
+                }
+                if (partner.status === 'Suspendu') {
+                    return showToast("Votre compte prestataire est actuellement suspendu. Contactez la Direction.", "error");
+                }
+
+                session = { role: 'partner', user: partner };
+                localStorage.setItem('matt_partner_session', JSON.stringify(partner));
+                showToast(`Bienvenue ${partner.name}`);
+                openPartnerApp();
+
+            } catch (err) {
+                if (btn) { btn.disabled = false; btn.innerText = "Accéder à mon espace"; }
+                showToast("Erreur inattendue : " + (err.message || err), "error");
+            }
+        }
+
+        function openPartnerApp() {
+            showView('view-partner-app');
+            loadPartnerMissions();
+            loadPartnerAcceptedCourses();
+            fetchPublishedCgu();
         }
 
         function openFullscreenClientAxis(viewId) {
@@ -966,7 +1102,6 @@
             }
         }
 
-        // NAVIGATION PLEIN ÉCRAN PARTENAIRE AVEC VÉRIFICATIONS DE SÉCURITÉ
         function openFullscreenPartnerTab(tabId) {
             const homeCol = document.getElementById('partner-home-column');
             if (homeCol) homeCol.classList.add('hidden');
@@ -991,15 +1126,10 @@
             const fsTab = document.getElementById('partner-fullscreen-tab');
             if (fsTab) fsTab.classList.remove('hidden');
 
-            if (tabId === 'partner-tab-ca') {
-                renderPartnerCA();
-            } else if (tabId === 'partner-tab-wallet') {
-                refreshPartnerWallet();
-            } else if (tabId === 'partner-tab-missions') {
-                loadPartnerMissions();
-            } else if (tabId === 'partner-tab-courses') {
-                loadPartnerAcceptedCourses();
-            }
+            if (tabId === 'partner-tab-ca') renderPartnerCA();
+            else if (tabId === 'partner-tab-wallet') refreshPartnerWallet();
+            else if (tabId === 'partner-tab-missions') loadPartnerMissions();
+            else if (tabId === 'partner-tab-courses') loadPartnerAcceptedCourses();
 
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -1054,9 +1184,6 @@
             }
         }
 
-        // ==========================================
-        // VÉHICULES ET CALCUL DU PANIER
-        // ==========================================
         function updateVehicleCount(vid, delta) {
             clientVehiculeSelection[vid] = Math.max(0, (clientVehiculeSelection[vid] || 0) + delta);
             const qtyEl = document.getElementById(`qty-${vid}`);
@@ -1359,297 +1486,8 @@
         }
 
         // ==========================================
-        // FILTRAGE DES MISSIONS SELON LE PROFIL DU PARTENAIRE
+        // PROFIL & IDENTIFIANTS PARTENAIRE
         // ==========================================
-        async function loadPartnerMissions() {
-            const btn = document.getElementById('btn-refresh-missions');
-            const icon = document.getElementById('refresh-icon');
-            if (icon) icon.classList.add('animate-spin');
-            if (btn) btn.disabled = true;
-
-            const { data, error } = await db.from('orders').select('*').eq('status', 'En attente').order('id', { ascending: false });
-            const container = document.getElementById('partner-missions-container');
-            if (container) container.innerHTML = '';
-
-            if (icon) icon.classList.remove('animate-spin');
-            if (btn) btn.disabled = false;
-
-            if (error) {
-                showToast("Erreur : " + error.message, "error");
-                return;
-            }
-
-            if (!data || data.length === 0) {
-                if (container) container.innerHTML = `<p class="text-xs text-slate-400 text-center py-12 col-span-full font-medium">Aucune mission disponible dans votre secteur.</p>`;
-                return;
-            }
-
-            const pSpec = (session.user?.specialty || '').toLowerCase();
-
-            const missionsFiltrees = data.filter(o => {
-                const desc = (o.description || '').toLowerCase();
-                const axe = (o.axe || '').toLowerCase();
-
-                const hasAuto = axe.includes('auto') || desc.includes('berline') || desc.includes('suv') || desc.includes('moto') || desc.includes('bus') || desc.includes('remorque') || desc.includes('poids lourd');
-                const hasMaison = axe.includes('maison') || desc.includes('tapis') || desc.includes('canapé') || desc.includes('vitre') || desc.includes('carreaux') || desc.includes('moquette') || desc.includes('matelas') || desc.includes('panneau');
-                const has3D = axe.includes('3d') || desc.includes('désinfection') || desc.includes('dératisation') || desc.includes('désinsectisation');
-                const hasVidange = desc.includes('fosse') || desc.includes('immondices') || desc.includes('vidange');
-
-                if (pSpec.includes('polyvalent')) {
-                    return hasAuto || hasMaison;
-                }
-                if (pSpec.includes('3d') || pSpec.includes('traitement') || pSpec.includes('assainissement')) {
-                    return has3D;
-                }
-                if (pSpec.includes('vidange') || pSpec.includes('immondices')) {
-                    return hasVidange;
-                }
-                if (pSpec.includes('auto') || pSpec.includes('lavage')) {
-                    return hasAuto;
-                }
-                if (pSpec.includes('maison')) {
-                    return hasMaison;
-                }
-
-                return false;
-            });
-
-            if (missionsFiltrees.length === 0) {
-                if (container) container.innerHTML = `<p class="text-xs text-slate-400 text-center py-12 col-span-full font-medium">Aucune mission disponible pour votre spécialité (${session.user?.specialty || 'Général'}).</p>`;
-                return;
-            }
-
-            missionsFiltrees.forEach(o => {
-                if (container) {
-                    container.innerHTML += `
-                        <div class="p-4 border border-slate-200 hover:border-aqua rounded-2xl bg-white space-y-3 text-xs shadow-sm transition">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <b class="text-navy-800 uppercase text-sm font-black">${o.commune}</b>
-                                    <span class="text-[10px] text-slate-500 block font-medium">${o.date} à ${o.time}</span>
-                                </div>
-                                <div class="text-right font-mono">
-                                    <span class="font-black text-navy-800 text-base">${Number(o.total_amount).toLocaleString('fr-FR')} CDF</span>
-                                    <span class="block text-[10px] text-mattOrange font-bold">Commission : ${Number(o.commission).toLocaleString('fr-FR')} CDF</span>
-                                </div>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-xl border text-[11px] text-slate-700 space-y-1">
-                                <div><b>Prestations :</b> ${o.description}</div>
-                                <div><b>Quartier :</b> ${o.quartier || 'N/A'}</div>
-                                <div><b>Logistique :</b> <span class="text-aqua font-black">${o.logistics || 'SNEL / REGIDESO'}</span></div>
-                                <div><b>Repère :</b> ${o.reference || 'Aucun'}</div>
-                            </div>
-                            <button onclick="accepterMission(${o.id}, ${o.commission})" class="w-full py-2.5 bg-mattOrange active:bg-orange-600 text-white rounded-xl font-black uppercase text-xs shadow transition">
-                                Accepter la course (${Number(o.commission).toLocaleString('fr-FR')} CDF)
-                            </button>
-                        </div>
-                    `;
-                }
-            });
-        }
-
-        async function loadPartnerAcceptedCourses() {
-            if (!session.user) return;
-            
-            const { data } = await db.from('orders')
-                .select('*')
-                .eq('partner_id', session.user.id)
-                .order('id', { ascending: false });
-            
-            partnerAllOrders = data || [];
-            renderAcceptedCoursesList();
-            renderPartnerCA();
-        }
-
-        function renderAcceptedCoursesList() {
-            const container = document.getElementById('partner-accepted-courses-list');
-            if (!container) return;
-            container.innerHTML = '';
-
-            const visibleOrders = partnerAllOrders.filter(o => !o.partner_cleared);
-
-            if (visibleOrders.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-8 col-span-full">Aucune mission dans votre liste.</p>`;
-                return;
-            }
-
-            visibleOrders.forEach(o => {
-                container.innerHTML += `
-                    <div class="p-4 border rounded-2xl bg-white shadow-sm space-y-2 text-xs">
-                        <div class="flex justify-between font-bold">
-                            <span>#${o.id} - ${o.commune}</span>
-                            <span class="text-navy-800 font-mono">${Number(o.total_amount).toLocaleString('fr-FR')} CDF</span>
-                        </div>
-                        <div class="text-[11px] text-slate-600">
-                            <b>Client :</b> ${o.client_name} • <a href="tel:${o.client_phone}" class="text-aqua font-bold font-mono underline">${o.client_phone}</a><br>
-                            <b>Adresse :</b> ${o.quartier ? o.quartier + ' - ' : ''}${o.avenue} (Repère : ${o.reference || 'N/A'})<br>
-                            <b>Conditions :</b> ${o.logistics || 'SNEL / REGIDESO'}
-                        </div>
-                        ${o.status === 'Acceptée' ? `
-                            <button onclick="cloturerMission(${o.id})" class="w-full py-2.5 bg-green-600 active:bg-green-700 text-white rounded-xl font-bold text-xs mt-1">
-                                ✅ Clôturer cette mission (Terminée)
-                            </button>
-                        ` : `
-                            <div class="flex justify-between items-center pt-1 border-t">
-                                <span class="text-green-600 font-bold text-xs">Mission clôturée ✔</span>
-                                <button onclick="deleteSinglePartnerCourse(${o.id})" class="text-slate-400 hover:text-red-500 font-bold text-[10px] px-2 py-0.5 rounded bg-slate-50 border">
-                                    Retirer ✕
-                                </button>
-                            </div>
-                        `}
-                    </div>
-                `;
-            });
-        }
-
-        function clearCompletedCourses() {
-            let count = 0;
-            partnerAllOrders.forEach(o => {
-                if (o.status === 'Terminée') {
-                    o.partner_cleared = true;
-                    count++;
-                }
-            });
-
-            renderAcceptedCoursesList();
-            showToast(count > 0 ? `${count} course(s) clôturée(s) retirée(s) de l'affichage.` : "Aucune course clôturée à vider.", "info");
-        }
-
-        function deleteSinglePartnerCourse(orderId) {
-            const o = partnerAllOrders.find(x => x.id === orderId);
-            if (o) o.partner_cleared = true;
-            renderAcceptedCoursesList();
-            showToast("Course retirée de votre affichage.");
-        }
-
-        function renderPartnerCA(filteredOrders = null) {
-            const orders = filteredOrders || partnerAllOrders.filter(o => o.status === 'Terminée');
-            let totalBrut = 0;
-            let totalCom = 0;
-
-            orders.forEach(o => {
-                totalBrut += Number(o.total_amount || 0);
-                totalCom += Number(o.commission || 0);
-            });
-
-            const net = totalBrut - totalCom;
-
-            const elCount = document.getElementById('ca-stat-count');
-            if (elCount) elCount.innerText = orders.length;
-
-            const elBrut = document.getElementById('ca-stat-brut');
-            if (elBrut) elBrut.innerText = `${totalBrut.toLocaleString('fr-FR')} CDF`;
-
-            const elCom = document.getElementById('ca-stat-com');
-            if (elCom) elCom.innerText = `${totalCom.toLocaleString('fr-FR')} CDF`;
-
-            const elNet = document.getElementById('ca-stat-net');
-            if (elNet) elNet.innerText = `${net.toLocaleString('fr-FR')} CDF`;
-
-            const tbody = document.getElementById('ca-table-body');
-            if (!tbody) return;
-
-            if (orders.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="7" class="p-8 text-center text-slate-400 font-medium">
-                            Aucune course enregistrée pour cette période.
-                        </td>
-                    </tr>
-                `;
-                return;
-            }
-
-            tbody.innerHTML = orders.map(o => {
-                const com = Number(o.commission || 0);
-                const brut = Number(o.total_amount || 0);
-                const gain = brut - com;
-
-                return `
-                    <tr class="hover:bg-slate-50 border-b">
-                        <td class="p-3 font-mono font-bold">#${o.id}</td>
-                        <td class="p-3">${o.date || '-'}</td>
-                        <td class="p-3 font-bold">${o.description || '-'}</td>
-                        <td class="p-3">${o.commune}</td>
-                        <td class="p-3 font-mono font-bold text-sky-600">${brut.toLocaleString('fr-FR')} CDF</td>
-                        <td class="p-3 font-mono font-bold text-red-500">-${com.toLocaleString('fr-FR')} CDF</td>
-                        <td class="p-3 font-mono font-bold text-green-600">${gain.toLocaleString('fr-FR')} CDF</td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        function filtrerChiffreAffaires() {
-            const start = document.getElementById('ca-date-start')?.value || '';
-            const end = document.getElementById('ca-date-end')?.value || '';
-
-            if (!start && !end) return renderPartnerCA();
-
-            const filtered = partnerAllOrders.filter(o => {
-                if (o.status !== 'Terminée') return false;
-                if (!o.date) return false;
-                if (start && o.date < start) return false;
-                if (end && o.date > end) return false;
-                return true;
-            });
-
-            const lbl = document.getElementById('ca-period-label');
-            if (lbl) lbl.innerText = `Du ${start || 'Début'} au ${end || 'Fin'}`;
-            renderPartnerCA(filtered);
-            showToast("Chiffre d'affaires recalculé.");
-        }
-
-        function resetFiltreCA() {
-            if (document.getElementById('ca-date-start')) document.getElementById('ca-date-start').value = '';
-            if (document.getElementById('ca-date-end')) document.getElementById('ca-date-end').value = '';
-            const lbl = document.getElementById('ca-period-label');
-            if (lbl) lbl.innerText = "Toutes dates";
-            renderPartnerCA();
-        }
-
-        async function accepterMission(orderId, commission) {
-            const mode = session.user.billing_mode || 'commission';
-            if (mode === 'commission' && session.user.wallet < commission) {
-                return showToast("Solde insuffisant pour couvrir la commission.", "error");
-            }
-
-            const newWallet = mode === 'commission' ? session.user.wallet - commission : session.user.wallet;
-            await db.from('partners').update({ wallet: newWallet }).eq('id', session.user.id);
-            await db.from('orders').update({ status: 'Acceptée', partner_id: session.user.id }).eq('id', orderId);
-
-            session.user.wallet = newWallet;
-            const wb = document.getElementById('partner-wallet-balance');
-            if (wb) wb.innerText = `${newWallet.toLocaleString('fr-FR')} CDF`;
-
-            showToast("Mission acceptée ! Coordonnées débloquées.");
-            loadPartnerMissions();
-            loadPartnerAcceptedCourses();
-        }
-
-        async function cloturerMission(orderId) {
-            await db.from('orders').update({ status: 'Terminée' }).eq('id', orderId);
-            showToast("Course terminée avec succès !");
-            loadPartnerAcceptedCourses();
-        }
-
-        async function sendRechargeDeclaration() {
-            const mode = document.getElementById('p-billing-mode-select')?.value || 'commission';
-            const amount = parseFloat(document.getElementById('p-recharge-amount')?.value);
-            const ref = document.getElementById('p-recharge-ref')?.value.trim() || '';
-            if (!amount || !ref) return showToast("Montant et référence requis.", "error");
-
-            await db.from('recharges').insert([{ partner_id: session.user.id, partner_name: session.user.name, mode, amount, ref, status: 'En attente' }]);
-            showToast("Déclaration transmise à la Direction !");
-            if (document.getElementById('p-recharge-amount')) document.getElementById('p-recharge-amount').value = '';
-            if (document.getElementById('p-recharge-ref')) document.getElementById('p-recharge-ref').value = '';
-        }
-
-        function adjustPartnerRechargeMode() {
-            const mode = document.getElementById('p-billing-mode-select')?.value;
-            const input = document.getElementById('p-recharge-amount');
-            if (input) input.value = mode === 'journalier' ? 15000 : (mode === 'mensuel' ? 150000 : '');
-        }
-
         async function savePartnerProfileUpdate() {
             if (!session.user) return;
             const newName = document.getElementById('partner-edit-name')?.value.trim() || '';
@@ -1806,7 +1644,6 @@
             onClientCommuneChange();
             fetchPublishedCgu();
 
-            // RECONNEXION AUTOMATIQUE SI SESSION EXISTANTE
             const savedPartner = localStorage.getItem('matt_partner_session');
             const savedClient = localStorage.getItem('matt_client_session');
 
