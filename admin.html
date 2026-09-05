@@ -98,13 +98,13 @@
                 <button onclick="switchAdminTab('admin-liaisons', this)" class="admin-tab-btn px-4 py-2.5 bg-navy-800 text-white rounded-xl whitespace-nowrap active shadow-sm">Suivi des Liaisons</button>
                 <button onclick="switchAdminTab('admin-partenaires', this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap">Gestion Partenaires</button>
                 <button onclick="switchAdminTab('admin-recharges', this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap">💰 Caisses & Trésorerie</button>
-                <button onclick="switchAdminTab('admin-prix', this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap">Configuration des Prix</button>
+                <button onclick="switchAdminTab('admin-prix', this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap">Configuration des Prix & Taux</button>
                 <button onclick="switchAdminTab('admin-cgu', this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap">📜 Édition des CGU</button>
                 <button onclick="switchAdminTab('admin-stats', this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap">📊 Statistiques d'Activité</button>
                 <button onclick="switchAdminTab('admin-config', this)" class="admin-tab-btn px-4 py-2.5 bg-slate-100 text-slate-600 hover:text-slate-900 rounded-xl whitespace-nowrap">⚙️ Configuration Système</button>
             </div>
 
-            <!-- SUIVI DES COMMANDES -->
+            <!-- ONGLET 1: SUIVI DES COMMANDES -->
             <div id="admin-liaisons" class="admin-subview space-y-5">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 border-b pb-3">
                     <div class="flex gap-2 text-xs">
@@ -158,12 +158,12 @@
                 </div>
             </div>
 
-            <!-- GESTION PARTENAIRES -->
+            <!-- ONGLET 2: GESTION PARTENAIRES (AVEC VALIDATION DES DOSSIERS) -->
             <div id="admin-partenaires" class="admin-subview hidden space-y-4">
                 <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3">
                     <div>
-                        <h3 class="text-md font-black text-navy-800 uppercase tracking-wide">👥 Annuaire des Prestataires Agréés</h3>
-                        <p class="text-xs text-slate-500 font-medium">Gestion des accès, activation et solde virtuel.</p>
+                        <h3 class="text-md font-black text-navy-800 uppercase tracking-wide">👥 Annuaire des Prestataires Agréés & Demandes d'adhésion</h3>
+                        <p class="text-xs text-slate-500 font-medium">Validation administrative des pièces d'identité, activation et solde virtuel.</p>
                     </div>
                     
                     <div class="flex flex-wrap items-center gap-2 text-xs w-full lg:w-auto">
@@ -179,10 +179,10 @@
                             <tr class="bg-slate-50 text-slate-600 border-b font-bold">
                                 <th class="p-3 uppercase">Partenaire</th>
                                 <th class="p-3 uppercase">Spécialité</th>
-                                <th class="p-3 uppercase">Commune</th>
+                                <th class="p-3 uppercase">Commune & Siège</th>
                                 <th class="p-3 uppercase">Facturation</th>
                                 <th class="p-3 uppercase">Solde</th>
-                                <th class="p-3 uppercase">Statut</th>
+                                <th class="p-3 uppercase">Statut Dossier</th>
                                 <th class="p-3 uppercase text-right">Actions</th>
                             </tr>
                         </thead>
@@ -191,7 +191,7 @@
                 </div>
             </div>
 
-            <!-- CAISSE CENTRALE & CAISSES PAR AXES -->
+            <!-- ONGLET 3: CAISSE CENTRALE & CAISSES PAR AXES -->
             <div id="admin-recharges" class="admin-subview hidden space-y-6">
                 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -311,12 +311,12 @@
 
             </div>
 
-            <!-- CONFIGURATION DES PRIX -->
+            <!-- ONGLET 4: CONFIGURATION DES PRIX & TAUX DE COMMISSION PAR ZONE -->
             <div id="admin-prix" class="admin-subview hidden space-y-6">
                 <div class="flex flex-col lg:flex-row justify-between lg:items-center gap-4 bg-slate-50 p-4 rounded-2xl border border-slate-200">
                     <div>
-                        <h3 class="text-lg font-black text-navy-800 uppercase tracking-wide">⚙️ Grille Tarifaire par Groupe de Communes</h3>
-                        <p class="text-xs text-slate-500 font-semibold">Ajustez les prix en fonction des zones géographiques de Kinshasa.</p>
+                        <h3 class="text-lg font-black text-navy-800 uppercase tracking-wide">⚙️ Grille Tarifaire & Taux de Commission par Zone</h3>
+                        <p class="text-xs text-slate-500 font-semibold">Ajustez les prix des prestations et le % de commission appliqué pour chaque zone de Kinshasa.</p>
                     </div>
                     <div class="flex flex-wrap items-center gap-3">
                         <select id="admin-commune-group-select" class="px-3 py-2 bg-white border-2 border-mattOrange rounded-xl text-xs font-black text-slate-900 shadow-sm focus:outline-none" onchange="onCommuneGroupChange()">
@@ -329,6 +329,18 @@
                         <button onclick="saveTarifsForCurrentGroup()" class="px-5 py-2 bg-mattOrange hover:bg-orange-600 text-white font-black text-xs rounded-xl shadow uppercase tracking-wider transition">
                             💾 Enregistrer ce Groupe
                         </button>
+                    </div>
+                </div>
+
+                <!-- Réglage Spécifique du Taux de Commission pour la Zone Sélectionnée -->
+                <div class="bg-orange-50/70 border-2 border-orange-200 p-4 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                    <div>
+                        <span class="text-xs font-black text-navy-800 uppercase block">📊 Taux de Commission MATT pour cette Zone :</span>
+                        <span class="text-[10px] text-slate-500 font-semibold">Pourcentage prélevé sur chaque mission réalisée dans ce groupe de communes.</span>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <input type="number" id="p-commission-rate" value="15" min="1" max="50" class="w-24 px-3 py-2 bg-white border border-mattOrange rounded-xl font-black text-navy-800 text-center font-mono">
+                        <span class="font-black text-slate-700 text-sm">%</span>
                     </div>
                 </div>
                 
@@ -651,6 +663,68 @@
         </div>
     </main>
 
+    <!-- MODALE EXAMEN DU DOSSIER PARTENAIRE (PIÈCE D'IDENTITÉ & ADRESSE) -->
+    <div id="modal-partner-review" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
+        <div class="bg-white text-slate-900 w-full max-w-lg rounded-3xl shadow-2xl p-6 border border-slate-200 space-y-4 relative max-h-[90vh] overflow-y-auto custom-scrollbar">
+            <button onclick="closePartnerReviewModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-700 font-bold text-xl">✕</button>
+            
+            <div class="border-b pb-3">
+                <h3 class="text-lg font-black text-navy-800 flex items-center gap-2">
+                    <span>📄</span> Examen Dossier Prestataire
+                </h3>
+                <span id="review-partner-status" class="px-2.5 py-0.5 rounded text-[10px] font-bold uppercase mt-1 inline-block"></span>
+            </div>
+
+            <input type="hidden" id="review-partner-id">
+
+            <div class="space-y-3 text-xs">
+                <div class="grid grid-cols-2 gap-2 bg-slate-50 p-3 rounded-2xl border">
+                    <div>
+                        <span class="text-[10px] font-bold text-slate-500 uppercase block">Raison Sociale / Nom :</span>
+                        <b class="text-slate-800 text-sm" id="review-partner-name">-</b>
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-bold text-slate-500 uppercase block">Téléphone / Contact :</span>
+                        <b class="font-mono text-slate-800 text-sm" id="review-partner-phone">-</b>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2 bg-slate-50 p-3 rounded-2xl border">
+                    <div>
+                        <span class="text-[10px] font-bold text-slate-500 uppercase block">Commune d'Intervention :</span>
+                        <b class="text-navy-800" id="review-partner-commune">-</b>
+                    </div>
+                    <div>
+                        <span class="text-[10px] font-bold text-slate-500 uppercase block">Spécialité Déclarée :</span>
+                        <b class="text-mattOrange" id="review-partner-specialty">-</b>
+                    </div>
+                </div>
+
+                <div class="bg-slate-50 p-3 rounded-2xl border">
+                    <span class="text-[10px] font-bold text-slate-500 uppercase block mb-1">📍 Adresse Complète d'Exploitation / Siège :</span>
+                    <p class="font-bold text-slate-800" id="review-partner-address">Non renseignée</p>
+                </div>
+
+                <!-- Aperçu de la pièce d'identité -->
+                <div class="bg-slate-50 p-3 rounded-2xl border space-y-2">
+                    <span class="text-[10px] font-black text-navy-800 uppercase block">📑 Pièce d'Identité ou Justificatif Joint :</span>
+                    <div id="review-partner-doc-preview" class="w-full flex items-center justify-center border rounded-xl overflow-hidden min-h-[160px] bg-white p-2">
+                        <span class="text-slate-400">Aucun document joint</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex justify-end gap-2 pt-3 border-t">
+                <button onclick="changePartnerValidationStatus('Suspendu')" class="px-4 py-2 bg-red-100 hover:bg-red-200 text-red-700 font-bold rounded-xl text-xs">
+                    Refuser / Suspendre
+                </button>
+                <button onclick="changePartnerValidationStatus('Actif')" class="px-5 py-2 bg-green-600 hover:bg-green-700 text-white font-black rounded-xl text-xs uppercase tracking-wider shadow">
+                    ✅ Valider & Activer le Prestataire
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- MODALE AUDIT COMMANDE -->
     <div id="modal-order-details" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-[999] flex items-center justify-center p-4 hidden">
         <div class="bg-white text-slate-900 w-full max-w-xl rounded-3xl shadow-2xl p-6 border border-slate-200 space-y-4 relative">
@@ -749,7 +823,7 @@
         </div>
     </footer>
 
-    <!-- LOGIQUE JAVASCRIPT ET VENTILATION RIGOUREUSE -->
+    <!-- LOGIQUE JAVASCRIPT -->
     <script>
         const SUPABASE_URL = "https://vbriworyscymnmtzzdny.supabase.co";
         const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZicml3b3J5c2N5bW5tdHp6ZG55Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODgzNzQwNTEsImV4cCI6MjEwMzk1MDA1MX0.VBZupVKj0srae0NT5BNZ0OeaIv9pAl2bl5L-Rd8ocJk";
@@ -771,6 +845,7 @@
         ];
 
         const defaultTarifsGroup = {
+            'commission-rate': 15,
             'moto': 8000, 'tricycle': 12000, 'berline': 15000, 'suv': 25000,
             'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000,
             'opt-moteur-berline': 5000, 'opt-chassis-berline': 4000, 'opt-sieges-berline': 7000,
@@ -790,10 +865,10 @@
             currentGroupKey: 'standard',
             pricesByGroup: {
                 'standard': { ...defaultTarifsGroup },
-                'zone1': { ...defaultTarifsGroup, 'berline': 20000, 'suv': 30000 },
-                'zone2': { ...defaultTarifsGroup, 'berline': 15000, 'suv': 25000 },
-                'zone3': { ...defaultTarifsGroup, 'berline': 12000, 'suv': 20000 },
-                'zone4': { ...defaultTarifsGroup, 'fosse': 50000, 'immondices': 20000 }
+                'zone1': { ...defaultTarifsGroup, 'commission-rate': 15, 'berline': 20000, 'suv': 30000 },
+                'zone2': { ...defaultTarifsGroup, 'commission-rate': 15, 'berline': 15000, 'suv': 25000 },
+                'zone3': { ...defaultTarifsGroup, 'commission-rate': 15, 'berline': 12000, 'suv': 20000 },
+                'zone4': { ...defaultTarifsGroup, 'commission-rate': 15, 'fosse': 50000, 'immondices': 20000 }
             },
             caisses: { centrale: 0, auto: 0, maison: 0, env: 0 }
         };
@@ -889,17 +964,13 @@
             ]);
 
             if (icon) setTimeout(() => icon.classList.remove('animate-spin'), 600);
-            showToast("Application et caisses synchronisées avec Supabase !", "success");
+            showToast("Données et caisses synchronisées avec Supabase !", "success");
         }
 
-        // =========================================================================
-        // DÉTECTION RATIONNELLE DE L'AXE BASÉE SUR LE PANIER RÉEL
-        // =========================================================================
         function determinerAxeCommande(order) {
             const clean = str => (str || '').toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
             const desc = clean(order.description);
 
-            // Mots-clés discriminants
             const isAuto = desc.includes('berline') || desc.includes('suv') || desc.includes('moto') || desc.includes('bus') || desc.includes('remorque') || desc.includes('poids lourd') || desc.includes('chassis') || desc.includes('moteur');
             const isMaison = desc.includes('tapis') || desc.includes('canape') || desc.includes('vitre') || desc.includes('carreau') || desc.includes('moquette') || desc.includes('matelas') || desc.includes('baie') || desc.includes('panneau');
             const isEnv = desc.includes('fosse') || desc.includes('immondice') || desc.includes('desinfection') || desc.includes('deratisation') || desc.includes('desinsectisation');
@@ -908,7 +979,6 @@
             if (isAuto && !isMaison && !isEnv) return 'auto';
             if (isEnv && !isAuto && !isMaison) return 'env';
 
-            // Si mixte ou non reconnu dans le texte, analyse du champ axe sans tenir compte de la mention '3D' par défaut
             const axe = clean(order.axe);
             if (axe.includes('maison') && !axe.includes('auto')) return 'maison';
             if (axe.includes('auto')) return 'auto';
@@ -933,7 +1003,6 @@
             }
         }
 
-        // VENTILATION PRÉCISE DANS CHAQUE CAISSE
         function ventilerCaissesActivites() {
             let cAuto = 0;
             let cMaison = 0;
@@ -1081,6 +1150,9 @@
             document.getElementById('modal-order-details').classList.add('hidden');
         }
 
+        // ==========================================
+        // GESTION DES PARTENAIRES & EXAMEN DU DOSSIER
+        // ==========================================
         async function loadSupabasePartners() {
             const { data, error } = await db.from('partners').select('*').order('created_at', { ascending: false });
             if (!error && data) {
@@ -1104,30 +1176,91 @@
                 if (filterCommune !== 'Toutes' && p.commune !== filterCommune) return;
                 if (search && !p.name.toLowerCase().includes(search) && !p.phone.includes(search)) return;
 
+                let statusBadge = '';
+                if (p.status === 'En attente de validation') {
+                    statusBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-800 animate-pulse">⏳ En attente validation</span>';
+                } else if (p.status === 'Actif') {
+                    statusBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-800">✅ Actif</span>';
+                } else {
+                    statusBadge = '<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-red-100 text-red-800">⛔ Suspendu</span>';
+                }
+
                 tbody.innerHTML += `
                     <tr class="hover:bg-slate-50 border-b">
                         <td class="p-3"><b>${p.name}</b><br><span class="text-slate-400 font-mono">${p.phone}</span></td>
                         <td class="p-3">${p.specialty || '-'}</td>
-                        <td class="p-3 font-bold">${p.commune}</td>
+                        <td class="p-3"><b>${p.commune}</b><br><span class="text-[10px] text-slate-500">${p.address || 'Siège non précisé'}</span></td>
                         <td class="p-3 uppercase font-bold">${p.billing_mode || 'commission'}</td>
                         <td class="p-3 font-mono font-bold">${Number(p.wallet || 0).toLocaleString('fr-FR')} CDF</td>
-                        <td class="p-3"><span class="px-2 py-0.5 rounded text-[10px] font-bold bg-green-100 text-green-800">${p.status || 'Actif'}</span></td>
-                        <td class="p-3 text-right">
-                            <button onclick="togglePartnerStatus('${p.id}')" class="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 rounded-lg font-bold">Désactiver</button>
+                        <td class="p-3">${statusBadge}</td>
+                        <td class="p-3 text-right space-x-1 whitespace-nowrap">
+                            <button onclick="openPartnerReviewModal('${p.id}')" class="px-2.5 py-1 bg-sky-100 hover:bg-sky-200 text-sky-800 rounded-lg font-bold text-[10px]">
+                                👁️ Examiner Dossier
+                            </button>
                         </td>
                     </tr>
                 `;
             });
         }
 
-        async function togglePartnerStatus(id) {
-            const p = state.partners.find(x => x.id === id);
+        // Modale d'examen et validation du dossier
+        function openPartnerReviewModal(partnerId) {
+            const p = state.partners.find(x => String(x.id) === String(partnerId));
             if (!p) return;
-            const newStatus = p.status === 'Actif' ? 'Suspendu' : 'Actif';
-            await db.from('partners').update({ status: newStatus }).eq('id', id);
-            p.status = newStatus;
+
+            document.getElementById('review-partner-id').value = p.id;
+            document.getElementById('review-partner-name').innerText = p.name;
+            document.getElementById('review-partner-phone').innerText = p.phone;
+            document.getElementById('review-partner-commune').innerText = p.commune;
+            document.getElementById('review-partner-specialty').innerText = p.specialty;
+            document.getElementById('review-partner-address').innerText = p.address || 'Aucune adresse physique renseignée';
+
+            const statusBadge = document.getElementById('review-partner-status');
+            statusBadge.innerText = p.status || 'En attente';
+            statusBadge.className = `px-2.5 py-0.5 rounded text-[10px] font-bold uppercase mt-1 inline-block ${
+                p.status === 'Actif' ? 'bg-green-100 text-green-800' : (p.status === 'Suspendu' ? 'bg-red-100 text-red-800' : 'bg-amber-100 text-amber-800')
+            }`;
+
+            // Affichage du document joint
+            const previewBox = document.getElementById('review-partner-doc-preview');
+            if (p.document_url) {
+                if (p.document_url.startsWith('data:image')) {
+                    previewBox.innerHTML = `<img src="${p.document_url}" alt="Pièce d'identité" class="max-h-64 object-contain rounded-lg border shadow-sm">`;
+                } else if (p.document_url.startsWith('data:application/pdf')) {
+                    previewBox.innerHTML = `
+                        <div class="text-center space-y-2 py-4">
+                            <span class="text-3xl">📄</span>
+                            <b class="block text-slate-800 text-xs">Document PDF Joint</b>
+                            <a href="${p.document_url}" download="piece_identite_${p.name}.pdf" class="px-4 py-1.5 bg-navy-800 text-white rounded-xl text-xs font-bold inline-block">Télécharger le PDF</a>
+                        </div>
+                    `;
+                } else {
+                    previewBox.innerHTML = `<a href="${p.document_url}" target="_blank" class="text-aqua underline font-bold">Consulter la pièce jointe externe ↗</a>`;
+                }
+            } else {
+                previewBox.innerHTML = `<span class="text-slate-400 italic">Aucun document n'a été téléversé pour ce dossier.</span>`;
+            }
+
+            document.getElementById('modal-partner-review').classList.remove('hidden');
+        }
+
+        function closePartnerReviewModal() {
+            document.getElementById('modal-partner-review').classList.add('hidden');
+        }
+
+        async function changePartnerValidationStatus(newStatus) {
+            const partnerId = document.getElementById('review-partner-id').value;
+            if (!partnerId) return;
+
+            const { error } = await db.from('partners').update({ status: newStatus }).eq('id', partnerId);
+            if (error) return showToast(error.message, "error");
+
+            const p = state.partners.find(x => String(x.id) === String(partnerId));
+            if (p) p.status = newStatus;
+
             renderAdminPartners();
-            showToast(`Statut mis à jour (${newStatus}).`);
+            closePartnerReviewModal();
+            showToast(`Statut du partenaire mis à jour : ${newStatus} !`, "success");
         }
 
         function payoutCommissions() {
@@ -1221,10 +1354,17 @@
             document.getElementById(elementId)?.scrollBy({ top: offset, behavior: 'smooth' });
         }
 
+        // MODIFICATION DYNAMIQUE DU TAUX DE COMMISSION ET DES PRIX PAR GROUPE
         function onCommuneGroupChange() {
             const groupKey = document.getElementById('admin-commune-group-select').value;
             state.currentGroupKey = groupKey;
             const prices = state.pricesByGroup[groupKey] || state.pricesByGroup['standard'];
+
+            // Chargement du taux de commission
+            const rateInput = document.getElementById('p-commission-rate');
+            if (rateInput) rateInput.value = prices['commission-rate'] || 15;
+
+            // Chargement de chaque tarif
             for (let k in prices) {
                 const input = document.getElementById(`p-${k}`);
                 if (input) input.value = prices[k];
@@ -1234,11 +1374,19 @@
         function saveTarifsForCurrentGroup() {
             const groupKey = state.currentGroupKey;
             if (!state.pricesByGroup[groupKey]) state.pricesByGroup[groupKey] = {};
+
+            // Enregistrement du taux de commission
+            const rateInput = document.getElementById('p-commission-rate');
+            if (rateInput) {
+                state.pricesByGroup[groupKey]['commission-rate'] = parseFloat(rateInput.value) || 15;
+            }
+
             document.querySelectorAll('#admin-prix input[type="number"]').forEach(input => {
                 const k = input.id.replace('p-', '');
                 state.pricesByGroup[groupKey][k] = parseFloat(input.value) || 0;
             });
-            showToast("Grille tarifaire enregistrée pour ce groupe.", "success");
+
+            showToast(`Tarifs et Taux de Commission (${rateInput ? rateInput.value : 15}%) enregistrés pour cette zone.`, "success");
         }
 
         function genererTableauStatistiques() {
