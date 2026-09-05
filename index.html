@@ -60,6 +60,7 @@
         </div>
 
         <div class="flex items-center gap-2">
+            <!-- Ce bouton n'apparaîtra que côté partenaire -->
             <button onclick="refreshApplicationData()" id="btn-app-refresh" class="hidden px-3.5 py-1.5 rounded-xl bg-sky-600/80 hover:bg-sky-600 text-white text-xs font-bold transition shadow flex items-center gap-1.5">
                 🔄 Actualiser
             </button>
@@ -420,7 +421,6 @@
                 </div>
 
                 <div id="axis-contact" class="client-axis-view hidden space-y-3">
-                    <!-- Conteneur des boutons Contact -->
                     <div id="cnt-buttons-container" class="grid grid-cols-3 gap-2 text-center mt-4">
                         <button type="button" onclick="switchContactTab('cnt-about')" class="p-4 rounded-2xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-2 shadow-sm hover:border-aqua transition">
                             <span class="text-3xl">🏢</span>
@@ -547,7 +547,6 @@
 
                 <!-- Chiffre d'Affaires -->
                 <div id="partner-tab-ca" class="partner-subview hidden space-y-4">
-                    <!-- Conteneur des boutons CA -->
                     <div id="ca-buttons-container" class="grid grid-cols-2 gap-3 text-center mt-4 max-w-md mx-auto">
                         <button type="button" onclick="switchCaSubTab('ca-sub-calc')" class="p-5 rounded-3xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-2 shadow-sm hover:border-mattOrange hover:text-mattOrange transition">
                             <span class="text-3xl">📈</span>
@@ -694,7 +693,6 @@
                 <!-- Profil & Sécurité (Navigation par profondeur / Drill-down) -->
                 <div id="partner-tab-profil" class="partner-subview hidden space-y-4 max-w-xl mx-auto">
                     
-                    <!-- Conteneur des boutons Profil -->
                     <div id="prof-buttons-container" class="grid grid-cols-2 gap-3 text-center mt-4">
                         <button type="button" onclick="switchProfileSubTab('prof-sub-info')" class="p-6 rounded-3xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-3 shadow-sm hover:border-mattOrange hover:text-mattOrange transition">
                             <span class="text-4xl">👤</span>
@@ -1653,306 +1651,9 @@
             detectClientOrders();
         }
 
-        async function loadPartnerMissions() {
-            const btn = document.getElementById('btn-refresh-missions');
-            const icon = document.getElementById('refresh-icon');
-            if (icon) icon.classList.add('animate-spin');
-            if (btn) btn.disabled = true;
-
-            const { data, error } = await db.from('orders').select('*').eq('status', 'En attente').order('id', { ascending: false });
-            const container = document.getElementById('partner-missions-container');
-            if (container) container.innerHTML = '';
-
-            if (icon) icon.classList.remove('animate-spin');
-            if (btn) btn.disabled = false;
-
-            if (error) {
-                showToast("Erreur : " + error.message, "error");
-                return;
-            }
-
-            if (!data || data.length === 0) {
-                if (container) container.innerHTML = `<p class="text-xs text-slate-400 text-center py-12 col-span-full font-medium">Aucune mission disponible dans votre secteur.</p>`;
-                return;
-            }
-
-            const pSpec = (session.user?.specialty || '').toLowerCase();
-
-            const missionsFiltrees = data.filter(o => {
-                const desc = (o.description || '').toLowerCase();
-                const axe = (o.axe || '').toLowerCase();
-
-                const hasAuto = axe.includes('auto') || desc.includes('berline') || desc.includes('suv') || desc.includes('moto') || desc.includes('bus') || desc.includes('remorque') || desc.includes('poids lourd');
-                const hasMaison = axe.includes('maison') || desc.includes('tapis') || desc.includes('canapé') || desc.includes('vitre') || desc.includes('carreaux') || desc.includes('moquette') || desc.includes('matelas') || desc.includes('panneau');
-                const has3D = axe.includes('3d') || desc.includes('désinfection') || desc.includes('dératisation') || desc.includes('désinsectisation');
-                const hasVidange = desc.includes('fosse') || desc.includes('immondices') || desc.includes('vidange');
-
-                if (pSpec.includes('polyvalent')) {
-                    return hasAuto || hasMaison;
-                }
-                if (pSpec.includes('3d') || pSpec.includes('traitement') || pSpec.includes('assainissement')) {
-                    return has3D;
-                }
-                if (pSpec.includes('vidange') || pSpec.includes('immondices')) {
-                    return hasVidange;
-                }
-                if (pSpec.includes('auto') || pSpec.includes('lavage')) {
-                    return hasAuto;
-                }
-                if (pSpec.includes('maison')) {
-                    return hasMaison;
-                }
-
-                return false;
-            });
-
-            if (missionsFiltrees.length === 0) {
-                if (container) container.innerHTML = `<p class="text-xs text-slate-400 text-center py-12 col-span-full font-medium">Aucune mission disponible pour votre spécialité (${session.user?.specialty || 'Général'}).</p>`;
-                return;
-            }
-
-            missionsFiltrees.forEach(o => {
-                if (container) {
-                    container.innerHTML += `
-                        <div class="p-4 border border-slate-200 hover:border-aqua rounded-2xl bg-white space-y-3 text-xs shadow-sm transition">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <b class="text-navy-800 uppercase text-sm font-black">${o.commune}</b>
-                                    <span class="text-[10px] text-slate-500 block font-medium">${o.date} à ${o.time}</span>
-                                </div>
-                                <div class="text-right font-mono">
-                                    <span class="font-black text-navy-800 text-base">${Number(o.total_amount).toLocaleString('fr-FR')} CDF</span>
-                                    <span class="block text-[10px] text-mattOrange font-bold">Commission : ${Number(o.commission).toLocaleString('fr-FR')} CDF</span>
-                                </div>
-                            </div>
-                            <div class="bg-slate-50 p-3 rounded-xl border text-[11px] text-slate-700 space-y-1">
-                                <div><b>Prestations :</b> ${o.description}</div>
-                                <div><b>Quartier :</b> ${o.quartier || 'N/A'}</div>
-                                <div><b>Logistique :</b> <span class="text-aqua font-black">${o.logistics || 'SNEL / REGIDESO'}</span></div>
-                                <div><b>Repère :</b> ${o.reference || 'Aucun'}</div>
-                            </div>
-                            <button onclick="accepterMission(${o.id}, ${o.commission})" class="w-full py-2.5 bg-mattOrange active:bg-orange-600 text-white rounded-xl font-black uppercase text-xs shadow transition">
-                                Accepter la course (${Number(o.commission).toLocaleString('fr-FR')} CDF)
-                            </button>
-                        </div>
-                    `;
-                }
-            });
-        }
-
-        async function loadPartnerAcceptedCourses() {
-            if (!session.user || !session.user.id) return;
-            
-            let ordersLoaded = [];
-
-            try {
-                const { data, error } = await db.from('orders')
-                    .select('*')
-                    .eq('partner_id', session.user.id)
-                    .order('id', { ascending: false });
-
-                if (!error && data) {
-                    ordersLoaded = data;
-                }
-            } catch (e) {
-                console.warn("Erreur chargement courses partenaire:", e);
-            }
-
-            partnerAllOrders = ordersLoaded;
-
-            renderAcceptedCoursesList();
-            renderPartnerCA();
-        }
-
-        function renderAcceptedCoursesList() {
-            const container = document.getElementById('partner-accepted-courses-list');
-            if (!container) return;
-            container.innerHTML = '';
-
-            const visibleOrders = partnerAllOrders.filter(o => !o.partner_cleared);
-
-            if (visibleOrders.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-8 col-span-full">Aucune mission dans votre liste.</p>`;
-                return;
-            }
-
-            visibleOrders.forEach(o => {
-                container.innerHTML += `
-                    <div class="p-4 border rounded-2xl bg-white shadow-sm space-y-2 text-xs">
-                        <div class="flex justify-between font-bold">
-                            <span>#${o.id} - ${o.commune}</span>
-                            <span class="text-navy-800 font-mono">${Number(o.total_amount).toLocaleString('fr-FR')} CDF</span>
-                        </div>
-                        <div class="text-[11px] text-slate-600">
-                            <b>Client :</b> ${o.client_name} • <a href="tel:${o.client_phone}" class="text-aqua font-bold font-mono underline">${o.client_phone}</a><br>
-                            <b>Adresse :</b> ${o.quartier ? o.quartier + ' - ' : ''}${o.avenue} (Repère : ${o.reference || 'N/A'})<br>
-                            <b>Conditions :</b> ${o.logistics || 'SNEL / REGIDESO'}
-                        </div>
-                        ${o.status === 'Acceptée' ? `
-                            <button onclick="cloturerMission(${o.id})" class="w-full py-2.5 bg-green-600 active:bg-green-700 text-white rounded-xl font-bold text-xs mt-1">
-                                ✅ Clôturer cette mission (Terminée)
-                            </button>
-                        ` : `
-                            <div class="flex justify-between items-center pt-1 border-t">
-                                <span class="text-green-600 font-bold text-xs">Mission clôturée ✔</span>
-                                <button onclick="deleteSinglePartnerCourse(${o.id})" class="text-slate-400 hover:text-red-500 font-bold text-[10px] px-2 py-0.5 rounded bg-slate-50 border">
-                                    Retirer ✕
-                                </button>
-                            </div>
-                        `}
-                    </div>
-                `;
-            });
-        }
-
-        function clearCompletedCourses() {
-            let count = 0;
-            partnerAllOrders.forEach(o => {
-                if (o.status === 'Terminée') {
-                    o.partner_cleared = true;
-                    count++;
-                }
-            });
-
-            renderAcceptedCoursesList();
-            showToast(count > 0 ? `${count} course(s) clôturée(s) retirée(s) de l'affichage.` : "Aucune course clôturée à vider.", "info");
-        }
-
-        function deleteSinglePartnerCourse(orderId) {
-            const o = partnerAllOrders.find(x => x.id === orderId);
-            if (o) o.partner_cleared = true;
-            renderAcceptedCoursesList();
-            showToast("Course retirée de votre affichage.");
-        }
-
-        function renderPartnerCA(filteredOrders = null) {
-            const orders = filteredOrders || partnerAllOrders.filter(o => o.status === 'Terminée');
-            let totalBrut = 0;
-            let totalCom = 0;
-
-            orders.forEach(o => {
-                totalBrut += Number(o.total_amount || 0);
-                totalCom += Number(o.commission || 0);
-            });
-
-            const net = totalBrut - totalCom;
-
-            const elCount = document.getElementById('ca-stat-count');
-            if (elCount) elCount.innerText = orders.length;
-
-            const elBrut = document.getElementById('ca-stat-brut');
-            if (elBrut) elBrut.innerText = `${totalBrut.toLocaleString('fr-FR')} CDF`;
-
-            const elCom = document.getElementById('ca-stat-com');
-            if (elCom) elCom.innerText = `${totalCom.toLocaleString('fr-FR')} CDF`;
-
-            const elNet = document.getElementById('ca-stat-net');
-            if (elNet) elNet.innerText = `${net.toLocaleString('fr-FR')} CDF`;
-
-            const tbody = document.getElementById('ca-table-body');
-            if (!tbody) return;
-
-            if (orders.length === 0) {
-                tbody.innerHTML = `
-                    <tr>
-                        <td colspan="7" class="p-8 text-center text-slate-400 font-medium">
-                            Aucune course enregistrée pour cette période.
-                        </td>
-                    </tr>
-                `;
-                return;
-            }
-
-            tbody.innerHTML = orders.map(o => {
-                const com = Number(o.commission || 0);
-                const brut = Number(o.total_amount || 0);
-                const gain = brut - com;
-
-                return `
-                    <tr class="hover:bg-slate-50 border-b">
-                        <td class="p-3 font-mono font-bold">#${o.id}</td>
-                        <td class="p-3">${o.date || '-'}</td>
-                        <td class="p-3 font-bold">${o.description || '-'}</td>
-                        <td class="p-3">${o.commune}</td>
-                        <td class="p-3 font-mono font-bold text-sky-600">${brut.toLocaleString('fr-FR')} CDF</td>
-                        <td class="p-3 font-mono font-bold text-red-500">-${com.toLocaleString('fr-FR')} CDF</td>
-                        <td class="p-3 font-mono font-bold text-green-600">${gain.toLocaleString('fr-FR')} CDF</td>
-                    </tr>
-                `;
-            }).join('');
-        }
-
-        function filtrerChiffreAffaires() {
-            const start = document.getElementById('ca-date-start')?.value || '';
-            const end = document.getElementById('ca-date-end')?.value || '';
-
-            if (!start && !end) return renderPartnerCA();
-
-            const filtered = partnerAllOrders.filter(o => {
-                if (o.status !== 'Terminée') return false;
-                if (!o.date) return false;
-                if (start && o.date < start) return false;
-                if (end && o.date > end) return false;
-                return true;
-            });
-
-            const lbl = document.getElementById('ca-period-label');
-            if (lbl) lbl.innerText = `Du ${start || 'Début'} au ${end || 'Fin'}`;
-            renderPartnerCA(filtered);
-            showToast("Chiffre d'affaires recalculé.");
-        }
-
-        function resetFiltreCA() {
-            if (document.getElementById('ca-date-start')) document.getElementById('ca-date-start').value = '';
-            if (document.getElementById('ca-date-end')) document.getElementById('ca-date-end').value = '';
-            const lbl = document.getElementById('ca-period-label');
-            if (lbl) lbl.innerText = "Toutes dates";
-            renderPartnerCA();
-        }
-
-        async function accepterMission(orderId, commission) {
-            const mode = session.user.billing_mode || 'commission';
-            if (mode === 'commission' && session.user.wallet < commission) {
-                return showToast("Solde insuffisant pour couvrir la commission.", "error");
-            }
-
-            const newWallet = mode === 'commission' ? session.user.wallet - commission : session.user.wallet;
-            await db.from('partners').update({ wallet: newWallet }).eq('id', session.user.id);
-            await db.from('orders').update({ status: 'Acceptée', partner_id: session.user.id }).eq('id', orderId);
-
-            session.user.wallet = newWallet;
-            const wb = document.getElementById('partner-wallet-balance');
-            if (wb) wb.innerText = `${newWallet.toLocaleString('fr-FR')} CDF`;
-
-            showToast("Mission acceptée ! Coordonnées débloquées.");
-            loadPartnerMissions();
-            loadPartnerAcceptedCourses();
-        }
-
-        async function cloturerMission(orderId) {
-            await db.from('orders').update({ status: 'Terminée' }).eq('id', orderId);
-            showToast("Course terminée avec succès !");
-            loadPartnerAcceptedCourses();
-        }
-
-        async function sendRechargeDeclaration() {
-            const mode = document.getElementById('p-billing-mode-select')?.value || 'commission';
-            const amount = parseFloat(document.getElementById('p-recharge-amount')?.value);
-            const ref = document.getElementById('p-recharge-ref')?.value.trim() || '';
-            if (!amount || !ref) return showToast("Montant et référence requis.", "error");
-
-            await db.from('recharges').insert([{ partner_id: session.user.id, partner_name: session.user.name, mode, amount, ref, status: 'En attente' }]);
-            showToast("Déclaration transmise à la Direction !");
-            if (document.getElementById('p-recharge-amount')) document.getElementById('p-recharge-amount').value = '';
-            if (document.getElementById('p-recharge-ref')) document.getElementById('p-recharge-ref').value = '';
-        }
-
-        function adjustPartnerRechargeMode() {
-            const mode = document.getElementById('p-billing-mode-select')?.value;
-            const input = document.getElementById('p-recharge-amount');
-            if (input) input.value = mode === 'journalier' ? 15000 : (mode === 'mensuel' ? 150000 : '');
-        }
-
+        // ==========================================
+        // PROFIL & IDENTIFIANTS PARTENAIRE
+        // ==========================================
         async function savePartnerInfoUpdate() {
             if (!session.user) return;
             const newName = document.getElementById('partner-edit-name')?.value.trim() || '';
@@ -1969,10 +1670,8 @@
             session.user.address = newAddress;
             localStorage.setItem('matt_partner_session', JSON.stringify(session.user));
             
-            const dashName = document.getElementById('partner-dashboard-name');
-            if (dashName) dashName.innerText = newName;
-            
             showToast("Profil mis à jour avec succès !");
+            resetProfileView();
         }
 
         async function savePartnerSecurityUpdate() {
@@ -2010,6 +1709,7 @@
             if (pNew) pNew.value = '';
 
             showToast("Sécurité mise à jour avec succès !");
+            resetProfileView();
         }
 
         async function fetchPublishedCgu() {
@@ -2071,6 +1771,13 @@
             detectClientOrders();
             onClientCommuneChange();
             fetchPublishedCgu();
+        }
+
+        function logoutCurrentSession() {
+            session = { role: null, user: null };
+            localStorage.removeItem('matt_client_session');
+            localStorage.removeItem('matt_partner_session');
+            window.location.reload();
         }
 
         window.addEventListener('DOMContentLoaded', () => {
