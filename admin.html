@@ -32,6 +32,7 @@
 
     <div id="toast-container" class="fixed top-4 right-4 z-[9999] flex flex-col gap-2 max-w-sm w-full pointer-events-none"></div>
 
+    <!-- HEADER ADMIN -->
     <header class="bg-navy-800/95 border-b-2 border-mattOrange px-4 py-3 md:px-8 flex justify-between items-center sticky top-0 z-50 backdrop-blur-md shadow-xl w-full">
         <div class="flex items-center gap-3">
             <div class="w-11 h-11 bg-white rounded-2xl shadow-md border border-mattOrange/40 p-1 flex items-center justify-center flex-shrink-0">
@@ -58,6 +59,7 @@
         </div>
     </header>
 
+    <!-- ÉCRAN D'AUTHENTIFICATION -->
     <div id="admin-auth-screen" class="container mx-auto px-4 py-16 max-w-md flex-grow flex items-center justify-center">
         <div class="bg-white text-slate-900 p-8 rounded-3xl shadow-2xl border border-slate-200 w-full space-y-5 text-center">
             <div class="w-16 h-16 bg-navy-900 text-mattOrange rounded-2xl mx-auto flex items-center justify-center text-3xl font-mono shadow-inner">
@@ -91,6 +93,7 @@
         </div>
     </div>
 
+    <!-- DASHBOARD PRINCIPAL -->
     <main id="admin-dashboard-screen" class="w-full px-4 py-6 md:px-8 md:py-8 flex-grow hidden">
         <div class="bg-white text-slate-800 rounded-3xl p-6 md:p-8 shadow-2xl space-y-6 w-full">
             
@@ -158,7 +161,7 @@
                 </div>
             </div>
 
-            <!-- ONGLET 2: GESTION PARTENAIRES (AVEC VALIDATION DES DOSSIERS) -->
+            <!-- ONGLET 2: GESTION PARTENAIRES -->
             <div id="admin-partenaires" class="admin-subview hidden space-y-4">
                 <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-3">
                     <div>
@@ -266,16 +269,21 @@
                                 <select id="admin-manual-recharge-partner" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-bold text-slate-800"></select>
                             </div>
                             
-                            <div class="grid grid-cols-2 gap-2">
-                                <div>
+                            <div class="flex flex-col sm:flex-row gap-2">
+                                <div class="flex-1">
                                     <label class="text-[10px] font-bold text-slate-500 block uppercase mb-1">Mode :</label>
                                     <select id="admin-manual-recharge-mode" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-bold text-slate-800" onchange="adjustManualAmountByMode()">
                                         <option value="commission">Commission (CDF)</option>
                                         <option value="journalier">Forfait Jour (23h59)</option>
                                         <option value="mensuel">Forfait Mois (30j)</option>
+                                        <option value="personnalise">Sur Mesure (Jours)</option>
                                     </select>
                                 </div>
-                                <div>
+                                <div id="div-custom-days" class="hidden w-24">
+                                    <label class="text-[10px] font-bold text-slate-500 block uppercase mb-1">Jours :</label>
+                                    <input type="number" id="admin-manual-recharge-days" placeholder="Ex: 5" min="1" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-bold text-center">
+                                </div>
+                                <div class="flex-1" id="div-recharge-amount">
                                     <label class="text-[10px] font-bold text-slate-500 block uppercase mb-1">Montant (CDF) :</label>
                                     <input type="number" id="admin-manual-recharge-amount" placeholder="Montant CDF" class="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-bold font-mono">
                                 </div>
@@ -554,7 +562,7 @@
             <!-- ONGLET 7: CONFIGURATION SYSTÈME SÉCURISÉ (DRILL-DOWN) -->
             <div id="admin-config" class="admin-subview hidden space-y-4">
                 
-                <!-- Ecran de verrouillage de la configuration -->
+                <!-- ÉCRAN DE VERROUILLAGE -->
                 <div id="cfg-lock-screen" class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200 text-center max-w-md mx-auto my-10">
                     <span class="text-4xl block mb-3">⚙️🔒</span>
                     <h3 class="text-lg font-black text-navy-800 uppercase mb-2">Zone Sécurisée</h3>
@@ -563,8 +571,9 @@
                     <button onclick="unlockConfigSystem()" class="w-full py-3.5 bg-mattOrange hover:bg-orange-600 text-white font-black rounded-xl uppercase tracking-widest shadow transition">Déverrouiller</button>
                 </div>
 
-                <!-- Le vrai contenu, caché par défaut -->
+                <!-- LE VRAI CONTENU -->
                 <div id="cfg-unlocked-content" class="hidden space-y-4">
+                    
                     <div id="cfg-buttons-container" class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-2">
                         <button onclick="switchConfigSubTab('cfg-sub-contacts')" class="p-6 rounded-3xl border-2 border-slate-200 bg-white text-slate-600 font-bold text-xs flex flex-col items-center gap-3 shadow-sm hover:border-red-500 hover:text-red-600 transition">
                             <span class="text-4xl">📱</span>
@@ -967,6 +976,7 @@
 
         let MASTER_PASS = localStorage.getItem('matt_master_pass') || 'MATT2026';
         let savedPricing = localStorage.getItem('matt_pricing_config');
+        
         const defaultTarifsGroup = {
             'moto': 8000, 'tricycle': 12000, 'berline': 15000, 'suv': 25000,
             'poids-lourd': 45000, 'bus-207': 20000, 'bus-long': 35000, 'remorque': 30000,
@@ -1180,6 +1190,7 @@
             if (tabId === 'admin-prix') onCommuneGroupChange();
             
             if (tabId === 'admin-config') {
+                // BARRIÈRE ABSOLUE : VERROUILLAGE SYSTÉMATIQUE
                 document.getElementById('cfg-lock-screen').classList.remove('hidden');
                 document.getElementById('cfg-unlocked-content').classList.add('hidden');
                 resetConfigView();
@@ -1767,16 +1778,26 @@
         function adjustManualAmountByMode() {
             const modeInp = document.getElementById('admin-manual-recharge-mode');
             const amountInp = document.getElementById('admin-manual-recharge-amount');
+            const daysDiv = document.getElementById('div-custom-days');
+            
             if(!modeInp || !amountInp) return;
             
             const mode = modeInp.value;
-            amountInp.value = mode === 'journalier' ? 15000 : (mode === 'mensuel' ? 150000 : '');
+            
+            if (mode === 'personnalise') {
+                if (daysDiv) daysDiv.classList.remove('hidden');
+                amountInp.value = '';
+            } else {
+                if (daysDiv) daysDiv.classList.add('hidden');
+                amountInp.value = mode === 'journalier' ? 15000 : (mode === 'mensuel' ? 150000 : '');
+            }
         }
 
         async function executeManualRecharge() {
             const pIdInp = document.getElementById('admin-manual-recharge-partner');
             const modeInp = document.getElementById('admin-manual-recharge-mode');
             const amountInp = document.getElementById('admin-manual-recharge-amount');
+            const daysInp = document.getElementById('admin-manual-recharge-days');
             
             if(!pIdInp || !modeInp || !amountInp) return;
 
@@ -1788,17 +1809,30 @@
 
             try {
                 let updatePayload = { billing_mode: mode };
-                if (mode === 'commission') updatePayload.wallet = (p.wallet || 0) + amount;
-                else {
+                if (mode === 'commission') {
+                    updatePayload.wallet = (p.wallet || 0) + amount;
+                } else {
                     const d = new Date();
-                    if (mode === 'journalier') d.setHours(23, 59, 59);
-                    else d.setDate(d.getDate() + 30);
+                    if (mode === 'journalier') {
+                        d.setHours(23, 59, 59);
+                    } else if (mode === 'mensuel') {
+                        d.setDate(d.getDate() + 30);
+                    } else if (mode === 'personnalise') {
+                        const customDays = parseInt(daysInp.value) || 0;
+                        if(customDays <= 0) return showToast("Veuillez saisir un nombre de jours valide.", "error");
+                        d.setDate(d.getDate() + customDays);
+                        updatePayload.billing_mode = 'forfait_personnalise';
+                    }
                     updatePayload.expires_at = d.toISOString();
                 }
 
                 await db.from('partners').update(updatePayload).eq('id', pId);
                 showToast("Opération appliquée au compte partenaire.");
                 loadSupabasePartners();
+                
+                amountInp.value = '';
+                if(daysInp) daysInp.value = '';
+                
             } catch(e) { console.warn(e); }
         }
 
